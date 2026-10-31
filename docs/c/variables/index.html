@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Variables, Data Types &amp; Constants · C | Bytebook</title>
+<meta name="description" content="Store values in variables, choose the right data type, print them with the right format specifier, and lock values with constants.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Variables, Data Types &amp; Constants · C | Bytebook">
+<meta property="og:description" content="Store values in variables, choose the right data type, print them with the right format specifier, and lock values with constants.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/variables" data-title="Variables, Data Types &amp; Constants" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 3 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Getting Started</p>
+<h1>Variables, Data Types &amp; Constants</h1>
+<p class="lede">Store values in variables, choose the right data type, print them with the right format specifier, and lock values with constants.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>5 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>variable</strong> is a named box in memory that holds a value. Every variable in C has a <strong>type</strong>, which decides how many bytes the box uses and what kind of value it can hold.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> age = <span class="hljs-number">19</span>;          <span class="hljs-comment">// whole number</span>
+    <span class="hljs-type">float</span> cgpa = <span class="hljs-number">8.75f</span>;    <span class="hljs-comment">// decimal number</span>
+    <span class="hljs-type">char</span> grade = <span class="hljs-string">&#x27;A&#x27;</span>;      <span class="hljs-comment">// single character</span>
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Age: %d\n&quot;</span>, age);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;CGPA: %.2f\n&quot;</span>, cgpa);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade: %c\n&quot;</span>, grade);
+
+    age = age + <span class="hljs-number">1</span>;         <span class="hljs-comment">// variables can change</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Next year: %d\n&quot;</span>, age);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Age: 19
+CGPA: 8.75
+Grade: A
+Next year: 20</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgYWdlID0gMTk7ICAgICAgICAgIC8vIHdob2xlIG51bWJlcgogICAgZmxvYXQgY2dwYSA9IDguNzVmOyAgICAvLyBkZWNpbWFsIG51bWJlcgogICAgY2hhciBncmFkZSA9ICdBJzsgICAgICAvLyBzaW5nbGUgY2hhcmFjdGVyCgogICAgcHJpbnRmKCJBZ2U6ICVkXG4iLCBhZ2UpOwogICAgcHJpbnRmKCJDR1BBOiAlLjJmXG4iLCBjZ3BhKTsKICAgIHByaW50ZigiR3JhZGU6ICVjXG4iLCBncmFkZSk7CgogICAgYWdlID0gYWdlICsgMTsgICAgICAgICAvLyB2YXJpYWJsZXMgY2FuIGNoYW5nZQogICAgcHJpbnRmKCJOZXh0IHllYXI6ICVkXG4iLCBhZ2UpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="declaring-and-naming-variables"><a class="anchor" href="#declaring-and-naming-variables" aria-hidden="true" tabindex="-1">#</a>Declaring and naming variables</h2>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">int</span> count;            <span class="hljs-comment">// declaration (value is garbage until you assign one)</span>
+count = <span class="hljs-number">10</span>;           <span class="hljs-comment">// assignment</span>
+<span class="hljs-type">int</span> total = <span class="hljs-number">0</span>;        <span class="hljs-comment">// declaration + initialisation</span>
+<span class="hljs-type">int</span> a = <span class="hljs-number">1</span>, b = <span class="hljs-number">2</span>;     <span class="hljs-comment">// several at once</span></code></pre></figure>
+<p><strong>Naming rules</strong> (these are called <em>identifiers</em>):</p>
+<ul>
+<li>Use letters, digits and underscores only: <code>total_marks</code>, <code>num1</code>.</li>
+<li>Must not start with a digit: <code>1num</code> is invalid.</li>
+<li>Cannot be a keyword such as <code>int</code>, <code>return</code>, <code>while</code>.</li>
+<li>Case matters: <code>Sum</code> and <code>sum</code> are different variables.</li>
+</ul>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>Always initialise</span></div><div class="callout-body"><p>A local variable that you declare but never assign holds <strong>garbage</strong> — whatever bytes were already in that memory. Reading it gives unpredictable results. Get into the habit of writing <code>int sum = 0;</code>.</p>
+</div></aside>
+<h2 id="data-types"><a class="anchor" href="#data-types" aria-hidden="true" tabindex="-1">#</a>Data types</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Typical size</th>
+<th>Holds</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>char</code></td>
+<td>1 byte</td>
+<td>one character or small integer</td>
+<td><code>&#39;A&#39;</code></td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>2 bytes</td>
+<td>small integers</td>
+<td><code>300</code></td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>4 bytes</td>
+<td>integers, about ±2.1 billion</td>
+<td><code>-42</code></td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td>8 bytes</td>
+<td>very large integers</td>
+<td><code>9000000000LL</code></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>4 bytes</td>
+<td>decimals, ~7 digits of precision</td>
+<td><code>3.14f</code></td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>8 bytes</td>
+<td>decimals, ~15 digits of precision</td>
+<td><code>3.14159265</code></td>
+</tr>
+</tbody></table>
+</div>
+<p>Add <code>unsigned</code> to an integer type to store only non-negative values with double the positive range. Sizes can vary between machines, so C gives you the <code>sizeof</code> operator to check:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;char      : %zu byte\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">char</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;short     : %zu bytes\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">short</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;int       : %zu bytes\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;long long : %zu bytes\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">long</span> <span class="hljs-type">long</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;float     : %zu bytes\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">float</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;double    : %zu bytes\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">double</span>));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>char      : 1 byte
+short     : 2 bytes
+int       : 4 bytes
+long long : 8 bytes
+float     : 4 bytes
+double    : 8 bytes</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBwcmludGYoImNoYXIgICAgICA6ICV6dSBieXRlXG4iLCBzaXplb2YoY2hhcikpOwogICAgcHJpbnRmKCJzaG9ydCAgICAgOiAlenUgYnl0ZXNcbiIsIHNpemVvZihzaG9ydCkpOwogICAgcHJpbnRmKCJpbnQgICAgICAgOiAlenUgYnl0ZXNcbiIsIHNpemVvZihpbnQpKTsKICAgIHByaW50ZigibG9uZyBsb25nIDogJXp1IGJ5dGVzXG4iLCBzaXplb2YobG9uZyBsb25nKSk7CiAgICBwcmludGYoImZsb2F0ICAgICA6ICV6dSBieXRlc1xuIiwgc2l6ZW9mKGZsb2F0KSk7CiAgICBwcmludGYoImRvdWJsZSAgICA6ICV6dSBieXRlc1xuIiwgc2l6ZW9mKGRvdWJsZSkpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="format-specifiers"><a class="anchor" href="#format-specifiers" aria-hidden="true" tabindex="-1">#</a>Format specifiers</h2>
+<p>The specifier must match the variable&#39;s type, or <code>printf</code> prints nonsense.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Specifier</th>
+<th>Type</th>
+<th>Specifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>%d</code> or <code>%i</code></td>
+<td><code>int</code></td>
+<td><code>%c</code></td>
+<td><code>char</code></td>
+</tr>
+<tr>
+<td><code>%u</code></td>
+<td><code>unsigned int</code></td>
+<td><code>%s</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>%ld</code></td>
+<td><code>long</code></td>
+<td><code>%x</code> / <code>%o</code></td>
+<td>hex / octal</td>
+</tr>
+<tr>
+<td><code>%lld</code></td>
+<td><code>long long</code></td>
+<td><code>%e</code></td>
+<td>scientific notation</td>
+</tr>
+<tr>
+<td><code>%f</code></td>
+<td><code>float</code> / <code>double</code></td>
+<td><code>%p</code></td>
+<td>pointer address</td>
+</tr>
+<tr>
+<td><code>%.2f</code></td>
+<td>2 decimal places</td>
+<td><code>%zu</code></td>
+<td><code>sizeof</code> result</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">255</span>;
+    <span class="hljs-type">double</span> pi = <span class="hljs-number">3.14159265</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d in hex is %x and in octal is %o\n&quot;</span>, n, n, n);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pi = %f\n&quot;</span>, pi);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pi = %.3f\n&quot;</span>, pi);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pi = %e\n&quot;</span>, pi);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[%5d] [%-5d]\n&quot;</span>, <span class="hljs-number">42</span>, <span class="hljs-number">42</span>);   <span class="hljs-comment">// width 5, right and left aligned</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>255 in hex is ff and in octal is 377
+pi = 3.141593
+pi = 3.142
+pi = 3.141593e+00
+[   42] [42   ]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiA9IDI1NTsKICAgIGRvdWJsZSBwaSA9IDMuMTQxNTkyNjU7CiAgICBwcmludGYoIiVkIGluIGhleCBpcyAleCBhbmQgaW4gb2N0YWwgaXMgJW9cbiIsIG4sIG4sIG4pOwogICAgcHJpbnRmKCJwaSA9ICVmXG4iLCBwaSk7CiAgICBwcmludGYoInBpID0gJS4zZlxuIiwgcGkpOwogICAgcHJpbnRmKCJwaSA9ICVlXG4iLCBwaSk7CiAgICBwcmludGYoIlslNWRdIFslLTVkXVxuIiwgNDIsIDQyKTsgICAvLyB3aWR0aCA1LCByaWdodCBhbmQgbGVmdCBhbGlnbmVkCiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="characters-are-numbers"><a class="anchor" href="#characters-are-numbers" aria-hidden="true" tabindex="-1">#</a>Characters are numbers</h2>
+<p>A <code>char</code> stores a small integer — its <strong>ASCII code</strong>. <code>&#39;A&#39;</code> is 65, <code>&#39;a&#39;</code> is 97 and <code>&#39;0&#39;</code> is 48. That is why you can do arithmetic on characters:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> c = <span class="hljs-string">&#x27;A&#x27;</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c has ASCII code %d\n&quot;</span>, c, c);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Next letter: %c\n&quot;</span>, c + <span class="hljs-number">1</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Lowercase: %c\n&quot;</span>, c + <span class="hljs-number">32</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Digit &#x27;7&#x27; as a number: %d\n&quot;</span>, <span class="hljs-string">&#x27;7&#x27;</span> - <span class="hljs-string">&#x27;0&#x27;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>A has ASCII code 65
+Next letter: B
+Lowercase: a
+Digit &#39;7&#39; as a number: 7</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBjaGFyIGMgPSAnQSc7CiAgICBwcmludGYoIiVjIGhhcyBBU0NJSSBjb2RlICVkXG4iLCBjLCBjKTsKICAgIHByaW50ZigiTmV4dCBsZXR0ZXI6ICVjXG4iLCBjICsgMSk7CiAgICBwcmludGYoIkxvd2VyY2FzZTogJWNcbiIsIGMgKyAzMik7CiAgICBwcmludGYoIkRpZ2l0ICc3JyBhcyBhIG51bWJlcjogJWRcbiIsICc3JyAtICcwJyk7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="constants"><a class="anchor" href="#constants" aria-hidden="true" tabindex="-1">#</a>Constants</h2>
+<p>Some values should never change. C gives you two ways to make them:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> GRAVITY 9.8          <span class="hljs-comment">// preprocessor constant: text replaced before compiling</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> DAYS_IN_WEEK = <span class="hljs-number">7</span>;   <span class="hljs-comment">// typed constant: the compiler refuses changes</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Weeks in 28 days: %d\n&quot;</span>, <span class="hljs-number">28</span> / DAYS_IN_WEEK);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Weight of 50 kg: %.1f N\n&quot;</span>, <span class="hljs-number">50</span> * GRAVITY);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Weeks in 28 days: 4
+Weight of 50 kg: 490.0 N</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNkZWZpbmUgR1JBVklUWSA5LjggICAgICAgICAgLy8gcHJlcHJvY2Vzc29yIGNvbnN0YW50OiB0ZXh0IHJlcGxhY2VkIGJlZm9yZSBjb21waWxpbmcKCmludCBtYWluKHZvaWQpIHsKICAgIGNvbnN0IGludCBEQVlTX0lOX1dFRUsgPSA3OyAgIC8vIHR5cGVkIGNvbnN0YW50OiB0aGUgY29tcGlsZXIgcmVmdXNlcyBjaGFuZ2VzCiAgICBwcmludGYoIldlZWtzIGluIDI4IGRheXM6ICVkXG4iLCAyOCAvIERBWVNfSU5fV0VFSyk7CiAgICBwcmludGYoIldlaWdodCBvZiA1MCBrZzogJS4xZiBOXG4iLCA1MCAqIEdSQVZJVFkpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Trying <code>DAYS_IN_WEEK = 8;</code> would be a compile error: <em>assignment of read-only variable</em>.</p>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Classic question</span></div><div class="callout-body"><p>&quot;Difference between <code>const</code> and <code>#define</code>&quot;: <code>#define</code> is a preprocessor text substitution with no type and no memory; <code>const</code> creates a real typed variable that the compiler checks and that has an address.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="c/variables" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which is a valid variable name in C?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>2ndPlace</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>float</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>total_marks</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>my-score</code></span></button></div><div class="q-why" hidden>Names may contain letters, digits and underscores, cannot start with a digit, and cannot be keywords. <code>my-score</code> contains a minus sign.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which format specifier prints a <code>double</code> with exactly two decimal places?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>%d</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>%2d</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>%.2f</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>%lf2</code></span></button></div><div class="q-why" hidden><code>%.2f</code> rounds to two digits after the decimal point.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What does this print?</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">char</span> c = <span class="hljs-string">&#x27;B&#x27;</span>;
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, c);</code></pre></figure>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>B</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>66</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>98</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">An error</span></button></div><div class="q-why" hidden><code>%d</code> prints the character&#39;s ASCII code, and <code>&#39;B&#39;</code> is 66.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What is the main difference between <code>const int X = 5;</code> and <code>#define X 5</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>const</code> creates a typed variable; <code>#define</code> is plain text replacement</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>#define</code> values can be changed later, <code>const</code> ones cannot</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">They are identical</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>const</code> only works with <code>float</code></span></button></div><div class="q-why" hidden>The preprocessor swaps <code>X</code> for <code>5</code> before compilation. <code>const</code> is a real variable the compiler type-checks.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/variables"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/syntax-output/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Syntax, Output &amp; Comments</strong></a><a class="next" href="../../c/input/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>User Input with scanf</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#declaring-and-naming-variables">Declaring and naming variables</a></li><li><a class="d2" href="#data-types">Data types</a></li><li><a class="d2" href="#format-specifiers">Format specifiers</a></li><li><a class="d2" href="#characters-are-numbers">Characters are numbers</a></li><li><a class="d2" href="#constants">Constants</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graph Traversal: BFS &amp; DFS · Data Structures | Bytebook</title>
+<meta name="description" content="Explore a graph level by level with a queue (BFS) or as deep as possible with a stack or recursion (DFS) — with step-by-step traces, shortest paths and applications.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Graph Traversal: BFS &amp; DFS · Data Structures | Bytebook">
+<meta property="og:description" content="Explore a graph level by level with a queue (BFS) or as deep as possible with a stack or recursion (DFS) — with step-by-step traces, shortest paths and applications.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/bfs-dfs" data-title="Graph Traversal: BFS &amp; DFS" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 16 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Graphs &amp; Hashing</p>
+<h1>Graph Traversal: BFS &amp; DFS</h1>
+<p class="lede">Explore a graph level by level with a queue (BFS) or as deep as possible with a stack or recursion (DFS) — with step-by-step traces, shortest paths and applications.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>To <strong>traverse</strong> a graph is to visit every vertex reachable from a starting vertex. Unlike a tree, a graph can have cycles, so we keep a <strong>visited</strong> array to avoid looping forever.</p>
+<h2 id="breadth-first-search-bfs"><a class="anchor" href="#breadth-first-search-bfs" aria-hidden="true" tabindex="-1">#</a>Breadth-first search (BFS)</h2>
+<p>BFS visits the start, then <strong>all its neighbours</strong>, then all <strong>their</strong> unvisited neighbours — expanding outward in rings, like ripples in water. It uses a <strong>queue</strong>.</p>
+<ol>
+<li>Mark the start visited and enqueue it.</li>
+<li>While the queue is not empty: dequeue a vertex, visit it, and enqueue each <strong>unvisited</strong> neighbour (marking it visited).</li>
+</ol>
+<h2 id="depth-first-search-dfs"><a class="anchor" href="#depth-first-search-dfs" aria-hidden="true" tabindex="-1">#</a>Depth-first search (DFS)</h2>
+<p>DFS goes <strong>as deep as possible</strong> along one path before backtracking. It uses a <strong>stack</strong> — usually the call stack, via recursion.</p>
+<ol>
+<li>Visit the vertex and mark it visited.</li>
+<li>For each unvisited neighbour, recursively DFS from it.</li>
+</ol>
+<h2 id="step-through-both"><a class="anchor" href="#step-through-both" aria-hidden="true" tabindex="-1">#</a>Step through both</h2>
+<p>Pick a start vertex and step through BFS or DFS. Watch the queue or stack and the visit order:</p>
+<div class="widget" data-widget="graph-traversal" data-opts="{}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="bfs-and-dfs-in-c"><a class="anchor" href="#bfs-and-dfs-in-c" aria-hidden="true" tabindex="-1">#</a>BFS and DFS in C</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> V 7</span>
+<span class="hljs-type">int</span> adj[V][V];
+<span class="hljs-type">const</span> <span class="hljs-type">char</span> *name = <span class="hljs-string">&quot;ABCDEFG&quot;</span>;
+<span class="hljs-type">int</span> visited[V];
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">addEdge</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v)</span> { adj[u][v] = adj[v][u] = <span class="hljs-number">1</span>; }
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">bfs</span><span class="hljs-params">(<span class="hljs-type">int</span> start)</span> {
+    <span class="hljs-type">int</span> <span class="hljs-built_in">queue</span>[V], front = <span class="hljs-number">0</span>, rear = <span class="hljs-number">0</span>, dist[V];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; V; i++) visited[i] = <span class="hljs-number">0</span>;
+    visited[start] = <span class="hljs-number">1</span>; dist[start] = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">queue</span>[rear++] = start;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;BFS: &quot;</span>);
+    <span class="hljs-keyword">while</span> (front &lt; rear) {
+        <span class="hljs-type">int</span> u = <span class="hljs-built_in">queue</span>[front++];
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c(%d) &quot;</span>, name[u], dist[u]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>; v &lt; V; v++)
+            <span class="hljs-keyword">if</span> (adj[u][v] &amp;&amp; !visited[v]) {
+                visited[v] = <span class="hljs-number">1</span>;
+                dist[v] = dist[u] + <span class="hljs-number">1</span>;      <span class="hljs-comment">// one more edge than its parent</span>
+                <span class="hljs-built_in">queue</span>[rear++] = v;
+            }
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span> {
+    visited[u] = <span class="hljs-number">1</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c &quot;</span>, name[u]);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>; v &lt; V; v++)
+        <span class="hljs-keyword">if</span> (adj[u][v] &amp;&amp; !visited[v]) dfs(v);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-comment">// A-B, A-C, B-D, B-E, C-F, E-F, F-G</span>
+    <span class="hljs-type">int</span> e[][<span class="hljs-number">2</span>] = {{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, <span class="hljs-number">2</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">3</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">4</span>}, {<span class="hljs-number">2</span>, <span class="hljs-number">5</span>}, {<span class="hljs-number">4</span>, <span class="hljs-number">5</span>}, {<span class="hljs-number">5</span>, <span class="hljs-number">6</span>}};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">7</span>; i++) addEdge(e[i][<span class="hljs-number">0</span>], e[i][<span class="hljs-number">1</span>]);
+    bfs(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; V; i++) visited[i] = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;DFS: &quot;</span>);
+    dfs(<span class="hljs-number">0</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>BFS: A(0) B(1) C(1) D(2) E(2) F(2) G(3) 
+DFS: A B D E F C G</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgojZGVmaW5lIFYgNwppbnQgYWRqW1ZdW1ZdOwpjb25zdCBjaGFyICpuYW1lID0gIkFCQ0RFRkciOwppbnQgdmlzaXRlZFtWXTsKCnZvaWQgYWRkRWRnZShpbnQgdSwgaW50IHYpIHsgYWRqW3VdW3ZdID0gYWRqW3ZdW3VdID0gMTsgfQoKdm9pZCBiZnMoaW50IHN0YXJ0KSB7CiAgICBpbnQgcXVldWVbVl0sIGZyb250ID0gMCwgcmVhciA9IDAsIGRpc3RbVl07CiAgICBmb3IgKGludCBpID0gMDsgaSA8IFY7IGkrKykgdmlzaXRlZFtpXSA9IDA7CiAgICB2aXNpdGVkW3N0YXJ0XSA9IDE7IGRpc3Rbc3RhcnRdID0gMDsKICAgIHF1ZXVlW3JlYXIrK10gPSBzdGFydDsKICAgIHByaW50ZigiQkZTOiAiKTsKICAgIHdoaWxlIChmcm9udCA8IHJlYXIpIHsKICAgICAgICBpbnQgdSA9IHF1ZXVlW2Zyb250KytdOwogICAgICAgIHByaW50ZigiJWMoJWQpICIsIG5hbWVbdV0sIGRpc3RbdV0pOwogICAgICAgIGZvciAoaW50IHYgPSAwOyB2IDwgVjsgdisrKQogICAgICAgICAgICBpZiAoYWRqW3VdW3ZdICYmICF2aXNpdGVkW3ZdKSB7CiAgICAgICAgICAgICAgICB2aXNpdGVkW3ZdID0gMTsKICAgICAgICAgICAgICAgIGRpc3Rbdl0gPSBkaXN0W3VdICsgMTsgICAgICAvLyBvbmUgbW9yZSBlZGdlIHRoYW4gaXRzIHBhcmVudAogICAgICAgICAgICAgICAgcXVldWVbcmVhcisrXSA9IHY7CiAgICAgICAgICAgIH0KICAgIH0KICAgIHByaW50ZigiXG4iKTsKfQoKdm9pZCBkZnMoaW50IHUpIHsKICAgIHZpc2l0ZWRbdV0gPSAxOwogICAgcHJpbnRmKCIlYyAiLCBuYW1lW3VdKTsKICAgIGZvciAoaW50IHYgPSAwOyB2IDwgVjsgdisrKQogICAgICAgIGlmIChhZGpbdV1bdl0gJiYgIXZpc2l0ZWRbdl0pIGRmcyh2KTsKfQoKaW50IG1haW4odm9pZCkgewogICAgLy8gQS1CLCBBLUMsIEItRCwgQi1FLCBDLUYsIEUtRiwgRi1HCiAgICBpbnQgZVtdWzJdID0ge3swLCAxfSwgezAsIDJ9LCB7MSwgM30sIHsxLCA0fSwgezIsIDV9LCB7NCwgNX0sIHs1LCA2fX07CiAgICBmb3IgKGludCBpID0gMDsgaSA8IDc7IGkrKykgYWRkRWRnZShlW2ldWzBdLCBlW2ldWzFdKTsKICAgIGJmcygwKTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgVjsgaSsrKSB2aXNpdGVkW2ldID0gMDsKICAgIHByaW50ZigiREZTOiAiKTsKICAgIGRmcygwKTsKICAgIHByaW50ZigiXG4iKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The number in brackets after each BFS vertex is its distance (in edges) from A — <strong>BFS finds shortest paths in unweighted graphs</strong>.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 296 342" width="296" height="342" role="img" aria-label="Undirected graph with vertices A, B, C, D, E, F, G"><defs><marker id="dg-ah-24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><line class="edge" x1="157.6" y1="46.4" x2="92.4" y2="111.6"/><line class="edge" x1="184.4" y1="46.4" x2="249.6" y2="111.6"/><line class="edge" x1="70.5" y1="142" x2="41.5" y2="200"/><line class="edge" x1="87.5" y1="142" x2="116.5" y2="200"/><line class="edge" x1="263" y1="144" x2="263" y2="198"/><line class="edge" x1="144" y1="217" x2="244" y2="217"/><line class="edge" x1="263" y1="236" x2="263" y2="290"/><circle class="node" cx="171" cy="33" r="19"/><text class="t" x="171" y="33">A</text><circle class="node" cx="79" cy="125" r="19"/><text class="t" x="79" y="125">B</text><circle class="node" cx="263" cy="125" r="19"/><text class="t" x="263" y="125">C</text><circle class="node" cx="33" cy="217" r="19"/><text class="t" x="33" y="217">D</text><circle class="node" cx="125" cy="217" r="19"/><text class="t" x="125" y="217">E</text><circle class="node" cx="263" cy="217" r="19"/><text class="t" x="263" y="217">F</text><circle class="node" cx="263" cy="309" r="19"/><text class="t" x="263" y="309">G</text></svg><figcaption>The graph used in the program. BFS from A: A B C D E F G. DFS from A: A B D E F C G.</figcaption></figure>
+<h2 id="bfs-vs-dfs"><a class="anchor" href="#bfs-vs-dfs" aria-hidden="true" tabindex="-1">#</a>BFS vs DFS</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>BFS</th>
+<th>DFS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Data structure</td>
+<td>queue</td>
+<td>stack / recursion</td>
+</tr>
+<tr>
+<td>Explores</td>
+<td>level by level</td>
+<td>one branch to the end, then backtracks</td>
+</tr>
+<tr>
+<td>Shortest path (unweighted)</td>
+<td><strong>yes</strong></td>
+<td>no</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>can hold a whole level</td>
+<td>holds one path</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>O(V + E) with a list, O(V²) with a matrix</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Typical uses</td>
+<td>shortest paths, nearest neighbours, web crawling, social &quot;degrees of separation&quot;</td>
+<td>cycle detection, topological sort, connected components, mazes, backtracking</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="applications"><a class="anchor" href="#applications" aria-hidden="true" tabindex="-1">#</a>Applications</h2>
+<ul>
+<li><strong>Connected components</strong>: run DFS/BFS from every unvisited vertex; each run discovers one component.</li>
+<li><strong>Cycle detection</strong>: in DFS, reaching a visited vertex that is not your parent means a cycle (undirected graphs).</li>
+<li><strong>Topological sort</strong> of a DAG: output vertices in reverse order of DFS completion — see <a href="../../daa/graph-algorithms/">Graph Algorithms</a>.</li>
+<li><strong>Bipartite check</strong>: BFS-colour vertices in two colours; a conflict means not bipartite.</li>
+</ul>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>Forgetting visited marks</span></div><div class="callout-body"><p>Without the <code>visited</code> array, BFS and DFS loop forever on any graph with a cycle — and even on a single undirected edge, which goes both ways.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="dsa/bfs-dfs" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which data structure does BFS use?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Queue</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Stack</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Heap</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Hash table</span></button></div><div class="q-why" hidden>BFS processes vertices in the order they were discovered: first in, first out.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is the time complexity of BFS with an adjacency list?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(V²)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(V + E)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(E log V)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(V × E)</span></button></div><div class="q-why" hidden>Each vertex is enqueued once and each edge is examined once (twice for undirected).</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>For the graph in this lesson, which vertex does DFS from A visit right after D?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">C</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">E</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">F</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">G</span></button></div><div class="q-why" hidden>DFS goes A → B → D (dead end), backtracks to B, then visits E.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which traversal finds the minimum number of edges between two vertices?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">BFS</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">DFS</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Inorder</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Both always do</span></button></div><div class="q-why" hidden>BFS reaches vertices in increasing order of distance from the start.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/bfs-dfs"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/graphs/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Graphs: Terminology &amp; Representation</strong></a><a class="next" href="../../dsa/hashing/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Hashing</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#breadth-first-search-bfs">Breadth-first search (BFS)</a></li><li><a class="d2" href="#depth-first-search-dfs">Depth-first search (DFS)</a></li><li><a class="d2" href="#step-through-both">Step through both</a></li><li><a class="d2" href="#bfs-and-dfs-in-c">BFS and DFS in C</a></li><li><a class="d2" href="#bfs-vs-dfs">BFS vs DFS</a></li><li><a class="d2" href="#applications">Applications</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

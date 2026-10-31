@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Templates · C++ OOP | Bytebook</title>
+<meta name="description" content="Write code once for any type: function templates, class templates, multiple type parameters, non-type parameters and specialisation — the foundation of the STL.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Templates · C++ OOP | Bytebook">
+<meta property="og:description" content="Write code once for any type: function templates, class templates, multiple type parameters, non-type parameters and specialisation — the foundation of the STL.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="cpp">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp" class="active" aria-current="true"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="cpp" aria-label="Object-Oriented Programming with C++ lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../cpp/"><span class="chip" data-c="cpp">OOPS</span><strong>Object-Oriented Programming with C++</strong></a>
+<div class="side-progress" data-course="cpp" data-total="19"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 19 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>From C to C++</h4><ol><li><a href="../../cpp/intro/" data-lesson="cpp/intro"><span class="tick" aria-hidden="true"></span><span>C++ Introduction</span></a></li><li><a href="../../cpp/io-references/" data-lesson="cpp/io-references"><span class="tick" aria-hidden="true"></span><span>Input/Output, Strings &amp; References</span></a></li><li><a href="../../cpp/functions/" data-lesson="cpp/functions"><span class="tick" aria-hidden="true"></span><span>Functions: Overloading, Defaults &amp; Inline</span></a></li></ol></div>
+<div class="side-unit"><h4>Classes &amp; Objects</h4><ol><li><a href="../../cpp/oop-concepts/" data-lesson="cpp/oop-concepts"><span class="tick" aria-hidden="true"></span><span>OOP Concepts</span></a></li><li><a href="../../cpp/classes-objects/" data-lesson="cpp/classes-objects"><span class="tick" aria-hidden="true"></span><span>Classes &amp; Objects</span></a></li><li><a href="../../cpp/constructors/" data-lesson="cpp/constructors"><span class="tick" aria-hidden="true"></span><span>Constructors &amp; Destructors</span></a></li><li><a href="../../cpp/encapsulation/" data-lesson="cpp/encapsulation"><span class="tick" aria-hidden="true"></span><span>Encapsulation, this &amp; static Members</span></a></li><li><a href="../../cpp/friend/" data-lesson="cpp/friend"><span class="tick" aria-hidden="true"></span><span>Friend Functions &amp; Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Inheritance &amp; Polymorphism</h4><ol><li><a href="../../cpp/inheritance/" data-lesson="cpp/inheritance"><span class="tick" aria-hidden="true"></span><span>Inheritance</span></a></li><li><a href="../../cpp/operator-overloading/" data-lesson="cpp/operator-overloading"><span class="tick" aria-hidden="true"></span><span>Operator Overloading</span></a></li><li><a href="../../cpp/virtual-functions/" data-lesson="cpp/virtual-functions"><span class="tick" aria-hidden="true"></span><span>Virtual Functions &amp; Runtime Polymorphism</span></a></li><li><a href="../../cpp/abstract-classes/" data-lesson="cpp/abstract-classes"><span class="tick" aria-hidden="true"></span><span>Abstract Classes &amp; Interfaces</span></a></li></ol></div>
+<div class="side-unit"><h4>Beyond the Basics</h4><ol><li><a href="../../cpp/templates/" data-lesson="cpp/templates" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Templates</span></a></li><li><a href="../../cpp/exceptions/" data-lesson="cpp/exceptions"><span class="tick" aria-hidden="true"></span><span>Exception Handling</span></a></li><li><a href="../../cpp/memory/" data-lesson="cpp/memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory &amp; Smart Pointers</span></a></li><li><a href="../../cpp/stl-containers/" data-lesson="cpp/stl-containers"><span class="tick" aria-hidden="true"></span><span>STL Containers</span></a></li><li><a href="../../cpp/stl-algorithms/" data-lesson="cpp/stl-algorithms"><span class="tick" aria-hidden="true"></span><span>Iterators, Algorithms &amp; Lambdas</span></a></li><li><a href="../../cpp/file-io/" data-lesson="cpp/file-io"><span class="tick" aria-hidden="true"></span><span>File I/O with fstream</span></a></li><li><a href="../../cpp/cheatsheet/" data-lesson="cpp/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C++ OOP Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../cpp/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="cpp/templates" data-title="Templates" data-course-title="Object-Oriented Programming with C++">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../cpp/">C++ OOP</a><span>/</span><span>Lesson 13 of 19</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Beyond the Basics</p>
+<h1>Templates</h1>
+<p class="lede">Write code once for any type: function templates, class templates, multiple type parameters, non-type parameters and specialisation — the foundation of the STL.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>5 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Suppose you need <code>maximum</code> for <code>int</code>, <code>double</code> and <code>string</code>. Overloading means three copies of identical code. A <strong>template</strong> lets you write the code <strong>once</strong> with a placeholder type; the compiler generates each version you use. This is <strong>generic programming</strong>.</p>
+<h2 id="function-templates"><a class="anchor" href="#function-templates" aria-hidden="true" tabindex="-1">#</a>Function templates</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function">T <span class="hljs-title">maximum</span><span class="hljs-params">(T a, T b)</span> </span>{
+    <span class="hljs-keyword">return</span> (a &gt; b) ? a : b;
+}
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">swapAny</span><span class="hljs-params">(T &amp;a, T &amp;b)</span> </span>{ T t = a; a = b; b = t; }
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    cout &lt;&lt; <span class="hljs-built_in">maximum</span>(<span class="hljs-number">3</span>, <span class="hljs-number">9</span>) &lt;&lt; endl;                          <span class="hljs-comment">// T = int</span>
+    cout &lt;&lt; <span class="hljs-built_in">maximum</span>(<span class="hljs-number">2.5</span>, <span class="hljs-number">1.75</span>) &lt;&lt; endl;                     <span class="hljs-comment">// T = double</span>
+    cout &lt;&lt; <span class="hljs-built_in">maximum</span>(<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;apple&quot;</span>), <span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;mango&quot;</span>)) &lt;&lt; endl;
+    cout &lt;&lt; <span class="hljs-built_in">maximum</span>&lt;<span class="hljs-type">double</span>&gt;(<span class="hljs-number">4</span>, <span class="hljs-number">7.5</span>) &lt;&lt; endl;                <span class="hljs-comment">// T given explicitly</span>
+
+    string a = <span class="hljs-string">&quot;left&quot;</span>, b = <span class="hljs-string">&quot;right&quot;</span>;
+    <span class="hljs-built_in">swapAny</span>(a, b);
+    cout &lt;&lt; a &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; b &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>9
+2.5
+mango
+7.5
+right left</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKdGVtcGxhdGUgPHR5cGVuYW1lIFQ-ClQgbWF4aW11bShUIGEsIFQgYikgewogICAgcmV0dXJuIChhID4gYikgPyBhIDogYjsKfQoKdGVtcGxhdGUgPHR5cGVuYW1lIFQ-CnZvaWQgc3dhcEFueShUICZhLCBUICZiKSB7IFQgdCA9IGE7IGEgPSBiOyBiID0gdDsgfQoKaW50IG1haW4oKSB7CiAgICBjb3V0IDw8IG1heGltdW0oMywgOSkgPDwgZW5kbDsgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIFQgPSBpbnQKICAgIGNvdXQgPDwgbWF4aW11bSgyLjUsIDEuNzUpIDw8IGVuZGw7ICAgICAgICAgICAgICAgICAgICAgLy8gVCA9IGRvdWJsZQogICAgY291dCA8PCBtYXhpbXVtKHN0cmluZygiYXBwbGUiKSwgc3RyaW5nKCJtYW5nbyIpKSA8PCBlbmRsOwogICAgY291dCA8PCBtYXhpbXVtPGRvdWJsZT4oNCwgNy41KSA8PCBlbmRsOyAgICAgICAgICAgICAgICAvLyBUIGdpdmVuIGV4cGxpY2l0bHkKCiAgICBzdHJpbmcgYSA9ICJsZWZ0IiwgYiA9ICJyaWdodCI7CiAgICBzd2FwQW55KGEsIGIpOwogICAgY291dCA8PCBhIDw8ICIgIiA8PCBiIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p><code>typename</code> and <code>class</code> mean the same thing in a template parameter list: <code>template &lt;class T&gt;</code> is equally valid.</p>
+<h2 id="templates-with-arrays"><a class="anchor" href="#templates-with-arrays" aria-hidden="true" tabindex="-1">#</a>Templates with arrays</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function">T <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-type">const</span> T arr[], <span class="hljs-type">int</span> n)</span> </span>{
+    T total = <span class="hljs-built_in">T</span>();                 <span class="hljs-comment">// zero for numbers</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) total += arr[i];
+    <span class="hljs-keyword">return</span> total;
+}
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">linearSearch</span><span class="hljs-params">(<span class="hljs-type">const</span> T arr[], <span class="hljs-type">int</span> n, <span class="hljs-type">const</span> T &amp;key)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-keyword">if</span> (arr[i] == key) <span class="hljs-keyword">return</span> i;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">int</span> marks[] = {<span class="hljs-number">78</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>};
+    <span class="hljs-type">double</span> prices[] = {<span class="hljs-number">9.99</span>, <span class="hljs-number">24.5</span>, <span class="hljs-number">3.25</span>};
+    <span class="hljs-type">char</span> grades[] = {<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;O&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>};
+    cout &lt;&lt; <span class="hljs-built_in">sum</span>(marks, <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; <span class="hljs-built_in">sum</span>(prices, <span class="hljs-number">3</span>) &lt;&lt; endl;
+    cout &lt;&lt; <span class="hljs-string">&quot;&#x27;O&#x27; at index &quot;</span> &lt;&lt; <span class="hljs-built_in">linearSearch</span>(grades, <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;O&#x27;</span>) &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>255 37.74
+&#39;O&#39; at index 2</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKdGVtcGxhdGUgPHR5cGVuYW1lIFQ-ClQgc3VtKGNvbnN0IFQgYXJyW10sIGludCBuKSB7CiAgICBUIHRvdGFsID0gVCgpOyAgICAgICAgICAgICAgICAgLy8gemVybyBmb3IgbnVtYmVycwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCBuOyBpKyspIHRvdGFsICs9IGFycltpXTsKICAgIHJldHVybiB0b3RhbDsKfQoKdGVtcGxhdGUgPHR5cGVuYW1lIFQ-CmludCBsaW5lYXJTZWFyY2goY29uc3QgVCBhcnJbXSwgaW50IG4sIGNvbnN0IFQgJmtleSkgewogICAgZm9yIChpbnQgaSA9IDA7IGkgPCBuOyBpKyspIGlmIChhcnJbaV0gPT0ga2V5KSByZXR1cm4gaTsKICAgIHJldHVybiAtMTsKfQoKaW50IG1haW4oKSB7CiAgICBpbnQgbWFya3NbXSA9IHs3OCwgODUsIDkyfTsKICAgIGRvdWJsZSBwcmljZXNbXSA9IHs5Ljk5LCAyNC41LCAzLjI1fTsKICAgIGNoYXIgZ3JhZGVzW10gPSB7J0EnLCAnQicsICdPJywgJ0MnfTsKICAgIGNvdXQgPDwgc3VtKG1hcmtzLCAzKSA8PCAiICIgPDwgc3VtKHByaWNlcywgMykgPDwgZW5kbDsKICAgIGNvdXQgPDwgIidPJyBhdCBpbmRleCAiIDw8IGxpbmVhclNlYXJjaChncmFkZXMsIDQsICdPJykgPDwgZW5kbDsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="class-templates"><a class="anchor" href="#class-templates" aria-hidden="true" tabindex="-1">#</a>Class templates</h2>
+<p>A class template describes a family of classes. The STL&#39;s <code>vector&lt;int&gt;</code> and <code>stack&lt;string&gt;</code> are class templates.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdexcept&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-type">int</span> CAPACITY = <span class="hljs-number">100</span>&gt;       <span class="hljs-comment">// a type parameter and a non-type parameter</span>
+<span class="hljs-keyword">class</span> Stack {
+    T items[CAPACITY];
+    <span class="hljs-type">int</span> top = <span class="hljs-number">-1</span>;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp;x)</span> </span>{
+        <span class="hljs-keyword">if</span> (top == CAPACITY - <span class="hljs-number">1</span>) <span class="hljs-keyword">throw</span> <span class="hljs-built_in">overflow_error</span>(<span class="hljs-string">&quot;stack full&quot;</span>);
+        items[++top] = x;
+    }
+    <span class="hljs-function">T <span class="hljs-title">pop</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (top == <span class="hljs-number">-1</span>) <span class="hljs-keyword">throw</span> <span class="hljs-built_in">underflow_error</span>(<span class="hljs-string">&quot;stack empty&quot;</span>);
+        <span class="hljs-keyword">return</span> items[top--];
+    }
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">empty</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> top == <span class="hljs-number">-1</span>; }
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> top + <span class="hljs-number">1</span>; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Stack&lt;<span class="hljs-type">int</span>&gt; numbers;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">4</span>; i++) numbers.<span class="hljs-built_in">push</span>(i * i);
+    cout &lt;&lt; <span class="hljs-string">&quot;popping ints:&quot;</span>;
+    <span class="hljs-keyword">while</span> (!numbers.<span class="hljs-built_in">empty</span>()) cout &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; numbers.<span class="hljs-built_in">pop</span>();
+    cout &lt;&lt; endl;
+
+    Stack&lt;string, <span class="hljs-number">3</span>&gt; words;                      <span class="hljs-comment">// capacity 3</span>
+    words.<span class="hljs-built_in">push</span>(<span class="hljs-string">&quot;templates&quot;</span>); words.<span class="hljs-built_in">push</span>(<span class="hljs-string">&quot;are&quot;</span>); words.<span class="hljs-built_in">push</span>(<span class="hljs-string">&quot;neat&quot;</span>);
+    <span class="hljs-keyword">try</span> { words.<span class="hljs-built_in">push</span>(<span class="hljs-string">&quot;overflow!&quot;</span>); }
+    <span class="hljs-keyword">catch</span> (<span class="hljs-type">const</span> overflow_error &amp;e) { cout &lt;&lt; <span class="hljs-string">&quot;error: &quot;</span> &lt;&lt; e.<span class="hljs-built_in">what</span>() &lt;&lt; endl; }
+    cout &lt;&lt; <span class="hljs-string">&quot;words on stack: &quot;</span> &lt;&lt; words.<span class="hljs-built_in">size</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>popping ints: 16 9 4 1
+error: stack full
+words on stack: 3</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgojaW5jbHVkZSA8c3RkZXhjZXB0Pgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKdGVtcGxhdGUgPHR5cGVuYW1lIFQsIGludCBDQVBBQ0lUWSA9IDEwMD4gICAgICAgLy8gYSB0eXBlIHBhcmFtZXRlciBhbmQgYSBub24tdHlwZSBwYXJhbWV0ZXIKY2xhc3MgU3RhY2sgewogICAgVCBpdGVtc1tDQVBBQ0lUWV07CiAgICBpbnQgdG9wID0gLTE7CnB1YmxpYzoKICAgIHZvaWQgcHVzaChjb25zdCBUICZ4KSB7CiAgICAgICAgaWYgKHRvcCA9PSBDQVBBQ0lUWSAtIDEpIHRocm93IG92ZXJmbG93X2Vycm9yKCJzdGFjayBmdWxsIik7CiAgICAgICAgaXRlbXNbKyt0b3BdID0geDsKICAgIH0KICAgIFQgcG9wKCkgewogICAgICAgIGlmICh0b3AgPT0gLTEpIHRocm93IHVuZGVyZmxvd19lcnJvcigic3RhY2sgZW1wdHkiKTsKICAgICAgICByZXR1cm4gaXRlbXNbdG9wLS1dOwogICAgfQogICAgYm9vbCBlbXB0eSgpIGNvbnN0IHsgcmV0dXJuIHRvcCA9PSAtMTsgfQogICAgaW50IHNpemUoKSBjb25zdCB7IHJldHVybiB0b3AgKyAxOyB9Cn07CgppbnQgbWFpbigpIHsKICAgIFN0YWNrPGludD4gbnVtYmVyczsKICAgIGZvciAoaW50IGkgPSAxOyBpIDw9IDQ7IGkrKykgbnVtYmVycy5wdXNoKGkgKiBpKTsKICAgIGNvdXQgPDwgInBvcHBpbmcgaW50czoiOwogICAgd2hpbGUgKCFudW1iZXJzLmVtcHR5KCkpIGNvdXQgPDwgIiAiIDw8IG51bWJlcnMucG9wKCk7CiAgICBjb3V0IDw8IGVuZGw7CgogICAgU3RhY2s8c3RyaW5nLCAzPiB3b3JkczsgICAgICAgICAgICAgICAgICAgICAgLy8gY2FwYWNpdHkgMwogICAgd29yZHMucHVzaCgidGVtcGxhdGVzIik7IHdvcmRzLnB1c2goImFyZSIpOyB3b3Jkcy5wdXNoKCJuZWF0Iik7CiAgICB0cnkgeyB3b3Jkcy5wdXNoKCJvdmVyZmxvdyEiKTsgfQogICAgY2F0Y2ggKGNvbnN0IG92ZXJmbG93X2Vycm9yICZlKSB7IGNvdXQgPDwgImVycm9yOiAiIDw8IGUud2hhdCgpIDw8IGVuZGw7IH0KICAgIGNvdXQgPDwgIndvcmRzIG9uIHN0YWNrOiAiIDw8IHdvcmRzLnNpemUoKSA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="two-type-parameters"><a class="anchor" href="#two-type-parameters" aria-hidden="true" tabindex="-1">#</a>Two type parameters</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> K, <span class="hljs-keyword">typename</span> V&gt;
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Pair</span> {
+<span class="hljs-keyword">public</span>:
+    K key;
+    V value;
+    <span class="hljs-built_in">Pair</span>(K k, V v) : <span class="hljs-built_in">key</span>(k), <span class="hljs-built_in">value</span>(v) {}
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; key &lt;&lt; <span class="hljs-string">&quot; -&gt; &quot;</span> &lt;&lt; value &lt;&lt; endl; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Pair&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-number">92</span>)</span></span>;
+    <span class="hljs-function">Pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">double</span>&gt; <span class="hljs-title">p2</span><span class="hljs-params">(<span class="hljs-number">7</span>, <span class="hljs-number">8.75</span>)</span></span>;
+    p1.<span class="hljs-built_in">show</span>();
+    p2.<span class="hljs-built_in">show</span>();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Asha -&gt; 92
+7 -&gt; 8.75</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKdGVtcGxhdGUgPHR5cGVuYW1lIEssIHR5cGVuYW1lIFY-CmNsYXNzIFBhaXIgewpwdWJsaWM6CiAgICBLIGtleTsKICAgIFYgdmFsdWU7CiAgICBQYWlyKEsgaywgViB2KSA6IGtleShrKSwgdmFsdWUodikge30KICAgIHZvaWQgc2hvdygpIGNvbnN0IHsgY291dCA8PCBrZXkgPDwgIiAtPiAiIDw8IHZhbHVlIDw8IGVuZGw7IH0KfTsKCmludCBtYWluKCkgewogICAgUGFpcjxzdHJpbmcsIGludD4gcDEoIkFzaGEiLCA5Mik7CiAgICBQYWlyPGludCwgZG91YmxlPiBwMig3LCA4Ljc1KTsKICAgIHAxLnNob3coKTsKICAgIHAyLnNob3coKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="template-specialisation"><a class="anchor" href="#template-specialisation" aria-hidden="true" tabindex="-1">#</a>Template specialisation</h2>
+<p>Give a type its own special version when the generic code does not fit:</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isEqual</span><span class="hljs-params">(T a, T b)</span> </span>{ <span class="hljs-keyword">return</span> a == b; }
+
+<span class="hljs-keyword">template</span> &lt;&gt;                                       <span class="hljs-comment">// full specialisation for C strings</span>
+<span class="hljs-type">bool</span> <span class="hljs-built_in">isEqual</span>&lt;<span class="hljs-type">const</span> <span class="hljs-type">char</span> *&gt;(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *a, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *b) { <span class="hljs-keyword">return</span> <span class="hljs-built_in">strcmp</span>(a, b) == <span class="hljs-number">0</span>; }
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">char</span> x[] = <span class="hljs-string">&quot;hello&quot;</span>, y[] = <span class="hljs-string">&quot;hello&quot;</span>;
+    cout &lt;&lt; boolalpha &lt;&lt; <span class="hljs-built_in">isEqual</span>(<span class="hljs-number">4</span>, <span class="hljs-number">4</span>) &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; <span class="hljs-built_in">isEqual</span>&lt;<span class="hljs-type">const</span> <span class="hljs-type">char</span> *&gt;(x, y) &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>true true</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8Y3N0cmluZz4KdXNpbmcgbmFtZXNwYWNlIHN0ZDsKCnRlbXBsYXRlIDx0eXBlbmFtZSBUPgpib29sIGlzRXF1YWwoVCBhLCBUIGIpIHsgcmV0dXJuIGEgPT0gYjsgfQoKdGVtcGxhdGUgPD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBmdWxsIHNwZWNpYWxpc2F0aW9uIGZvciBDIHN0cmluZ3MKYm9vbCBpc0VxdWFsPGNvbnN0IGNoYXIgKj4oY29uc3QgY2hhciAqYSwgY29uc3QgY2hhciAqYikgeyByZXR1cm4gc3RyY21wKGEsIGIpID09IDA7IH0KCmludCBtYWluKCkgewogICAgY2hhciB4W10gPSAiaGVsbG8iLCB5W10gPSAiaGVsbG8iOwogICAgY291dCA8PCBib29sYWxwaGEgPDwgaXNFcXVhbCg0LCA0KSA8PCAiICIgPDwgaXNFcXVhbDxjb25zdCBjaGFyICo-KHgsIHkpIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Without the specialisation, comparing two <code>const char *</code> would compare <strong>addresses</strong>, not text.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Templates</th>
+<th>Overloading</th>
+<th>Macros</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>one definition, many types</td>
+<td>one definition per type</td>
+<td>text substitution</td>
+</tr>
+<tr>
+<td>type-checked</td>
+<td>type-checked</td>
+<td>no type checking</td>
+</tr>
+<tr>
+<td>code generated per type used</td>
+<td>written by hand</td>
+<td>expanded inline</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="cpp/templates" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does <code>template &lt;typename T&gt;</code> do?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Declares <code>T</code> as a placeholder type for the following function or class</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Creates a variable called <code>T</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Includes the template library</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Makes the function inline</span></button></div><div class="q-why" hidden>The compiler substitutes the real type for <code>T</code> when the template is used.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>For <code>template &lt;typename T&gt; T big(T a, T b)</code>, what does <code>big(3, 4.5)</code> do?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Returns 4.5</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Fails to compile, because T cannot be both <code>int</code> and <code>double</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Returns 4</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Converts both to <code>float</code></span></button></div><div class="q-why" hidden>Write <code>big&lt;double&gt;(3, 4.5)</code> to choose the type explicitly.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>In <code>template &lt;typename T, int N&gt; class Buffer</code>, what is <code>N</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A second type</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A non-type template parameter (a compile-time constant)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">A default argument</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The class size in bytes</span></button></div><div class="q-why" hidden>Non-type parameters let you pass constant values such as array sizes.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which STL component is a class template?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>cout</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>vector</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>endl</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>main</code></span></button></div><div class="q-why" hidden><code>vector&lt;int&gt;</code>, <code>vector&lt;string&gt;</code> and so on are generated from one class template.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="cpp/templates"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../cpp/abstract-classes/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Abstract Classes &amp; Interfaces</strong></a><a class="next" href="../../cpp/exceptions/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Exception Handling</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#function-templates">Function templates</a></li><li><a class="d2" href="#templates-with-arrays">Templates with arrays</a></li><li><a class="d2" href="#class-templates">Class templates</a></li><li><a class="d2" href="#two-type-parameters">Two type parameters</a></li><li><a class="d2" href="#template-specialisation">Template specialisation</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

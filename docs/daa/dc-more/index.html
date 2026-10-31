@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>More Divide and Conquer · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Max–min with fewer comparisons, counting inversions with merge sort, Karatsuba&#39;s fast multiplication and Strassen&#39;s matrix multiplication.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="More Divide and Conquer · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Max–min with fewer comparisons, counting inversions with merge sort, Karatsuba&#39;s fast multiplication and Strassen&#39;s matrix multiplication.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/dc-more" data-title="More Divide and Conquer" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 6 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Divide and Conquer</p>
+<h1>More Divide and Conquer</h1>
+<p class="lede">Max–min with fewer comparisons, counting inversions with merge sort, Karatsuba&#39;s fast multiplication and Strassen&#39;s matrix multiplication.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>6 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>4 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="finding-the-maximum-and-minimum"><a class="anchor" href="#finding-the-maximum-and-minimum" aria-hidden="true" tabindex="-1">#</a>Finding the maximum and minimum</h2>
+<p>Finding both the max and min of n numbers naively takes 2(n − 1) comparisons. Divide and conquer does it in about <strong>3n/2 − 2</strong>:</p>
+<ul>
+<li>Split the array in half; find (max, min) of each half recursively.</li>
+<li>Combine with <strong>two</strong> comparisons: max of the maxes, min of the mins.</li>
+</ul>
+<p>T(n) = 2T(n/2) + 2, T(2) = 1, T(1) = 0 → T(n) = 3n/2 − 2 for n a power of two.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">int</span> comps = <span class="hljs-number">0</span>;
+
+<span class="hljs-function">pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; <span class="hljs-title">maxMin</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;<span class="hljs-type">int</span>&gt; &amp;a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> hi)</span> </span>{
+    <span class="hljs-keyword">if</span> (lo == hi) <span class="hljs-keyword">return</span> {a[lo], a[lo]};
+    <span class="hljs-keyword">if</span> (hi == lo + <span class="hljs-number">1</span>) {
+        comps++;
+        <span class="hljs-keyword">return</span> a[lo] &gt; a[hi] ? <span class="hljs-built_in">make_pair</span>(a[lo], a[hi]) : <span class="hljs-built_in">make_pair</span>(a[hi], a[lo]);
+    }
+    <span class="hljs-type">int</span> mid = (lo + hi) / <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">auto</span> [max1, min1] = <span class="hljs-built_in">maxMin</span>(a, lo, mid);
+    <span class="hljs-keyword">auto</span> [max2, min2] = <span class="hljs-built_in">maxMin</span>(a, mid + <span class="hljs-number">1</span>, hi);
+    comps += <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">return</span> {<span class="hljs-built_in">max</span>(max1, max2), <span class="hljs-built_in">min</span>(min1, min2)};
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;<span class="hljs-type">int</span>&gt; a = {<span class="hljs-number">22</span>, <span class="hljs-number">13</span>, <span class="hljs-number">-5</span>, <span class="hljs-number">-8</span>, <span class="hljs-number">15</span>, <span class="hljs-number">60</span>, <span class="hljs-number">17</span>, <span class="hljs-number">31</span>, <span class="hljs-number">47</span>, <span class="hljs-number">9</span>, <span class="hljs-number">3</span>, <span class="hljs-number">50</span>, <span class="hljs-number">2</span>, <span class="hljs-number">41</span>, <span class="hljs-number">11</span>, <span class="hljs-number">28</span>};
+    <span class="hljs-keyword">auto</span> [mx, mn] = <span class="hljs-built_in">maxMin</span>(a, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>);
+    cout &lt;&lt; <span class="hljs-string">&quot;max &quot;</span> &lt;&lt; mx &lt;&lt; <span class="hljs-string">&quot;, min &quot;</span> &lt;&lt; mn &lt;&lt; <span class="hljs-string">&quot;, comparisons &quot;</span> &lt;&lt; comps
+         &lt;&lt; <span class="hljs-string">&quot; (naive: &quot;</span> &lt;&lt; <span class="hljs-number">2</span> * (a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>) &lt;&lt; <span class="hljs-string">&quot;)&quot;</span> &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>max 60, min -8, comparisons 22 (naive: 30)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IGNvbXBzID0gMDsKCnBhaXI8aW50LCBpbnQ-IG1heE1pbihjb25zdCB2ZWN0b3I8aW50PiAmYSwgaW50IGxvLCBpbnQgaGkpIHsKICAgIGlmIChsbyA9PSBoaSkgcmV0dXJuIHthW2xvXSwgYVtsb119OwogICAgaWYgKGhpID09IGxvICsgMSkgewogICAgICAgIGNvbXBzKys7CiAgICAgICAgcmV0dXJuIGFbbG9dID4gYVtoaV0gPyBtYWtlX3BhaXIoYVtsb10sIGFbaGldKSA6IG1ha2VfcGFpcihhW2hpXSwgYVtsb10pOwogICAgfQogICAgaW50IG1pZCA9IChsbyArIGhpKSAvIDI7CiAgICBhdXRvIFttYXgxLCBtaW4xXSA9IG1heE1pbihhLCBsbywgbWlkKTsKICAgIGF1dG8gW21heDIsIG1pbjJdID0gbWF4TWluKGEsIG1pZCArIDEsIGhpKTsKICAgIGNvbXBzICs9IDI7CiAgICByZXR1cm4ge21heChtYXgxLCBtYXgyKSwgbWluKG1pbjEsIG1pbjIpfTsKfQoKaW50IG1haW4oKSB7CiAgICB2ZWN0b3I8aW50PiBhID0gezIyLCAxMywgLTUsIC04LCAxNSwgNjAsIDE3LCAzMSwgNDcsIDksIDMsIDUwLCAyLCA0MSwgMTEsIDI4fTsKICAgIGF1dG8gW214LCBtbl0gPSBtYXhNaW4oYSwgMCwgKGludClhLnNpemUoKSAtIDEpOwogICAgY291dCA8PCAibWF4ICIgPDwgbXggPDwgIiwgbWluICIgPDwgbW4gPDwgIiwgY29tcGFyaXNvbnMgIiA8PCBjb21wcwogICAgICAgICA8PCAiIChuYWl2ZTogIiA8PCAyICogKGEuc2l6ZSgpIC0gMSkgPDwgIikiIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="counting-inversions"><a class="anchor" href="#counting-inversions" aria-hidden="true" tabindex="-1">#</a>Counting inversions</h2>
+<p>An <strong>inversion</strong> is a pair i &lt; j with a[i] &gt; a[j]. The count measures how &quot;unsorted&quot; an array is (used in ranking similarity, e.g. comparing two people&#39;s movie rankings). Checking all pairs is Θ(n²). <strong>Piggyback on merge sort</strong>: while merging, whenever an element from the right half is placed before remaining left-half elements, it forms an inversion with <strong>each</strong> of them.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">mergeCount</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt; &amp;a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> hi)</span> </span>{
+    <span class="hljs-keyword">if</span> (lo &gt;= hi) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-type">int</span> mid = (lo + hi) / <span class="hljs-number">2</span>;
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> inv = <span class="hljs-built_in">mergeCount</span>(a, lo, mid) + <span class="hljs-built_in">mergeCount</span>(a, mid + <span class="hljs-number">1</span>, hi);
+    vector&lt;<span class="hljs-type">int</span>&gt; tmp;
+    <span class="hljs-type">int</span> i = lo, j = mid + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= hi) {
+        <span class="hljs-keyword">if</span> (a[i] &lt;= a[j]) tmp.<span class="hljs-built_in">push_back</span>(a[i++]);
+        <span class="hljs-keyword">else</span> { tmp.<span class="hljs-built_in">push_back</span>(a[j++]); inv += mid - i + <span class="hljs-number">1</span>; }   <span class="hljs-comment">// a[j] beats all remaining left elements</span>
+    }
+    <span class="hljs-keyword">while</span> (i &lt;= mid) tmp.<span class="hljs-built_in">push_back</span>(a[i++]);
+    <span class="hljs-keyword">while</span> (j &lt;= hi) tmp.<span class="hljs-built_in">push_back</span>(a[j++]);
+    <span class="hljs-built_in">copy</span>(tmp.<span class="hljs-built_in">begin</span>(), tmp.<span class="hljs-built_in">end</span>(), a.<span class="hljs-built_in">begin</span>() + lo);
+    <span class="hljs-keyword">return</span> inv;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;<span class="hljs-type">int</span>&gt; a = {<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>};
+    vector&lt;<span class="hljs-type">int</span>&gt; b = {<span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>};
+    cout &lt;&lt; <span class="hljs-string">&quot;inversions in {2,4,1,3,5}: &quot;</span> &lt;&lt; <span class="hljs-built_in">mergeCount</span>(a, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>) &lt;&lt; endl;   <span class="hljs-comment">// (2,1) (4,1) (4,3)</span>
+    cout &lt;&lt; <span class="hljs-string">&quot;inversions in {5,4,3,2,1}: &quot;</span> &lt;&lt; <span class="hljs-built_in">mergeCount</span>(b, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>) &lt;&lt; endl;   <span class="hljs-comment">// n(n-1)/2</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>inversions in {2,4,1,3,5}: 3
+inversions in {5,4,3,2,1}: 10</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKbG9uZyBsb25nIG1lcmdlQ291bnQodmVjdG9yPGludD4gJmEsIGludCBsbywgaW50IGhpKSB7CiAgICBpZiAobG8gPj0gaGkpIHJldHVybiAwOwogICAgaW50IG1pZCA9IChsbyArIGhpKSAvIDI7CiAgICBsb25nIGxvbmcgaW52ID0gbWVyZ2VDb3VudChhLCBsbywgbWlkKSArIG1lcmdlQ291bnQoYSwgbWlkICsgMSwgaGkpOwogICAgdmVjdG9yPGludD4gdG1wOwogICAgaW50IGkgPSBsbywgaiA9IG1pZCArIDE7CiAgICB3aGlsZSAoaSA8PSBtaWQgJiYgaiA8PSBoaSkgewogICAgICAgIGlmIChhW2ldIDw9IGFbal0pIHRtcC5wdXNoX2JhY2soYVtpKytdKTsKICAgICAgICBlbHNlIHsgdG1wLnB1c2hfYmFjayhhW2orK10pOyBpbnYgKz0gbWlkIC0gaSArIDE7IH0gICAvLyBhW2pdIGJlYXRzIGFsbCByZW1haW5pbmcgbGVmdCBlbGVtZW50cwogICAgfQogICAgd2hpbGUgKGkgPD0gbWlkKSB0bXAucHVzaF9iYWNrKGFbaSsrXSk7CiAgICB3aGlsZSAoaiA8PSBoaSkgdG1wLnB1c2hfYmFjayhhW2orK10pOwogICAgY29weSh0bXAuYmVnaW4oKSwgdG1wLmVuZCgpLCBhLmJlZ2luKCkgKyBsbyk7CiAgICByZXR1cm4gaW52Owp9CgppbnQgbWFpbigpIHsKICAgIHZlY3RvcjxpbnQ-IGEgPSB7MiwgNCwgMSwgMywgNX07CiAgICB2ZWN0b3I8aW50PiBiID0gezUsIDQsIDMsIDIsIDF9OwogICAgY291dCA8PCAiaW52ZXJzaW9ucyBpbiB7Miw0LDEsMyw1fTogIiA8PCBtZXJnZUNvdW50KGEsIDAsIDQpIDw8IGVuZGw7ICAgLy8gKDIsMSkgKDQsMSkgKDQsMykKICAgIGNvdXQgPDwgImludmVyc2lvbnMgaW4gezUsNCwzLDIsMX06ICIgPDwgbWVyZ2VDb3VudChiLCAwLCA0KSA8PCBlbmRsOyAgIC8vIG4obi0xKS8yCiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Θ(n log n) instead of Θ(n²).</p>
+<h2 id="karatsuba-multiplication"><a class="anchor" href="#karatsuba-multiplication" aria-hidden="true" tabindex="-1">#</a>Karatsuba multiplication</h2>
+<p>Multiplying two n-digit numbers the school way takes Θ(n²) digit operations. Split each number into halves: x = a·10^m + b and y = c·10^m + d. Then</p>
+<p>x·y = ac·10^(2m) + (ad + bc)·10^m + bd.</p>
+<p>That needs four half-size products: T(n) = 4T(n/2) + O(n) = Θ(n²) — no gain. <strong>Karatsuba&#39;s trick</strong> (1960) computes the middle term with <strong>one</strong> extra product:</p>
+<p>ad + bc = (a + b)(c + d) − ac − bd</p>
+<p>So only <strong>three</strong> multiplications are needed: T(n) = 3T(n/2) + O(n) = <strong>Θ(n^1.585)</strong>.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cmath&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">karatsuba</span><span class="hljs-params">(<span class="hljs-type">long</span> <span class="hljs-type">long</span> x, <span class="hljs-type">long</span> <span class="hljs-type">long</span> y)</span> </span>{
+    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">10</span> || y &lt; <span class="hljs-number">10</span>) <span class="hljs-keyword">return</span> x * y;
+    <span class="hljs-type">int</span> digits = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">to_string</span>(x).<span class="hljs-built_in">size</span>(), <span class="hljs-built_in">to_string</span>(y).<span class="hljs-built_in">size</span>());
+    <span class="hljs-type">int</span> m = digits / <span class="hljs-number">2</span>;
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> p = (<span class="hljs-type">long</span> <span class="hljs-type">long</span>)<span class="hljs-built_in">pow</span>(<span class="hljs-number">10</span>, m);
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> a = x / p, b = x % p, c = y / p, d = y % p;
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> ac = <span class="hljs-built_in">karatsuba</span>(a, c);
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> bd = <span class="hljs-built_in">karatsuba</span>(b, d);
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> mid = <span class="hljs-built_in">karatsuba</span>(a + b, c + d) - ac - bd;     <span class="hljs-comment">// = ad + bc with one multiplication</span>
+    <span class="hljs-keyword">return</span> ac * p * p + mid * p + bd;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> x = <span class="hljs-number">12345678</span>, y = <span class="hljs-number">87654321</span>;
+    cout &lt;&lt; <span class="hljs-built_in">karatsuba</span>(x, y) &lt;&lt; endl;
+    cout &lt;&lt; x * y &lt;&lt; <span class="hljs-string">&quot; (built-in, for comparison)&quot;</span> &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1082152022374638
+1082152022374638 (built-in, for comparison)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8Y21hdGg-CnVzaW5nIG5hbWVzcGFjZSBzdGQ7Cgpsb25nIGxvbmcga2FyYXRzdWJhKGxvbmcgbG9uZyB4LCBsb25nIGxvbmcgeSkgewogICAgaWYgKHggPCAxMCB8fCB5IDwgMTApIHJldHVybiB4ICogeTsKICAgIGludCBkaWdpdHMgPSBtYXgodG9fc3RyaW5nKHgpLnNpemUoKSwgdG9fc3RyaW5nKHkpLnNpemUoKSk7CiAgICBpbnQgbSA9IGRpZ2l0cyAvIDI7CiAgICBsb25nIGxvbmcgcCA9IChsb25nIGxvbmcpcG93KDEwLCBtKTsKICAgIGxvbmcgbG9uZyBhID0geCAvIHAsIGIgPSB4ICUgcCwgYyA9IHkgLyBwLCBkID0geSAlIHA7CiAgICBsb25nIGxvbmcgYWMgPSBrYXJhdHN1YmEoYSwgYyk7CiAgICBsb25nIGxvbmcgYmQgPSBrYXJhdHN1YmEoYiwgZCk7CiAgICBsb25nIGxvbmcgbWlkID0ga2FyYXRzdWJhKGEgKyBiLCBjICsgZCkgLSBhYyAtIGJkOyAgICAgLy8gPSBhZCArIGJjIHdpdGggb25lIG11bHRpcGxpY2F0aW9uCiAgICByZXR1cm4gYWMgKiBwICogcCArIG1pZCAqIHAgKyBiZDsKfQoKaW50IG1haW4oKSB7CiAgICBsb25nIGxvbmcgeCA9IDEyMzQ1Njc4LCB5ID0gODc2NTQzMjE7CiAgICBjb3V0IDw8IGthcmF0c3ViYSh4LCB5KSA8PCBlbmRsOwogICAgY291dCA8PCB4ICogeSA8PCAiIChidWlsdC1pbiwgZm9yIGNvbXBhcmlzb24pIiA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="strassen-s-matrix-multiplication"><a class="anchor" href="#strassen-s-matrix-multiplication" aria-hidden="true" tabindex="-1">#</a>Strassen&#39;s matrix multiplication</h2>
+<p>Ordinary multiplication of two n × n matrices takes Θ(n³). Splitting each matrix into four (n/2) × (n/2) blocks gives 8 block multiplications: T(n) = 8T(n/2) + Θ(n²) = Θ(n³).</p>
+<p><strong>Strassen</strong> (1969) found a way to combine the blocks using only <strong>7</strong> multiplications (and 18 additions/subtractions):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M₁</td>
+<td>(A₁₁ + A₂₂)(B₁₁ + B₂₂)</td>
+</tr>
+<tr>
+<td>M₂</td>
+<td>(A₂₁ + A₂₂)B₁₁</td>
+</tr>
+<tr>
+<td>M₃</td>
+<td>A₁₁(B₁₂ − B₂₂)</td>
+</tr>
+<tr>
+<td>M₄</td>
+<td>A₂₂(B₂₁ − B₁₁)</td>
+</tr>
+<tr>
+<td>M₅</td>
+<td>(A₁₁ + A₁₂)B₂₂</td>
+</tr>
+<tr>
+<td>M₆</td>
+<td>(A₂₁ − A₁₁)(B₁₁ + B₁₂)</td>
+</tr>
+<tr>
+<td>M₇</td>
+<td>(A₁₂ − A₂₂)(B₂₁ + B₂₂)</td>
+</tr>
+</tbody></table>
+</div>
+<p>C₁₁ = M₁ + M₄ − M₅ + M₇, C₁₂ = M₃ + M₅, C₂₁ = M₂ + M₄, C₂₂ = M₁ − M₂ + M₃ + M₆.</p>
+<p>T(n) = 7T(n/2) + Θ(n²) = <strong>Θ(n^log₂7) ≈ Θ(n^2.81)</strong>.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{      <span class="hljs-comment">// Strassen&#x27;s seven products on 2x2 matrices of numbers</span>
+    <span class="hljs-type">int</span> a11 = <span class="hljs-number">1</span>, a12 = <span class="hljs-number">3</span>, a21 = <span class="hljs-number">7</span>, a22 = <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> b11 = <span class="hljs-number">6</span>, b12 = <span class="hljs-number">8</span>, b21 = <span class="hljs-number">4</span>, b22 = <span class="hljs-number">2</span>;
+    <span class="hljs-type">int</span> m1 = (a11 + a22) * (b11 + b22), m2 = (a21 + a22) * b11, m3 = a11 * (b12 - b22);
+    <span class="hljs-type">int</span> m4 = a22 * (b21 - b11), m5 = (a11 + a12) * b22, m6 = (a21 - a11) * (b11 + b12);
+    <span class="hljs-type">int</span> m7 = (a12 - a22) * (b21 + b22);
+    cout &lt;&lt; <span class="hljs-string">&quot;Strassen: &quot;</span> &lt;&lt; m1 + m4 - m5 + m7 &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; m3 + m5 &lt;&lt; <span class="hljs-string">&quot; / &quot;</span> &lt;&lt; m2 + m4 &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; m1 - m2 + m3 + m6 &lt;&lt; endl;
+    cout &lt;&lt; <span class="hljs-string">&quot;Normal:   &quot;</span> &lt;&lt; a11 * b11 + a12 * b21 &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; a11 * b12 + a12 * b22 &lt;&lt; <span class="hljs-string">&quot; / &quot;</span>
+         &lt;&lt; a21 * b11 + a22 * b21 &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; a21 * b12 + a22 * b22 &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Strassen: 18 14 / 62 66
+Normal:   18 14 / 62 66</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKSB7ICAgICAgLy8gU3RyYXNzZW4ncyBzZXZlbiBwcm9kdWN0cyBvbiAyeDIgbWF0cmljZXMgb2YgbnVtYmVycwogICAgaW50IGExMSA9IDEsIGExMiA9IDMsIGEyMSA9IDcsIGEyMiA9IDU7CiAgICBpbnQgYjExID0gNiwgYjEyID0gOCwgYjIxID0gNCwgYjIyID0gMjsKICAgIGludCBtMSA9IChhMTEgKyBhMjIpICogKGIxMSArIGIyMiksIG0yID0gKGEyMSArIGEyMikgKiBiMTEsIG0zID0gYTExICogKGIxMiAtIGIyMik7CiAgICBpbnQgbTQgPSBhMjIgKiAoYjIxIC0gYjExKSwgbTUgPSAoYTExICsgYTEyKSAqIGIyMiwgbTYgPSAoYTIxIC0gYTExKSAqIChiMTEgKyBiMTIpOwogICAgaW50IG03ID0gKGExMiAtIGEyMikgKiAoYjIxICsgYjIyKTsKICAgIGNvdXQgPDwgIlN0cmFzc2VuOiAiIDw8IG0xICsgbTQgLSBtNSArIG03IDw8ICIgIiA8PCBtMyArIG01IDw8ICIgLyAiIDw8IG0yICsgbTQgPDwgIiAiIDw8IG0xIC0gbTIgKyBtMyArIG02IDw8IGVuZGw7CiAgICBjb3V0IDw8ICJOb3JtYWw6ICAgIiA8PCBhMTEgKiBiMTEgKyBhMTIgKiBiMjEgPDwgIiAiIDw8IGExMSAqIGIxMiArIGExMiAqIGIyMiA8PCAiIC8gIgogICAgICAgICA8PCBhMjEgKiBiMTEgKyBhMjIgKiBiMjEgPDwgIiAiIDw8IGEyMSAqIGIxMiArIGEyMiAqIGIyMiA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Other divide-and-conquer classics</span></div><div class="callout-body"><p><strong>Closest pair of points</strong> in Θ(n log n), <strong>fast Fourier transform</strong> (FFT) for polynomial multiplication in Θ(n log n), and the <strong>median-of-medians</strong> selection algorithm that finds the k-th smallest element in worst-case Θ(n).</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="daa/dc-more" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>How many comparisons does divide-and-conquer max–min use for n = 16?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">30</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">22</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">16</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">8</span></button></div><div class="q-why" hidden>3n/2 − 2 = 24 − 2 = 22.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>How many inversions does <code>[3, 1, 2]</code> have?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">0</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">2</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">3</span></button></div><div class="q-why" hidden>The pairs (3, 1) and (3, 2).</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What is the running time of Karatsuba multiplication?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Θ(n²)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Θ(n^log₂3) ≈ Θ(n^1.585)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Θ(n log n)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Θ(n³)</span></button></div><div class="q-why" hidden>T(n) = 3T(n/2) + O(n).</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>How many recursive multiplications does Strassen&#39;s algorithm use per level?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">8</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">7</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">4</span></button></div><div class="q-why" hidden>Seven products instead of eight gives T(n) = 7T(n/2) + Θ(n²).</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/dc-more"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/divide-conquer/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Divide and Conquer</strong></a><a class="next" href="../../daa/greedy/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>The Greedy Method</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#finding-the-maximum-and-minimum">Finding the maximum and minimum</a></li><li><a class="d2" href="#counting-inversions">Counting inversions</a></li><li><a class="d2" href="#karatsuba-multiplication">Karatsuba multiplication</a></li><li><a class="d2" href="#strassen-s-matrix-multiplication">Strassen&#39;s matrix multiplication</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

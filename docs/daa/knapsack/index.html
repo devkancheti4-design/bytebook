@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>0/1 Knapsack · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Choose whole items to maximise value within a weight limit: the DP table, the recurrence, tracing back the chosen items, and a space-optimised version.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="0/1 Knapsack · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Choose whole items to maximise value within a weight limit: the DP table, the recurrence, tracing back the chosen items, and a space-optimised version.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/knapsack" data-title="0/1 Knapsack" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 12 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Dynamic Programming</p>
+<h1>0/1 Knapsack</h1>
+<p class="lede">Choose whole items to maximise value within a weight limit: the DP table, the recurrence, tracing back the chosen items, and a space-optimised version.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>You have n items, each with a <strong>weight</strong> and a <strong>value</strong>, and a knapsack of capacity W. Each item is taken <strong>whole or not at all</strong> (0 or 1). Maximise the total value without exceeding W.</p>
+<p>Greedy by value-per-weight fails here (see <a href="../../daa/greedy/">the greedy lesson</a>); trying all 2ⁿ subsets is too slow. DP solves it in <strong>O(nW)</strong>.</p>
+<h2 id="state-and-recurrence"><a class="anchor" href="#state-and-recurrence" aria-hidden="true" tabindex="-1">#</a>State and recurrence</h2>
+<p><strong>State</strong>: <code>dp[i][w]</code> = the best value achievable using the first <code>i</code> items with capacity <code>w</code>.</p>
+<p>For item i (weight wᵢ, value vᵢ), either <strong>skip</strong> it or <strong>take</strong> it (if it fits):</p>
+<blockquote>
+<p>dp[i][w] = dp[i−1][w] if wᵢ &gt; w
+dp[i][w] = max(dp[i−1][w], vᵢ + dp[i−1][w − wᵢ]) otherwise</p>
+</blockquote>
+<p><strong>Base</strong>: dp[0][w] = 0 (no items) and dp[i][0] = 0 (no capacity). <strong>Answer</strong>: dp[n][W].</p>
+<h2 id="watch-the-table-fill"><a class="anchor" href="#watch-the-table-fill" aria-hidden="true" tabindex="-1">#</a>Watch the table fill</h2>
+<div class="widget" data-widget="dp-table" data-opts="{&quot;mode&quot;:&quot;knapsack&quot;}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="code-with-traceback"><a class="anchor" href="#code-with-traceback" aria-hidden="true" tabindex="-1">#</a>Code with traceback</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iomanip&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;string&gt; name = {<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>};
+    vector&lt;<span class="hljs-type">int</span>&gt; wt = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>}, val = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>};
+    <span class="hljs-type">int</span> n = <span class="hljs-number">4</span>, W = <span class="hljs-number">7</span>;
+    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(W + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> w = <span class="hljs-number">0</span>; w &lt;= W; w++) {
+            dp[i][w] = dp[i - <span class="hljs-number">1</span>][w];                                    <span class="hljs-comment">// skip item i</span>
+            <span class="hljs-keyword">if</span> (wt[i] &lt;= w) dp[i][w] = <span class="hljs-built_in">max</span>(dp[i][w], val[i] + dp[i - <span class="hljs-number">1</span>][w - wt[i]]);   <span class="hljs-comment">// or take it</span>
+        }
+
+    cout &lt;&lt; <span class="hljs-string">&quot;item\\w&quot;</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> w = <span class="hljs-number">0</span>; w &lt;= W; w++) cout &lt;&lt; <span class="hljs-built_in">setw</span>(<span class="hljs-number">3</span>) &lt;&lt; w;
+    cout &lt;&lt; endl;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) {
+        cout &lt;&lt; <span class="hljs-built_in">setw</span>(<span class="hljs-number">6</span>) &lt;&lt; (i ? name[i] + <span class="hljs-string">&quot;(&quot;</span> + <span class="hljs-built_in">to_string</span>(wt[i]) + <span class="hljs-string">&quot;,&quot;</span> + <span class="hljs-built_in">to_string</span>(val[i]) + <span class="hljs-string">&quot;)&quot;</span> : <span class="hljs-string">&quot;-&quot;</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> w = <span class="hljs-number">0</span>; w &lt;= W; w++) cout &lt;&lt; <span class="hljs-built_in">setw</span>(<span class="hljs-number">3</span>) &lt;&lt; dp[i][w];
+        cout &lt;&lt; endl;
+    }
+
+    cout &lt;&lt; <span class="hljs-string">&quot;best value = &quot;</span> &lt;&lt; dp[n][W] &lt;&lt; <span class="hljs-string">&quot;, items:&quot;</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n, w = W; i &gt; <span class="hljs-number">0</span>; i--)
+        <span class="hljs-keyword">if</span> (dp[i][w] != dp[i - <span class="hljs-number">1</span>][w]) { cout &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; name[i]; w -= wt[i]; }   <span class="hljs-comment">// value changed: i was taken</span>
+    cout &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>item\w  0  1  2  3  4  5  6  7
+     -  0  0  0  0  0  0  0  0
+A(1,1)  0  1  1  1  1  1  1  1
+B(3,4)  0  1  1  4  5  5  5  5
+C(4,5)  0  1  1  4  5  6  6  9
+D(5,7)  0  1  1  4  5  7  8  9
+best value = 9, items: C B</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgojaW5jbHVkZSA8aW9tYW5pcD4KI2luY2x1ZGUgPHN0cmluZz4KdXNpbmcgbmFtZXNwYWNlIHN0ZDsKCmludCBtYWluKCkgewogICAgdmVjdG9yPHN0cmluZz4gbmFtZSA9IHsiIiwgIkEiLCAiQiIsICJDIiwgIkQifTsKICAgIHZlY3RvcjxpbnQ-IHd0ID0gezAsIDEsIDMsIDQsIDV9LCB2YWwgPSB7MCwgMSwgNCwgNSwgN307CiAgICBpbnQgbiA9IDQsIFcgPSA3OwogICAgdmVjdG9yPHZlY3RvcjxpbnQ-PiBkcChuICsgMSwgdmVjdG9yPGludD4oVyArIDEsIDApKTsKICAgIGZvciAoaW50IGkgPSAxOyBpIDw9IG47IGkrKykKICAgICAgICBmb3IgKGludCB3ID0gMDsgdyA8PSBXOyB3KyspIHsKICAgICAgICAgICAgZHBbaV1bd10gPSBkcFtpIC0gMV1bd107ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gc2tpcCBpdGVtIGkKICAgICAgICAgICAgaWYgKHd0W2ldIDw9IHcpIGRwW2ldW3ddID0gbWF4KGRwW2ldW3ddLCB2YWxbaV0gKyBkcFtpIC0gMV1bdyAtIHd0W2ldXSk7ICAgLy8gb3IgdGFrZSBpdAogICAgICAgIH0KCiAgICBjb3V0IDw8ICJpdGVtXFx3IjsKICAgIGZvciAoaW50IHcgPSAwOyB3IDw9IFc7IHcrKykgY291dCA8PCBzZXR3KDMpIDw8IHc7CiAgICBjb3V0IDw8IGVuZGw7CiAgICBmb3IgKGludCBpID0gMDsgaSA8PSBuOyBpKyspIHsKICAgICAgICBjb3V0IDw8IHNldHcoNikgPDwgKGkgPyBuYW1lW2ldICsgIigiICsgdG9fc3RyaW5nKHd0W2ldKSArICIsIiArIHRvX3N0cmluZyh2YWxbaV0pICsgIikiIDogIi0iKTsKICAgICAgICBmb3IgKGludCB3ID0gMDsgdyA8PSBXOyB3KyspIGNvdXQgPDwgc2V0dygzKSA8PCBkcFtpXVt3XTsKICAgICAgICBjb3V0IDw8IGVuZGw7CiAgICB9CgogICAgY291dCA8PCAiYmVzdCB2YWx1ZSA9ICIgPDwgZHBbbl1bV10gPDwgIiwgaXRlbXM6IjsKICAgIGZvciAoaW50IGkgPSBuLCB3ID0gVzsgaSA-IDA7IGktLSkKICAgICAgICBpZiAoZHBbaV1bd10gIT0gZHBbaSAtIDFdW3ddKSB7IGNvdXQgPDwgIiAiIDw8IG5hbWVbaV07IHcgLT0gd3RbaV07IH0gICAvLyB2YWx1ZSBjaGFuZ2VkOiBpIHdhcyB0YWtlbgogICAgY291dCA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p><strong>Traceback</strong>: start at dp[n][W]. If the value equals the cell above, item i was skipped; otherwise it was taken — subtract its weight and move up.</p>
+<h2 id="space-optimisation"><a class="anchor" href="#space-optimisation" aria-hidden="true" tabindex="-1">#</a>Space optimisation</h2>
+<p>Each row depends only on the previous row, so one 1-D array suffices if you loop <strong>w downwards</strong> (so each item is used at most once):</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;<span class="hljs-type">int</span>&gt; wt = {<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>}, val = {<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>};
+    <span class="hljs-type">int</span> W = <span class="hljs-number">7</span>;
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(W + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; wt.<span class="hljs-built_in">size</span>(); i++)
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> w = W; w &gt;= wt[i]; w--)                 <span class="hljs-comment">// downwards!</span>
+            dp[w] = <span class="hljs-built_in">max</span>(dp[w], val[i] + dp[w - wt[i]]);
+    cout &lt;&lt; <span class="hljs-string">&quot;best value = &quot;</span> &lt;&lt; dp[W] &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>best value = 9</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKSB7CiAgICB2ZWN0b3I8aW50PiB3dCA9IHsxLCAzLCA0LCA1fSwgdmFsID0gezEsIDQsIDUsIDd9OwogICAgaW50IFcgPSA3OwogICAgdmVjdG9yPGludD4gZHAoVyArIDEsIDApOwogICAgZm9yIChzaXplX3QgaSA9IDA7IGkgPCB3dC5zaXplKCk7IGkrKykKICAgICAgICBmb3IgKGludCB3ID0gVzsgdyA-PSB3dFtpXTsgdy0tKSAgICAgICAgICAgICAgICAgLy8gZG93bndhcmRzIQogICAgICAgICAgICBkcFt3XSA9IG1heChkcFt3XSwgdmFsW2ldICsgZHBbdyAtIHd0W2ldXSk7CiAgICBjb3V0IDw8ICJiZXN0IHZhbHVlID0gIiA8PCBkcFtXXSA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Looping w <strong>upwards</strong> would allow an item to be reused — which solves the <strong>unbounded</strong> knapsack instead.</p>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Pseudo-polynomial time</span></div><div class="callout-body"><p>O(nW) looks polynomial, but W is a <strong>number</strong>, not the input&#39;s length: it takes only log W bits to write down. If W is huge (say 10¹⁸), the table is impossible. 0/1 knapsack is in fact <strong>NP-hard</strong> — see <a href="../../daa/np-completeness/">NP-Completeness</a>.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="daa/knapsack" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>In 0/1 knapsack, what does <code>dp[i][w]</code> represent?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The best value using the first i items with capacity w</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The weight of item i</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Whether item i is taken</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The number of items that fit in w</span></button></div><div class="q-why" hidden>Defining the state in words is the first step of any DP.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>If <code>wt[i] &gt; w</code>, what is <code>dp[i][w]</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">0</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>dp[i-1][w]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>val[i]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>dp[i][w-1]</code></span></button></div><div class="q-why" hidden>Item i cannot fit, so the answer is the same as without it.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Items (w, v): (1, 1), (3, 4), (4, 5), (5, 7); W = 7. What is the maximum value?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">8</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">9</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">10</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">12</span></button></div><div class="q-why" hidden>Taking the items of weight 3 and 4 gives value 4 + 5 = 9.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>In the 1-D version, why loop w from W down to wt[i]?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It is faster</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">So each item is counted at most once</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">To allow unlimited copies of each item</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It does not matter</span></button></div><div class="q-why" hidden>Going downwards reads values from the previous item&#39;s row before they are overwritten.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/knapsack"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/dp-intro/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Dynamic Programming</strong></a><a class="next" href="../../daa/lcs/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Longest Common Subsequence</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#state-and-recurrence">State and recurrence</a></li><li><a class="d2" href="#watch-the-table-fill">Watch the table fill</a></li><li><a class="d2" href="#code-with-traceback">Code with traceback</a></li><li><a class="d2" href="#space-optimisation">Space optimisation</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

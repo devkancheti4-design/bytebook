@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dynamic Memory Allocation · C | Bytebook</title>
+<meta name="description" content="Ask for memory at run time with malloc, calloc and realloc, give it back with free, and avoid leaks and dangling pointers.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Dynamic Memory Allocation · C | Bytebook">
+<meta property="og:description" content="Ask for memory at run time with malloc, calloc and realloc, give it back with free, and avoid leaks and dangling pointers.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/dynamic-memory" data-title="Dynamic Memory Allocation" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 17 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Pointers &amp; Memory</p>
+<h1>Dynamic Memory Allocation</h1>
+<p class="lede">Ask for memory at run time with malloc, calloc and realloc, give it back with free, and avoid leaks and dangling pointers.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>4 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>So far every array had a size fixed when you wrote the program. But often you only learn the size <strong>while the program runs</strong> — how many students in this class? How many lines in this file? <strong>Dynamic memory allocation</strong> asks the operating system for memory at run time, from a region called the <strong>heap</strong>.</p>
+<h2 id="stack-vs-heap"><a class="anchor" href="#stack-vs-heap" aria-hidden="true" tabindex="-1">#</a>Stack vs heap</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Stack</th>
+<th>Heap</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Used for</td>
+<td>local variables, function calls</td>
+<td>memory you request with <code>malloc</code></td>
+</tr>
+<tr>
+<td>Size</td>
+<td>small (often 1–8 MB)</td>
+<td>large (most of RAM)</td>
+</tr>
+<tr>
+<td>Freed</td>
+<td>automatically when the function returns</td>
+<td><strong>only when you call <code>free</code></strong></td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>very fast</td>
+<td>slower to allocate</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="malloc"><a class="anchor" href="#malloc" aria-hidden="true" tabindex="-1">#</a>malloc</h2>
+<p><code>malloc(bytes)</code> returns a pointer to a block of uninitialised memory, or <code>NULL</code> if it fails. All four functions live in <code>stdlib.h</code>.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Number of students: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+
+    <span class="hljs-type">int</span> *marks = <span class="hljs-built_in">malloc</span>(n * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));     <span class="hljs-comment">// room for n ints</span>
+    <span class="hljs-keyword">if</span> (marks == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Out of memory!\n&quot;</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter %d marks: &quot;</span>, n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;marks[i]);   <span class="hljs-comment">// use it like an array</span>
+
+    <span class="hljs-type">int</span> total = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) total += marks[i];
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Average: %.1f\n&quot;</span>, (<span class="hljs-type">double</span>)total / n);
+
+    <span class="hljs-built_in">free</span>(marks);          <span class="hljs-comment">// give the memory back</span>
+    marks = <span class="hljs-literal">NULL</span>;         <span class="hljs-comment">// avoid a dangling pointer</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Number of students: <span class="in">5</span>
+Enter 5 marks: <span class="in">80 92 67 74 88</span>
+Average: 80.2</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCmludCBtYWluKHZvaWQpIHsKICAgIGludCBuOwogICAgcHJpbnRmKCJOdW1iZXIgb2Ygc3R1ZGVudHM6ICIpOwogICAgc2NhbmYoIiVkIiwgJm4pOwoKICAgIGludCAqbWFya3MgPSBtYWxsb2MobiAqIHNpemVvZihpbnQpKTsgICAgIC8vIHJvb20gZm9yIG4gaW50cwogICAgaWYgKG1hcmtzID09IE5VTEwpIHsKICAgICAgICBwcmludGYoIk91dCBvZiBtZW1vcnkhXG4iKTsKICAgICAgICByZXR1cm4gMTsKICAgIH0KCiAgICBwcmludGYoIkVudGVyICVkIG1hcmtzOiAiLCBuKTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgbjsgaSsrKSBzY2FuZigiJWQiLCAmbWFya3NbaV0pOyAgIC8vIHVzZSBpdCBsaWtlIGFuIGFycmF5CgogICAgaW50IHRvdGFsID0gMDsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgbjsgaSsrKSB0b3RhbCArPSBtYXJrc1tpXTsKICAgIHByaW50ZigiQXZlcmFnZTogJS4xZlxuIiwgKGRvdWJsZSl0b3RhbCAvIG4pOwoKICAgIGZyZWUobWFya3MpOyAgICAgICAgICAvLyBnaXZlIHRoZSBtZW1vcnkgYmFjawogICAgbWFya3MgPSBOVUxMOyAgICAgICAgIC8vIGF2b2lkIGEgZGFuZ2xpbmcgcG9pbnRlcgogICAgcmV0dXJuIDA7Cn0K&amp;stdin=NQo4MCA5MiA2NyA3NCA4OAo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="calloc"><a class="anchor" href="#calloc" aria-hidden="true" tabindex="-1">#</a>calloc</h2>
+<p><code>calloc(count, size)</code> allocates <code>count × size</code> bytes <strong>and sets them all to zero</strong>:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> *freq = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">10</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));   <span class="hljs-comment">// ten zeros</span>
+    <span class="hljs-type">int</span> digits[] = {<span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">11</span>; i++) freq[digits[i]]++;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> d = <span class="hljs-number">0</span>; d &lt; <span class="hljs-number">10</span>; d++)
+        <span class="hljs-keyword">if</span> (freq[d]) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;digit %d appears %d time(s)\n&quot;</span>, d, freq[d]);
+    <span class="hljs-built_in">free</span>(freq);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>digit 1 appears 2 time(s)
+digit 2 appears 1 time(s)
+digit 3 appears 2 time(s)
+digit 4 appears 1 time(s)
+digit 5 appears 3 time(s)
+digit 6 appears 1 time(s)
+digit 9 appears 1 time(s)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCmludCBtYWluKHZvaWQpIHsKICAgIGludCAqZnJlcSA9IGNhbGxvYygxMCwgc2l6ZW9mKGludCkpOyAgIC8vIHRlbiB6ZXJvcwogICAgaW50IGRpZ2l0c1tdID0gezMsIDEsIDQsIDEsIDUsIDksIDIsIDYsIDUsIDMsIDV9OwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMTsgaSsrKSBmcmVxW2RpZ2l0c1tpXV0rKzsKICAgIGZvciAoaW50IGQgPSAwOyBkIDwgMTA7IGQrKykKICAgICAgICBpZiAoZnJlcVtkXSkgcHJpbnRmKCJkaWdpdCAlZCBhcHBlYXJzICVkIHRpbWUocylcbiIsIGQsIGZyZXFbZF0pOwogICAgZnJlZShmcmVxKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="realloc"><a class="anchor" href="#realloc" aria-hidden="true" tabindex="-1">#</a>realloc</h2>
+<p><code>realloc(ptr, newBytes)</code> resizes a block. It may move the data to a new address, so always use the pointer it returns. This is how growable arrays (like C++&#39;s <code>vector</code> or Python&#39;s <code>list</code>) work underneath:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> capacity = <span class="hljs-number">2</span>, size = <span class="hljs-number">0</span>;
+    <span class="hljs-type">int</span> *a = <span class="hljs-built_in">malloc</span>(capacity * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> value = <span class="hljs-number">1</span>; value &lt;= <span class="hljs-number">9</span>; value++) {
+        <span class="hljs-keyword">if</span> (size == capacity) {
+            capacity *= <span class="hljs-number">2</span>;                                   <span class="hljs-comment">// double when full</span>
+            <span class="hljs-type">int</span> *bigger = <span class="hljs-built_in">realloc</span>(a, capacity * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));
+            <span class="hljs-keyword">if</span> (!bigger) { <span class="hljs-built_in">free</span>(a); <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; }
+            a = bigger;
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;grew to capacity %d\n&quot;</span>, capacity);
+        }
+        a[size++] = value * value;
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, a[i]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-built_in">free</span>(a);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>grew to capacity 4
+grew to capacity 8
+grew to capacity 16
+1 4 9 16 25 36 49 64 81</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCmludCBtYWluKHZvaWQpIHsKICAgIGludCBjYXBhY2l0eSA9IDIsIHNpemUgPSAwOwogICAgaW50ICphID0gbWFsbG9jKGNhcGFjaXR5ICogc2l6ZW9mKGludCkpOwogICAgZm9yIChpbnQgdmFsdWUgPSAxOyB2YWx1ZSA8PSA5OyB2YWx1ZSsrKSB7CiAgICAgICAgaWYgKHNpemUgPT0gY2FwYWNpdHkpIHsKICAgICAgICAgICAgY2FwYWNpdHkgKj0gMjsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIGRvdWJsZSB3aGVuIGZ1bGwKICAgICAgICAgICAgaW50ICpiaWdnZXIgPSByZWFsbG9jKGEsIGNhcGFjaXR5ICogc2l6ZW9mKGludCkpOwogICAgICAgICAgICBpZiAoIWJpZ2dlcikgeyBmcmVlKGEpOyByZXR1cm4gMTsgfQogICAgICAgICAgICBhID0gYmlnZ2VyOwogICAgICAgICAgICBwcmludGYoImdyZXcgdG8gY2FwYWNpdHkgJWRcbiIsIGNhcGFjaXR5KTsKICAgICAgICB9CiAgICAgICAgYVtzaXplKytdID0gdmFsdWUgKiB2YWx1ZTsKICAgIH0KICAgIGZvciAoaW50IGkgPSAwOyBpIDwgc2l6ZTsgaSsrKSBwcmludGYoIiVkICIsIGFbaV0pOwogICAgcHJpbnRmKCJcbiIpOwogICAgZnJlZShhKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="malloc-vs-calloc"><a class="anchor" href="#malloc-vs-calloc" aria-hidden="true" tabindex="-1">#</a>malloc vs calloc</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th><code>malloc(n * size)</code></th>
+<th><code>calloc(n, size)</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>one argument: total bytes</td>
+<td>two arguments: count and element size</td>
+</tr>
+<tr>
+<td>memory contains garbage</td>
+<td>memory is zeroed</td>
+</tr>
+<tr>
+<td>slightly faster</td>
+<td>safe default when you need zeros</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="dynamic-2d-arrays"><a class="anchor" href="#dynamic-2d-arrays" aria-hidden="true" tabindex="-1">#</a>Dynamic 2D arrays</h2>
+<p>Allocate an array of row pointers, then each row:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> rows = <span class="hljs-number">3</span>, cols = <span class="hljs-number">4</span>;
+    <span class="hljs-type">int</span> **grid = <span class="hljs-built_in">malloc</span>(rows * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span> *));
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; rows; i++) {
+        grid[i] = <span class="hljs-built_in">malloc</span>(cols * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; cols; j++) grid[i][j] = i * cols + j;
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; rows; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; cols; j++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%3d&quot;</span>, grid[i][j]);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; rows; i++) <span class="hljs-built_in">free</span>(grid[i]);   <span class="hljs-comment">// free rows first</span>
+    <span class="hljs-built_in">free</span>(grid);                                     <span class="hljs-comment">// then the row array</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>  0  1  2  3
+  4  5  6  7
+  8  9 10 11</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCmludCBtYWluKHZvaWQpIHsKICAgIGludCByb3dzID0gMywgY29scyA9IDQ7CiAgICBpbnQgKipncmlkID0gbWFsbG9jKHJvd3MgKiBzaXplb2YoaW50ICopKTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgcm93czsgaSsrKSB7CiAgICAgICAgZ3JpZFtpXSA9IG1hbGxvYyhjb2xzICogc2l6ZW9mKGludCkpOwogICAgICAgIGZvciAoaW50IGogPSAwOyBqIDwgY29sczsgaisrKSBncmlkW2ldW2pdID0gaSAqIGNvbHMgKyBqOwogICAgfQogICAgZm9yIChpbnQgaSA9IDA7IGkgPCByb3dzOyBpKyspIHsKICAgICAgICBmb3IgKGludCBqID0gMDsgaiA8IGNvbHM7IGorKykgcHJpbnRmKCIlM2QiLCBncmlkW2ldW2pdKTsKICAgICAgICBwcmludGYoIlxuIik7CiAgICB9CiAgICBmb3IgKGludCBpID0gMDsgaSA8IHJvd3M7IGkrKykgZnJlZShncmlkW2ldKTsgICAvLyBmcmVlIHJvd3MgZmlyc3QKICAgIGZyZWUoZ3JpZCk7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIHRoZW4gdGhlIHJvdyBhcnJheQogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="memory-leaks"><a class="anchor" href="#memory-leaks" aria-hidden="true" tabindex="-1">#</a>Memory leaks</h2>
+<p>A <strong>memory leak</strong> happens when you lose the last pointer to a block without freeing it. The memory stays reserved until the program ends. In long-running programs (servers, games) leaks slowly eat all RAM.</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">void</span> <span class="hljs-title function_">leaky</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> *p = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">100</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));
+    <span class="hljs-comment">// ... use p ...</span>
+    <span class="hljs-comment">// forgot free(p): when the function returns, p disappears but the block stays</span>
+}</code></pre></figure>
+<aside class="callout callout-key"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 14.4 8.4l5.4.8-3.9 3.8.9 5.4L12 15.9l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><span>Golden rules</span></div><div class="callout-body"><ol>
+<li>Check every <code>malloc</code>/<code>calloc</code>/<code>realloc</code> result for <code>NULL</code>.</li>
+<li>Every <code>malloc</code> needs exactly one matching <code>free</code>.</li>
+<li>Never use memory after <code>free</code> (set the pointer to <code>NULL</code>).</li>
+<li>Never <code>free</code> the same block twice, or free memory you did not allocate.</li>
+</ol>
+</div></aside>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Finding leaks</span></div><div class="callout-body"><p>On Linux, run your program with <code>valgrind ./prog</code>, or compile with <code>-fsanitize=address</code>. Both report leaks and use-after-free bugs with exact line numbers.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="c/dynamic-memory" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does <code>malloc</code> return when it cannot allocate memory?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">0 bytes of memory</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>NULL</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">−1</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It crashes the program</span></button></div><div class="q-why" hidden>Always check the pointer against <code>NULL</code> before using it.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which function returns zero-filled memory?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>malloc</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>calloc</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>realloc</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>free</code></span></button></div><div class="q-why" hidden><code>calloc</code> initialises every byte to zero; <code>malloc</code> leaves garbage.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>After <code>free(p);</code>, what is <code>p</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Automatically <code>NULL</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A dangling pointer that still holds the old address</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Pointing to a new block</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A compile error</span></button></div><div class="q-why" hidden><code>free</code> does not change <code>p</code>. Set it to <code>NULL</code> yourself to avoid accidental reuse.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Why must you use the return value of <code>realloc</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It may move the block to a new address</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">It returns the old size</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It frees the original block only on success</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It always returns the same pointer</span></button></div><div class="q-why" hidden>If the block cannot grow in place, <code>realloc</code> copies the data elsewhere and returns the new address.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/dynamic-memory"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/pointers-functions/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Pointers, Arrays &amp; Functions</strong></a><a class="next" href="../../c/structures/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Structures, Unions &amp; Enums</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#stack-vs-heap">Stack vs heap</a></li><li><a class="d2" href="#malloc">malloc</a></li><li><a class="d2" href="#calloc">calloc</a></li><li><a class="d2" href="#realloc">realloc</a></li><li><a class="d2" href="#malloc-vs-calloc">malloc vs calloc</a></li><li><a class="d2" href="#dynamic-2d-arrays">Dynamic 2D arrays</a></li><li><a class="d2" href="#memory-leaks">Memory leaks</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

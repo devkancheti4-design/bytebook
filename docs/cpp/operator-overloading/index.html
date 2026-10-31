@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Operator Overloading · C++ OOP | Bytebook</title>
+<meta name="description" content="Make your own types work with +, ==, &lt;&lt;, [] and more: member vs friend operators, unary and binary operators, and the rules you must follow.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Operator Overloading · C++ OOP | Bytebook">
+<meta property="og:description" content="Make your own types work with +, ==, &lt;&lt;, [] and more: member vs friend operators, unary and binary operators, and the rules you must follow.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="cpp">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp" class="active" aria-current="true"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="cpp" aria-label="Object-Oriented Programming with C++ lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../cpp/"><span class="chip" data-c="cpp">OOPS</span><strong>Object-Oriented Programming with C++</strong></a>
+<div class="side-progress" data-course="cpp" data-total="19"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 19 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>From C to C++</h4><ol><li><a href="../../cpp/intro/" data-lesson="cpp/intro"><span class="tick" aria-hidden="true"></span><span>C++ Introduction</span></a></li><li><a href="../../cpp/io-references/" data-lesson="cpp/io-references"><span class="tick" aria-hidden="true"></span><span>Input/Output, Strings &amp; References</span></a></li><li><a href="../../cpp/functions/" data-lesson="cpp/functions"><span class="tick" aria-hidden="true"></span><span>Functions: Overloading, Defaults &amp; Inline</span></a></li></ol></div>
+<div class="side-unit"><h4>Classes &amp; Objects</h4><ol><li><a href="../../cpp/oop-concepts/" data-lesson="cpp/oop-concepts"><span class="tick" aria-hidden="true"></span><span>OOP Concepts</span></a></li><li><a href="../../cpp/classes-objects/" data-lesson="cpp/classes-objects"><span class="tick" aria-hidden="true"></span><span>Classes &amp; Objects</span></a></li><li><a href="../../cpp/constructors/" data-lesson="cpp/constructors"><span class="tick" aria-hidden="true"></span><span>Constructors &amp; Destructors</span></a></li><li><a href="../../cpp/encapsulation/" data-lesson="cpp/encapsulation"><span class="tick" aria-hidden="true"></span><span>Encapsulation, this &amp; static Members</span></a></li><li><a href="../../cpp/friend/" data-lesson="cpp/friend"><span class="tick" aria-hidden="true"></span><span>Friend Functions &amp; Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Inheritance &amp; Polymorphism</h4><ol><li><a href="../../cpp/inheritance/" data-lesson="cpp/inheritance"><span class="tick" aria-hidden="true"></span><span>Inheritance</span></a></li><li><a href="../../cpp/operator-overloading/" data-lesson="cpp/operator-overloading" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Operator Overloading</span></a></li><li><a href="../../cpp/virtual-functions/" data-lesson="cpp/virtual-functions"><span class="tick" aria-hidden="true"></span><span>Virtual Functions &amp; Runtime Polymorphism</span></a></li><li><a href="../../cpp/abstract-classes/" data-lesson="cpp/abstract-classes"><span class="tick" aria-hidden="true"></span><span>Abstract Classes &amp; Interfaces</span></a></li></ol></div>
+<div class="side-unit"><h4>Beyond the Basics</h4><ol><li><a href="../../cpp/templates/" data-lesson="cpp/templates"><span class="tick" aria-hidden="true"></span><span>Templates</span></a></li><li><a href="../../cpp/exceptions/" data-lesson="cpp/exceptions"><span class="tick" aria-hidden="true"></span><span>Exception Handling</span></a></li><li><a href="../../cpp/memory/" data-lesson="cpp/memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory &amp; Smart Pointers</span></a></li><li><a href="../../cpp/stl-containers/" data-lesson="cpp/stl-containers"><span class="tick" aria-hidden="true"></span><span>STL Containers</span></a></li><li><a href="../../cpp/stl-algorithms/" data-lesson="cpp/stl-algorithms"><span class="tick" aria-hidden="true"></span><span>Iterators, Algorithms &amp; Lambdas</span></a></li><li><a href="../../cpp/file-io/" data-lesson="cpp/file-io"><span class="tick" aria-hidden="true"></span><span>File I/O with fstream</span></a></li><li><a href="../../cpp/cheatsheet/" data-lesson="cpp/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C++ OOP Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../cpp/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="cpp/operator-overloading" data-title="Operator Overloading" data-course-title="Object-Oriented Programming with C++">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../cpp/">C++ OOP</a><span>/</span><span>Lesson 10 of 19</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Inheritance &amp; Polymorphism</p>
+<h1>Operator Overloading</h1>
+<p class="lede">Make your own types work with +, ==, &lt;&lt;, [] and more: member vs friend operators, unary and binary operators, and the rules you must follow.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>4 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Operator overloading lets you define what operators mean for <strong>your own classes</strong>, so code reads naturally: <code>c1 + c2</code> instead of <code>add(c1, c2)</code>. It is a form of <strong>compile-time polymorphism</strong>.</p>
+<p>An overloaded operator is just a function named <code>operator</code> followed by the symbol: <code>operator+</code>, <code>operator==</code>, <code>operator&lt;&lt;</code>.</p>
+<h2 id="binary-operators-as-members"><a class="anchor" href="#binary-operators-as-members" aria-hidden="true" tabindex="-1">#</a>Binary operators as members</h2>
+<p>For <code>a + b</code> written as a member function, <code>a</code> is the object the function is called on and <code>b</code> is the parameter.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Complex</span> {
+    <span class="hljs-type">double</span> re, im;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Complex</span>(<span class="hljs-type">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-type">double</span> i = <span class="hljs-number">0</span>) : <span class="hljs-built_in">re</span>(r), <span class="hljs-built_in">im</span>(i) {}
+    Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Complex &amp;o) <span class="hljs-type">const</span> { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Complex</span>(re + o.re, im + o.im); }
+    Complex <span class="hljs-keyword">operator</span>-(<span class="hljs-type">const</span> Complex &amp;o) <span class="hljs-type">const</span> { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Complex</span>(re - o.re, im - o.im); }
+    Complex <span class="hljs-keyword">operator</span>*(<span class="hljs-type">const</span> Complex &amp;o) <span class="hljs-type">const</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Complex</span>(re * o.re - im * o.im, re * o.im + im * o.re);   <span class="hljs-comment">// (a+bi)(c+di)</span>
+    }
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>==(<span class="hljs-type">const</span> Complex &amp;o) <span class="hljs-type">const</span> { <span class="hljs-keyword">return</span> re == o.re &amp;&amp; im == o.im; }
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; re &lt;&lt; (im &lt; <span class="hljs-number">0</span> ? <span class="hljs-string">&quot; - &quot;</span> : <span class="hljs-string">&quot; + &quot;</span>) &lt;&lt; (im &lt; <span class="hljs-number">0</span> ? -im : im) &lt;&lt; <span class="hljs-string">&quot;i&quot;</span> &lt;&lt; endl; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Complex <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)</span>, <span class="hljs-title">b</span><span class="hljs-params">(<span class="hljs-number">1</span>, <span class="hljs-number">-4</span>)</span></span>;
+    Complex sum = a + b;           <span class="hljs-comment">// calls a.operator+(b)</span>
+    sum.<span class="hljs-built_in">print</span>();
+    (a - b).<span class="hljs-built_in">print</span>();
+    (a * b).<span class="hljs-built_in">print</span>();
+    cout &lt;&lt; boolalpha &lt;&lt; (a + b == <span class="hljs-built_in">Complex</span>(<span class="hljs-number">4</span>, <span class="hljs-number">-2</span>)) &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>4 - 2i
+2 + 6i
+11 - 10i
+true</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgQ29tcGxleCB7CiAgICBkb3VibGUgcmUsIGltOwpwdWJsaWM6CiAgICBDb21wbGV4KGRvdWJsZSByID0gMCwgZG91YmxlIGkgPSAwKSA6IHJlKHIpLCBpbShpKSB7fQogICAgQ29tcGxleCBvcGVyYXRvcisoY29uc3QgQ29tcGxleCAmbykgY29uc3QgeyByZXR1cm4gQ29tcGxleChyZSArIG8ucmUsIGltICsgby5pbSk7IH0KICAgIENvbXBsZXggb3BlcmF0b3ItKGNvbnN0IENvbXBsZXggJm8pIGNvbnN0IHsgcmV0dXJuIENvbXBsZXgocmUgLSBvLnJlLCBpbSAtIG8uaW0pOyB9CiAgICBDb21wbGV4IG9wZXJhdG9yKihjb25zdCBDb21wbGV4ICZvKSBjb25zdCB7CiAgICAgICAgcmV0dXJuIENvbXBsZXgocmUgKiBvLnJlIC0gaW0gKiBvLmltLCByZSAqIG8uaW0gKyBpbSAqIG8ucmUpOyAgIC8vIChhK2JpKShjK2RpKQogICAgfQogICAgYm9vbCBvcGVyYXRvcj09KGNvbnN0IENvbXBsZXggJm8pIGNvbnN0IHsgcmV0dXJuIHJlID09IG8ucmUgJiYgaW0gPT0gby5pbTsgfQogICAgdm9pZCBwcmludCgpIGNvbnN0IHsgY291dCA8PCByZSA8PCAoaW0gPCAwID8gIiAtICIgOiAiICsgIikgPDwgKGltIDwgMCA_IC1pbSA6IGltKSA8PCAiaSIgPDwgZW5kbDsgfQp9OwoKaW50IG1haW4oKSB7CiAgICBDb21wbGV4IGEoMywgMiksIGIoMSwgLTQpOwogICAgQ29tcGxleCBzdW0gPSBhICsgYjsgICAgICAgICAgIC8vIGNhbGxzIGEub3BlcmF0b3IrKGIpCiAgICBzdW0ucHJpbnQoKTsKICAgIChhIC0gYikucHJpbnQoKTsKICAgIChhICogYikucHJpbnQoKTsKICAgIGNvdXQgPDwgYm9vbGFscGhhIDw8IChhICsgYiA9PSBDb21wbGV4KDQsIC0yKSkgPDwgZW5kbDsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="unary-operators"><a class="anchor" href="#unary-operators" aria-hidden="true" tabindex="-1">#</a>Unary operators</h2>
+<p>Prefix and postfix <code>++</code> are told apart by a dummy <code>int</code> parameter on the postfix version:</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Counter</span> {
+    <span class="hljs-type">int</span> value;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Counter</span>(<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>) : <span class="hljs-built_in">value</span>(v) {}
+    Counter &amp;<span class="hljs-keyword">operator</span>++()   { ++value; <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>; }                 <span class="hljs-comment">// prefix: ++c</span>
+    Counter <span class="hljs-keyword">operator</span>++(<span class="hljs-type">int</span>) { Counter old = *<span class="hljs-keyword">this</span>; ++value; <span class="hljs-keyword">return</span> old; }  <span class="hljs-comment">// postfix: c++</span>
+    Counter <span class="hljs-keyword">operator</span>-() <span class="hljs-type">const</span> { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Counter</span>(-value); }              <span class="hljs-comment">// unary minus</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> value; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Counter <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;
+    Counter a = c++;     <span class="hljs-comment">// a gets 5, c becomes 6</span>
+    Counter b = ++c;     <span class="hljs-comment">// c becomes 7, b gets 7</span>
+    cout &lt;&lt; a.<span class="hljs-built_in">get</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; b.<span class="hljs-built_in">get</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; c.<span class="hljs-built_in">get</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; (-c).<span class="hljs-built_in">get</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>5 7 7 -7</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgQ291bnRlciB7CiAgICBpbnQgdmFsdWU7CnB1YmxpYzoKICAgIENvdW50ZXIoaW50IHYgPSAwKSA6IHZhbHVlKHYpIHt9CiAgICBDb3VudGVyICZvcGVyYXRvcisrKCkgICB7ICsrdmFsdWU7IHJldHVybiAqdGhpczsgfSAgICAgICAgICAgICAgICAgLy8gcHJlZml4OiArK2MKICAgIENvdW50ZXIgb3BlcmF0b3IrKyhpbnQpIHsgQ291bnRlciBvbGQgPSAqdGhpczsgKyt2YWx1ZTsgcmV0dXJuIG9sZDsgfSAgLy8gcG9zdGZpeDogYysrCiAgICBDb3VudGVyIG9wZXJhdG9yLSgpIGNvbnN0IHsgcmV0dXJuIENvdW50ZXIoLXZhbHVlKTsgfSAgICAgICAgICAgICAgLy8gdW5hcnkgbWludXMKICAgIGludCBnZXQoKSBjb25zdCB7IHJldHVybiB2YWx1ZTsgfQp9OwoKaW50IG1haW4oKSB7CiAgICBDb3VudGVyIGMoNSk7CiAgICBDb3VudGVyIGEgPSBjKys7ICAgICAvLyBhIGdldHMgNSwgYyBiZWNvbWVzIDYKICAgIENvdW50ZXIgYiA9ICsrYzsgICAgIC8vIGMgYmVjb21lcyA3LCBiIGdldHMgNwogICAgY291dCA8PCBhLmdldCgpIDw8ICIgIiA8PCBiLmdldCgpIDw8ICIgIiA8PCBjLmdldCgpIDw8ICIgIiA8PCAoLWMpLmdldCgpIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="overloading-with-friends"><a class="anchor" href="#overloading-with-friends" aria-hidden="true" tabindex="-1">#</a>Overloading &lt;&lt; and &gt;&gt; with friends</h2>
+<p><code>cout &lt;&lt; obj</code> has <code>cout</code> (an <code>ostream</code>) on the <strong>left</strong>, so it cannot be a member of your class. Write it as a <strong>non-member</strong> — usually a <code>friend</code> so it can read private data — and return the stream to allow chaining:</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Fraction</span> {
+    <span class="hljs-type">int</span> num, den;
+    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>{ <span class="hljs-keyword">return</span> b == <span class="hljs-number">0</span> ? a : <span class="hljs-built_in">gcd</span>(b, a % b); }
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reduce</span><span class="hljs-params">()</span> </span>{ <span class="hljs-type">int</span> g = <span class="hljs-built_in">gcd</span>(num &lt; <span class="hljs-number">0</span> ? -num : num, den); <span class="hljs-keyword">if</span> (g) { num /= g; den /= g; } }
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Fraction</span>(<span class="hljs-type">int</span> n = <span class="hljs-number">0</span>, <span class="hljs-type">int</span> d = <span class="hljs-number">1</span>) : <span class="hljs-built_in">num</span>(n), <span class="hljs-built_in">den</span>(d) { <span class="hljs-built_in">reduce</span>(); }
+    Fraction <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Fraction &amp;o) <span class="hljs-type">const</span> { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Fraction</span>(num * o.den + o.num * den, den * o.den); }
+    <span class="hljs-keyword">friend</span> ostream &amp;<span class="hljs-keyword">operator</span>&lt;&lt;(ostream &amp;out, <span class="hljs-type">const</span> Fraction &amp;f) { <span class="hljs-keyword">return</span> out &lt;&lt; f.num &lt;&lt; <span class="hljs-string">&quot;/&quot;</span> &lt;&lt; f.den; }
+    <span class="hljs-keyword">friend</span> istream &amp;<span class="hljs-keyword">operator</span>&gt;&gt;(istream &amp;in, Fraction &amp;f) { in &gt;&gt; f.num &gt;&gt; f.den; f.<span class="hljs-built_in">reduce</span>(); <span class="hljs-keyword">return</span> in; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Fraction <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)</span>, b</span>;
+    cout &lt;&lt; <span class="hljs-string">&quot;Enter a fraction (numerator denominator): &quot;</span>;
+    cin &gt;&gt; b;
+    cout &lt;&lt; a &lt;&lt; <span class="hljs-string">&quot; + &quot;</span> &lt;&lt; b &lt;&lt; <span class="hljs-string">&quot; = &quot;</span> &lt;&lt; a + b &lt;&lt; endl;
+    cout &lt;&lt; <span class="hljs-string">&quot;6/8 simplifies to &quot;</span> &lt;&lt; <span class="hljs-built_in">Fraction</span>(<span class="hljs-number">6</span>, <span class="hljs-number">8</span>) &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter a fraction (numerator denominator): <span class="in">7 3</span>
+1/2 + 7/3 = 17/6
+6/8 simplifies to 3/4</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgRnJhY3Rpb24gewogICAgaW50IG51bSwgZGVuOwogICAgc3RhdGljIGludCBnY2QoaW50IGEsIGludCBiKSB7IHJldHVybiBiID09IDAgPyBhIDogZ2NkKGIsIGEgJSBiKTsgfQogICAgdm9pZCByZWR1Y2UoKSB7IGludCBnID0gZ2NkKG51bSA8IDAgPyAtbnVtIDogbnVtLCBkZW4pOyBpZiAoZykgeyBudW0gLz0gZzsgZGVuIC89IGc7IH0gfQpwdWJsaWM6CiAgICBGcmFjdGlvbihpbnQgbiA9IDAsIGludCBkID0gMSkgOiBudW0obiksIGRlbihkKSB7IHJlZHVjZSgpOyB9CiAgICBGcmFjdGlvbiBvcGVyYXRvcisoY29uc3QgRnJhY3Rpb24gJm8pIGNvbnN0IHsgcmV0dXJuIEZyYWN0aW9uKG51bSAqIG8uZGVuICsgby5udW0gKiBkZW4sIGRlbiAqIG8uZGVuKTsgfQogICAgZnJpZW5kIG9zdHJlYW0gJm9wZXJhdG9yPDwob3N0cmVhbSAmb3V0LCBjb25zdCBGcmFjdGlvbiAmZikgeyByZXR1cm4gb3V0IDw8IGYubnVtIDw8ICIvIiA8PCBmLmRlbjsgfQogICAgZnJpZW5kIGlzdHJlYW0gJm9wZXJhdG9yPj4oaXN0cmVhbSAmaW4sIEZyYWN0aW9uICZmKSB7IGluID4-IGYubnVtID4-IGYuZGVuOyBmLnJlZHVjZSgpOyByZXR1cm4gaW47IH0KfTsKCmludCBtYWluKCkgewogICAgRnJhY3Rpb24gYSgxLCAyKSwgYjsKICAgIGNvdXQgPDwgIkVudGVyIGEgZnJhY3Rpb24gKG51bWVyYXRvciBkZW5vbWluYXRvcik6ICI7CiAgICBjaW4gPj4gYjsKICAgIGNvdXQgPDwgYSA8PCAiICsgIiA8PCBiIDw8ICIgPSAiIDw8IGEgKyBiIDw8IGVuZGw7CiAgICBjb3V0IDw8ICI2Lzggc2ltcGxpZmllcyB0byAiIDw8IEZyYWN0aW9uKDYsIDgpIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo&amp;stdin=NyAzCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="subscript-and-comparison-operators"><a class="anchor" href="#subscript-and-comparison-operators" aria-hidden="true" tabindex="-1">#</a>Subscript and comparison operators</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdexcept&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SafeArray</span> {
+    <span class="hljs-type">int</span> data[<span class="hljs-number">5</span>] = {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>};
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-type">int</span> &amp;<span class="hljs-keyword">operator</span>[](<span class="hljs-type">int</span> i) {                     <span class="hljs-comment">// returns a reference so a[i] = x works</span>
+        <span class="hljs-keyword">if</span> (i &lt; <span class="hljs-number">0</span> || i &gt;= <span class="hljs-number">5</span>) <span class="hljs-keyword">throw</span> <span class="hljs-built_in">out_of_range</span>(<span class="hljs-string">&quot;index &quot;</span> + <span class="hljs-built_in">to_string</span>(i));
+        <span class="hljs-keyword">return</span> data[i];
+    }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    SafeArray a;
+    a[<span class="hljs-number">2</span>] = <span class="hljs-number">99</span>;
+    cout &lt;&lt; a[<span class="hljs-number">2</span>] &lt;&lt; endl;
+    <span class="hljs-keyword">try</span> { cout &lt;&lt; a[<span class="hljs-number">7</span>] &lt;&lt; endl; }
+    <span class="hljs-keyword">catch</span> (<span class="hljs-type">const</span> out_of_range &amp;e) { cout &lt;&lt; <span class="hljs-string">&quot;caught bad &quot;</span> &lt;&lt; e.<span class="hljs-built_in">what</span>() &lt;&lt; endl; }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>99
+caught bad index 7</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RkZXhjZXB0Pgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgU2FmZUFycmF5IHsKICAgIGludCBkYXRhWzVdID0gezEwLCAyMCwgMzAsIDQwLCA1MH07CnB1YmxpYzoKICAgIGludCAmb3BlcmF0b3JbXShpbnQgaSkgeyAgICAgICAgICAgICAgICAgICAgIC8vIHJldHVybnMgYSByZWZlcmVuY2Ugc28gYVtpXSA9IHggd29ya3MKICAgICAgICBpZiAoaSA8IDAgfHwgaSA-PSA1KSB0aHJvdyBvdXRfb2ZfcmFuZ2UoImluZGV4ICIgKyB0b19zdHJpbmcoaSkpOwogICAgICAgIHJldHVybiBkYXRhW2ldOwogICAgfQp9OwoKaW50IG1haW4oKSB7CiAgICBTYWZlQXJyYXkgYTsKICAgIGFbMl0gPSA5OTsKICAgIGNvdXQgPDwgYVsyXSA8PCBlbmRsOwogICAgdHJ5IHsgY291dCA8PCBhWzddIDw8IGVuZGw7IH0KICAgIGNhdGNoIChjb25zdCBvdXRfb2ZfcmFuZ2UgJmUpIHsgY291dCA8PCAiY2F1Z2h0IGJhZCAiIDw8IGUud2hhdCgpIDw8IGVuZGw7IH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="rules"><a class="anchor" href="#rules" aria-hidden="true" tabindex="-1">#</a>Rules</h2>
+<ul>
+<li>You <strong>cannot</strong> create new operators or change precedence, associativity or the number of operands.</li>
+<li>At least one operand must be a user-defined type (you cannot redefine <code>int + int</code>).</li>
+<li>These <strong>cannot</strong> be overloaded: <code>::</code> <code>.</code> <code>.*</code> <code>?:</code> <code>sizeof</code> <code>typeid</code>.</li>
+<li><code>=</code>, <code>()</code>, <code>[]</code> and <code>-&gt;</code> must be <strong>member</strong> functions.</li>
+<li><code>&lt;&lt;</code> and <code>&gt;&gt;</code> for streams must be <strong>non-members</strong> (usually friends).</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Member operator</th>
+<th>Friend / non-member operator</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>left operand is <code>*this</code></td>
+<td>both operands are parameters</td>
+</tr>
+<tr>
+<td>one parameter for binary operators</td>
+<td>two parameters for binary operators</td>
+</tr>
+<tr>
+<td>left operand must be your class</td>
+<td>left operand can be any type (<code>cout &lt;&lt; x</code>, <code>5 + x</code>)</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="cpp/operator-overloading" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>How many parameters does a <strong>member</strong> <code>operator+</code> take?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">0</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">2</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">3</span></button></div><div class="q-why" hidden>The left operand is the object itself (<code>this</code>); the right operand is the single parameter.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Why must <code>operator&lt;&lt;</code> for <code>cout &lt;&lt; obj</code> be a non-member?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Its left operand is an <code>ostream</code>, not your class</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Member functions cannot return references</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>&lt;&lt;</code> cannot be overloaded as a member of any class</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">For speed</span></button></div><div class="q-why" hidden>A member operator always has the class object on the left.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which operator <strong>cannot</strong> be overloaded?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>+</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>::</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>==</code></span></button></div><div class="q-why" hidden>Scope resolution, member access <code>.</code>, <code>?:</code> and <code>sizeof</code> cannot be overloaded.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>How does C++ distinguish postfix <code>operator++</code> from prefix?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Postfix returns <code>void</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Postfix takes a dummy <code>int</code> parameter</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Prefix is declared <code>static</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It cannot distinguish them</span></button></div><div class="q-why" hidden><code>operator++(int)</code> is postfix; <code>operator++()</code> is prefix.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="cpp/operator-overloading"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../cpp/inheritance/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Inheritance</strong></a><a class="next" href="../../cpp/virtual-functions/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Virtual Functions &amp; Runtime Polymorphism</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#binary-operators-as-members">Binary operators as members</a></li><li><a class="d2" href="#unary-operators">Unary operators</a></li><li><a class="d2" href="#overloading-with-friends">Overloading &lt;&lt; and &gt;&gt; with friends</a></li><li><a class="d2" href="#subscript-and-comparison-operators">Subscript and comparison operators</a></li><li><a class="d2" href="#rules">Rules</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

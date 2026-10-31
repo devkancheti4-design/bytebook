@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Break, Continue &amp; Pattern Programs · C | Bytebook</title>
+<meta name="description" content="Control loops with `break`, `continue` and `goto`, then master nested loops through the star and number patterns every exam asks for.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Break, Continue &amp; Pattern Programs · C | Bytebook">
+<meta property="og:description" content="Control loops with `break`, `continue` and `goto`, then master nested loops through the star and number patterns every exam asks for.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/jumps-patterns" data-title="Break, Continue &amp; Pattern Programs" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 8 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Control Flow</p>
+<h1>Break, Continue &amp; Pattern Programs</h1>
+<p class="lede">Control loops with <code>break</code>, <code>continue</code> and <code>goto</code>, then master nested loops through the star and number patterns every exam asks for.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>8 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="break"><a class="anchor" href="#break" aria-hidden="true" tabindex="-1">#</a>break</h2>
+<p><code>break</code> ends the nearest loop (or <code>switch</code>) immediately:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">10</span>; i++) {
+        <span class="hljs-keyword">if</span> (i == <span class="hljs-number">6</span>) <span class="hljs-keyword">break</span>;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, i);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\nLoop ended early.\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1 2 3 4 5 
+Loop ended early.</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBmb3IgKGludCBpID0gMTsgaSA8PSAxMDsgaSsrKSB7CiAgICAgICAgaWYgKGkgPT0gNikgYnJlYWs7CiAgICAgICAgcHJpbnRmKCIlZCAiLCBpKTsKICAgIH0KICAgIHByaW50ZigiXG5Mb29wIGVuZGVkIGVhcmx5LlxuIik7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="continue"><a class="anchor" href="#continue" aria-hidden="true" tabindex="-1">#</a>continue</h2>
+<p><code>continue</code> skips the rest of the <strong>current</strong> pass and jumps to the next one:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Odd numbers below 12: &quot;</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">12</span>; i++) {
+        <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, i);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Odd numbers below 12: 1 3 5 7 9 11</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBwcmludGYoIk9kZCBudW1iZXJzIGJlbG93IDEyOiAiKTsKICAgIGZvciAoaW50IGkgPSAxOyBpIDwgMTI7IGkrKykgewogICAgICAgIGlmIChpICUgMiA9PSAwKSBjb250aW51ZTsKICAgICAgICBwcmludGYoIiVkICIsIGkpOwogICAgfQogICAgcHJpbnRmKCJcbiIpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>goto</span></div><div class="callout-body"><p>C also has <code>goto label;</code>, which jumps to <code>label:</code> anywhere in the same function. It makes code hard to follow, so avoid it. The one accepted use is breaking out of deeply nested loops in a single jump.</p>
+</div></aside>
+<h2 id="nested-loops"><a class="anchor" href="#nested-loops" aria-hidden="true" tabindex="-1">#</a>Nested loops</h2>
+<p>A loop inside another loop runs its inner body <strong>rows × columns</strong> times. The outer loop usually picks the <strong>row</strong>; the inner loop prints the <strong>columns</strong> of that row. That is the whole secret of pattern programs.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> row = <span class="hljs-number">1</span>; row &lt;= <span class="hljs-number">3</span>; row++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> col = <span class="hljs-number">1</span>; col &lt;= <span class="hljs-number">4</span>; col++)
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;(%d,%d) &quot;</span>, row, col);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>(1,1) (1,2) (1,3) (1,4) 
+(2,1) (2,2) (2,3) (2,4) 
+(3,1) (3,2) (3,3) (3,4)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBmb3IgKGludCByb3cgPSAxOyByb3cgPD0gMzsgcm93KyspIHsKICAgICAgICBmb3IgKGludCBjb2wgPSAxOyBjb2wgPD0gNDsgY29sKyspCiAgICAgICAgICAgIHByaW50ZigiKCVkLCVkKSAiLCByb3csIGNvbCk7CiAgICAgICAgcHJpbnRmKCJcbiIpOwogICAgfQogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="pattern-1-right-triangle"><a class="anchor" href="#pattern-1-right-triangle" aria-hidden="true" tabindex="-1">#</a>Pattern 1: right triangle</h2>
+<p>Row <code>i</code> has <code>i</code> stars.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j++)
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;* &quot;</span>);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>* 
+* * 
+* * * 
+* * * * 
+* * * * *</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiA9IDU7CiAgICBmb3IgKGludCBpID0gMTsgaSA8PSBuOyBpKyspIHsKICAgICAgICBmb3IgKGludCBqID0gMTsgaiA8PSBpOyBqKyspCiAgICAgICAgICAgIHByaW50ZigiKiAiKTsKICAgICAgICBwcmludGYoIlxuIik7CiAgICB9CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="pattern-2-number-triangle-and-floyd-s-triangle"><a class="anchor" href="#pattern-2-number-triangle-and-floyd-s-triangle" aria-hidden="true" tabindex="-1">#</a>Pattern 2: number triangle and Floyd&#39;s triangle</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">4</span>, k = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {          <span class="hljs-comment">// 1 / 1 2 / 1 2 3 ...</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, j);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {          <span class="hljs-comment">// Floyd: keep counting across rows</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%-3d&quot;</span>, k++);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1 
+1 2 
+1 2 3 
+1 2 3 4 
+
+1  
+2  3  
+4  5  6  
+7  8  9  10</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiA9IDQsIGsgPSAxOwogICAgZm9yIChpbnQgaSA9IDE7IGkgPD0gbjsgaSsrKSB7ICAgICAgICAgIC8vIDEgLyAxIDIgLyAxIDIgMyAuLi4KICAgICAgICBmb3IgKGludCBqID0gMTsgaiA8PSBpOyBqKyspIHByaW50ZigiJWQgIiwgaik7CiAgICAgICAgcHJpbnRmKCJcbiIpOwogICAgfQogICAgcHJpbnRmKCJcbiIpOwogICAgZm9yIChpbnQgaSA9IDE7IGkgPD0gbjsgaSsrKSB7ICAgICAgICAgIC8vIEZsb3lkOiBrZWVwIGNvdW50aW5nIGFjcm9zcyByb3dzCiAgICAgICAgZm9yIChpbnQgaiA9IDE7IGogPD0gaTsgaisrKSBwcmludGYoIiUtM2QiLCBrKyspOwogICAgICAgIHByaW50ZigiXG4iKTsKICAgIH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="pattern-3-pyramid"><a class="anchor" href="#pattern-3-pyramid" aria-hidden="true" tabindex="-1">#</a>Pattern 3: pyramid</h2>
+<p>Each row needs <strong>spaces</strong> first, then stars. For <code>n</code> rows, row <code>i</code> has <code>n - i</code> spaces and <code>2i - 1</code> stars.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">1</span>; s &lt;= n - i; s++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; &quot;</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= <span class="hljs-number">2</span> * i - <span class="hljs-number">1</span>; j++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;*&quot;</span>);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>    *
+   ***
+  *****
+ *******
+*********</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiA9IDU7CiAgICBmb3IgKGludCBpID0gMTsgaSA8PSBuOyBpKyspIHsKICAgICAgICBmb3IgKGludCBzID0gMTsgcyA8PSBuIC0gaTsgcysrKSBwcmludGYoIiAiKTsKICAgICAgICBmb3IgKGludCBqID0gMTsgaiA8PSAyICogaSAtIDE7IGorKykgcHJpbnRmKCIqIik7CiAgICAgICAgcHJpbnRmKCJcbiIpOwogICAgfQogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="pattern-4-diamond"><a class="anchor" href="#pattern-4-diamond" aria-hidden="true" tabindex="-1">#</a>Pattern 4: diamond</h2>
+<p>A diamond is a pyramid followed by an upside-down pyramid:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">4</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">0</span>; s &lt; n - i; s++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; &quot;</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">2</span> * i - <span class="hljs-number">1</span>; j++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;*&quot;</span>);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">1</span>; i--) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">0</span>; s &lt; n - i; s++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; &quot;</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">2</span> * i - <span class="hljs-number">1</span>; j++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;*&quot;</span>);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiA9IDQ7CiAgICBmb3IgKGludCBpID0gMTsgaSA8PSBuOyBpKyspIHsKICAgICAgICBmb3IgKGludCBzID0gMDsgcyA8IG4gLSBpOyBzKyspIHByaW50ZigiICIpOwogICAgICAgIGZvciAoaW50IGogPSAwOyBqIDwgMiAqIGkgLSAxOyBqKyspIHByaW50ZigiKiIpOwogICAgICAgIHByaW50ZigiXG4iKTsKICAgIH0KICAgIGZvciAoaW50IGkgPSBuIC0gMTsgaSA-PSAxOyBpLS0pIHsKICAgICAgICBmb3IgKGludCBzID0gMDsgcyA8IG4gLSBpOyBzKyspIHByaW50ZigiICIpOwogICAgICAgIGZvciAoaW50IGogPSAwOyBqIDwgMiAqIGkgLSAxOyBqKyspIHByaW50ZigiKiIpOwogICAgICAgIHByaW50ZigiXG4iKTsKICAgIH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="pattern-5-pascal-s-triangle"><a class="anchor" href="#pattern-5-pascal-s-triangle" aria-hidden="true" tabindex="-1">#</a>Pattern 5: Pascal&#39;s triangle</h2>
+<p>Each number is the sum of the two above it. Using the formula C(i, j+1) = C(i, j) × (i − j) / (j + 1) we can print each row without storing earlier rows:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">6</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">0</span>; s &lt; n - i - <span class="hljs-number">1</span>; s++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  &quot;</span>);
+        <span class="hljs-type">int</span> c = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= i; j++) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%4d&quot;</span>, c);
+            c = c * (i - j) / (j + <span class="hljs-number">1</span>);
+        }
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>             1
+           1   1
+         1   2   1
+       1   3   3   1
+     1   4   6   4   1
+   1   5  10  10   5   1</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiA9IDY7CiAgICBmb3IgKGludCBpID0gMDsgaSA8IG47IGkrKykgewogICAgICAgIGZvciAoaW50IHMgPSAwOyBzIDwgbiAtIGkgLSAxOyBzKyspIHByaW50ZigiICAiKTsKICAgICAgICBpbnQgYyA9IDE7CiAgICAgICAgZm9yIChpbnQgaiA9IDA7IGogPD0gaTsgaisrKSB7CiAgICAgICAgICAgIHByaW50ZigiJTRkIiwgYyk7CiAgICAgICAgICAgIGMgPSBjICogKGkgLSBqKSAvIChqICsgMSk7CiAgICAgICAgfQogICAgICAgIHByaW50ZigiXG4iKTsKICAgIH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>How to crack any pattern question</span></div><div class="callout-body"><ol>
+<li>Count the rows: that is your outer loop.</li>
+<li>For row <code>i</code>, write down how many spaces and how many symbols it has.</li>
+<li>Turn those counts into formulas in <code>i</code> (like <code>n - i</code> and <code>2*i - 1</code>).</li>
+<li>Write one inner loop per formula, then <code>printf(&quot;\n&quot;)</code>.</li>
+</ol>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="c/jumps-patterns" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does this print?</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) {
+    <span class="hljs-keyword">if</span> (i == <span class="hljs-number">3</span>) <span class="hljs-keyword">continue</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, i);
+}</code></pre></figure>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>12</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>1245</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>12345</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>345</code></span></button></div><div class="q-why" hidden><code>continue</code> skips only the pass where <code>i == 3</code>.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>How many stars does this print in total?</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">4</span>; i++)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;*&quot;</span>);</code></pre></figure>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">8</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">10</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">16</span></button></div><div class="q-why" hidden>Row <code>i</code> prints <code>i</code> stars: 1 + 2 + 3 + 4 = 10.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>In a 5-row centred pyramid, how many stars are on row 3?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">3</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">7</span></button></div><div class="q-why" hidden>Row <code>i</code> has <code>2i − 1</code> stars, so row 3 has 5.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which statement about <code>break</code> is true?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It exits all nested loops at once</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">It exits only the innermost loop or switch that contains it</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It skips to the next iteration</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It ends the whole program</span></button></div><div class="q-why" hidden><code>break</code> leaves only the closest enclosing loop or <code>switch</code>. <code>continue</code> skips to the next iteration.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/jumps-patterns"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/loops/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Loops: while, do-while and for</strong></a><a class="next" href="../../c/functions/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Functions</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#break">break</a></li><li><a class="d2" href="#continue">continue</a></li><li><a class="d2" href="#nested-loops">Nested loops</a></li><li><a class="d2" href="#pattern-1-right-triangle">Pattern 1: right triangle</a></li><li><a class="d2" href="#pattern-2-number-triangle-and-floyd-s-triangle">Pattern 2: number triangle and Floyd&#39;s triangle</a></li><li><a class="d2" href="#pattern-3-pyramid">Pattern 3: pyramid</a></li><li><a class="d2" href="#pattern-4-diamond">Pattern 4: diamond</a></li><li><a class="d2" href="#pattern-5-pascal-s-triangle">Pattern 5: Pascal&#39;s triangle</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

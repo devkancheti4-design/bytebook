@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>From Code to Running Program · Foundations | Bytebook</title>
+<meta name="description" content="How source code becomes a running program: compilers vs interpreters, the build steps, IDEs and editors, and the three kinds of errors — syntax, runtime and logical — with debugging strategies.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="From Code to Running Program · Foundations | Bytebook">
+<meta property="og:description" content="How source code becomes a running program: compilers vs interpreters, the build steps, IDEs and editors, and the three kinds of errors — syntax, runtime and logical — with debugging strategies.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="foundations">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations" class="active" aria-current="true"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="foundations" aria-label="First-Year Foundations lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../foundations/"><span class="chip" data-c="foundations">YEAR 1</span><strong>First-Year Foundations</strong></a>
+<div class="side-progress" data-course="foundations" data-total="11"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 11 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Computer Basics</h4><ol><li><a href="../../foundations/how-computers-work/" data-lesson="foundations/how-computers-work"><span class="tick" aria-hidden="true"></span><span>How Computers Work</span></a></li><li><a href="../../foundations/number-systems/" data-lesson="foundations/number-systems"><span class="tick" aria-hidden="true"></span><span>Number Systems</span></a></li><li><a href="../../foundations/data-representation/" data-lesson="foundations/data-representation"><span class="tick" aria-hidden="true"></span><span>Data Representation</span></a></li><li><a href="../../foundations/logic-gates/" data-lesson="foundations/logic-gates"><span class="tick" aria-hidden="true"></span><span>Logic Gates &amp; Circuits</span></a></li></ol></div>
+<div class="side-unit"><h4>Problem Solving</h4><ol><li><a href="../../foundations/algorithms-flowcharts/" data-lesson="foundations/algorithms-flowcharts"><span class="tick" aria-hidden="true"></span><span>Algorithms, Flowcharts &amp; Pseudocode</span></a></li><li><a href="../../foundations/from-code-to-program/" data-lesson="foundations/from-code-to-program" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>From Code to Running Program</span></a></li></ol></div>
+<div class="side-unit"><h4>Developer Tools</h4><ol><li><a href="../../foundations/linux-command-line/" data-lesson="foundations/linux-command-line"><span class="tick" aria-hidden="true"></span><span>The Linux Command Line</span></a></li><li><a href="../../foundations/git-github/" data-lesson="foundations/git-github"><span class="tick" aria-hidden="true"></span><span>Git &amp; GitHub</span></a></li></ol></div>
+<div class="side-unit"><h4>The Web</h4><ol><li><a href="../../foundations/how-the-web-works/" data-lesson="foundations/how-the-web-works"><span class="tick" aria-hidden="true"></span><span>How the Internet &amp; Web Work</span></a></li><li><a href="../../foundations/html-css/" data-lesson="foundations/html-css"><span class="tick" aria-hidden="true"></span><span>HTML &amp; CSS Essentials</span></a></li><li><a href="../../foundations/javascript/" data-lesson="foundations/javascript"><span class="tick" aria-hidden="true"></span><span>JavaScript Essentials</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../foundations/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="foundations/from-code-to-program" data-title="From Code to Running Program" data-course-title="First-Year Foundations">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../foundations/">Foundations</a><span>/</span><span>Lesson 6 of 11</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Problem Solving</p>
+<h1>From Code to Running Program</h1>
+<p class="lede">How source code becomes a running program: compilers vs interpreters, the build steps, IDEs and editors, and the three kinds of errors — syntax, runtime and logical — with debugging strategies.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="programming-languages"><a class="anchor" href="#programming-languages" aria-hidden="true" tabindex="-1">#</a>Programming languages</h2>
+<p>Computers only execute <strong>machine code</strong> — binary instructions specific to a CPU. Programmers write in <strong>high-level languages</strong> like C, Python and Java that are readable by humans, and a translator converts them.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Example</th>
+<th>Who reads it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Machine code</td>
+<td><code>10110000 01100001</code></td>
+<td>the CPU</td>
+</tr>
+<tr>
+<td>Assembly</td>
+<td><code>mov al, 0x61</code></td>
+<td>low-level programmers</td>
+</tr>
+<tr>
+<td>High-level</td>
+<td><code>x = 97</code></td>
+<td>everyone</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="compilers-vs-interpreters"><a class="anchor" href="#compilers-vs-interpreters" aria-hidden="true" tabindex="-1">#</a>Compilers vs interpreters</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Compiler</th>
+<th>Interpreter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Translates</td>
+<td>the whole program before it runs</td>
+<td>one statement at a time while running</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>a standalone executable file</td>
+<td>no separate file</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td>all syntax errors reported before running</td>
+<td>reported when the line is reached</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>the program runs fast</td>
+<td>slower</td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>C, C++, Rust, Go</td>
+<td>Python, JavaScript (with JIT compilers today), Ruby</td>
+</tr>
+</tbody></table>
+</div>
+<p>Java and Python actually do both: they compile to an intermediate <strong>bytecode</strong>, which a virtual machine then runs.</p>
+<h2 id="the-c-build-pipeline"><a class="anchor" href="#the-c-build-pipeline" aria-hidden="true" tabindex="-1">#</a>The C build pipeline</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">gcc -E hello.c -o hello.i     <span class="hljs-comment"># 1. preprocess: expand #include and #define</span>
+gcc -S hello.i -o hello.s     <span class="hljs-comment"># 2. compile: C to assembly</span>
+gcc -c hello.s -o hello.o     <span class="hljs-comment"># 3. assemble: assembly to machine code (object file)</span>
+gcc hello.o -o hello          <span class="hljs-comment"># 4. link: add library code (printf) into an executable</span>
+./hello                       <span class="hljs-comment"># 5. load and run</span></code></pre></figure>
+<p>Normally one command does it all: <code>gcc hello.c -o hello</code>. See <a href="../../c/intro/">C Introduction</a> for the diagram.</p>
+<h2 id="editors-and-ides"><a class="anchor" href="#editors-and-ides" aria-hidden="true" tabindex="-1">#</a>Editors and IDEs</h2>
+<ul>
+<li>A <strong>text editor</strong> (VS Code, Sublime, Vim) edits code; extensions add colours, suggestions and error checks.</li>
+<li>An <strong>IDE</strong> (integrated development environment) bundles an editor, compiler, debugger and project tools: CLion and Visual Studio for C/C++, PyCharm for Python, IntelliJ for Java.</li>
+<li><strong>Online compilers</strong> (like this site&#39;s <a href="../../playground/">Compiler</a>) need nothing installed.</li>
+</ul>
+<h2 id="the-three-kinds-of-errors"><a class="anchor" href="#the-three-kinds-of-errors" aria-hidden="true" tabindex="-1">#</a>The three kinds of errors</h2>
+<h3 id="1-syntax-errors"><a class="anchor" href="#1-syntax-errors" aria-hidden="true" tabindex="-1">#</a>1. Syntax errors</h3>
+<p>The code breaks the language&#39;s grammar, so it will not compile (or start). The compiler tells you the line.</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello&quot;</span>)      <span class="hljs-comment">// missing semicolon -&gt; error: expected &#x27;;&#x27;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre></figure>
+<h3 id="2-runtime-errors"><a class="anchor" href="#2-runtime-errors" aria-hidden="true" tabindex="-1">#</a>2. Runtime errors</h3>
+<p>The program compiles but crashes or misbehaves while running: dividing by zero, reading past an array, opening a missing file, running out of memory.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">marks = [<span class="hljs-number">78</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>]
+total = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>):          <span class="hljs-comment"># one too many</span>
+    total += marks[i]
+<span class="hljs-built_in">print</span>(total)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre><span class="stderr">Traceback (most recent call last):
+  File &quot;main.py&quot;, line 4, in &lt;module&gt;
+    total += marks[i]
+             ~~~~~^^^
+IndexError: list index out of range</span></pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bWFya3MgPSBbNzgsIDg1LCA5Ml0KdG90YWwgPSAwCmZvciBpIGluIHJhbmdlKDQpOiAgICAgICAgICAjIG9uZSB0b28gbWFueQogICAgdG90YWwgKz0gbWFya3NbaV0KcHJpbnQodG90YWwpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h3 id="3-logical-errors"><a class="anchor" href="#3-logical-errors" aria-hidden="true" tabindex="-1">#</a>3. Logical errors</h3>
+<p>The program runs and finishes, but gives the <strong>wrong answer</strong>. No error message appears — these are the hardest to find.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">marks = [<span class="hljs-number">78</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>]
+average = <span class="hljs-built_in">sum</span>(marks) / <span class="hljs-number">2</span>       <span class="hljs-comment"># bug: should divide by len(marks)</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average:&quot;</span>, average)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Average: 127.5</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bWFya3MgPSBbNzgsIDg1LCA5Ml0KYXZlcmFnZSA9IHN1bShtYXJrcykgLyAyICAgICAgICMgYnVnOiBzaG91bGQgZGl2aWRlIGJ5IGxlbihtYXJrcykKcHJpbnQoIkF2ZXJhZ2U6IiwgYXZlcmFnZSkK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Error type</th>
+<th>When found</th>
+<th>Who finds it</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Syntax</td>
+<td>compile time</td>
+<td>the compiler</td>
+<td>missing <code>;</code> or <code>:</code></td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>while running</td>
+<td>a crash or exception</td>
+<td>divide by zero</td>
+</tr>
+<tr>
+<td>Logical</td>
+<td>after checking the output</td>
+<td>you, by testing</td>
+<td>wrong formula</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="debugging-strategies"><a class="anchor" href="#debugging-strategies" aria-hidden="true" tabindex="-1">#</a>Debugging strategies</h2>
+<ol>
+<li><strong>Read the error message</strong> from the top — it names the file, line and problem.</li>
+<li><strong>Reproduce</strong> the bug with the smallest input that triggers it.</li>
+<li><strong>Print</strong> values at key points (<code>printf</code> / <code>print</code> debugging).</li>
+<li>Use a <strong>debugger</strong>: set breakpoints, step line by line, watch variables (gdb, VS Code debugger).</li>
+<li><strong>Rubber-duck</strong>: explain the code line by line to someone (or a rubber duck). Often you spot the bug while explaining.</li>
+<li><strong>Check edge cases</strong>: 0, 1, negative numbers, empty input, the largest input.</li>
+</ol>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Test like a professional</span></div><div class="callout-body"><p>Before calling a program done, test: a normal case, the smallest case, an edge case (zero, empty, equal values), and an invalid input. Write the expected output down <strong>before</strong> you run it.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="foundations/from-code-to-program" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which translates an entire program into an executable before running it?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A compiler</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">An interpreter</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">A debugger</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">An editor</span></button></div><div class="q-why" hidden>Compilers translate ahead of time; interpreters translate as the program runs.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>A program prints an average of 127.5 for marks 78, 85 and 92. What kind of error is this?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Syntax error</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Runtime error</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Logical error</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Linker error</span></button></div><div class="q-why" hidden>It runs without crashing but produces the wrong answer.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Accessing the 11th element of a 10-element Python list is a...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Syntax error</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Runtime error</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Logical error</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Compiler warning</span></button></div><div class="q-why" hidden>Python raises an <code>IndexError</code> while the program is running.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which build step combines your object file with library code like <code>printf</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Preprocessing</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Assembling</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Linking</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Loading</span></button></div><div class="q-why" hidden>The linker resolves calls to functions defined in libraries.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="foundations/from-code-to-program"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../foundations/algorithms-flowcharts/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Algorithms, Flowcharts &amp; Pseudocode</strong></a><a class="next" href="../../foundations/linux-command-line/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>The Linux Command Line</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#programming-languages">Programming languages</a></li><li><a class="d2" href="#compilers-vs-interpreters">Compilers vs interpreters</a></li><li><a class="d2" href="#the-c-build-pipeline">The C build pipeline</a></li><li><a class="d2" href="#editors-and-ides">Editors and IDEs</a></li><li><a class="d2" href="#the-three-kinds-of-errors">The three kinds of errors</a></li><li><a class="d3" href="#1-syntax-errors">1. Syntax errors</a></li><li><a class="d3" href="#2-runtime-errors">2. Runtime errors</a></li><li><a class="d3" href="#3-logical-errors">3. Logical errors</a></li><li><a class="d2" href="#debugging-strategies">Debugging strategies</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

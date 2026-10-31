@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arrays as a Data Structure · Data Structures | Bytebook</title>
+<meta name="description" content="Arrays from the data-structure point of view: O(1) access, the cost of insertion and deletion by shifting, and when an array is the right choice.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Arrays as a Data Structure · Data Structures | Bytebook">
+<meta property="og:description" content="Arrays from the data-structure point of view: O(1) access, the cost of insertion and deletion by shifting, and when an array is the right choice.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/arrays-ds" data-title="Arrays as a Data Structure" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 3 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Foundations</p>
+<h1>Arrays as a Data Structure</h1>
+<p class="lede">Arrays from the data-structure point of view: O(1) access, the cost of insertion and deletion by shifting, and when an array is the right choice.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>3 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>You already know how to use arrays from the C course. Here we look at them as a data structure: <strong>what each operation costs</strong>.</p>
+<p>An array stores elements in <strong>contiguous memory</strong>. Because every element has the same size, the address of <code>a[i]</code> is simply <code>base + i × size</code>. That makes access <strong>O(1)</strong> — the computer jumps straight there.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 362 122" width="362" height="122" role="img" aria-label="Array  with values 12, 25, 31, 47, 58, _, _"><defs><marker id="dg-ah-9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box cell" x="6" y="48" width="50" height="46" rx="0"/><text class="t" x="31" y="71">12</text><text class="s" x="31" y="110">0</text><rect class="box cell" x="56" y="48" width="50" height="46" rx="0"/><text class="t" x="81" y="71">25</text><text class="s" x="81" y="110">1</text><rect class="box cell" x="106" y="48" width="50" height="46" rx="0"/><text class="t" x="131" y="71">31</text><text class="s" x="131" y="110">2</text><rect class="box cell" x="156" y="48" width="50" height="46" rx="0"/><text class="t" x="181" y="71">47</text><text class="s" x="181" y="110">3</text><rect class="box cell" x="206" y="48" width="50" height="46" rx="0"/><text class="t" x="231" y="71">58</text><text class="s" x="231" y="110">4</text><rect class="box cell" x="256" y="48" width="50" height="46" rx="0"/><text class="t" x="281" y="71">_</text><text class="s" x="281" y="110">5</text><rect class="box cell" x="306" y="48" width="50" height="46" rx="0"/><text class="t" x="331" y="71">_</text><text class="s" x="331" y="110">6</text><rect class="frame" x="6" y="48" width="350" height="46" rx="0"/><text class="s ptr" x="31" y="13">base</text><line class="edge ptr" x1="31" y1="22" x2="31" y2="45" marker-end="url(#dg-ah-9)"/><text class="s ptr" x="181" y="13">a[3]</text><line class="edge ptr" x1="181" y1="22" x2="181" y2="45" marker-end="url(#dg-ah-9)"/></svg><figcaption><code>a[3]</code> is at base + 3 × 4 bytes. No searching needed, so indexing is O(1). The <code>_</code> cells are spare capacity.</figcaption></figure>
+<h2 id="insertion-at-a-position"><a class="anchor" href="#insertion-at-a-position" aria-hidden="true" tabindex="-1">#</a>Insertion at a position</h2>
+<p>To insert at index <code>pos</code>, every element from <code>pos</code> onwards must <strong>shift one place right</strong> to make room. Inserting at the front of <code>n</code> elements moves all <code>n</code>: <strong>O(n)</strong>.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">insertAt</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> cap, <span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> value)</span> {
+    <span class="hljs-keyword">if</span> (n == cap || pos &lt; <span class="hljs-number">0</span> || pos &gt; n) <span class="hljs-keyword">return</span> n;      <span class="hljs-comment">// full or invalid position</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n; i &gt; pos; i--)                       <span class="hljs-comment">// shift right, starting from the end</span>
+        a[i] = a[i - <span class="hljs-number">1</span>];
+    a[pos] = value;
+    <span class="hljs-keyword">return</span> n + <span class="hljs-number">1</span>;                                       <span class="hljs-comment">// new size</span>
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">print</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, a[i]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> a[<span class="hljs-number">10</span>] = {<span class="hljs-number">12</span>, <span class="hljs-number">25</span>, <span class="hljs-number">31</span>, <span class="hljs-number">47</span>, <span class="hljs-number">58</span>};
+    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;
+    n = insertAt(a, n, <span class="hljs-number">10</span>, <span class="hljs-number">2</span>, <span class="hljs-number">99</span>);
+    print(a, n);
+    n = insertAt(a, n, <span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>);
+    print(a, n);
+    n = insertAt(a, n, <span class="hljs-number">10</span>, n, <span class="hljs-number">100</span>);   <span class="hljs-comment">// at the end: no shifting, O(1)</span>
+    print(a, n);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>12 25 99 31 47 58 
+7 12 25 99 31 47 58 
+7 12 25 99 31 47 58 100</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgaW5zZXJ0QXQoaW50IGFbXSwgaW50IG4sIGludCBjYXAsIGludCBwb3MsIGludCB2YWx1ZSkgewogICAgaWYgKG4gPT0gY2FwIHx8IHBvcyA8IDAgfHwgcG9zID4gbikgcmV0dXJuIG47ICAgICAgLy8gZnVsbCBvciBpbnZhbGlkIHBvc2l0aW9uCiAgICBmb3IgKGludCBpID0gbjsgaSA-IHBvczsgaS0tKSAgICAgICAgICAgICAgICAgICAgICAgLy8gc2hpZnQgcmlnaHQsIHN0YXJ0aW5nIGZyb20gdGhlIGVuZAogICAgICAgIGFbaV0gPSBhW2kgLSAxXTsKICAgIGFbcG9zXSA9IHZhbHVlOwogICAgcmV0dXJuIG4gKyAxOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIG5ldyBzaXplCn0KCnZvaWQgcHJpbnQoY29uc3QgaW50IGFbXSwgaW50IG4pIHsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgbjsgaSsrKSBwcmludGYoIiVkICIsIGFbaV0pOwogICAgcHJpbnRmKCJcbiIpOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgYVsxMF0gPSB7MTIsIDI1LCAzMSwgNDcsIDU4fTsKICAgIGludCBuID0gNTsKICAgIG4gPSBpbnNlcnRBdChhLCBuLCAxMCwgMiwgOTkpOwogICAgcHJpbnQoYSwgbik7CiAgICBuID0gaW5zZXJ0QXQoYSwgbiwgMTAsIDAsIDcpOwogICAgcHJpbnQoYSwgbik7CiAgICBuID0gaW5zZXJ0QXQoYSwgbiwgMTAsIG4sIDEwMCk7ICAgLy8gYXQgdGhlIGVuZDogbm8gc2hpZnRpbmcsIE8oMSkKICAgIHByaW50KGEsIG4pOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="deletion-at-a-position"><a class="anchor" href="#deletion-at-a-position" aria-hidden="true" tabindex="-1">#</a>Deletion at a position</h2>
+<p>Deleting shifts the later elements <strong>left</strong> to close the gap: also <strong>O(n)</strong> in the worst case.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">deleteAt</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> pos)</span> {
+    <span class="hljs-keyword">if</span> (pos &lt; <span class="hljs-number">0</span> || pos &gt;= n) <span class="hljs-keyword">return</span> n;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = pos; i &lt; n - <span class="hljs-number">1</span>; i++)
+        a[i] = a[i + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">return</span> n - <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> a[] = {<span class="hljs-number">12</span>, <span class="hljs-number">25</span>, <span class="hljs-number">31</span>, <span class="hljs-number">47</span>, <span class="hljs-number">58</span>};
+    <span class="hljs-type">int</span> n = <span class="hljs-number">5</span>;
+    n = deleteAt(a, n, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, a[i]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>12 31 47 58</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgZGVsZXRlQXQoaW50IGFbXSwgaW50IG4sIGludCBwb3MpIHsKICAgIGlmIChwb3MgPCAwIHx8IHBvcyA-PSBuKSByZXR1cm4gbjsKICAgIGZvciAoaW50IGkgPSBwb3M7IGkgPCBuIC0gMTsgaSsrKQogICAgICAgIGFbaV0gPSBhW2kgKyAxXTsKICAgIHJldHVybiBuIC0gMTsKfQoKaW50IG1haW4odm9pZCkgewogICAgaW50IGFbXSA9IHsxMiwgMjUsIDMxLCA0NywgNTh9OwogICAgaW50IG4gPSA1OwogICAgbiA9IGRlbGV0ZUF0KGEsIG4sIDEpOwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCBuOyBpKyspIHByaW50ZigiJWQgIiwgYVtpXSk7CiAgICBwcmludGYoIlxuIik7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Delete in O(1) when order does not matter</span></div><div class="callout-body"><p>If the order of elements is not important, copy the <strong>last</strong> element into the deleted slot and shrink the size by one. No shifting needed.</p>
+</div></aside>
+<h2 id="array-operation-costs"><a class="anchor" href="#array-operation-costs" aria-hidden="true" tabindex="-1">#</a>Array operation costs</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Cost</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Access <code>a[i]</code></td>
+<td>O(1)</td>
+<td>address arithmetic</td>
+</tr>
+<tr>
+<td>Update <code>a[i] = x</code></td>
+<td>O(1)</td>
+<td>address arithmetic</td>
+</tr>
+<tr>
+<td>Search (unsorted)</td>
+<td>O(n)</td>
+<td>may check every element</td>
+</tr>
+<tr>
+<td>Search (sorted)</td>
+<td>O(log n)</td>
+<td>binary search</td>
+</tr>
+<tr>
+<td>Insert / delete at end</td>
+<td>O(1)</td>
+<td>nothing to shift</td>
+</tr>
+<tr>
+<td>Insert / delete at front or middle</td>
+<td>O(n)</td>
+<td>shifting</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="strengths-and-weaknesses"><a class="anchor" href="#strengths-and-weaknesses" aria-hidden="true" tabindex="-1">#</a>Strengths and weaknesses</h2>
+<p><strong>Use an array when</strong> you need fast random access by index, the size is known or changes rarely, and you mostly add or remove at the end.</p>
+<p><strong>Avoid an array when</strong> you insert and delete in the middle a lot, or the size is completely unpredictable — that is where <a href="../../dsa/singly-linked-list/">linked lists</a> shine.</p>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Cache friendliness</span></div><div class="callout-body"><p>Because array elements sit next to each other, the CPU loads several of them into its cache at once. In practice, traversing an array is often several times faster than traversing a linked list with the same Big-O.</p>
+</div></aside>
+<h2 id="merging-two-sorted-arrays"><a class="anchor" href="#merging-two-sorted-arrays" aria-hidden="true" tabindex="-1">#</a>Merging two sorted arrays</h2>
+<p>A pattern you will reuse in merge sort: walk both arrays with two indexes, always taking the smaller front element. It runs in <strong>O(n + m)</strong>.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> a[] = {<span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">15</span>, <span class="hljs-number">21</span>}, b[] = {<span class="hljs-number">1</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">22</span>, <span class="hljs-number">30</span>};
+    <span class="hljs-type">int</span> n = <span class="hljs-number">4</span>, m = <span class="hljs-number">5</span>, c[<span class="hljs-number">9</span>], i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, k = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (i &lt; n &amp;&amp; j &lt; m) c[k++] = (a[i] &lt;= b[j]) ? a[i++] : b[j++];
+    <span class="hljs-keyword">while</span> (i &lt; n) c[k++] = a[i++];
+    <span class="hljs-keyword">while</span> (j &lt; m) c[k++] = b[j++];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> t = <span class="hljs-number">0</span>; t &lt; k; t++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, c[t]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1 3 8 9 10 15 21 22 30</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgYVtdID0gezMsIDgsIDE1LCAyMX0sIGJbXSA9IHsxLCA5LCAxMCwgMjIsIDMwfTsKICAgIGludCBuID0gNCwgbSA9IDUsIGNbOV0sIGkgPSAwLCBqID0gMCwgayA9IDA7CiAgICB3aGlsZSAoaSA8IG4gJiYgaiA8IG0pIGNbaysrXSA9IChhW2ldIDw9IGJbal0pID8gYVtpKytdIDogYltqKytdOwogICAgd2hpbGUgKGkgPCBuKSBjW2srK10gPSBhW2krK107CiAgICB3aGlsZSAoaiA8IG0pIGNbaysrXSA9IGJbaisrXTsKICAgIGZvciAoaW50IHQgPSAwOyB0IDwgazsgdCsrKSBwcmludGYoIiVkICIsIGNbdF0pOwogICAgcHJpbnRmKCJcbiIpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<section class="quiz" id="quiz" data-quiz="dsa/arrays-ds" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Why is accessing <code>a[i]</code> O(1)?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The array is sorted</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The address is computed directly as base + i × element size</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">C caches every element</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Arrays are small</span></button></div><div class="q-why" hidden>No traversal is needed; the address is arithmetic.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is the worst-case cost of inserting at the front of an array holding <code>n</code> elements?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(1)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(log n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(n)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(n²)</span></button></div><div class="q-why" hidden>Every existing element must shift one position right.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Merging two sorted arrays of sizes <code>n</code> and <code>m</code> takes...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(n × m)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(n + m)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(log(n + m))</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(n²)</span></button></div><div class="q-why" hidden>Each step copies one element, and there are n + m elements in total.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which situation suits an array <strong>least</strong>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Reading the 500th element repeatedly</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Storing exactly 12 monthly totals</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Frequently inserting in the middle of a large, changing list</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Looping over all elements in order</span></button></div><div class="q-why" hidden>Middle insertions require O(n) shifting each time.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/arrays-ds"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/complexity/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Time &amp; Space Complexity</strong></a><a class="next" href="../../dsa/singly-linked-list/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Singly Linked List</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#insertion-at-a-position">Insertion at a position</a></li><li><a class="d2" href="#deletion-at-a-position">Deletion at a position</a></li><li><a class="d2" href="#array-operation-costs">Array operation costs</a></li><li><a class="d2" href="#strengths-and-weaknesses">Strengths and weaknesses</a></li><li><a class="d2" href="#merging-two-sorted-arrays">Merging two sorted arrays</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

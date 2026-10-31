@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C Cheat Sheet &amp; Exam Prep · C | Bytebook</title>
+<meta name="description" content="Everything from CSE 101 on one page: syntax, format specifiers, operators, must-know programs and the mistakes that cost marks.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="C Cheat Sheet &amp; Exam Prep · C | Bytebook">
+<meta property="og:description" content="Everything from CSE 101 on one page: syntax, format specifiers, operators, must-know programs and the mistakes that cost marks.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/cheatsheet" data-title="C Cheat Sheet &amp; Exam Prep" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 21 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Structures, Files &amp; More</p>
+<h1>C Cheat Sheet &amp; Exam Prep</h1>
+<p class="lede">Everything from CSE 101 on one page: syntax, format specifiers, operators, must-know programs and the mistakes that cost marks.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Use this page for last-minute revision. Every row links back to the full lesson.</p>
+<h2 id="program-skeleton"><a class="anchor" href="#program-skeleton" aria-hidden="true" tabindex="-1">#</a>Program skeleton</h2>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-comment">// declarations</span>
+    <span class="hljs-comment">// input</span>
+    <span class="hljs-comment">// processing</span>
+    <span class="hljs-comment">// output</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre></figure>
+<h2 id="data-types-and-format-specifiers"><a class="anchor" href="#data-types-and-format-specifiers" aria-hidden="true" tabindex="-1">#</a>Data types and format specifiers</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size*</th>
+<th><code>printf</code></th>
+<th><code>scanf</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>char</code></td>
+<td>1</td>
+<td><code>%c</code></td>
+<td><code>%c</code> (use <code>&quot; %c&quot;</code>)</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>4</td>
+<td><code>%d</code></td>
+<td><code>%d</code></td>
+</tr>
+<tr>
+<td><code>unsigned int</code></td>
+<td>4</td>
+<td><code>%u</code></td>
+<td><code>%u</code></td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td>8</td>
+<td><code>%lld</code></td>
+<td><code>%lld</code></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>4</td>
+<td><code>%f</code></td>
+<td><code>%f</code></td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>8</td>
+<td><code>%f</code> / <code>%lf</code></td>
+<td><code>%lf</code></td>
+</tr>
+<tr>
+<td>string</td>
+<td>—</td>
+<td><code>%s</code></td>
+<td><code>%s</code> (no <code>&amp;</code>)</td>
+</tr>
+<tr>
+<td>pointer</td>
+<td>8</td>
+<td><code>%p</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>size_t</code></td>
+<td>8</td>
+<td><code>%zu</code></td>
+<td><code>%zu</code></td>
+</tr>
+</tbody></table>
+</div>
+<p>* typical 64-bit sizes; check with <code>sizeof</code>. See <a href="../../c/variables/">Variables &amp; Data Types</a>.</p>
+<h2 id="control-flow-at-a-glance"><a class="anchor" href="#control-flow-at-a-glance" aria-hidden="true" tabindex="-1">#</a>Control flow at a glance</h2>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">if</span> (cond) { } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cond2) { } <span class="hljs-keyword">else</span> { }
+<span class="hljs-keyword">switch</span> (n) { <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: ...; <span class="hljs-keyword">break</span>; <span class="hljs-keyword">default</span>: ...; }
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) { }
+<span class="hljs-keyword">while</span> (cond) { }
+<span class="hljs-keyword">do</span> { } <span class="hljs-keyword">while</span> (cond);     <span class="hljs-comment">// runs at least once</span>
+<span class="hljs-keyword">break</span>;     <span class="hljs-comment">// leave loop/switch</span>
+<span class="hljs-keyword">continue</span>;  <span class="hljs-comment">// skip to next iteration</span></code></pre></figure>
+<h2 id="pointers-in-one-table"><a class="anchor" href="#pointers-in-one-table" aria-hidden="true" tabindex="-1">#</a>Pointers in one table</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int *p = &amp;x;</code></td>
+<td><code>p</code> stores the address of <code>x</code></td>
+</tr>
+<tr>
+<td><code>*p</code></td>
+<td>the value at that address</td>
+</tr>
+<tr>
+<td><code>p + 1</code></td>
+<td>address of the next <code>int</code></td>
+</tr>
+<tr>
+<td><code>a[i]</code> ≡ <code>*(a + i)</code></td>
+<td>array indexing is pointer arithmetic</td>
+</tr>
+<tr>
+<td><code>p-&gt;m</code> ≡ <code>(*p).m</code></td>
+<td>member through a struct pointer</td>
+</tr>
+<tr>
+<td><code>int **pp = &amp;p;</code></td>
+<td>pointer to pointer</td>
+</tr>
+<tr>
+<td><code>void f(int *x)</code></td>
+<td>call by reference</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="must-practise-programs"><a class="anchor" href="#must-practise-programs" aria-hidden="true" tabindex="-1">#</a>Must-practise programs</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Programs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Basics</td>
+<td>swap two numbers (with and without a temp), simple interest, area, temperature conversion</td>
+</tr>
+<tr>
+<td>Decisions</td>
+<td>largest of three, leap year, grade calculator, vowel or consonant, calculator with <code>switch</code></td>
+</tr>
+<tr>
+<td>Loops</td>
+<td>factorial, Fibonacci, prime check, primes in a range, Armstrong number, palindrome number, sum of digits, GCD/LCM</td>
+</tr>
+<tr>
+<td>Patterns</td>
+<td>right triangle, pyramid, diamond, Floyd&#39;s triangle, Pascal&#39;s triangle</td>
+</tr>
+<tr>
+<td>Arrays</td>
+<td>max/min, second largest, reverse, linear search, frequency count, remove duplicates</td>
+</tr>
+<tr>
+<td>2D arrays</td>
+<td>matrix add, multiply, transpose, diagonal sums</td>
+</tr>
+<tr>
+<td>Strings</td>
+<td>length, reverse, palindrome, count vowels, without library functions</td>
+</tr>
+<tr>
+<td>Recursion</td>
+<td>factorial, Fibonacci, power, sum of digits, Tower of Hanoi</td>
+</tr>
+<tr>
+<td>Pointers</td>
+<td>swap with pointers, array via pointer, dynamic array with <code>malloc</code></td>
+</tr>
+<tr>
+<td>Structs &amp; files</td>
+<td>student records, topper, save and read records from a file</td>
+</tr>
+</tbody></table>
+</div>
+<h3 id="armstrong-number-asked-very-often"><a class="anchor" href="#armstrong-number-asked-very-often" aria-hidden="true" tabindex="-1">#</a>Armstrong number (asked very often)</h3>
+<p>A number is an Armstrong number if the sum of its digits, each raised to the number of digits, equals the number: 153 = 1³ + 5³ + 3³.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">isArmstrong</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-type">int</span> digits = <span class="hljs-number">0</span>, sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> t = n; t &gt; <span class="hljs-number">0</span>; t /= <span class="hljs-number">10</span>) digits++;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> t = n; t &gt; <span class="hljs-number">0</span>; t /= <span class="hljs-number">10</span>) {
+        <span class="hljs-type">int</span> d = t % <span class="hljs-number">10</span>, p = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; digits; i++) p *= d;
+        sum += p;
+    }
+    <span class="hljs-keyword">return</span> sum == n;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Armstrong numbers below 10000: &quot;</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">10000</span>; i++)
+        <span class="hljs-keyword">if</span> (isArmstrong(i)) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, i);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Armstrong numbers below 10000: 1 2 3 4 5 6 7 8 9 153 370 371 407 1634 8208 9474</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgaXNBcm1zdHJvbmcoaW50IG4pIHsKICAgIGludCBkaWdpdHMgPSAwLCBzdW0gPSAwOwogICAgZm9yIChpbnQgdCA9IG47IHQgPiAwOyB0IC89IDEwKSBkaWdpdHMrKzsKICAgIGZvciAoaW50IHQgPSBuOyB0ID4gMDsgdCAvPSAxMCkgewogICAgICAgIGludCBkID0gdCAlIDEwLCBwID0gMTsKICAgICAgICBmb3IgKGludCBpID0gMDsgaSA8IGRpZ2l0czsgaSsrKSBwICo9IGQ7CiAgICAgICAgc3VtICs9IHA7CiAgICB9CiAgICByZXR1cm4gc3VtID09IG47Cn0KCmludCBtYWluKHZvaWQpIHsKICAgIHByaW50ZigiQXJtc3Ryb25nIG51bWJlcnMgYmVsb3cgMTAwMDA6ICIpOwogICAgZm9yIChpbnQgaSA9IDE7IGkgPCAxMDAwMDsgaSsrKQogICAgICAgIGlmIChpc0FybXN0cm9uZyhpKSkgcHJpbnRmKCIlZCAiLCBpKTsKICAgIHByaW50ZigiXG4iKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="mistakes-that-cost-marks"><a class="anchor" href="#mistakes-that-cost-marks" aria-hidden="true" tabindex="-1">#</a>Mistakes that cost marks</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>if (x = 5)</code></td>
+<td><code>if (x == 5)</code></td>
+</tr>
+<tr>
+<td><code>scanf(&quot;%d&quot;, x)</code></td>
+<td><code>scanf(&quot;%d&quot;, &amp;x)</code></td>
+</tr>
+<tr>
+<td><code>scanf(&quot;%f&quot;, &amp;d)</code> for a <code>double</code></td>
+<td><code>%lf</code></td>
+</tr>
+<tr>
+<td><code>for (i = 0; i &lt;= n; i++)</code> on an array of <code>n</code></td>
+<td><code>i &lt; n</code></td>
+</tr>
+<tr>
+<td><code>5 / 2</code> expecting 2.5</td>
+<td><code>5.0 / 2</code> or a cast</td>
+</tr>
+<tr>
+<td><code>str1 == str2</code></td>
+<td><code>strcmp(str1, str2) == 0</code></td>
+</tr>
+<tr>
+<td>missing <code>break</code> in <code>switch</code></td>
+<td>add <code>break;</code> after each case</td>
+</tr>
+<tr>
+<td><code>char s[5] = &quot;Hello&quot;;</code></td>
+<td>needs 6 bytes for <code>&#39;\0&#39;</code></td>
+</tr>
+<tr>
+<td>using <code>gets</code></td>
+<td><code>fgets(buf, size, stdin)</code></td>
+</tr>
+<tr>
+<td><code>malloc</code> without <code>free</code></td>
+<td>free every block exactly once</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="theory-questions-to-prepare"><a class="anchor" href="#theory-questions-to-prepare" aria-hidden="true" tabindex="-1">#</a>Theory questions to prepare</h2>
+<ol>
+<li>Features of C and the structure of a C program.</li>
+<li>Compilation stages: preprocessor, compiler, assembler, linker.</li>
+<li>Difference between <code>while</code> and <code>do-while</code>; between <code>break</code> and <code>continue</code>.</li>
+<li>Call by value vs call by reference with an example.</li>
+<li>Recursion vs iteration.</li>
+<li>Storage classes with scope, lifetime and default values.</li>
+<li>Structure vs union.</li>
+<li><code>malloc</code> vs <code>calloc</code>; what a memory leak is.</li>
+<li>File opening modes.</li>
+<li>Macro vs function.</li>
+</ol>
+<section class="quiz" id="quiz" data-quiz="c/cheatsheet" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Final check: mixed revision</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which loop always executes at least once?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>for</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>while</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>do-while</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">None</span></button></div><div class="q-why" hidden>The condition of a <code>do-while</code> is checked after the body.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does <code>printf(&quot;%d&quot;, 17 % 5 * 2);</code> print?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">7</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">3</span></button></div><div class="q-why" hidden><code>%</code> and <code>*</code> share a precedence level and run left to right: 17 % 5 = 2, then 2 × 2 = 4.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which statement correctly allocates an array of <code>n</code> doubles?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>double *a = malloc(n);</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>double *a = malloc(n * sizeof(double));</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>double a = malloc(n * sizeof(double));</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>double *a = calloc(sizeof(double));</code></span></button></div><div class="q-why" hidden><code>malloc</code> takes a byte count, so multiply the element count by the element size.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which is an Armstrong number?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">123</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">370</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">100</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">222</span></button></div><div class="q-why" hidden>3³ + 7³ + 0³ = 27 + 343 + 0 = 370.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/cheatsheet"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/preprocessor/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Preprocessor, Macros &amp; Command-Line Arguments</strong></a><a class="next" href="../../dsa/"><small>Next subject<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Data Structures</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#program-skeleton">Program skeleton</a></li><li><a class="d2" href="#data-types-and-format-specifiers">Data types and format specifiers</a></li><li><a class="d2" href="#control-flow-at-a-glance">Control flow at a glance</a></li><li><a class="d2" href="#pointers-in-one-table">Pointers in one table</a></li><li><a class="d2" href="#must-practise-programs">Must-practise programs</a></li><li><a class="d3" href="#armstrong-number-asked-very-often">Armstrong number (asked very often)</a></li><li><a class="d2" href="#mistakes-that-cost-marks">Mistakes that cost marks</a></li><li><a class="d2" href="#theory-questions-to-prepare">Theory questions to prepare</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

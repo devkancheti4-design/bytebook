@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boolean Algebra · Discrete Math | Bytebook</title>
+<meta name="description" content="The algebra of 0 and 1 behind every circuit: Boolean operations and laws, duality, Boolean functions, sum-of-products and product-of-sums forms, logic gates and Karnaugh-map simplification.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Boolean Algebra · Discrete Math | Bytebook">
+<meta property="og:description" content="The algebra of 0 and 1 behind every circuit: Boolean operations and laws, duality, Boolean functions, sum-of-products and product-of-sums forms, logic gates and Karnaugh-map simplification.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="discrete">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete" class="active" aria-current="true"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="discrete" aria-label="Discrete Mathematics lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../discrete/"><span class="chip" data-c="discrete">DMS</span><strong>Discrete Mathematics</strong></a>
+<div class="side-progress" data-course="discrete" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Logic &amp; Proofs</h4><ol><li><a href="../../discrete/propositional-logic/" data-lesson="discrete/propositional-logic"><span class="tick" aria-hidden="true"></span><span>Propositional Logic</span></a></li><li><a href="../../discrete/logical-equivalence/" data-lesson="discrete/logical-equivalence"><span class="tick" aria-hidden="true"></span><span>Logical Equivalences &amp; Normal Forms</span></a></li><li><a href="../../discrete/predicate-logic/" data-lesson="discrete/predicate-logic"><span class="tick" aria-hidden="true"></span><span>Predicates &amp; Quantifiers</span></a></li><li><a href="../../discrete/proofs/" data-lesson="discrete/proofs"><span class="tick" aria-hidden="true"></span><span>Proof Techniques</span></a></li><li><a href="../../discrete/induction/" data-lesson="discrete/induction"><span class="tick" aria-hidden="true"></span><span>Mathematical Induction</span></a></li></ol></div>
+<div class="side-unit"><h4>Sets, Relations &amp; Functions</h4><ol><li><a href="../../discrete/sets/" data-lesson="discrete/sets"><span class="tick" aria-hidden="true"></span><span>Sets</span></a></li><li><a href="../../discrete/relations/" data-lesson="discrete/relations"><span class="tick" aria-hidden="true"></span><span>Relations</span></a></li><li><a href="../../discrete/partial-orders/" data-lesson="discrete/partial-orders"><span class="tick" aria-hidden="true"></span><span>Partial Orders &amp; Lattices</span></a></li><li><a href="../../discrete/functions/" data-lesson="discrete/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li></ol></div>
+<div class="side-unit"><h4>Counting</h4><ol><li><a href="../../discrete/counting/" data-lesson="discrete/counting"><span class="tick" aria-hidden="true"></span><span>Counting Principles &amp; Pigeonhole</span></a></li><li><a href="../../discrete/permutations-combinations/" data-lesson="discrete/permutations-combinations"><span class="tick" aria-hidden="true"></span><span>Permutations &amp; Combinations</span></a></li><li><a href="../../discrete/inclusion-exclusion/" data-lesson="discrete/inclusion-exclusion"><span class="tick" aria-hidden="true"></span><span>Inclusion–Exclusion &amp; the Binomial Theorem</span></a></li><li><a href="../../discrete/recurrences/" data-lesson="discrete/recurrences"><span class="tick" aria-hidden="true"></span><span>Recurrence Relations</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs, Number Theory &amp; Algebra</h4><ol><li><a href="../../discrete/graph-theory/" data-lesson="discrete/graph-theory"><span class="tick" aria-hidden="true"></span><span>Graph Theory</span></a></li><li><a href="../../discrete/trees/" data-lesson="discrete/trees"><span class="tick" aria-hidden="true"></span><span>Trees</span></a></li><li><a href="../../discrete/number-theory/" data-lesson="discrete/number-theory"><span class="tick" aria-hidden="true"></span><span>Number Theory</span></a></li><li><a href="../../discrete/boolean-algebra/" data-lesson="discrete/boolean-algebra" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Boolean Algebra</span></a></li><li><a href="../../discrete/cheatsheet/" data-lesson="discrete/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Discrete Mathematics Formula Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../discrete/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="discrete/boolean-algebra" data-title="Boolean Algebra" data-course-title="Discrete Mathematics">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../discrete/">Discrete Math</a><span>/</span><span>Lesson 17 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Graphs, Number Theory &amp; Algebra</p>
+<h1>Boolean Algebra</h1>
+<p class="lede">The algebra of 0 and 1 behind every circuit: Boolean operations and laws, duality, Boolean functions, sum-of-products and product-of-sums forms, logic gates and Karnaugh-map simplification.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p><strong>Boolean algebra</strong> works with two values, <strong>0</strong> and <strong>1</strong>, and three operations:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Notation</th>
+<th>Logic</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Complement</td>
+<td>x′ or x̄</td>
+<td>NOT</td>
+<td>inverter</td>
+</tr>
+<tr>
+<td>Boolean sum</td>
+<td>x + y</td>
+<td>OR</td>
+<td>OR gate</td>
+</tr>
+<tr>
+<td>Boolean product</td>
+<td>x · y or xy</td>
+<td>AND</td>
+<td>AND gate</td>
+</tr>
+</tbody></table>
+</div>
+<p>It is propositional logic in algebraic dress (T = 1, F = 0) and set algebra in disguise (∪ = +, ∩ = ·). George Boole introduced it in 1854; Claude Shannon showed in 1937 that it describes switching circuits — the birth of digital electronics.</p>
+<h2 id="laws"><a class="anchor" href="#laws" aria-hidden="true" tabindex="-1">#</a>Laws</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Law</th>
+<th>Sum form</th>
+<th>Product form</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Identity</td>
+<td>x + 0 = x</td>
+<td>x · 1 = x</td>
+</tr>
+<tr>
+<td>Domination</td>
+<td>x + 1 = 1</td>
+<td>x · 0 = 0</td>
+</tr>
+<tr>
+<td>Idempotent</td>
+<td>x + x = x</td>
+<td>x · x = x</td>
+</tr>
+<tr>
+<td>Complement</td>
+<td>x + x′ = 1</td>
+<td>x · x′ = 0</td>
+</tr>
+<tr>
+<td>Involution</td>
+<td>(x′)′ = x</td>
+<td></td>
+</tr>
+<tr>
+<td>Commutative</td>
+<td>x + y = y + x</td>
+<td>xy = yx</td>
+</tr>
+<tr>
+<td>Associative</td>
+<td>x + (y + z) = (x + y) + z</td>
+<td>x(yz) = (xy)z</td>
+</tr>
+<tr>
+<td>Distributive</td>
+<td>x(y + z) = xy + xz</td>
+<td>x + yz = (x + y)(x + z)</td>
+</tr>
+<tr>
+<td>Absorption</td>
+<td>x + xy = x</td>
+<td>x(x + y) = x</td>
+</tr>
+<tr>
+<td><strong>De Morgan</strong></td>
+<td>(x + y)′ = x′y′</td>
+<td>(xy)′ = x′ + y′</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>Duality</strong>: swap + with ·, and 0 with 1, in any identity and you get another valid identity. That is why the laws come in pairs.</p>
+<h2 id="boolean-functions-and-normal-forms"><a class="anchor" href="#boolean-functions-and-normal-forms" aria-hidden="true" tabindex="-1">#</a>Boolean functions and normal forms</h2>
+<p>A Boolean function of n variables maps each of the 2ⁿ input combinations to 0 or 1. There are 2^(2ⁿ) such functions.</p>
+<ul>
+<li><strong>Sum of products (SOP / DNF)</strong>: OR together a <strong>minterm</strong> (an AND of all variables, complemented where 0) for every row where f = 1.</li>
+<li><strong>Product of sums (POS / CNF)</strong>: AND together a <strong>maxterm</strong> for every row where f = 0.</li>
+</ul>
+<p>Example: the <strong>majority</strong> function of three inputs (1 when at least two inputs are 1):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>x</th>
+<th>y</th>
+<th>z</th>
+<th>f</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</div>
+<p>SOP: f = x′yz + xy′z + xyz′ + xyz, which simplifies to <strong>f = xy + yz + xz</strong>.</p>
+<h2 id="logic-gates"><a class="anchor" href="#logic-gates" aria-hidden="true" tabindex="-1">#</a>Logic gates</h2>
+<figure class="diagram"><svg class="dg" viewBox="0 0 802 112" width="802" height="112" role="img" aria-label="Logic gates: AND, OR, NOT, NAND, NOR, XOR"><g class="gate" transform="translate(42,18)"><line class="wire" x1="-20" y1="12" x2="0" y2="12"/><line class="wire" x1="-20" y1="36" x2="0" y2="36"/><path class="body" d="M0,0 H26 A24,24 0 0 1 26,48 H0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="70" y="94">AND</text><g class="gate" transform="translate(174,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="202" y="94">OR</text><g class="gate" transform="translate(306,18)"><line class="wire" x1="-20" y1="24" x2="0" y2="24"/><path class="body" d="M0,2 L42,24 L0,46 Z"/><circle class="body" cx="46.5" cy="24" r="4.5"/><line class="wire" x1="51" y1="24" x2="69" y2="24"/></g><text class="t cap" x="334" y="94">NOT</text><g class="gate" transform="translate(438,18)"><line class="wire" x1="-20" y1="12" x2="0" y2="12"/><line class="wire" x1="-20" y1="36" x2="0" y2="36"/><path class="body" d="M0,0 H26 A24,24 0 0 1 26,48 H0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="466" y="94">NAND</text><g class="gate" transform="translate(570,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="598" y="94">NOR</text><g class="gate" transform="translate(702,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="wire" d="M-7,0 Q5,24 -7,48"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="730" y="94">XOR</text></svg><figcaption>The standard gate symbols. A bubble on the output means NOT.</figcaption></figure>
+<p><strong>NAND</strong> and <strong>NOR</strong> are each <strong>functionally complete</strong>: any Boolean function can be built from NAND gates alone. For example, x′ = (x·x)′ and x·y = ((x·y)′)′.</p>
+<h2 id="simplifying-with-karnaugh-maps"><a class="anchor" href="#simplifying-with-karnaugh-maps" aria-hidden="true" tabindex="-1">#</a>Simplifying with Karnaugh maps</h2>
+<p>A <strong>Karnaugh map (K-map)</strong> arranges a function&#39;s truth table in a grid whose rows and columns are in <strong>Gray code</strong> order (00, 01, 11, 10), so neighbouring cells differ in exactly one variable. To simplify:</p>
+<ol>
+<li>Write a 1 in each cell where f = 1.</li>
+<li>Circle <strong>rectangular groups of 1, 2, 4 or 8</strong> adjacent 1s (groups may wrap around the edges), as large as possible.</li>
+<li>Each group becomes one product term: keep only the variables that <strong>do not change</strong> within the group.</li>
+<li>OR the terms together.</li>
+</ol>
+<p>For the majority function (rows x, columns yz):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>x \ yz</th>
+<th>00</th>
+<th>01</th>
+<th>11</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</div>
+<p>Three overlapping pairs give yz (column 11), xz (cells 101, 111) and xy (cells 111, 110): <strong>f = xy + yz + xz</strong>.</p>
+<p>Verify any simplification by comparing truth tables:</p>
+<div class="widget" data-widget="truth-table" data-opts="{&quot;expr&quot;:&quot;(x &amp; y) | (y &amp; z) | (x &amp; z) &lt;-&gt; (!x &amp; y &amp; z) | (x &amp; !y &amp; z) | (x &amp; y &amp; !z) | (x &amp; y &amp; z)&quot;,&quot;style&quot;:&quot;bits&quot;}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> product
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_sop</span>(<span class="hljs-params">x, y, z</span>):
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">not</span> x <span class="hljs-keyword">and</span> y <span class="hljs-keyword">and</span> z) <span class="hljs-keyword">or</span> (x <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> y <span class="hljs-keyword">and</span> z) <span class="hljs-keyword">or</span> (x <span class="hljs-keyword">and</span> y <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> z) <span class="hljs-keyword">or</span> (x <span class="hljs-keyword">and</span> y <span class="hljs-keyword">and</span> z)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">majority_simple</span>(<span class="hljs-params">x, y, z</span>):
+    <span class="hljs-keyword">return</span> (x <span class="hljs-keyword">and</span> y) <span class="hljs-keyword">or</span> (y <span class="hljs-keyword">and</span> z) <span class="hljs-keyword">or</span> (x <span class="hljs-keyword">and</span> z)
+
+same = <span class="hljs-built_in">all</span>(<span class="hljs-built_in">bool</span>(majority_sop(*v)) == <span class="hljs-built_in">bool</span>(majority_simple(*v)) <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> product([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], repeat=<span class="hljs-number">3</span>))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;simplified circuit matches:&quot;</span>, same)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">nand</span>(<span class="hljs-params">a, b</span>): <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-keyword">not</span> (a <span class="hljs-keyword">and</span> b))
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">xor_from_nand</span>(<span class="hljs-params">a, b</span>):
+    m = nand(a, b)
+    <span class="hljs-keyword">return</span> nand(nand(a, m), nand(b, m))      <span class="hljs-comment"># XOR built from four NAND gates</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;XOR from NANDs:&quot;</span>, [xor_from_nand(a, b) <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> product([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], repeat=<span class="hljs-number">2</span>)])</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>simplified circuit matches: True
+XOR from NANDs: [0, 1, 1, 0]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZnJvbSBpdGVydG9vbHMgaW1wb3J0IHByb2R1Y3QKCmRlZiBtYWpvcml0eV9zb3AoeCwgeSwgeik6CiAgICByZXR1cm4gKG5vdCB4IGFuZCB5IGFuZCB6KSBvciAoeCBhbmQgbm90IHkgYW5kIHopIG9yICh4IGFuZCB5IGFuZCBub3Qgeikgb3IgKHggYW5kIHkgYW5kIHopCgpkZWYgbWFqb3JpdHlfc2ltcGxlKHgsIHksIHopOgogICAgcmV0dXJuICh4IGFuZCB5KSBvciAoeSBhbmQgeikgb3IgKHggYW5kIHopCgpzYW1lID0gYWxsKGJvb2wobWFqb3JpdHlfc29wKCp2KSkgPT0gYm9vbChtYWpvcml0eV9zaW1wbGUoKnYpKSBmb3IgdiBpbiBwcm9kdWN0KFswLCAxXSwgcmVwZWF0PTMpKQpwcmludCgic2ltcGxpZmllZCBjaXJjdWl0IG1hdGNoZXM6Iiwgc2FtZSkKCmRlZiBuYW5kKGEsIGIpOiByZXR1cm4gaW50KG5vdCAoYSBhbmQgYikpCmRlZiB4b3JfZnJvbV9uYW5kKGEsIGIpOgogICAgbSA9IG5hbmQoYSwgYikKICAgIHJldHVybiBuYW5kKG5hbmQoYSwgbSksIG5hbmQoYiwgbSkpICAgICAgIyBYT1IgYnVpbHQgZnJvbSBmb3VyIE5BTkQgZ2F0ZXMKcHJpbnQoIlhPUiBmcm9tIE5BTkRzOiIsIFt4b3JfZnJvbV9uYW5kKGEsIGIpIGZvciBhLCBiIGluIHByb2R1Y3QoWzAsIDFdLCByZXBlYXQ9MildKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="half-adder"><a class="anchor" href="#half-adder" aria-hidden="true" tabindex="-1">#</a>Half adder</h2>
+<p>Adding two bits produces a <strong>sum</strong> bit S = x ⊕ y and a <strong>carry</strong> bit C = x · y — one XOR gate and one AND gate. Chaining full adders gives the circuits that add numbers inside every CPU (see <a href="../../foundations/logic-gates/">Logic Gates</a> in Foundations).</p>
+<section class="quiz" id="quiz" data-quiz="discrete/boolean-algebra" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Simplify x + xy.</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">x</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">y</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">xy</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">x + y</span></button></div><div class="q-why" hidden>Absorption law.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is (x + y)′ by De Morgan&#39;s law?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">x′ + y′</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">x′y′</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">xy</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">x + y</span></button></div><div class="q-why" hidden>The complement of a sum is the product of the complements.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which single gate type can build every Boolean function?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">AND</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">OR</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">NAND</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">XOR</span></button></div><div class="q-why" hidden>NAND (and NOR) are functionally complete.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>In a K-map, why are rows and columns ordered 00, 01, 11, 10?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Alphabetical order</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">So neighbouring cells differ in exactly one variable (Gray code)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">To list minterms in numeric order</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It does not matter</span></button></div><div class="q-why" hidden>Adjacency in the map must mean a one-variable difference so groups simplify.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="discrete/boolean-algebra"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../discrete/number-theory/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Number Theory</strong></a><a class="next" href="../../discrete/cheatsheet/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Discrete Mathematics Formula Sheet</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#laws">Laws</a></li><li><a class="d2" href="#boolean-functions-and-normal-forms">Boolean functions and normal forms</a></li><li><a class="d2" href="#logic-gates">Logic gates</a></li><li><a class="d2" href="#simplifying-with-karnaugh-maps">Simplifying with Karnaugh maps</a></li><li><a class="d2" href="#half-adder">Half adder</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Algorithms Cheat Sheet · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Design and Analysis of Algorithms on one page: notations, recurrences, the Master Theorem, every algorithm&#39;s complexity, technique selection and exam favourites.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Algorithms Cheat Sheet · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Design and Analysis of Algorithms on one page: notations, recurrences, the Master Theorem, every algorithm&#39;s complexity, technique selection and exam favourites.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/cheatsheet" data-title="Algorithms Cheat Sheet" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 21 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Search, Graphs &amp; Complexity</p>
+<h1>Algorithms Cheat Sheet</h1>
+<p class="lede">Design and Analysis of Algorithms on one page: notations, recurrences, the Master Theorem, every algorithm&#39;s complexity, technique selection and exam favourites.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="asymptotic-notations"><a class="anchor" href="#asymptotic-notations" aria-hidden="true" tabindex="-1">#</a>Asymptotic notations</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Notation</th>
+<th>Definition (for n ≥ n₀)</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f = O(g)</td>
+<td>f(n) ≤ c·g(n)</td>
+<td>upper bound</td>
+</tr>
+<tr>
+<td>f = Ω(g)</td>
+<td>f(n) ≥ c·g(n)</td>
+<td>lower bound</td>
+</tr>
+<tr>
+<td>f = Θ(g)</td>
+<td>c₁·g(n) ≤ f(n) ≤ c₂·g(n)</td>
+<td>tight bound</td>
+</tr>
+<tr>
+<td>f = o(g)</td>
+<td>f/g → 0</td>
+<td>strictly smaller</td>
+</tr>
+<tr>
+<td>f = ω(g)</td>
+<td>f/g → ∞</td>
+<td>strictly larger</td>
+</tr>
+</tbody></table>
+</div>
+<p>Growth: 1 &lt; log n &lt; √n &lt; n &lt; n log n &lt; n² &lt; n³ &lt; 2ⁿ &lt; n! &lt; nⁿ</p>
+<h2 id="master-theorem-t-n-at-n-b-f-n"><a class="anchor" href="#master-theorem-t-n-at-n-b-f-n" aria-hidden="true" tabindex="-1">#</a>Master Theorem: T(n) = aT(n/b) + f(n)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Compare f(n) with n^(log_b a)</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f smaller by a polynomial factor</td>
+<td>Θ(n^(log_b a))</td>
+</tr>
+<tr>
+<td>f equal (up to logᵏ)</td>
+<td>Θ(n^(log_b a) · log n)</td>
+</tr>
+<tr>
+<td>f larger by a polynomial factor (+ regularity)</td>
+<td>Θ(f(n))</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="common-recurrences"><a class="anchor" href="#common-recurrences" aria-hidden="true" tabindex="-1">#</a>Common recurrences</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Recurrence</th>
+<th>Solution</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T(n) = T(n/2) + 1</td>
+<td>Θ(log n)</td>
+<td>binary search</td>
+</tr>
+<tr>
+<td>T(n) = 2T(n/2) + n</td>
+<td>Θ(n log n)</td>
+<td>merge sort</td>
+</tr>
+<tr>
+<td>T(n) = T(n − 1) + n</td>
+<td>Θ(n²)</td>
+<td>quick sort worst case</td>
+</tr>
+<tr>
+<td>T(n) = 2T(n − 1) + 1</td>
+<td>Θ(2ⁿ)</td>
+<td>Tower of Hanoi</td>
+</tr>
+<tr>
+<td>T(n) = 3T(n/2) + n</td>
+<td>Θ(n^1.585)</td>
+<td>Karatsuba</td>
+</tr>
+<tr>
+<td>T(n) = 7T(n/2) + n²</td>
+<td>Θ(n^2.81)</td>
+<td>Strassen</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="algorithm-complexities"><a class="anchor" href="#algorithm-complexities" aria-hidden="true" tabindex="-1">#</a>Algorithm complexities</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Technique</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Binary search</td>
+<td>D&amp;C</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Merge sort</td>
+<td>D&amp;C</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Quick sort</td>
+<td>D&amp;C</td>
+<td>O(n log n) avg, O(n²) worst</td>
+</tr>
+<tr>
+<td>Heap sort</td>
+<td>heap</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Activity selection</td>
+<td>greedy</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Fractional knapsack</td>
+<td>greedy</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Huffman coding</td>
+<td>greedy</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Kruskal</td>
+<td>greedy + union-find</td>
+<td>O(E log E)</td>
+</tr>
+<tr>
+<td>Prim</td>
+<td>greedy + heap</td>
+<td>O(E log V)</td>
+</tr>
+<tr>
+<td>Dijkstra</td>
+<td>greedy + heap</td>
+<td>O((V + E) log V)</td>
+</tr>
+<tr>
+<td>Bellman–Ford</td>
+<td>DP</td>
+<td>O(VE)</td>
+</tr>
+<tr>
+<td>Floyd–Warshall</td>
+<td>DP</td>
+<td>O(V³)</td>
+</tr>
+<tr>
+<td>0/1 knapsack</td>
+<td>DP</td>
+<td>O(nW)</td>
+</tr>
+<tr>
+<td>LCS</td>
+<td>DP</td>
+<td>O(mn)</td>
+</tr>
+<tr>
+<td>Matrix chain</td>
+<td>DP</td>
+<td>O(n³)</td>
+</tr>
+<tr>
+<td>BFS / DFS / topological sort</td>
+<td>traversal</td>
+<td>O(V + E)</td>
+</tr>
+<tr>
+<td>N-Queens, subset sum</td>
+<td>backtracking</td>
+<td>exponential</td>
+</tr>
+<tr>
+<td>KMP</td>
+<td>string matching</td>
+<td>O(n + m)</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="which-technique"><a class="anchor" href="#which-technique" aria-hidden="true" tabindex="-1">#</a>Which technique?</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Clue in the problem</th>
+<th>Try</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>split in halves, combine answers</td>
+<td>divide and conquer</td>
+</tr>
+<tr>
+<td>locally best choice is provably safe</td>
+<td>greedy</td>
+</tr>
+<tr>
+<td>overlapping subproblems, &quot;count the ways&quot;, &quot;minimum/maximum of&quot;</td>
+<td>dynamic programming</td>
+</tr>
+<tr>
+<td>find all arrangements, satisfy constraints</td>
+<td>backtracking</td>
+</tr>
+<tr>
+<td>optimise over an exponential search space</td>
+<td>branch and bound</td>
+</tr>
+<tr>
+<td>problem is NP-hard and n is large</td>
+<td>approximation or heuristics</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="exam-favourites"><a class="anchor" href="#exam-favourites" aria-hidden="true" tabindex="-1">#</a>Exam favourites</h2>
+<ol>
+<li>Define algorithm; properties; loop invariant for insertion sort.</li>
+<li>Prove 3n² + 2n = Θ(n²) by finding c₁, c₂, n₀.</li>
+<li>Solve recurrences with the Master Theorem and recursion trees.</li>
+<li>Trace merge sort and quick sort partition; best/worst cases.</li>
+<li>Activity selection, fractional knapsack, job sequencing tables.</li>
+<li>Huffman tree and codes; average code length.</li>
+<li>Kruskal and Prim on a given graph; Dijkstra table.</li>
+<li>0/1 knapsack, LCS and matrix-chain tables with traceback.</li>
+<li>Floyd–Warshall matrices D⁰ … Dⁿ.</li>
+<li>N-Queens state-space tree; subset sum.</li>
+<li>KMP prefix function for a pattern.</li>
+<li>P, NP, NP-complete, NP-hard with examples; Cook&#39;s theorem.</li>
+</ol>
+<section class="quiz" id="quiz" data-quiz="daa/cheatsheet" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Final check: mixed revision</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Solve T(n) = 2T(n/2) + n log n.</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Θ(n log n)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Θ(n log² n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Θ(n²)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Θ(n)</span></button></div><div class="q-why" hidden>Extended case 2 of the Master Theorem with k = 1.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which algorithm finds a minimum spanning tree?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Dijkstra</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Kruskal</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Bellman–Ford</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">KMP</span></button></div><div class="q-why" hidden>Kruskal and Prim find MSTs; Dijkstra and Bellman–Ford find shortest paths.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which technique does the LCS algorithm use?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Greedy</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Divide and conquer</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Dynamic programming</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Backtracking</span></button></div><div class="q-why" hidden>Overlapping subproblems L[i][j] are stored in a table.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>A problem that is in NP and to which every NP problem reduces is...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">in P</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">NP-hard only</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">NP-complete</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">undecidable</span></button></div><div class="q-why" hidden>NP-complete = NP-hard and in NP.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/cheatsheet"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/np-completeness/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>P, NP, NP-Complete &amp; NP-Hard</strong></a><a class="next" href="../../foundations/"><small>Next subject<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>First-Year Foundations</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#asymptotic-notations">Asymptotic notations</a></li><li><a class="d2" href="#master-theorem-t-n-at-n-b-f-n">Master Theorem: T(n) = aT(n/b) + f(n)</a></li><li><a class="d2" href="#common-recurrences">Common recurrences</a></li><li><a class="d2" href="#algorithm-complexities">Algorithm complexities</a></li><li><a class="d2" href="#which-technique">Which technique?</a></li><li><a class="d2" href="#exam-favourites">Exam favourites</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

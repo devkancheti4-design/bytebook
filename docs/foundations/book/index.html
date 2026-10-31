@@ -1,0 +1,1837 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First-Year Foundations (ebook) | Bytebook</title>
+<meta name="description" content="How computers, code and the web really work: number systems, logic gates, algorithms and flowcharts, the Linux terminal, Git and GitHub, HTML, CSS and JavaScript.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="First-Year Foundations (ebook) | Bytebook">
+<meta property="og:description" content="How computers, code and the web really work: number systems, logic gates, algorithms and flowcharts, the Linux terminal, Git and GitHub, HTML, CSS and JavaScript.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-book" data-c="foundations">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations" class="active" aria-current="true"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<main id="main" class="book" data-c="foundations">
+<section class="book-cover">
+<p class="eyebrow">Bytebook · YEAR 1</p>
+<h1>First-Year Foundations</h1>
+<p class="lede">How computers, code and the web really work: number systems, logic gates, algorithms and flowcharts, the Linux terminal, Git and GitHub, HTML, CSS and JavaScript.</p>
+<div class="hero-actions no-print"><button class="btn btn-course print-btn" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3.5h10V8M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v6.5H7z"/></svg><span>Print or save as PDF</span></button><a class="btn btn-ghost" href="../../foundations/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>Back to lessons</span></a></div>
+<nav class="book-toc" aria-label="Contents"><h2>Contents</h2><ol><li><a href="#how-computers-work">How Computers Work</a></li><li><a href="#number-systems">Number Systems</a></li><li><a href="#data-representation">Data Representation</a></li><li><a href="#logic-gates">Logic Gates &amp; Circuits</a></li><li><a href="#algorithms-flowcharts">Algorithms, Flowcharts &amp; Pseudocode</a></li><li><a href="#from-code-to-program">From Code to Running Program</a></li><li><a href="#linux-command-line">The Linux Command Line</a></li><li><a href="#git-github">Git &amp; GitHub</a></li><li><a href="#how-the-web-works">How the Internet &amp; Web Work</a></li><li><a href="#html-css">HTML &amp; CSS Essentials</a></li><li><a href="#javascript">JavaScript Essentials</a></li></ol></nav>
+</section>
+<section class="chapter" id="how-computers-work"><p class="eyebrow">Chapter 1 · Computer Basics</p><h1>How Computers Work</h1><p class="lede">What is inside a computer — CPU, memory, storage and I/O — the fetch–decode–execute cycle, the memory hierarchy, and what an operating system does for your programs.</p><div class="prose"><p>Every program you will write in C, Python or C++ eventually runs on the same few pieces of hardware. Knowing them explains why some code is fast and some is slow.</p>
+<h2 id="how-computers-work--the-main-parts"><a class="anchor" href="#how-computers-work--the-main-parts" aria-hidden="true" tabindex="-1">#</a>The main parts</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Job</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CPU</strong> (processor)</td>
+<td>executes instructions: arithmetic, comparisons, jumps</td>
+<td>the chef</td>
+</tr>
+<tr>
+<td><strong>RAM</strong> (main memory)</td>
+<td>holds running programs and their data; fast but <strong>volatile</strong> (erased when power goes off)</td>
+<td>the kitchen counter</td>
+</tr>
+<tr>
+<td><strong>Storage</strong> (SSD/HDD)</td>
+<td>keeps files permanently; much slower than RAM</td>
+<td>the pantry</td>
+</tr>
+<tr>
+<td><strong>Input devices</strong></td>
+<td>keyboard, mouse, camera, microphone, network</td>
+<td>orders coming in</td>
+</tr>
+<tr>
+<td><strong>Output devices</strong></td>
+<td>screen, speakers, printer, network</td>
+<td>plates going out</td>
+</tr>
+<tr>
+<td><strong>Motherboard / bus</strong></td>
+<td>connects everything and carries data between parts</td>
+<td>the corridors</td>
+</tr>
+</tbody></table>
+</div>
+<p>This design — a CPU that fetches both <strong>instructions</strong> and <strong>data</strong> from the same memory — is the <strong>von Neumann architecture</strong> (1945), and nearly every computer still follows it.</p>
+<h2 id="how-computers-work--inside-the-cpu"><a class="anchor" href="#how-computers-work--inside-the-cpu" aria-hidden="true" tabindex="-1">#</a>Inside the CPU</h2>
+<ul>
+<li><strong>ALU</strong> (arithmetic logic unit): adds, subtracts, compares, does AND/OR/NOT.</li>
+<li><strong>Control unit</strong>: decodes instructions and directs the other parts.</li>
+<li><strong>Registers</strong>: a few tiny, ultra-fast storage slots inside the CPU, including the <strong>program counter</strong> (address of the next instruction).</li>
+<li><strong>Cache</strong>: small fast memory between the CPU and RAM (L1, L2, L3).</li>
+<li><strong>Clock</strong>: a 3 GHz CPU ticks 3 billion times per second. Modern chips have several <strong>cores</strong>, each able to run its own stream of instructions.</li>
+</ul>
+<h2 id="how-computers-work--the-fetch-decode-execute-cycle"><a class="anchor" href="#how-computers-work--the-fetch-decode-execute-cycle" aria-hidden="true" tabindex="-1">#</a>The fetch–decode–execute cycle</h2>
+<p>The CPU repeats three steps billions of times per second:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 453 434" width="453" height="434" role="img" aria-label="Flowchart: Power on → FETCH the instruction at the program counter → DECODE it: which operation, which data? → EXECUTE it in the ALU, read or write memory → Move the program counter to the next instruction → Repeat (billions of times per second)"><defs><marker id="dg-ah-42" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="20" y="10" width="412.8" height="44" rx="22"/><text class="t" x="226.4" y="32">Power on</text><line class="edge" x1="226.4" y1="54" x2="226.4" y2="82" marker-end="url(#dg-ah-42)"/><rect class="fc proc" x="20" y="84" width="412.8" height="44" rx="4"/><text class="t" x="226.4" y="106">FETCH the instruction at the program counter</text><line class="edge" x1="226.4" y1="128" x2="226.4" y2="156" marker-end="url(#dg-ah-42)"/><rect class="fc proc" x="20" y="158" width="412.8" height="44" rx="4"/><text class="t" x="226.4" y="180">DECODE it: which operation, which data?</text><line class="edge" x1="226.4" y1="202" x2="226.4" y2="230" marker-end="url(#dg-ah-42)"/><rect class="fc proc" x="20" y="232" width="412.8" height="44" rx="4"/><text class="t" x="226.4" y="254">EXECUTE it in the ALU, read or write memory</text><line class="edge" x1="226.4" y1="276" x2="226.4" y2="304" marker-end="url(#dg-ah-42)"/><rect class="fc proc" x="20" y="306" width="412.8" height="44" rx="4"/><text class="t" x="226.4" y="328">Move the program counter to the next instruction</text><line class="edge" x1="226.4" y1="350" x2="226.4" y2="378" marker-end="url(#dg-ah-42)"/><rect class="fc term" x="20" y="380" width="412.8" height="44" rx="22"/><text class="t" x="226.4" y="402">Repeat (billions of times per second)</text></svg><figcaption>The instruction cycle. A loop in your code is just the CPU jumping the program counter back to an earlier instruction.</figcaption></figure>
+<h2 id="how-computers-work--the-memory-hierarchy"><a class="anchor" href="#how-computers-work--the-memory-hierarchy" aria-hidden="true" tabindex="-1">#</a>The memory hierarchy</h2>
+<p>Faster memory is more expensive and smaller. Computers stack several layers:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Typical size</th>
+<th>Typical access time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Registers</td>
+<td>under 1 KB</td>
+<td>under 1 ns</td>
+</tr>
+<tr>
+<td>L1 cache</td>
+<td>32–64 KB per core</td>
+<td>about 1 ns</td>
+</tr>
+<tr>
+<td>L2 / L3 cache</td>
+<td>1–64 MB</td>
+<td>3–15 ns</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>8–32 GB</td>
+<td>about 100 ns</td>
+</tr>
+<tr>
+<td>SSD</td>
+<td>256 GB–2 TB</td>
+<td>about 100,000 ns (0.1 ms)</td>
+</tr>
+<tr>
+<td>Hard disk</td>
+<td>1–10 TB</td>
+<td>about 10,000,000 ns (10 ms)</td>
+</tr>
+</tbody></table>
+</div>
+<p>Reading from RAM is about <strong>100 times</strong> slower than from L1 cache. Programs that access memory <strong>sequentially</strong> (like walking through an array) let the cache prefetch data and run much faster than programs that jump around (like following linked-list pointers).</p>
+<h2 id="how-computers-work--units-of-data"><a class="anchor" href="#how-computers-work--units-of-data" aria-hidden="true" tabindex="-1">#</a>Units of data</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bit</td>
+<td>a single 0 or 1</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>8 bits — one character in ASCII</td>
+</tr>
+<tr>
+<td>kilobyte (KB)</td>
+<td>1,024 bytes (strictly, KiB)</td>
+</tr>
+<tr>
+<td>megabyte (MB)</td>
+<td>1,024 KB</td>
+</tr>
+<tr>
+<td>gigabyte (GB)</td>
+<td>1,024 MB</td>
+</tr>
+<tr>
+<td>terabyte (TB)</td>
+<td>1,024 GB</td>
+</tr>
+</tbody></table>
+</div>
+<p>(Storage makers use powers of 1000, which is why a &quot;1 TB&quot; drive shows up as about 931 GB.)</p>
+<h2 id="how-computers-work--the-operating-system"><a class="anchor" href="#how-computers-work--the-operating-system" aria-hidden="true" tabindex="-1">#</a>The operating system</h2>
+<p>The <strong>operating system</strong> (Linux, Windows, macOS, Android) is the program that manages the hardware for every other program:</p>
+<ul>
+<li><strong>Process management</strong> — runs many programs at once by switching the CPU between them very quickly.</li>
+<li><strong>Memory management</strong> — gives each program its own memory space and protects it from others.</li>
+<li><strong>File system</strong> — organises storage into files and folders.</li>
+<li><strong>Device drivers</strong> — talk to hardware like printers, Wi-Fi and cameras.</li>
+<li><strong>User interface</strong> — a command line (shell) or a graphical desktop.</li>
+<li><strong>Security</strong> — users, permissions and passwords.</li>
+</ul>
+<p>When your C program calls <code>printf</code> or <code>fopen</code>, the C library asks the operating system to do the actual work through a <strong>system call</strong>.</p>
+<h2 id="how-computers-work--software-layers"><a class="anchor" href="#how-computers-work--software-layers" aria-hidden="true" tabindex="-1">#</a>Software layers</h2>
+<figure class="diagram"><svg class="dg" viewBox="0 0 1024 268" width="1024" height="268" role="img" aria-label="Tree rooted at You"><path class="edge" d="M532.875,40 V60 H258.9 V80"/><path class="edge" d="M258.9,114 V134 H90.3 V154"/><path class="edge" d="M258.9,114 V134 H258.9 V154"/><path class="edge" d="M258.9,114 V134 H427.5 V154"/><path class="edge" d="M532.875,40 V60 H806.8499999999999 V80"/><path class="edge" d="M806.8499999999999,114 V134 H680.4 V154"/><path class="edge" d="M680.4,188 V208 H596.0999999999999 V228"/><path class="edge" d="M680.4,188 V208 H764.6999999999999 V228"/><path class="edge" d="M806.8499999999999,114 V134 H933.3 V154"/><rect class="box" x="52" y="154" width="76.6" height="34" rx="8"/><text class="t lbl small" x="90.3" y="171">Browser</text><rect class="box" x="220.6" y="154" width="76.6" height="34" rx="8"/><text class="t lbl small" x="258.9" y="171">VS Code</text><rect class="box" x="365.8" y="154" width="123.4" height="34" rx="8"/><text class="t lbl small" x="427.5" y="171">Your programs</text><rect class="box" x="201.1" y="80" width="115.6" height="34" rx="8"/><text class="t lbl small" x="258.9" y="97">Applications</text><rect class="box" x="561.7" y="228" width="68.8" height="34" rx="8"/><text class="t lbl small" x="596.1" y="245">Kernel</text><rect class="box" x="726.4" y="228" width="76.6" height="34" rx="8"/><text class="t lbl small" x="764.7" y="245">Drivers</text><rect class="box" x="607" y="154" width="146.8" height="34" rx="8"/><text class="t lbl small" x="680.4" y="171">Operating system</text><rect class="box" x="856" y="154" width="154.6" height="34" rx="8"/><text class="t lbl small" x="933.3" y="171">Compilers &amp; tools</text><rect class="box" x="737.3" y="80" width="139" height="34" rx="8"/><text class="t lbl small" x="806.8" y="97">System software</text><rect class="box" x="510.2" y="6" width="45.4" height="34" rx="8"/><text class="t lbl small" x="532.9" y="23">You</text></svg><figcaption>Software sits in layers: applications rely on system software, which controls the hardware.</figcaption></figure>
+</div></section>
+<section class="chapter" id="number-systems"><p class="eyebrow">Chapter 2 · Computer Basics</p><h1>Number Systems</h1><p class="lede">Binary, octal, decimal and hexadecimal: place values, converting between any two bases, and why programmers use hex — with an interactive converter.</p><div class="prose"><p>We count in <strong>decimal</strong> (base 10) because we have ten fingers. Computers use <strong>binary</strong> (base 2) because a transistor is either off (0) or on (1). Programmers also use <strong>octal</strong> (base 8) and <strong>hexadecimal</strong> (base 16) as compact ways to write binary.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>System</th>
+<th>Base</th>
+<th>Digits</th>
+<th>Example</th>
+<th>C / Python literal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Binary</td>
+<td>2</td>
+<td>0 1</td>
+<td>1011</td>
+<td><code>0b1011</code></td>
+</tr>
+<tr>
+<td>Octal</td>
+<td>8</td>
+<td>0–7</td>
+<td>755</td>
+<td><code>0755</code> (C), <code>0o755</code> (Python)</td>
+</tr>
+<tr>
+<td>Decimal</td>
+<td>10</td>
+<td>0–9</td>
+<td>255</td>
+<td><code>255</code></td>
+</tr>
+<tr>
+<td>Hexadecimal</td>
+<td>16</td>
+<td>0–9, A–F (A = 10 … F = 15)</td>
+<td>FF</td>
+<td><code>0xFF</code></td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="number-systems--place-values"><a class="anchor" href="#number-systems--place-values" aria-hidden="true" tabindex="-1">#</a>Place values</h2>
+<p>In base b, each position is worth a power of b, growing from right to left.</p>
+<blockquote>
+<p>1011₂ = 1·2³ + 0·2² + 1·2¹ + 1·2⁰ = 8 + 0 + 2 + 1 = <strong>11</strong>
+2F₁₆ = 2·16¹ + 15·16⁰ = 32 + 15 = <strong>47</strong>
+157₈ = 1·8² + 5·8¹ + 7·8⁰ = 64 + 40 + 7 = <strong>111</strong></p>
+</blockquote>
+<h2 id="number-systems--decimal-to-any-base-repeated-division"><a class="anchor" href="#number-systems--decimal-to-any-base-repeated-division" aria-hidden="true" tabindex="-1">#</a>Decimal to any base: repeated division</h2>
+<p>Divide by the base, record the <strong>remainder</strong>, repeat with the quotient until it reaches 0, then <strong>read the remainders bottom to top</strong>.</p>
+<p>Convert 45 to binary:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Divide</th>
+<th>Quotient</th>
+<th>Remainder</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45 ÷ 2</td>
+<td>22</td>
+<td>1</td>
+</tr>
+<tr>
+<td>22 ÷ 2</td>
+<td>11</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11 ÷ 2</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5 ÷ 2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2 ÷ 2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1 ÷ 2</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</div>
+<p>Reading upwards: <strong>45 = 101101₂</strong>.</p>
+<h2 id="number-systems--try-it"><a class="anchor" href="#number-systems--try-it" aria-hidden="true" tabindex="-1">#</a>Try it</h2>
+<div class="widget" data-widget="base-converter" data-opts="{}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="number-systems--binary-octal-and-hexadecimal-grouping"><a class="anchor" href="#number-systems--binary-octal-and-hexadecimal-grouping" aria-hidden="true" tabindex="-1">#</a>Binary ↔ octal and hexadecimal: grouping</h2>
+<p>Because 8 = 2³ and 16 = 2⁴, each octal digit is exactly <strong>3 bits</strong> and each hex digit exactly <strong>4 bits</strong>. Group bits from the right:</p>
+<blockquote>
+<p>1101 0110 1010₂ → D 6 A → <strong>D6A₁₆</strong>
+110 101 101 010₂ → 6 5 5 2 → <strong>6552₈</strong></p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Hex</th>
+<th>Binary</th>
+<th>Hex</th>
+<th>Binary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0000</td>
+<td>8</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0001</td>
+<td>9</td>
+<td>1001</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0010</td>
+<td>A</td>
+<td>1010</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0011</td>
+<td>B</td>
+<td>1011</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0100</td>
+<td>C</td>
+<td>1100</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0101</td>
+<td>D</td>
+<td>1101</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0110</td>
+<td>E</td>
+<td>1110</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0111</td>
+<td>F</td>
+<td>1111</td>
+</tr>
+</tbody></table>
+</div>
+<p>That is why programmers love hex: one hex digit = 4 bits, two hex digits = one byte. Colours (<code>#FF8800</code>), memory addresses (<code>0x7ffe…</code>) and file signatures are all written in hex.</p>
+<h2 id="number-systems--fractions-in-binary"><a class="anchor" href="#number-systems--fractions-in-binary" aria-hidden="true" tabindex="-1">#</a>Fractions in binary</h2>
+<p>Positions after the point are negative powers: 0.101₂ = 1/2 + 0/4 + 1/8 = 0.625. To convert a decimal fraction, <strong>multiply by 2 repeatedly</strong> and take the integer parts: 0.625 → 1.25 (1) → 0.5 (0) → 1.0 (1) → 0.101₂. Some fractions never terminate in binary — 0.1 is 0.000110011…₂ — which is why <code>0.1 + 0.2 != 0.3</code> in every language.</p>
+<h2 id="number-systems--converting-in-code"><a class="anchor" href="#number-systems--converting-in-code" aria-hidden="true" tabindex="-1">#</a>Converting in code</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">toBase</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> n, <span class="hljs-type">unsigned</span> base)</span> {
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *digits = <span class="hljs-string">&quot;0123456789ABCDEF&quot;</span>;
+    <span class="hljs-type">char</span> buf[<span class="hljs-number">40</span>];
+    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) buf[i++] = <span class="hljs-string">&#x27;0&#x27;</span>;
+    <span class="hljs-keyword">while</span> (n &gt; <span class="hljs-number">0</span>) { buf[i++] = digits[n % base]; n /= base; }   <span class="hljs-comment">// remainders, last first</span>
+    <span class="hljs-keyword">while</span> (i &gt; <span class="hljs-number">0</span>) <span class="hljs-built_in">putchar</span>(buf[--i]);                            <span class="hljs-comment">// print them in reverse</span>
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">unsigned</span> n = <span class="hljs-number">2026</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%u in decimal\n&quot;</span>, n);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;binary: &quot;</span>); toBase(n, <span class="hljs-number">2</span>); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;octal:  %o\nhex:    %X\n&quot;</span>, n, n);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;base 5: &quot;</span>); toBase(n, <span class="hljs-number">5</span>); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;0x7E2 = %d, 0b11111101010 = %d\n&quot;</span>, <span class="hljs-number">0x7E2</span>, <span class="hljs-number">0b11111101010</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>2026 in decimal
+binary: 11111101010
+octal:  3752
+hex:    7EA
+base 5: 31101
+0x7E2 = 2018, 0b11111101010 = 2026</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgp2b2lkIHRvQmFzZSh1bnNpZ25lZCBuLCB1bnNpZ25lZCBiYXNlKSB7CiAgICBjb25zdCBjaGFyICpkaWdpdHMgPSAiMDEyMzQ1Njc4OUFCQ0RFRiI7CiAgICBjaGFyIGJ1Zls0MF07CiAgICBpbnQgaSA9IDA7CiAgICBpZiAobiA9PSAwKSBidWZbaSsrXSA9ICcwJzsKICAgIHdoaWxlIChuID4gMCkgeyBidWZbaSsrXSA9IGRpZ2l0c1tuICUgYmFzZV07IG4gLz0gYmFzZTsgfSAgIC8vIHJlbWFpbmRlcnMsIGxhc3QgZmlyc3QKICAgIHdoaWxlIChpID4gMCkgcHV0Y2hhcihidWZbLS1pXSk7ICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIHByaW50IHRoZW0gaW4gcmV2ZXJzZQp9CgppbnQgbWFpbih2b2lkKSB7CiAgICB1bnNpZ25lZCBuID0gMjAyNjsKICAgIHByaW50ZigiJXUgaW4gZGVjaW1hbFxuIiwgbik7CiAgICBwcmludGYoImJpbmFyeTogIik7IHRvQmFzZShuLCAyKTsgcHJpbnRmKCJcbiIpOwogICAgcHJpbnRmKCJvY3RhbDogICVvXG5oZXg6ICAgICVYXG4iLCBuLCBuKTsKICAgIHByaW50ZigiYmFzZSA1OiAiKTsgdG9CYXNlKG4sIDUpOyBwcmludGYoIlxuIik7CiAgICBwcmludGYoIjB4N0UyID0gJWQsIDBiMTExMTExMDEwMTAgPSAlZFxuIiwgMHg3RTIsIDBiMTExMTExMDEwMTApOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">n = <span class="hljs-number">2026</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">bin</span>(n), <span class="hljs-built_in">oct</span>(n), <span class="hljs-built_in">hex</span>(n))
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-string">&quot;11111101010&quot;</span>, <span class="hljs-number">2</span>), <span class="hljs-built_in">int</span>(<span class="hljs-string">&quot;3752&quot;</span>, <span class="hljs-number">8</span>), <span class="hljs-built_in">int</span>(<span class="hljs-string">&quot;7ea&quot;</span>, <span class="hljs-number">16</span>), <span class="hljs-built_in">int</span>(<span class="hljs-string">&quot;31101&quot;</span>, <span class="hljs-number">5</span>))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{n:b}</span> <span class="hljs-subst">{n:o}</span> <span class="hljs-subst">{n:X}</span> <span class="hljs-subst">{n:#<span class="hljs-number">0</span>10b}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>0b11111101010 0o3752 0x7ea
+2026 2026 2026 2026
+11111101010 3752 7EA 0b11111101010</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=biA9IDIwMjYKcHJpbnQoYmluKG4pLCBvY3QobiksIGhleChuKSkKcHJpbnQoaW50KCIxMTExMTEwMTAxMCIsIDIpLCBpbnQoIjM3NTIiLCA4KSwgaW50KCI3ZWEiLCAxNiksIGludCgiMzExMDEiLCA1KSkKcHJpbnQoZiJ7bjpifSB7bjpvfSB7bjpYfSB7bjojMDEwYn0iKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+</div></section>
+<section class="chapter" id="data-representation"><p class="eyebrow">Chapter 3 · Computer Basics</p><h1>Data Representation</h1><p class="lede">How computers store everything as bits: unsigned and signed integers, two&#39;s complement, overflow, floating point, characters with ASCII and Unicode, and images and sound.</p><div class="prose"><p>Inside a computer, <strong>everything</strong> — numbers, text, images, music, your code — is a pattern of bits. The meaning depends on how the program interprets those bits.</p>
+<h2 id="data-representation--unsigned-integers"><a class="anchor" href="#data-representation--unsigned-integers" aria-hidden="true" tabindex="-1">#</a>Unsigned integers</h2>
+<p>With n bits you can store 2ⁿ patterns: unsigned values 0 to 2ⁿ − 1.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>Unsigned range</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8</td>
+<td>0 to 255</td>
+</tr>
+<tr>
+<td>16</td>
+<td>0 to 65,535</td>
+</tr>
+<tr>
+<td>32</td>
+<td>0 to about 4.29 billion</td>
+</tr>
+<tr>
+<td>64</td>
+<td>0 to about 1.8 × 10¹⁹</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="data-representation--signed-integers-two-s-complement"><a class="anchor" href="#data-representation--signed-integers-two-s-complement" aria-hidden="true" tabindex="-1">#</a>Signed integers: two&#39;s complement</h2>
+<p>To store negative numbers, computers use <strong>two&#39;s complement</strong>. The leftmost bit has a <strong>negative</strong> place value: in 8 bits it is worth −128.</p>
+<p>To find the 8-bit pattern for <strong>−x</strong>: write x in binary, <strong>invert all the bits</strong>, then <strong>add 1</strong>.</p>
+<blockquote>
+<p>5 = 0000 0101 → invert → 1111 1010 → add 1 → <strong>1111 1011</strong> = −5</p>
+</blockquote>
+<p>Check: −128 + 64 + 32 + 16 + 8 + 2 + 1 = −5 ✓.</p>
+<p>8-bit two&#39;s complement ranges from <strong>−128 to +127</strong>; in general, −2ⁿ⁻¹ to 2ⁿ⁻¹ − 1. Two&#39;s complement is used because addition works the same way for positive and negative numbers — the CPU needs only one adder circuit.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">bits8</span><span class="hljs-params">(<span class="hljs-type">signed</span> <span class="hljs-type">char</span> x)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">7</span>; i &gt;= <span class="hljs-number">0</span>; i--) <span class="hljs-built_in">putchar</span>((x &gt;&gt; i) &amp; <span class="hljs-number">1</span> ? <span class="hljs-string">&#x27;1&#x27;</span> : <span class="hljs-string">&#x27;0&#x27;</span>);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">signed</span> <span class="hljs-type">char</span> values[] = {<span class="hljs-number">5</span>, <span class="hljs-number">-5</span>, <span class="hljs-number">127</span>, <span class="hljs-number">-128</span>, <span class="hljs-number">-1</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%5d = &quot;</span>, values[i]);
+        bits8(values[i]);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>    5 = 00000101
+   -5 = 11111011
+  127 = 01111111
+ -128 = 10000000
+   -1 = 11111111</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgp2b2lkIGJpdHM4KHNpZ25lZCBjaGFyIHgpIHsKICAgIGZvciAoaW50IGkgPSA3OyBpID49IDA7IGktLSkgcHV0Y2hhcigoeCA-PiBpKSAmIDEgPyAnMScgOiAnMCcpOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBzaWduZWQgY2hhciB2YWx1ZXNbXSA9IHs1LCAtNSwgMTI3LCAtMTI4LCAtMX07CiAgICBmb3IgKGludCBpID0gMDsgaSA8IDU7IGkrKykgewogICAgICAgIHByaW50ZigiJTVkID0gIiwgdmFsdWVzW2ldKTsKICAgICAgICBiaXRzOCh2YWx1ZXNbaV0pOwogICAgICAgIHByaW50ZigiXG4iKTsKICAgIH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="data-representation--overflow"><a class="anchor" href="#data-representation--overflow" aria-hidden="true" tabindex="-1">#</a>Overflow</h2>
+<p>When a result does not fit in the available bits, it <strong>wraps around</strong>:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;limits.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> u = <span class="hljs-number">255</span>;
+    u = u + <span class="hljs-number">1</span>;                                   <span class="hljs-comment">// 256 does not fit in 8 bits</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;255 + 1 in an unsigned char = %d\n&quot;</span>, u);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;INT_MAX = %d\n&quot;</span>, INT_MAX);
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> big = (<span class="hljs-type">long</span> <span class="hljs-type">long</span>)INT_MAX + <span class="hljs-number">1</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;INT_MAX + 1 as a long long = %lld\n&quot;</span>, big);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;(int)(INT_MAX + 1LL) = %d\n&quot;</span>, (<span class="hljs-type">int</span>)(INT_MAX + <span class="hljs-number">1LL</span>));   <span class="hljs-comment">// wraps to INT_MIN</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>255 + 1 in an unsigned char = 0
+INT_MAX = 2147483647
+INT_MAX + 1 as a long long = 2147483648
+(int)(INT_MAX + 1LL) = -2147483648</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxsaW1pdHMuaD4KCmludCBtYWluKHZvaWQpIHsKICAgIHVuc2lnbmVkIGNoYXIgdSA9IDI1NTsKICAgIHUgPSB1ICsgMTsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIDI1NiBkb2VzIG5vdCBmaXQgaW4gOCBiaXRzCiAgICBwcmludGYoIjI1NSArIDEgaW4gYW4gdW5zaWduZWQgY2hhciA9ICVkXG4iLCB1KTsKICAgIHByaW50ZigiSU5UX01BWCA9ICVkXG4iLCBJTlRfTUFYKTsKICAgIGxvbmcgbG9uZyBiaWcgPSAobG9uZyBsb25nKUlOVF9NQVggKyAxOwogICAgcHJpbnRmKCJJTlRfTUFYICsgMSBhcyBhIGxvbmcgbG9uZyA9ICVsbGRcbiIsIGJpZyk7CiAgICBwcmludGYoIihpbnQpKElOVF9NQVggKyAxTEwpID0gJWRcbiIsIChpbnQpKElOVF9NQVggKyAxTEwpKTsgICAvLyB3cmFwcyB0byBJTlRfTUlOCiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The 2038 problem is an overflow waiting to happen: many systems store time as seconds since 1 January 1970 in a signed 32-bit integer, which runs out on 19 January 2038.</p>
+<h2 id="data-representation--floating-point"><a class="anchor" href="#data-representation--floating-point" aria-hidden="true" tabindex="-1">#</a>Floating point</h2>
+<p>Real numbers use <strong>IEEE 754</strong> floating point — a binary version of scientific notation:</p>
+<blockquote>
+<p>value = (−1)^sign × 1.mantissa × 2^(exponent − bias)</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Bits</th>
+<th>Sign</th>
+<th>Exponent</th>
+<th>Mantissa</th>
+<th>Precision</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>float</code></td>
+<td>32</td>
+<td>1</td>
+<td>8</td>
+<td>23</td>
+<td>about 7 decimal digits</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>64</td>
+<td>1</td>
+<td>11</td>
+<td>52</td>
+<td>about 15–16 decimal digits</td>
+</tr>
+</tbody></table>
+</div>
+<p>Most decimal fractions cannot be stored exactly, so small errors creep in:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">print</span>(<span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span> == <span class="hljs-number">0.3</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">abs</span>((<span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>) - <span class="hljs-number">0.3</span>) &lt; <span class="hljs-number">1e-9</span>)          <span class="hljs-comment"># compare with a tolerance instead</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{<span class="hljs-number">0.1</span>:<span class="hljs-number">.20</span>f}</span>&quot;</span>)                          <span class="hljs-comment"># what is really stored</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-number">1e308</span> * <span class="hljs-number">10</span>, -<span class="hljs-number">1e308</span> * <span class="hljs-number">10</span>)                 <span class="hljs-comment"># overflow to infinity</span>
+total = <span class="hljs-number">0.0</span>
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):
+    total += <span class="hljs-number">0.1</span>                               <span class="hljs-comment"># tiny errors accumulate</span>
+<span class="hljs-built_in">print</span>(total, total == <span class="hljs-number">1.0</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>0.30000000000000004
+False
+True
+0.10000000000000000555
+inf -inf
+0.9999999999999999 False</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=cHJpbnQoMC4xICsgMC4yKQpwcmludCgwLjEgKyAwLjIgPT0gMC4zKQpwcmludChhYnMoKDAuMSArIDAuMikgLSAwLjMpIDwgMWUtOSkgICAgICAgICAgIyBjb21wYXJlIHdpdGggYSB0b2xlcmFuY2UgaW5zdGVhZApwcmludChmInswLjE6LjIwZn0iKSAgICAgICAgICAgICAgICAgICAgICAgICAgIyB3aGF0IGlzIHJlYWxseSBzdG9yZWQKcHJpbnQoMWUzMDggKiAxMCwgLTFlMzA4ICogMTApICAgICAgICAgICAgICAgICAjIG92ZXJmbG93IHRvIGluZmluaXR5CnRvdGFsID0gMC4wCmZvciBfIGluIHJhbmdlKDEwKToKICAgIHRvdGFsICs9IDAuMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIHRpbnkgZXJyb3JzIGFjY3VtdWxhdGUKcHJpbnQodG90YWwsIHRvdGFsID09IDEuMCkK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>Never use floats for money</span></div><div class="callout-body"><p>Rounding errors add up. Store money as an integer number of paise (or use a decimal type).</p>
+</div></aside>
+<h2 id="data-representation--characters"><a class="anchor" href="#data-representation--characters" aria-hidden="true" tabindex="-1">#</a>Characters</h2>
+<p>Text is stored as numbers too.</p>
+<ul>
+<li><strong>ASCII</strong> (1963) uses 7 bits for 128 characters: &#39;A&#39; = 65, &#39;a&#39; = 97, &#39;0&#39; = 48, space = 32, newline = 10.</li>
+<li><strong>Unicode</strong> assigns a <strong>code point</strong> to every character in every script — over 150,000 of them, including Devanagari, Tamil, emoji and ₹ (U+20B9).</li>
+<li><strong>UTF-8</strong> encodes Unicode in 1 to 4 bytes, and is identical to ASCII for the first 128 characters. It is the encoding of the web.</li>
+</ul>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;₹&quot;</span>, <span class="hljs-string">&quot;अ&quot;</span>, <span class="hljs-string">&quot;😀&quot;</span>]:
+    data = ch.encode(<span class="hljs-string">&quot;utf-8&quot;</span>)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{ch!r}</span>: code point U+<span class="hljs-subst">{<span class="hljs-built_in">ord</span>(ch):04X}</span> (<span class="hljs-subst">{<span class="hljs-built_in">ord</span>(ch)}</span>), UTF-8 bytes = <span class="hljs-subst">{data.<span class="hljs-built_in">hex</span>(<span class="hljs-string">&#x27; &#x27;</span>)}</span> (<span class="hljs-subst">{<span class="hljs-built_in">len</span>(data)}</span> byte<span class="hljs-subst">{<span class="hljs-string">&#x27;s&#x27;</span> <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(data) &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;&#x27;</span>}</span>)&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>&#39;A&#39;: code point U+0041 (65), UTF-8 bytes = 41 (1 byte)
+&#39;a&#39;: code point U+0061 (97), UTF-8 bytes = 61 (1 byte)
+&#39;0&#39;: code point U+0030 (48), UTF-8 bytes = 30 (1 byte)
+&#39;₹&#39;: code point U+20B9 (8377), UTF-8 bytes = e2 82 b9 (3 bytes)
+&#39;अ&#39;: code point U+0905 (2309), UTF-8 bytes = e0 a4 85 (3 bytes)
+&#39;😀&#39;: code point U+1F600 (128512), UTF-8 bytes = f0 9f 98 80 (4 bytes)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=Zm9yIGNoIGluIFsiQSIsICJhIiwgIjAiLCAi4oK5IiwgIuCkhSIsICLwn5iAIl06CiAgICBkYXRhID0gY2guZW5jb2RlKCJ1dGYtOCIpCiAgICBwcmludChmIntjaCFyfTogY29kZSBwb2ludCBVK3tvcmQoY2gpOjA0WH0gKHtvcmQoY2gpfSksIFVURi04IGJ5dGVzID0ge2RhdGEuaGV4KCcgJyl9ICh7bGVuKGRhdGEpfSBieXRleydzJyBpZiBsZW4oZGF0YSkgPiAxIGVsc2UgJyd9KSIpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="data-representation--images-and-sound"><a class="anchor" href="#data-representation--images-and-sound" aria-hidden="true" tabindex="-1">#</a>Images and sound</h2>
+<ul>
+<li>An <strong>image</strong> is a grid of <strong>pixels</strong>; each pixel stores a colour, often as 3 bytes for red, green and blue (24-bit colour). A 1920 × 1080 photo has about 2 million pixels × 3 bytes ≈ <strong>6 MB</strong> uncompressed — which is why JPEG and PNG compression matter.</li>
+<li><strong>Sound</strong> is sampled thousands of times per second: CD audio stores 44,100 samples per second, 16 bits each, per channel.</li>
+</ul>
+</div></section>
+<section class="chapter" id="logic-gates"><p class="eyebrow">Chapter 4 · Computer Basics</p><h1>Logic Gates &amp; Circuits</h1><p class="lede">The building blocks of hardware: AND, OR, NOT, NAND, NOR and XOR gates with truth tables, building circuits, the half adder and full adder, and how they add numbers.</p><div class="prose"><p>A <strong>logic gate</strong> is a tiny electronic circuit (made of transistors) that takes one or more bits as input and produces a bit as output. Billions of them inside a CPU perform every calculation your programs do.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 934 112" width="934" height="112" role="img" aria-label="Logic gates: AND, OR, NOT, NAND, NOR, XOR, XNOR"><g class="gate" transform="translate(42,18)"><line class="wire" x1="-20" y1="12" x2="0" y2="12"/><line class="wire" x1="-20" y1="36" x2="0" y2="36"/><path class="body" d="M0,0 H26 A24,24 0 0 1 26,48 H0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="70" y="94">AND</text><g class="gate" transform="translate(174,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="202" y="94">OR</text><g class="gate" transform="translate(306,18)"><line class="wire" x1="-20" y1="24" x2="0" y2="24"/><path class="body" d="M0,2 L42,24 L0,46 Z"/><circle class="body" cx="46.5" cy="24" r="4.5"/><line class="wire" x1="51" y1="24" x2="69" y2="24"/></g><text class="t cap" x="334" y="94">NOT</text><g class="gate" transform="translate(438,18)"><line class="wire" x1="-20" y1="12" x2="0" y2="12"/><line class="wire" x1="-20" y1="36" x2="0" y2="36"/><path class="body" d="M0,0 H26 A24,24 0 0 1 26,48 H0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="466" y="94">NAND</text><g class="gate" transform="translate(570,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="598" y="94">NOR</text><g class="gate" transform="translate(702,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="wire" d="M-7,0 Q5,24 -7,48"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="730" y="94">XOR</text><g class="gate" transform="translate(834,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="wire" d="M-7,0 Q5,24 -7,48"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="862" y="94">XNOR</text></svg><figcaption>The seven standard gates. A small circle (bubble) on the output means the result is inverted.</figcaption></figure>
+<h2 id="logic-gates--truth-tables"><a class="anchor" href="#logic-gates--truth-tables" aria-hidden="true" tabindex="-1">#</a>Truth tables</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>AND</th>
+<th>OR</th>
+<th>NAND</th>
+<th>NOR</th>
+<th>XOR</th>
+<th>XNOR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</div>
+<p>NOT has one input: NOT 0 = 1, NOT 1 = 0.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Output is 1 when…</th>
+<th>Boolean expression</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AND</td>
+<td>all inputs are 1</td>
+<td>A · B</td>
+</tr>
+<tr>
+<td>OR</td>
+<td>at least one input is 1</td>
+<td>A + B</td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>the input is 0</td>
+<td>A′</td>
+</tr>
+<tr>
+<td>NAND</td>
+<td>not all inputs are 1</td>
+<td>(A · B)′</td>
+</tr>
+<tr>
+<td>NOR</td>
+<td>no input is 1</td>
+<td>(A + B)′</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>the inputs differ</td>
+<td>A ⊕ B</td>
+</tr>
+<tr>
+<td>XNOR</td>
+<td>the inputs are equal</td>
+<td>(A ⊕ B)′</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="logic-gates--building-circuits"><a class="anchor" href="#logic-gates--building-circuits" aria-hidden="true" tabindex="-1">#</a>Building circuits</h2>
+<p>Connect gates and you get a circuit for any Boolean expression. Explore one:</p>
+<div class="widget" data-widget="truth-table" data-opts="{&quot;expr&quot;:&quot;(A &amp; !B) | (!A &amp; B)&quot;}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<p>That expression, (A AND NOT B) OR (NOT A AND B), is exactly <strong>XOR</strong>.</p>
+<aside class="callout callout-info"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Universal gates</span></div><div class="callout-body"><p>NAND alone can build every other gate — chip makers often build entire processors mostly from NAND gates. NOR is universal too. The algebra behind this is in <a href="../../discrete/boolean-algebra/">Boolean Algebra</a>.</p>
+</div></aside>
+<h2 id="logic-gates--adding-binary-numbers"><a class="anchor" href="#logic-gates--adding-binary-numbers" aria-hidden="true" tabindex="-1">#</a>Adding binary numbers</h2>
+<p>Binary addition follows simple rules: 0 + 0 = 0, 0 + 1 = 1, 1 + 1 = 10 (0, carry 1), 1 + 1 + 1 = 11 (1, carry 1).</p>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">    1 0 1 1   (11)
+  + 0 1 1 1   ( 7)
+  ---------
+  1 0 0 1 0   (18)</code></pre></figure>
+<h3 id="logic-gates--half-adder"><a class="anchor" href="#logic-gates--half-adder" aria-hidden="true" tabindex="-1">#</a>Half adder</h3>
+<p>Adds two bits A and B:</p>
+<ul>
+<li><strong>Sum</strong> = A XOR B</li>
+<li><strong>Carry</strong> = A AND B</li>
+</ul>
+<h3 id="logic-gates--full-adder"><a class="anchor" href="#logic-gates--full-adder" aria-hidden="true" tabindex="-1">#</a>Full adder</h3>
+<p>Adds two bits <strong>plus a carry in</strong>, so adders can be chained for multi-bit numbers:</p>
+<ul>
+<li><strong>Sum</strong> = A XOR B XOR Cin</li>
+<li><strong>Carry out</strong> = (A AND B) OR (Cin AND (A XOR B))</li>
+</ul>
+<p>Chain 32 or 64 full adders, each passing its carry to the next, and you have the adder inside a CPU&#39;s ALU — a <strong>ripple-carry adder</strong>:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">full_adder</span>(<span class="hljs-params">a, b, carry_in</span>):
+    s = a ^ b ^ carry_in
+    carry_out = (a &amp; b) | (carry_in &amp; (a ^ b))
+    <span class="hljs-keyword">return</span> s, carry_out
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">add_bits</span>(<span class="hljs-params">x, y, width=<span class="hljs-number">8</span></span>):
+    carry, result = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(width):                       <span class="hljs-comment"># from the least significant bit</span>
+        bit, carry = full_adder((x &gt;&gt; i) &amp; <span class="hljs-number">1</span>, (y &gt;&gt; i) &amp; <span class="hljs-number">1</span>, carry)
+        result |= bit &lt;&lt; i
+    <span class="hljs-keyword">return</span> result, carry
+
+<span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> [(<span class="hljs-number">11</span>, <span class="hljs-number">7</span>), (<span class="hljs-number">100</span>, <span class="hljs-number">55</span>), (<span class="hljs-number">200</span>, <span class="hljs-number">100</span>)]:
+    total, overflow = add_bits(x, y)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{x:<span class="hljs-number">3</span>}</span> + <span class="hljs-subst">{y:<span class="hljs-number">3</span>}</span> = <span class="hljs-subst">{total:<span class="hljs-number">3</span>}</span>  (binary <span class="hljs-subst">{x:08b}</span> + <span class="hljs-subst">{y:08b}</span> = <span class="hljs-subst">{total:08b}</span>, carry out <span class="hljs-subst">{overflow}</span>)&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre> 11 +   7 =  18  (binary 00001011 + 00000111 = 00010010, carry out 0)
+100 +  55 = 155  (binary 01100100 + 00110111 = 10011011, carry out 0)
+200 + 100 =  44  (binary 11001000 + 01100100 = 00101100, carry out 1)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGZ1bGxfYWRkZXIoYSwgYiwgY2FycnlfaW4pOgogICAgcyA9IGEgXiBiIF4gY2FycnlfaW4KICAgIGNhcnJ5X291dCA9IChhICYgYikgfCAoY2FycnlfaW4gJiAoYSBeIGIpKQogICAgcmV0dXJuIHMsIGNhcnJ5X291dAoKZGVmIGFkZF9iaXRzKHgsIHksIHdpZHRoPTgpOgogICAgY2FycnksIHJlc3VsdCA9IDAsIDAKICAgIGZvciBpIGluIHJhbmdlKHdpZHRoKTogICAgICAgICAgICAgICAgICAgICAgICMgZnJvbSB0aGUgbGVhc3Qgc2lnbmlmaWNhbnQgYml0CiAgICAgICAgYml0LCBjYXJyeSA9IGZ1bGxfYWRkZXIoKHggPj4gaSkgJiAxLCAoeSA-PiBpKSAmIDEsIGNhcnJ5KQogICAgICAgIHJlc3VsdCB8PSBiaXQgPDwgaQogICAgcmV0dXJuIHJlc3VsdCwgY2FycnkKCmZvciB4LCB5IGluIFsoMTEsIDcpLCAoMTAwLCA1NSksICgyMDAsIDEwMCldOgogICAgdG90YWwsIG92ZXJmbG93ID0gYWRkX2JpdHMoeCwgeSkKICAgIHByaW50KGYie3g6M30gKyB7eTozfSA9IHt0b3RhbDozfSAgKGJpbmFyeSB7eDowOGJ9ICsge3k6MDhifSA9IHt0b3RhbDowOGJ9LCBjYXJyeSBvdXQge292ZXJmbG93fSkiKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The last line shows <strong>overflow</strong>: 300 does not fit in 8 bits, so the result wraps to 44 and the carry-out bit is 1.</p>
+<h2 id="logic-gates--beyond-adders"><a class="anchor" href="#logic-gates--beyond-adders" aria-hidden="true" tabindex="-1">#</a>Beyond adders</h2>
+<ul>
+<li><strong>Multiplexers</strong> select one of several inputs (the hardware version of <code>switch</code>).</li>
+<li><strong>Flip-flops</strong> use feedback between gates to <strong>remember</strong> a bit — the basis of registers and memory.</li>
+<li>Combining adders, multiplexers and flip-flops with a clock gives you a CPU.</li>
+</ul>
+</div></section>
+<section class="chapter" id="algorithms-flowcharts"><p class="eyebrow">Chapter 5 · Problem Solving</p><h1>Algorithms, Flowcharts &amp; Pseudocode</h1><p class="lede">Think before you code: computational thinking, writing step-by-step algorithms, drawing flowcharts with the standard symbols, and writing clear pseudocode.</p><div class="prose"><p>Most programming mistakes happen <strong>before</strong> any code is typed: the plan was wrong or vague. Professional developers plan solutions first. This lesson gives you three tools for planning.</p>
+<h2 id="algorithms-flowcharts--computational-thinking"><a class="anchor" href="#algorithms-flowcharts--computational-thinking" aria-hidden="true" tabindex="-1">#</a>Computational thinking</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Meaning</th>
+<th>Example: &quot;find the class topper&quot;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Decomposition</strong></td>
+<td>break a big problem into smaller ones</td>
+<td>read marks; compare; report</td>
+</tr>
+<tr>
+<td><strong>Pattern recognition</strong></td>
+<td>spot similarities with problems you have solved</td>
+<td>&quot;it&#39;s just finding a maximum&quot;</td>
+</tr>
+<tr>
+<td><strong>Abstraction</strong></td>
+<td>ignore details that do not matter</td>
+<td>names do not matter until the end</td>
+</tr>
+<tr>
+<td><strong>Algorithm design</strong></td>
+<td>write precise steps that always work</td>
+<td>keep the best so far, update it</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="algorithms-flowcharts--algorithms"><a class="anchor" href="#algorithms-flowcharts--algorithms" aria-hidden="true" tabindex="-1">#</a>Algorithms</h2>
+<p>An <strong>algorithm</strong> is a finite, ordered list of unambiguous steps that solves a problem. A recipe is an algorithm for cooking.</p>
+<p><strong>Algorithm: find the largest of three numbers</strong></p>
+<ol>
+<li>Start.</li>
+<li>Read A, B, C.</li>
+<li>If A ≥ B and A ≥ C, then LARGEST = A.</li>
+<li>Otherwise, if B ≥ C, then LARGEST = B.</li>
+<li>Otherwise, LARGEST = C.</li>
+<li>Print LARGEST.</li>
+<li>Stop.</li>
+</ol>
+<p>A good algorithm is <strong>correct</strong> for every input (what if two numbers are equal?), <strong>finite</strong>, <strong>unambiguous</strong> and <strong>efficient</strong>.</p>
+<h2 id="algorithms-flowcharts--flowcharts"><a class="anchor" href="#algorithms-flowcharts--flowcharts" aria-hidden="true" tabindex="-1">#</a>Flowcharts</h2>
+<p>A <strong>flowchart</strong> draws an algorithm as connected shapes:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Shape</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Terminal</td>
+<td>rounded rectangle (oval)</td>
+<td>Start / Stop</td>
+</tr>
+<tr>
+<td>Input/Output</td>
+<td>parallelogram</td>
+<td>Read or print data</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>rectangle</td>
+<td>a calculation or assignment</td>
+</tr>
+<tr>
+<td>Decision</td>
+<td>diamond</td>
+<td>a yes/no question, two exits</td>
+</tr>
+<tr>
+<td>Flow line</td>
+<td>arrow</td>
+<td>the order of steps</td>
+</tr>
+<tr>
+<td>Connector</td>
+<td>small circle</td>
+<td>joins parts of a long chart</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="diagram"><svg class="dg" viewBox="0 0 420 412" width="420" height="412" role="img" aria-label="Flowchart: Start → Read a number n → n % 2 == 0 ? → Print &quot;Even&quot; → Print &quot;Odd&quot; → Stop"><defs><marker id="dg-ah-43" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="115" y="10" width="190" height="44" rx="22"/><text class="t" x="210" y="32">Start</text><line class="edge" x1="210" y1="54" x2="210" y2="82" marker-end="url(#dg-ah-43)"/><path class="fc io" d="M129,84 H305 L291,128 H115 Z"/><text class="t" x="210" y="106">Read a number n</text><line class="edge" x1="210" y1="128" x2="210" y2="156" marker-end="url(#dg-ah-43)"/><path class="fc dec" d="M210,158 L325,193 L210,228 L95,193 Z"/><text class="t" x="210" y="193">n % 2 == 0 ?</text><path class="edge" d="M95,193 H98 V260" marker-end="url(#dg-ah-43)"/><text class="s yes" x="77" y="181">Yes</text><path class="fc io" d="M27,262 H183 L169,306 H13 Z"/><text class="t" x="98" y="284">Print &quot;Even&quot;</text><path class="edge" d="M325,193 H322 V260" marker-end="url(#dg-ah-43)"/><text class="s no" x="341" y="181">No</text><path class="fc io" d="M251,262 H407 L393,306 H237 Z"/><text class="t" x="322" y="284">Print &quot;Odd&quot;</text><path class="edge" d="M98,306 V328 H322 V306"/><line class="edge" x1="210" y1="328" x2="210" y2="336"/><line class="edge" x1="210" y1="336" x2="210" y2="356" marker-end="url(#dg-ah-43)"/><rect class="fc term" x="115" y="358" width="190" height="44" rx="22"/><text class="t" x="210" y="380">Stop</text></svg><figcaption>Flowchart for checking whether a number is even or odd.</figcaption></figure>
+<p>Loops appear as an arrow going <strong>back</strong> to an earlier step:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 707 386" width="707" height="386" role="img" aria-label="Flowchart: Start → sum = 0, i = 1 → i &lt;= n ? → sum = sum + i, then i = i + 1 → Print sum → Stop"><defs><marker id="dg-ah-44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="115" y="10" width="190" height="44" rx="22"/><text class="t" x="210" y="32">Start</text><line class="edge" x1="210" y1="54" x2="210" y2="82" marker-end="url(#dg-ah-44)"/><rect class="fc proc" x="115" y="84" width="190" height="44" rx="4"/><text class="t" x="210" y="106">sum = 0, i = 1</text><line class="edge" x1="210" y1="128" x2="210" y2="156" marker-end="url(#dg-ah-44)"/><path class="fc dec" d="M210,158 L325,193 L210,228 L95,193 Z"/><text class="t" x="210" y="193">i &lt;= n ?</text><line class="edge" x1="325" y1="193" x2="353" y2="193" marker-end="url(#dg-ah-44)"/><text class="s yes" x="340" y="181">Yes</text><rect class="fc proc" x="355" y="171" width="256.4" height="44" rx="4"/><text class="t" x="483.2" y="193">sum = sum + i, then i = i + 1</text><path class="edge" d="M483.2,171 V142 H210"/><text class="s no" x="226" y="240">No</text><line class="edge" x1="210" y1="228" x2="210" y2="256" marker-end="url(#dg-ah-44)"/><path class="fc io" d="M129,258 H305 L291,302 H115 Z"/><text class="t" x="210" y="280">Print sum</text><line class="edge" x1="210" y1="302" x2="210" y2="330" marker-end="url(#dg-ah-44)"/><rect class="fc term" x="115" y="332" width="190" height="44" rx="22"/><text class="t" x="210" y="354">Stop</text></svg><figcaption>Flowchart for the sum 1 + 2 + … + n. The &quot;Yes&quot; branch loops back to the condition.</figcaption></figure>
+<h2 id="algorithms-flowcharts--pseudocode"><a class="anchor" href="#algorithms-flowcharts--pseudocode" aria-hidden="true" tabindex="-1">#</a>Pseudocode</h2>
+<p><strong>Pseudocode</strong> writes an algorithm in structured, code-like English — precise like code, but free of any one language&#39;s syntax.</p>
+<figure class="code" data-lang="pseudo"><div class="code-head"><span class="code-lang">Pseudocode</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">ALGORITHM SumOfDigits
+    INPUT n
+    sum ← 0
+    WHILE n &gt; 0 DO
+        digit ← n MOD 10
+        sum ← sum + digit
+        n ← n DIV 10
+    END WHILE
+    OUTPUT sum
+END</code></pre></figure>
+<p>Common conventions: <code>←</code> for assignment, <code>IF … THEN … ELSE … END IF</code>, <code>FOR i ← 1 TO n DO … END FOR</code>, <code>WHILE … DO … END WHILE</code>, <code>INPUT</code> and <code>OUTPUT</code>, and indentation to show blocks.</p>
+<h2 id="algorithms-flowcharts--from-plan-to-program"><a class="anchor" href="#algorithms-flowcharts--from-plan-to-program" aria-hidden="true" tabindex="-1">#</a>From plan to program</h2>
+<p>The pseudocode translates almost line by line into any language:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n, sum = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter a number: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+    <span class="hljs-keyword">while</span> (n &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-type">int</span> digit = n % <span class="hljs-number">10</span>;
+        sum = sum + digit;
+        n = n / <span class="hljs-number">10</span>;
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sum of digits = %d\n&quot;</span>, sum);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter a number: <span class="in">40213</span>
+Sum of digits = 10</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiwgc3VtID0gMDsKICAgIHByaW50ZigiRW50ZXIgYSBudW1iZXI6ICIpOwogICAgc2NhbmYoIiVkIiwgJm4pOwogICAgd2hpbGUgKG4gPiAwKSB7CiAgICAgICAgaW50IGRpZ2l0ID0gbiAlIDEwOwogICAgICAgIHN1bSA9IHN1bSArIGRpZ2l0OwogICAgICAgIG4gPSBuIC8gMTA7CiAgICB9CiAgICBwcmludGYoIlN1bSBvZiBkaWdpdHMgPSAlZFxuIiwgc3VtKTsKICAgIHJldHVybiAwOwp9Cg&amp;stdin=NDAyMTMK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;Enter a number: &quot;</span>))
+total = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+    total += n % <span class="hljs-number">10</span>
+    n //= <span class="hljs-number">10</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sum of digits =&quot;</span>, total)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter a number: <span class="in">40213</span>
+Sum of digits = 10</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=python&amp;code=biA9IGludChpbnB1dCgiRW50ZXIgYSBudW1iZXI6ICIpKQp0b3RhbCA9IDAKd2hpbGUgbiA-IDA6CiAgICB0b3RhbCArPSBuICUgMTAKICAgIG4gLy89IDEwCnByaW50KCJTdW0gb2YgZGlnaXRzID0iLCB0b3RhbCkK&amp;stdin=NDAyMTMK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="algorithms-flowcharts--dry-runs"><a class="anchor" href="#algorithms-flowcharts--dry-runs" aria-hidden="true" tabindex="-1">#</a>Dry runs</h2>
+<p>Before running code, <strong>trace</strong> it by hand with a table of variables — the single best debugging habit:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>n</th>
+<th>digit</th>
+<th>sum</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>start</td>
+<td>40213</td>
+<td>–</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4021</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>402</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>40</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>4</td>
+<td>10</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>The problem-solving routine</span></div><div class="callout-body"><ol>
+<li>Restate the problem in your own words. 2. Work two or three small examples by hand, including an edge case. 3. Write the algorithm or pseudocode. 4. Dry-run it. 5. Only then code it, and test with your examples.</li>
+</ol>
+</div></aside>
+</div></section>
+<section class="chapter" id="from-code-to-program"><p class="eyebrow">Chapter 6 · Problem Solving</p><h1>From Code to Running Program</h1><p class="lede">How source code becomes a running program: compilers vs interpreters, the build steps, IDEs and editors, and the three kinds of errors — syntax, runtime and logical — with debugging strategies.</p><div class="prose"><h2 id="from-code-to-program--programming-languages"><a class="anchor" href="#from-code-to-program--programming-languages" aria-hidden="true" tabindex="-1">#</a>Programming languages</h2>
+<p>Computers only execute <strong>machine code</strong> — binary instructions specific to a CPU. Programmers write in <strong>high-level languages</strong> like C, Python and Java that are readable by humans, and a translator converts them.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Example</th>
+<th>Who reads it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Machine code</td>
+<td><code>10110000 01100001</code></td>
+<td>the CPU</td>
+</tr>
+<tr>
+<td>Assembly</td>
+<td><code>mov al, 0x61</code></td>
+<td>low-level programmers</td>
+</tr>
+<tr>
+<td>High-level</td>
+<td><code>x = 97</code></td>
+<td>everyone</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="from-code-to-program--compilers-vs-interpreters"><a class="anchor" href="#from-code-to-program--compilers-vs-interpreters" aria-hidden="true" tabindex="-1">#</a>Compilers vs interpreters</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Compiler</th>
+<th>Interpreter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Translates</td>
+<td>the whole program before it runs</td>
+<td>one statement at a time while running</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>a standalone executable file</td>
+<td>no separate file</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td>all syntax errors reported before running</td>
+<td>reported when the line is reached</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>the program runs fast</td>
+<td>slower</td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>C, C++, Rust, Go</td>
+<td>Python, JavaScript (with JIT compilers today), Ruby</td>
+</tr>
+</tbody></table>
+</div>
+<p>Java and Python actually do both: they compile to an intermediate <strong>bytecode</strong>, which a virtual machine then runs.</p>
+<h2 id="from-code-to-program--the-c-build-pipeline"><a class="anchor" href="#from-code-to-program--the-c-build-pipeline" aria-hidden="true" tabindex="-1">#</a>The C build pipeline</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">gcc -E hello.c -o hello.i     <span class="hljs-comment"># 1. preprocess: expand #include and #define</span>
+gcc -S hello.i -o hello.s     <span class="hljs-comment"># 2. compile: C to assembly</span>
+gcc -c hello.s -o hello.o     <span class="hljs-comment"># 3. assemble: assembly to machine code (object file)</span>
+gcc hello.o -o hello          <span class="hljs-comment"># 4. link: add library code (printf) into an executable</span>
+./hello                       <span class="hljs-comment"># 5. load and run</span></code></pre></figure>
+<p>Normally one command does it all: <code>gcc hello.c -o hello</code>. See <a href="../../c/intro/">C Introduction</a> for the diagram.</p>
+<h2 id="from-code-to-program--editors-and-ides"><a class="anchor" href="#from-code-to-program--editors-and-ides" aria-hidden="true" tabindex="-1">#</a>Editors and IDEs</h2>
+<ul>
+<li>A <strong>text editor</strong> (VS Code, Sublime, Vim) edits code; extensions add colours, suggestions and error checks.</li>
+<li>An <strong>IDE</strong> (integrated development environment) bundles an editor, compiler, debugger and project tools: CLion and Visual Studio for C/C++, PyCharm for Python, IntelliJ for Java.</li>
+<li><strong>Online compilers</strong> (like this site&#39;s <a href="../../playground/">Compiler</a>) need nothing installed.</li>
+</ul>
+<h2 id="from-code-to-program--the-three-kinds-of-errors"><a class="anchor" href="#from-code-to-program--the-three-kinds-of-errors" aria-hidden="true" tabindex="-1">#</a>The three kinds of errors</h2>
+<h3 id="from-code-to-program--1-syntax-errors"><a class="anchor" href="#from-code-to-program--1-syntax-errors" aria-hidden="true" tabindex="-1">#</a>1. Syntax errors</h3>
+<p>The code breaks the language&#39;s grammar, so it will not compile (or start). The compiler tells you the line.</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello&quot;</span>)      <span class="hljs-comment">// missing semicolon -&gt; error: expected &#x27;;&#x27;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre></figure>
+<h3 id="from-code-to-program--2-runtime-errors"><a class="anchor" href="#from-code-to-program--2-runtime-errors" aria-hidden="true" tabindex="-1">#</a>2. Runtime errors</h3>
+<p>The program compiles but crashes or misbehaves while running: dividing by zero, reading past an array, opening a missing file, running out of memory.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">marks = [<span class="hljs-number">78</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>]
+total = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>):          <span class="hljs-comment"># one too many</span>
+    total += marks[i]
+<span class="hljs-built_in">print</span>(total)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre><span class="stderr">Traceback (most recent call last):
+  File &quot;main.py&quot;, line 4, in &lt;module&gt;
+    total += marks[i]
+             ~~~~~^^^
+IndexError: list index out of range</span></pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bWFya3MgPSBbNzgsIDg1LCA5Ml0KdG90YWwgPSAwCmZvciBpIGluIHJhbmdlKDQpOiAgICAgICAgICAjIG9uZSB0b28gbWFueQogICAgdG90YWwgKz0gbWFya3NbaV0KcHJpbnQodG90YWwpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h3 id="from-code-to-program--3-logical-errors"><a class="anchor" href="#from-code-to-program--3-logical-errors" aria-hidden="true" tabindex="-1">#</a>3. Logical errors</h3>
+<p>The program runs and finishes, but gives the <strong>wrong answer</strong>. No error message appears — these are the hardest to find.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">marks = [<span class="hljs-number">78</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>]
+average = <span class="hljs-built_in">sum</span>(marks) / <span class="hljs-number">2</span>       <span class="hljs-comment"># bug: should divide by len(marks)</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average:&quot;</span>, average)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Average: 127.5</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bWFya3MgPSBbNzgsIDg1LCA5Ml0KYXZlcmFnZSA9IHN1bShtYXJrcykgLyAyICAgICAgICMgYnVnOiBzaG91bGQgZGl2aWRlIGJ5IGxlbihtYXJrcykKcHJpbnQoIkF2ZXJhZ2U6IiwgYXZlcmFnZSkK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Error type</th>
+<th>When found</th>
+<th>Who finds it</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Syntax</td>
+<td>compile time</td>
+<td>the compiler</td>
+<td>missing <code>;</code> or <code>:</code></td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>while running</td>
+<td>a crash or exception</td>
+<td>divide by zero</td>
+</tr>
+<tr>
+<td>Logical</td>
+<td>after checking the output</td>
+<td>you, by testing</td>
+<td>wrong formula</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="from-code-to-program--debugging-strategies"><a class="anchor" href="#from-code-to-program--debugging-strategies" aria-hidden="true" tabindex="-1">#</a>Debugging strategies</h2>
+<ol>
+<li><strong>Read the error message</strong> from the top — it names the file, line and problem.</li>
+<li><strong>Reproduce</strong> the bug with the smallest input that triggers it.</li>
+<li><strong>Print</strong> values at key points (<code>printf</code> / <code>print</code> debugging).</li>
+<li>Use a <strong>debugger</strong>: set breakpoints, step line by line, watch variables (gdb, VS Code debugger).</li>
+<li><strong>Rubber-duck</strong>: explain the code line by line to someone (or a rubber duck). Often you spot the bug while explaining.</li>
+<li><strong>Check edge cases</strong>: 0, 1, negative numbers, empty input, the largest input.</li>
+</ol>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Test like a professional</span></div><div class="callout-body"><p>Before calling a program done, test: a normal case, the smallest case, an edge case (zero, empty, equal values), and an invalid input. Write the expected output down <strong>before</strong> you run it.</p>
+</div></aside>
+</div></section>
+<section class="chapter" id="linux-command-line"><p class="eyebrow">Chapter 7 · Developer Tools</p><h1>The Linux Command Line</h1><p class="lede">Work like a developer in the terminal: the file system tree, navigating and managing files, viewing and searching text, permissions, pipes and redirection, processes and compiling code.</p><div class="prose"><p>Servers, cloud machines, Raspberry Pis and most developer tools run Linux, and they are driven from the <strong>command line</strong> (also called the terminal or shell). It is faster than clicking once you know a few dozen commands — and in internships you will be expected to use it.</p>
+<p>The program that reads your commands is the <strong>shell</strong> (usually <strong>bash</strong> or <strong>zsh</strong>). On Windows, install <strong>WSL</strong> (Windows Subsystem for Linux) to get a real Linux shell; macOS already has a Unix shell.</p>
+<h2 id="linux-command-line--the-file-system"><a class="anchor" href="#linux-command-line--the-file-system" aria-hidden="true" tabindex="-1">#</a>The file system</h2>
+<p>Linux organises everything in <strong>one tree</strong> starting at the <strong>root</strong>, <code>/</code>:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 650 268" width="650" height="268" role="img" aria-label="Tree rooted at /"><path class="edge" d="M351.15000000000003,40 V60 H112.2 V80"/><path class="edge" d="M112.2,114 V134 H112.2 V154"/><path class="edge" d="M112.2,188 V208 H59.1 V228"/><path class="edge" d="M112.2,188 V208 H165.3 V228"/><path class="edge" d="M351.15000000000003,40 V60 H271.5 V80"/><path class="edge" d="M351.15000000000003,40 V60 H377.70000000000005 V80"/><path class="edge" d="M351.15000000000003,40 V60 H483.90000000000003 V80"/><path class="edge" d="M351.15000000000003,40 V60 H590.1 V80"/><rect class="box" x="16.9" y="228" width="84.4" height="34" rx="8"/><text class="t lbl small" x="59.1" y="245">projects</text><rect class="box" x="119.2" y="228" width="92.2" height="34" rx="8"/><text class="t lbl small" x="165.3" y="245">notes.txt</text><rect class="box" x="85.6" y="154" width="53.2" height="34" rx="8"/><text class="t lbl small" x="112.2" y="171">asha</text><rect class="box" x="85.6" y="80" width="53.2" height="34" rx="8"/><text class="t lbl small" x="112.2" y="97">home</text><rect class="box" x="248.8" y="80" width="45.4" height="34" rx="8"/><text class="t lbl small" x="271.5" y="97">etc</text><rect class="box" x="355" y="80" width="45.4" height="34" rx="8"/><text class="t lbl small" x="377.7" y="97">bin</text><rect class="box" x="461.2" y="80" width="45.4" height="34" rx="8"/><text class="t lbl small" x="483.9" y="97">usr</text><rect class="box" x="567.4" y="80" width="45.4" height="34" rx="8"/><text class="t lbl small" x="590.1" y="97">tmp</text><rect class="box" x="336.3" y="6" width="29.8" height="34" rx="8"/><text class="t lbl small" x="351.2" y="23">/</text></svg><figcaption>Part of a Linux directory tree. Asha&#39;s home folder is /home/asha, also written ~.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/</code></td>
+<td>the root of the whole tree</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>your home folder, e.g. <code>/home/asha</code></td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>the current folder</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>the parent folder</td>
+</tr>
+<tr>
+<td><code>/home/asha/notes.txt</code></td>
+<td>an <strong>absolute</strong> path (starts at <code>/</code>)</td>
+</tr>
+<tr>
+<td><code>projects/lab1.c</code></td>
+<td>a <strong>relative</strong> path (starts at the current folder)</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="linux-command-line--navigating"><a class="anchor" href="#linux-command-line--navigating" aria-hidden="true" tabindex="-1">#</a>Navigating</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">pwd</span>                     <span class="hljs-comment"># print working directory: where am I?</span>
+<span class="hljs-built_in">ls</span>                      <span class="hljs-comment"># list files</span>
+<span class="hljs-built_in">ls</span> -la                  <span class="hljs-comment"># long format, including hidden files (names starting with .)</span>
+<span class="hljs-built_in">cd</span> projects             <span class="hljs-comment"># change into a folder</span>
+<span class="hljs-built_in">cd</span> ..                   <span class="hljs-comment"># go up one level</span>
+<span class="hljs-built_in">cd</span> ~                    <span class="hljs-comment"># go home (plain `cd` does the same)</span>
+<span class="hljs-built_in">cd</span> -                    <span class="hljs-comment"># go back to the previous folder</span></code></pre></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Tab completion and history</span></div><div class="callout-body"><p>Press <strong>Tab</strong> to auto-complete file and command names. Press <strong>↑</strong> to recall previous commands, and <strong>Ctrl+R</strong> to search your history.</p>
+</div></aside>
+<h2 id="linux-command-line--managing-files-and-folders"><a class="anchor" href="#linux-command-line--managing-files-and-folders" aria-hidden="true" tabindex="-1">#</a>Managing files and folders</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">mkdir</span> lab1                      <span class="hljs-comment"># make a folder</span>
+<span class="hljs-built_in">mkdir</span> -p cse101/week2/day3      <span class="hljs-comment"># make nested folders at once</span>
+<span class="hljs-built_in">touch</span> main.c                    <span class="hljs-comment"># create an empty file</span>
+<span class="hljs-built_in">cp</span> main.c backup.c              <span class="hljs-comment"># copy</span>
+<span class="hljs-built_in">cp</span> -r lab1 lab1-backup          <span class="hljs-comment"># copy a folder recursively</span>
+<span class="hljs-built_in">mv</span> backup.c old/                <span class="hljs-comment"># move into a folder</span>
+<span class="hljs-built_in">mv</span> draft.txt final.txt          <span class="hljs-comment"># rename</span>
+<span class="hljs-built_in">rm</span> old.txt                      <span class="hljs-comment"># delete a file (no recycle bin!)</span>
+<span class="hljs-built_in">rm</span> -r lab1-backup               <span class="hljs-comment"># delete a folder and everything inside</span></code></pre></figure>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>rm is permanent</span></div><div class="callout-body"><p>There is no undo. Double-check before <code>rm -r</code>, and never run commands like <code>rm -rf /</code> that you find online without understanding them.</p>
+</div></aside>
+<h2 id="linux-command-line--viewing-and-searching-text"><a class="anchor" href="#linux-command-line--viewing-and-searching-text" aria-hidden="true" tabindex="-1">#</a>Viewing and searching text</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">cat</span> notes.txt                   <span class="hljs-comment"># print a whole file</span>
+less big.log                    <span class="hljs-comment"># scroll through a long file (q to quit)</span>
+<span class="hljs-built_in">head</span> -n 5 data.csv              <span class="hljs-comment"># first 5 lines</span>
+<span class="hljs-built_in">tail</span> -n 20 server.log           <span class="hljs-comment"># last 20 lines</span>
+<span class="hljs-built_in">tail</span> -f server.log              <span class="hljs-comment"># follow a growing file live</span>
+<span class="hljs-built_in">wc</span> -l *.c                       <span class="hljs-comment"># count lines in every .c file</span>
+grep <span class="hljs-string">&quot;main&quot;</span> *.c                 <span class="hljs-comment"># find lines containing &quot;main&quot;</span>
+grep -rn <span class="hljs-string">&quot;TODO&quot;</span> src/            <span class="hljs-comment"># search recursively, with line numbers</span>
+find . -name <span class="hljs-string">&quot;*.py&quot;</span>             <span class="hljs-comment"># find files by name</span></code></pre></figure>
+<h2 id="linux-command-line--pipes-and-redirection"><a class="anchor" href="#linux-command-line--pipes-and-redirection" aria-hidden="true" tabindex="-1">#</a>Pipes and redirection</h2>
+<p>Linux commands are small tools that you <strong>combine</strong>:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&gt;</code></td>
+<td>write output to a file (overwrite)</td>
+<td><code>ls &gt; files.txt</code></td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code></td>
+<td>append output to a file</td>
+<td><code>echo &quot;done&quot; &gt;&gt; log.txt</code></td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>read input from a file</td>
+<td><code>./a.out &lt; input.txt</code></td>
+</tr>
+<tr>
+<td><code>|</code></td>
+<td>pipe one command&#39;s output into the next</td>
+<td><code>cat log.txt | grep ERROR | wc -l</code></td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">history</span> | grep gcc | <span class="hljs-built_in">tail</span> -n 3          <span class="hljs-comment"># my last 3 gcc commands</span>
+<span class="hljs-built_in">ls</span> -l | <span class="hljs-built_in">sort</span> -k5 -n | <span class="hljs-built_in">tail</span> -n 1          <span class="hljs-comment"># the largest file in this folder</span>
+./marks &lt; test1.txt &gt; result1.txt       <span class="hljs-comment"># test a program with saved input</span></code></pre></figure>
+<h2 id="linux-command-line--permissions"><a class="anchor" href="#linux-command-line--permissions" aria-hidden="true" tabindex="-1">#</a>Permissions</h2>
+<p><code>ls -l</code> shows a permission string like <code>-rwxr-xr--</code>: the file type, then <strong>read/write/execute</strong> for the <strong>owner</strong>, the <strong>group</strong> and <strong>others</strong>.</p>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">chmod</span> +x script.sh              <span class="hljs-comment"># make a script executable</span>
+<span class="hljs-built_in">chmod</span> 644 notes.txt             <span class="hljs-comment"># rw- r-- r-- (6 = 4+2, 4 = read)</span>
+<span class="hljs-built_in">sudo</span> apt install gcc            <span class="hljs-comment"># run one command as the administrator (root)</span></code></pre></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Digit</th>
+<th>Permissions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7</td>
+<td>rwx (4 + 2 + 1)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>rw-</td>
+</tr>
+<tr>
+<td>5</td>
+<td>r-x</td>
+</tr>
+<tr>
+<td>4</td>
+<td>r--</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="linux-command-line--processes"><a class="anchor" href="#linux-command-line--processes" aria-hidden="true" tabindex="-1">#</a>Processes</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">ps aux | grep python            <span class="hljs-comment"># list running processes</span>
+top                             <span class="hljs-comment"># live view of CPU and memory use (q to quit)</span>
+<span class="hljs-built_in">kill</span> 4321                       <span class="hljs-comment"># stop process 4321</span>
+./server &amp;                      <span class="hljs-comment"># run in the background</span>
+Ctrl+C                          <span class="hljs-comment"># stop the program running in the terminal</span></code></pre></figure>
+<h2 id="linux-command-line--compiling-and-running-from-the-terminal"><a class="anchor" href="#linux-command-line--compiling-and-running-from-the-terminal" aria-hidden="true" tabindex="-1">#</a>Compiling and running from the terminal</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">gcc -Wall -o hello hello.c &amp;&amp; ./hello          <span class="hljs-comment"># C: compile, then run only if it compiled</span>
+g++ -std=c++17 -o app main.cpp &amp;&amp; ./app         <span class="hljs-comment"># C++</span>
+python3 script.py                               <span class="hljs-comment"># Python</span>
+./hello &lt; input.txt                             <span class="hljs-comment"># feed input from a file</span></code></pre></figure>
+<h2 id="linux-command-line--command-cheat-sheet"><a class="anchor" href="#linux-command-line--command-cheat-sheet" aria-hidden="true" tabindex="-1">#</a>Command cheat sheet</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Where am I / what&#39;s here</td>
+<td><code>pwd</code>, <code>ls -la</code></td>
+</tr>
+<tr>
+<td>Move around</td>
+<td><code>cd folder</code>, <code>cd ..</code>, <code>cd ~</code></td>
+</tr>
+<tr>
+<td>Create</td>
+<td><code>mkdir</code>, <code>touch</code></td>
+</tr>
+<tr>
+<td>Copy / move / delete</td>
+<td><code>cp</code>, <code>mv</code>, <code>rm</code> (<code>-r</code> for folders)</td>
+</tr>
+<tr>
+<td>Read files</td>
+<td><code>cat</code>, <code>less</code>, <code>head</code>, <code>tail</code></td>
+</tr>
+<tr>
+<td>Search</td>
+<td><code>grep</code>, <code>find</code></td>
+</tr>
+<tr>
+<td>Help</td>
+<td><code>man ls</code>, <code>ls --help</code></td>
+</tr>
+<tr>
+<td>Install software (Ubuntu)</td>
+<td><code>sudo apt install name</code></td>
+</tr>
+<tr>
+<td>Download</td>
+<td><code>curl -O url</code>, <code>wget url</code></td>
+</tr>
+</tbody></table>
+</div>
+</div></section>
+<section class="chapter" id="git-github"><p class="eyebrow">Chapter 8 · Developer Tools</p><h1>Git &amp; GitHub</h1><p class="lede">Version control for every project: repositories, the staging area, commits, history, branches and merging, and sharing work on GitHub with push, pull, clones and pull requests.</p><div class="prose"><p><strong>Git</strong> is a <strong>version control system</strong>: it records snapshots of your project over time so you can see what changed, go back to any earlier version, and work with others without overwriting each other&#39;s work. <strong>GitHub</strong> is a website that hosts Git repositories online — and doubles as your public developer portfolio.</p>
+<h2 id="git-github--why-version-control"><a class="anchor" href="#git-github--why-version-control" aria-hidden="true" tabindex="-1">#</a>Why version control?</h2>
+<ul>
+<li><strong>Never lose work</strong> — every commit is a restore point.</li>
+<li><strong>Understand history</strong> — who changed what, when, and why.</li>
+<li><strong>Experiment safely</strong> — try ideas on a branch; throw them away if they fail.</li>
+<li><strong>Collaborate</strong> — many people work on one codebase in parallel.</li>
+</ul>
+<h2 id="git-github--the-three-areas"><a class="anchor" href="#git-github--the-three-areas" aria-hidden="true" tabindex="-1">#</a>The three areas</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Area</th>
+<th>What lives there</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Working directory</strong></td>
+<td>the files you are editing right now</td>
+</tr>
+<tr>
+<td><strong>Staging area</strong> (index)</td>
+<td>changes you have marked for the next commit</td>
+</tr>
+<tr>
+<td><strong>Repository</strong> (<code>.git</code> folder)</td>
+<td>the permanent history of commits</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="diagram"><svg class="dg" viewBox="0 0 420 360" width="420" height="360" role="img" aria-label="Flowchart: Edit files in the working directory → git add — stage the changes you want → git commit — save a snapshot with a message → git push — upload commits to GitHub → Teammates git pull to get them"><defs><marker id="dg-ah-45" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="22.6" y="10" width="374.8" height="44" rx="22"/><text class="t" x="210" y="32">Edit files in the working directory</text><line class="edge" x1="210" y1="54" x2="210" y2="82" marker-end="url(#dg-ah-45)"/><rect class="fc proc" x="22.6" y="84" width="374.8" height="44" rx="4"/><text class="t" x="210" y="106">git add — stage the changes you want</text><line class="edge" x1="210" y1="128" x2="210" y2="156" marker-end="url(#dg-ah-45)"/><rect class="fc proc" x="22.6" y="158" width="374.8" height="44" rx="4"/><text class="t" x="210" y="180">git commit — save a snapshot with a message</text><line class="edge" x1="210" y1="202" x2="210" y2="230" marker-end="url(#dg-ah-45)"/><rect class="fc proc" x="22.6" y="232" width="374.8" height="44" rx="4"/><text class="t" x="210" y="254">git push — upload commits to GitHub</text><line class="edge" x1="210" y1="276" x2="210" y2="304" marker-end="url(#dg-ah-45)"/><rect class="fc term" x="22.6" y="306" width="374.8" height="44" rx="22"/><text class="t" x="210" y="328">Teammates git pull to get them</text></svg><figcaption>The everyday Git workflow.</figcaption></figure>
+<h2 id="git-github--first-time-setup"><a class="anchor" href="#git-github--first-time-setup" aria-hidden="true" tabindex="-1">#</a>First-time setup</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">git config --global user.name <span class="hljs-string">&quot;Asha Rao&quot;</span>
+git config --global user.email <span class="hljs-string">&quot;asha@example.com&quot;</span>
+git config --global init.defaultBranch main</code></pre></figure>
+<h2 id="git-github--starting-and-saving-work"><a class="anchor" href="#git-github--starting-and-saving-work" aria-hidden="true" tabindex="-1">#</a>Starting and saving work</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">git init                          <span class="hljs-comment"># turn the current folder into a repository</span>
+git status                        <span class="hljs-comment"># what changed? what is staged?</span>
+git add main.c                    <span class="hljs-comment"># stage one file</span>
+git add .                         <span class="hljs-comment"># stage everything in this folder</span>
+git commit -m <span class="hljs-string">&quot;Add linked list insert and delete&quot;</span>
+git <span class="hljs-built_in">log</span> --oneline                 <span class="hljs-comment"># history, one line per commit</span>
+git diff                          <span class="hljs-comment"># unstaged changes, line by line</span></code></pre></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Good commit messages</span></div><div class="callout-body"><p>Write the message in the imperative mood and describe <strong>why</strong>, briefly: &quot;Fix off-by-one in binary search&quot;, not &quot;changes&quot; or &quot;final final 2&quot;. Commit small, logical steps.</p>
+</div></aside>
+<h2 id="git-github--gitignore"><a class="anchor" href="#git-github--gitignore" aria-hidden="true" tabindex="-1">#</a>.gitignore</h2>
+<p>List files Git should never track — compiled programs, secrets, editor clutter:</p>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"># .gitignore
+a.out
+*.o
+*.exe
+__pycache__/
+.env
+node_modules/
+.vscode/</code></pre></figure>
+<h2 id="git-github--undoing-things"><a class="anchor" href="#git-github--undoing-things" aria-hidden="true" tabindex="-1">#</a>Undoing things</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">git restore main.c                <span class="hljs-comment"># discard unstaged edits to a file</span>
+git restore --staged main.c       <span class="hljs-comment"># unstage, keeping the edits</span>
+git commit --amend                <span class="hljs-comment"># fix the last commit&#x27;s message or contents</span>
+git revert a1b2c3d                <span class="hljs-comment"># make a new commit that undoes an old one</span>
+git checkout a1b2c3d -- notes.txt <span class="hljs-comment"># bring back an old version of one file</span></code></pre></figure>
+<h2 id="git-github--branches"><a class="anchor" href="#git-github--branches" aria-hidden="true" tabindex="-1">#</a>Branches</h2>
+<p>A <strong>branch</strong> is an independent line of development. <code>main</code> holds working code; you create a branch for each feature or fix, then <strong>merge</strong> it back.</p>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">git branch                        <span class="hljs-comment"># list branches</span>
+git switch -c feature/stack       <span class="hljs-comment"># create and switch to a new branch</span>
+<span class="hljs-comment"># ... edit and commit on the branch ...</span>
+git switch main                   <span class="hljs-comment"># go back to main</span>
+git merge feature/stack           <span class="hljs-comment"># bring the branch&#x27;s commits into main</span>
+git branch -d feature/stack       <span class="hljs-comment"># delete the merged branch</span></code></pre></figure>
+<p>If both branches changed the same lines, Git reports a <strong>merge conflict</strong> and marks the file:</p>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+printf(&quot;Hello\n&quot;);
+=======
+printf(&quot;Hello, world!\n&quot;);
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/greeting</code></pre></figure>
+<p>Edit the file to keep the right version, delete the markers, then <code>git add</code> and <code>git commit</code>.</p>
+<h2 id="git-github--working-with-github"><a class="anchor" href="#git-github--working-with-github" aria-hidden="true" tabindex="-1">#</a>Working with GitHub</h2>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">git <span class="hljs-built_in">clone</span> https://github.com/user/repo.git      <span class="hljs-comment"># download a repository</span>
+git remote add origin https://github.com/you/project.git
+git push -u origin main                          <span class="hljs-comment"># upload your commits (first time)</span>
+git push                                         <span class="hljs-comment"># later pushes</span>
+git pull                                         <span class="hljs-comment"># fetch and merge others&#x27; changes</span></code></pre></figure>
+<p><strong>Pull requests (PRs)</strong>: on GitHub, push your branch, then open a pull request asking to merge it into <code>main</code>. Teammates review the changes and comment before merging — the standard workflow in every software company.</p>
+<p><strong>Forks</strong>: copy someone else&#39;s repository to your account, change it, then open a PR back to the original — how open-source contributions work.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>git init</code> / <code>git clone</code></td>
+<td>start a repository / copy one</td>
+</tr>
+<tr>
+<td><code>git status</code>, <code>git diff</code>, <code>git log</code></td>
+<td>inspect</td>
+</tr>
+<tr>
+<td><code>git add</code>, <code>git commit</code></td>
+<td>save a snapshot</td>
+</tr>
+<tr>
+<td><code>git switch -c</code>, <code>git merge</code></td>
+<td>branch and merge</td>
+</tr>
+<tr>
+<td><code>git push</code>, <code>git pull</code></td>
+<td>sync with GitHub</td>
+</tr>
+<tr>
+<td><code>git restore</code>, <code>git revert</code></td>
+<td>undo</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Your GitHub is your CV</span></div><div class="callout-body"><p>Recruiters look at GitHub profiles. Keep each project in its own repository with a README (what it does, how to run it, a screenshot), commit regularly, and never commit passwords or API keys.</p>
+</div></aside>
+</div></section>
+<section class="chapter" id="how-the-web-works"><p class="eyebrow">Chapter 9 · The Web</p><h1>How the Internet &amp; Web Work</h1><p class="lede">What happens when you open a website: clients and servers, IP addresses, DNS, TCP and packets, HTTP requests and responses, status codes, HTTPS, and front end vs back end.</p><div class="prose"><p>The <strong>Internet</strong> is a global network of networks — billions of devices connected by cables, fibre, Wi-Fi and cell towers, all speaking common <strong>protocols</strong> (agreed rules). The <strong>World Wide Web</strong>, invented by Tim Berners-Lee in 1989, is one service that runs on top of the Internet: web pages linked together and fetched with HTTP. Email, video calls and online games are other services on the same Internet.</p>
+<h2 id="how-the-web-works--clients-and-servers"><a class="anchor" href="#how-the-web-works--clients-and-servers" aria-hidden="true" tabindex="-1">#</a>Clients and servers</h2>
+<ul>
+<li>A <strong>client</strong> requests something — your browser or a mobile app.</li>
+<li>A <strong>server</strong> is a computer that waits for requests and responds — with a web page, an image, or data.</li>
+</ul>
+<h2 id="how-the-web-works--addresses-ip-and-dns"><a class="anchor" href="#how-the-web-works--addresses-ip-and-dns" aria-hidden="true" tabindex="-1">#</a>Addresses: IP and DNS</h2>
+<p>Every device on the Internet has an <strong>IP address</strong>:</p>
+<ul>
+<li><strong>IPv4</strong>: four numbers 0–255, e.g. <code>142.250.193.78</code> (about 4.3 billion addresses — not enough).</li>
+<li><strong>IPv6</strong>: eight groups of hex, e.g. <code>2404:6800:4007:81a::200e</code>.</li>
+</ul>
+<p>Humans prefer names. The <strong>Domain Name System (DNS)</strong> is the Internet&#39;s phone book: it translates a name such as <code>www.example.com</code> into an IP address, asking a hierarchy of DNS servers (root → <code>.com</code> → <code>example.com</code>) and caching the answer.</p>
+<h2 id="how-the-web-works--packets-tcp-and-routing"><a class="anchor" href="#how-the-web-works--packets-tcp-and-routing" aria-hidden="true" tabindex="-1">#</a>Packets, TCP and routing</h2>
+<p>Data travels in small <strong>packets</strong>. Each packet carries the source and destination IP addresses and is forwarded hop by hop by <strong>routers</strong>. Packets of one message may take different routes.</p>
+<ul>
+<li><strong>IP</strong> delivers packets on a best-effort basis.</li>
+<li><strong>TCP</strong> sits on top: it numbers packets, re-sends lost ones and reassembles them in order — a reliable stream. (<strong>UDP</strong> skips that for speed — video calls, games.)</li>
+</ul>
+<h2 id="how-the-web-works--what-happens-when-you-visit-a-website"><a class="anchor" href="#how-the-web-works--what-happens-when-you-visit-a-website" aria-hidden="true" tabindex="-1">#</a>What happens when you visit a website</h2>
+<figure class="diagram"><svg class="dg" viewBox="0 0 461 508" width="461" height="508" role="img" aria-label="Flowchart: You type https://example.com and press Enter → DNS lookup: example.com → 93.184.215.14 → TCP connection + TLS handshake (HTTPS encryption) → Browser sends an HTTP request: GET / → Server responds: 200 OK + HTML → Browser parses HTML, fetches CSS, JS and images → Page is rendered and becomes interactive"><defs><marker id="dg-ah-46" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="20" y="10" width="420.4" height="44" rx="22"/><text class="t" x="230.2" y="32">You type https://example.com and press Enter</text><line class="edge" x1="230.2" y1="54" x2="230.2" y2="82" marker-end="url(#dg-ah-46)"/><rect class="fc proc" x="20" y="84" width="420.4" height="44" rx="4"/><text class="t" x="230.2" y="106">DNS lookup: example.com → 93.184.215.14</text><line class="edge" x1="230.2" y1="128" x2="230.2" y2="156" marker-end="url(#dg-ah-46)"/><rect class="fc proc" x="20" y="158" width="420.4" height="44" rx="4"/><text class="t" x="230.2" y="180">TCP connection + TLS handshake (HTTPS encryption)</text><line class="edge" x1="230.2" y1="202" x2="230.2" y2="230" marker-end="url(#dg-ah-46)"/><rect class="fc proc" x="20" y="232" width="420.4" height="44" rx="4"/><text class="t" x="230.2" y="254">Browser sends an HTTP request: GET /</text><line class="edge" x1="230.2" y1="276" x2="230.2" y2="304" marker-end="url(#dg-ah-46)"/><rect class="fc proc" x="20" y="306" width="420.4" height="44" rx="4"/><text class="t" x="230.2" y="328">Server responds: 200 OK + HTML</text><line class="edge" x1="230.2" y1="350" x2="230.2" y2="378" marker-end="url(#dg-ah-46)"/><rect class="fc proc" x="20" y="380" width="420.4" height="44" rx="4"/><text class="t" x="230.2" y="402">Browser parses HTML, fetches CSS, JS and images</text><line class="edge" x1="230.2" y1="424" x2="230.2" y2="452" marker-end="url(#dg-ah-46)"/><rect class="fc term" x="20" y="454" width="420.4" height="44" rx="22"/><text class="t" x="230.2" y="476">Page is rendered and becomes interactive</text></svg><figcaption>The journey of one page load, usually completed in well under a second.</figcaption></figure>
+<h2 id="how-the-web-works--http-requests-and-responses"><a class="anchor" href="#how-the-web-works--http-requests-and-responses" aria-hidden="true" tabindex="-1">#</a>HTTP: requests and responses</h2>
+<p><strong>HTTP</strong> (HyperText Transfer Protocol) is a simple text conversation:</p>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">GET /courses/c HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0
+Accept: text/html</code></pre></figure>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 1532
+
+&lt;!doctype html&gt;
+&lt;html&gt; ... &lt;/html&gt;</code></pre></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET</code></td>
+<td>read a resource</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>create something / submit a form</td>
+</tr>
+<tr>
+<td><code>PUT</code> / <code>PATCH</code></td>
+<td>update</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>delete</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Status code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>200</strong> OK</td>
+<td>success</td>
+</tr>
+<tr>
+<td><strong>301 / 302</strong></td>
+<td>moved — redirect</td>
+</tr>
+<tr>
+<td><strong>400</strong> Bad Request</td>
+<td>the request was malformed</td>
+</tr>
+<tr>
+<td><strong>401 / 403</strong></td>
+<td>not logged in / not allowed</td>
+</tr>
+<tr>
+<td><strong>404</strong> Not Found</td>
+<td>no such resource</td>
+</tr>
+<tr>
+<td><strong>500</strong> Internal Server Error</td>
+<td>the server crashed</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>HTTPS</strong> is HTTP inside an encrypted <strong>TLS</strong> connection, so nobody between you and the server can read or alter the traffic — that is what the padlock in the address bar means.</p>
+<h2 id="how-the-web-works--urls"><a class="anchor" href="#how-the-web-works--urls" aria-hidden="true" tabindex="-1">#</a>URLs</h2>
+<p><code>https://shop.example.com:443/search?q=keyboard&amp;page=2#reviews</code></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Scheme</td>
+<td><code>https</code></td>
+</tr>
+<tr>
+<td>Host (domain)</td>
+<td><code>shop.example.com</code></td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>443</code> (the default for HTTPS)</td>
+</tr>
+<tr>
+<td>Path</td>
+<td><code>/search</code></td>
+</tr>
+<tr>
+<td>Query string</td>
+<td><code>q=keyboard&amp;page=2</code></td>
+</tr>
+<tr>
+<td>Fragment</td>
+<td><code>#reviews</code> (handled by the browser only)</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">const</span> url = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">&quot;https://shop.example.com:443/search?q=keyboard&amp;page=2#reviews&quot;</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(url.<span class="hljs-property">protocol</span>, url.<span class="hljs-property">hostname</span>, url.<span class="hljs-property">pathname</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;q =&quot;</span>, url.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;q&quot;</span>), <span class="hljs-string">&quot;| page =&quot;</span>, url.<span class="hljs-property">searchParams</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;page&quot;</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;fragment:&quot;</span>, url.<span class="hljs-property">hash</span>);</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>https: shop.example.com /search
+q = keyboard | page = 2
+fragment: #reviews</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=js&amp;code=Y29uc3QgdXJsID0gbmV3IFVSTCgiaHR0cHM6Ly9zaG9wLmV4YW1wbGUuY29tOjQ0My9zZWFyY2g_cT1rZXlib2FyZCZwYWdlPTIjcmV2aWV3cyIpOwpjb25zb2xlLmxvZyh1cmwucHJvdG9jb2wsIHVybC5ob3N0bmFtZSwgdXJsLnBhdGhuYW1lKTsKY29uc29sZS5sb2coInEgPSIsIHVybC5zZWFyY2hQYXJhbXMuZ2V0KCJxIiksICJ8IHBhZ2UgPSIsIHVybC5zZWFyY2hQYXJhbXMuZ2V0KCJwYWdlIikpOwpjb25zb2xlLmxvZygiZnJhZ21lbnQ6IiwgdXJsLmhhc2gpOwo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="how-the-web-works--front-end-and-back-end"><a class="anchor" href="#how-the-web-works--front-end-and-back-end" aria-hidden="true" tabindex="-1">#</a>Front end and back end</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Front end (client side)</th>
+<th>Back end (server side)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runs in</td>
+<td>the browser</td>
+<td>a server</td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>HTML, CSS, JavaScript</td>
+<td>JavaScript (Node.js), Python, Java, Go, C# …</td>
+</tr>
+<tr>
+<td>Job</td>
+<td>layout, styling, interaction</td>
+<td>data, logic, authentication, databases</td>
+</tr>
+<tr>
+<td>Talks via</td>
+<td>HTTP requests to <strong>APIs</strong> (often JSON)</td>
+<td>HTTP responses</td>
+</tr>
+</tbody></table>
+</div>
+<p>A <strong>full-stack</strong> developer works on both.</p>
+</div></section>
+<section class="chapter" id="html-css"><p class="eyebrow">Chapter 10 · The Web</p><h1>HTML &amp; CSS Essentials</h1><p class="lede">Build and style a web page: HTML document structure, common elements, links, images, lists, tables and forms, then CSS selectors, the box model, colours, fonts and Flexbox — with a live editor.</p><div class="prose"><p>Every web page is built from three languages:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Role</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>HTML</strong></td>
+<td>structure and content</td>
+<td>the skeleton</td>
+</tr>
+<tr>
+<td><strong>CSS</strong></td>
+<td>presentation and layout</td>
+<td>the clothes</td>
+</tr>
+<tr>
+<td><strong>JavaScript</strong></td>
+<td>behaviour and interaction</td>
+<td>the muscles</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="html-css--html-structure"><a class="anchor" href="#html-css--html-structure" aria-hidden="true" tabindex="-1">#</a>HTML: structure</h2>
+<p>HTML marks up content with <strong>elements</strong>, written as tags: <code>&lt;p&gt;A paragraph&lt;/p&gt;</code>. Tags can have <strong>attributes</strong>: <code>&lt;a href=&quot;https://example.com&quot;&gt;a link&lt;/a&gt;</code>.</p>
+<figure class="code" data-lang="html"><div class="code-head"><span class="code-lang">HTML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">&lt;!doctype <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>My first page<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, I&#x27;m Asha<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>I study <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>computer science<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span> at Kalvium.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://github.com&quot;</span>&gt;</span>My GitHub<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre></figure>
+<ul>
+<li><code>&lt;head&gt;</code> holds information <strong>about</strong> the page (title, character set, CSS links).</li>
+<li><code>&lt;body&gt;</code> holds what is <strong>shown</strong>.</li>
+</ul>
+<h2 id="html-css--common-elements"><a class="anchor" href="#html-css--common-elements" aria-hidden="true" tabindex="-1">#</a>Common elements</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;h1&gt;</code> … <code>&lt;h6&gt;</code></td>
+<td>headings, from most to least important</td>
+</tr>
+<tr>
+<td><code>&lt;p&gt;</code></td>
+<td>paragraph</td>
+</tr>
+<tr>
+<td><code>&lt;a href=&quot;…&quot;&gt;</code></td>
+<td>link</td>
+</tr>
+<tr>
+<td><code>&lt;img src=&quot;…&quot; alt=&quot;…&quot;&gt;</code></td>
+<td>image (the <code>alt</code> text is read by screen readers)</td>
+</tr>
+<tr>
+<td><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code></td>
+<td>bulleted list, numbered list, list item</td>
+</tr>
+<tr>
+<td><code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></td>
+<td>table, row, header cell, data cell</td>
+</tr>
+<tr>
+<td><code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;label&gt;</code></td>
+<td>forms</td>
+</tr>
+<tr>
+<td><code>&lt;div&gt;</code>, <code>&lt;span&gt;</code></td>
+<td>generic block and inline containers</td>
+</tr>
+<tr>
+<td><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code></td>
+<td><strong>semantic</strong> layout regions</td>
+</tr>
+</tbody></table>
+</div>
+<p>Semantic elements tell browsers, search engines and screen readers what each part <strong>means</strong> — prefer them to plain <code>&lt;div&gt;</code>s.</p>
+<h2 id="html-css--css-style"><a class="anchor" href="#html-css--css-style" aria-hidden="true" tabindex="-1">#</a>CSS: style</h2>
+<p>CSS rules have a <strong>selector</strong> and <strong>declarations</strong>:</p>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-selector-tag">h1</span> {
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#2e8b47</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">2rem</span>;
+}
+<span class="hljs-selector-class">.card</span> {                 <span class="hljs-comment">/* class selector: &lt;div class=&quot;card&quot;&gt; */</span>
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">12px</span>;
+}
+<span class="hljs-selector-id">#signup</span> { }             <span class="hljs-comment">/* id selector: &lt;form id=&quot;signup&quot;&gt; */</span>
+<span class="hljs-selector-tag">nav</span> <span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:hover</span> { }         <span class="hljs-comment">/* descendant + state */</span></code></pre></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>p</code></td>
+<td>every <code>&lt;p&gt;</code></td>
+</tr>
+<tr>
+<td><code>.card</code></td>
+<td>elements with <code>class=&quot;card&quot;</code></td>
+</tr>
+<tr>
+<td><code>#main</code></td>
+<td>the element with <code>id=&quot;main&quot;</code></td>
+</tr>
+<tr>
+<td><code>nav a</code></td>
+<td><code>&lt;a&gt;</code> elements inside <code>&lt;nav&gt;</code></td>
+</tr>
+<tr>
+<td><code>a:hover</code></td>
+<td>links under the mouse pointer</td>
+</tr>
+</tbody></table>
+</div>
+<p>When rules conflict, the more <strong>specific</strong> selector wins (id &gt; class &gt; element), and later rules beat earlier ones of equal specificity — the <strong>cascade</strong>.</p>
+<h2 id="html-css--the-box-model"><a class="anchor" href="#html-css--the-box-model" aria-hidden="true" tabindex="-1">#</a>The box model</h2>
+<p>Every element is a box: <strong>content</strong>, surrounded by <strong>padding</strong>, then a <strong>border</strong>, then <strong>margin</strong> (space outside).</p>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-selector-class">.box</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span>;          <span class="hljs-comment">/* inside the border */</span>
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid <span class="hljs-number">#333</span>;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">24px</span> auto;      <span class="hljs-comment">/* outside; auto centres horizontally */</span>
+  <span class="hljs-attribute">box-sizing</span>: border-box; <span class="hljs-comment">/* width now includes padding and border */</span>
+}</code></pre></figure>
+<h2 id="html-css--flexbox-layout"><a class="anchor" href="#html-css--flexbox-layout" aria-hidden="true" tabindex="-1">#</a>Flexbox layout</h2>
+<p>Flexbox arranges children in a row or column with easy alignment and spacing:</p>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-selector-class">.row</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">gap</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">justify-content</span>: space-between;   <span class="hljs-comment">/* along the main axis */</span>
+  <span class="hljs-attribute">align-items</span>: center;              <span class="hljs-comment">/* across it */</span>
+  <span class="hljs-attribute">flex-wrap</span>: wrap;
+}</code></pre></figure>
+<h2 id="html-css--try-it-a-live-editor"><a class="anchor" href="#html-css--try-it-a-live-editor" aria-hidden="true" tabindex="-1">#</a>Try it: a live editor</h2>
+<p>Edit the HTML and CSS — the preview updates as you type:</p>
+<div class="widget" data-widget="web-playground" data-opts="{}" data-body="&lt;style&gt;
+  body { font-family: system-ui, sans-serif; margin: 24px; background: #f6f7fb; }
+  .card { background: white; border-radius: 14px; padding: 20px; max-width: 360px;
+          box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  h1 { margin: 0 0 6px; font-size: 22px; color: #2e8b47; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tags span { background: #e7f5ec; color: #1f6d36; padding: 4px 10px; border-radius: 99px; font-size: 13px; }
+&lt;/style&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;h1&gt;Asha Rao&lt;/h1&gt;
+  &lt;p&gt;First-year CS student. I like C, DSA and building things for the web.&lt;/p&gt;
+  &lt;div class=&quot;tags&quot;&gt;&lt;span&gt;C&lt;/span&gt;&lt;span&gt;Python&lt;/span&gt;&lt;span&gt;HTML&lt;/span&gt;&lt;span&gt;Git&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="html-css--responsive-design"><a class="anchor" href="#html-css--responsive-design" aria-hidden="true" tabindex="-1">#</a>Responsive design</h2>
+<p>Phones, tablets and laptops need different layouts. Two essentials:</p>
+<figure class="code" data-lang="html"><div class="code-head"><span class="code-lang">HTML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></code></pre></figure>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">600px</span>) {
+  <span class="hljs-selector-class">.row</span> { <span class="hljs-attribute">flex-direction</span>: column; }   <span class="hljs-comment">/* stack on small screens */</span>
+}</code></pre></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Keep learning HTML</span></div><div class="callout-body"><p>For a deeper, hands-on HTML course with an exercise for every element, try <a href="https://devkancheti4-design.github.io/tagbench/" target="_blank" rel="noopener">Tagbench</a>.</p>
+</div></aside>
+</div></section>
+<section class="chapter" id="javascript"><p class="eyebrow">Chapter 11 · The Web</p><h1>JavaScript Essentials</h1><p class="lede">The language of the web: variables, types, functions, arrays and objects, loops, and making pages interactive with the DOM and events — with runnable examples.</p><div class="prose"><p><strong>JavaScript (JS)</strong> is the programming language every web browser runs. It makes pages interactive — buttons, form validation, live updates — and with <strong>Node.js</strong> it also runs on servers. Despite the name, it is unrelated to Java.</p>
+<h2 id="javascript--variables-and-types"><a class="anchor" href="#javascript--variables-and-types" aria-hidden="true" tabindex="-1">#</a>Variables and types</h2>
+<figure class="code has-out" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;Asha&quot;</span>;        <span class="hljs-comment">// can be reassigned</span>
+<span class="hljs-keyword">const</span> year = <span class="hljs-number">2026</span>;        <span class="hljs-comment">// cannot be reassigned</span>
+<span class="hljs-keyword">let</span> cgpa = <span class="hljs-number">9.1</span>;
+<span class="hljs-keyword">let</span> enrolled = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">let</span> nothing = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">let</span> notSet;               <span class="hljs-comment">// undefined</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">typeof</span> name, <span class="hljs-keyword">typeof</span> year, <span class="hljs-keyword">typeof</span> enrolled, <span class="hljs-keyword">typeof</span> notSet);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${name}</span> joined in <span class="hljs-subst">${year}</span> with a CGPA of <span class="hljs-subst">${cgpa}</span>`</span>);   <span class="hljs-comment">// template literal</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>string number boolean undefined
+Asha joined in 2026 with a CGPA of 9.1</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=js&amp;code=bGV0IG5hbWUgPSAiQXNoYSI7ICAgICAgICAvLyBjYW4gYmUgcmVhc3NpZ25lZApjb25zdCB5ZWFyID0gMjAyNjsgICAgICAgIC8vIGNhbm5vdCBiZSByZWFzc2lnbmVkCmxldCBjZ3BhID0gOS4xOwpsZXQgZW5yb2xsZWQgPSB0cnVlOwpsZXQgbm90aGluZyA9IG51bGw7CmxldCBub3RTZXQ7ICAgICAgICAgICAgICAgLy8gdW5kZWZpbmVkCgpjb25zb2xlLmxvZyh0eXBlb2YgbmFtZSwgdHlwZW9mIHllYXIsIHR5cGVvZiBlbnJvbGxlZCwgdHlwZW9mIG5vdFNldCk7CmNvbnNvbGUubG9nKGAke25hbWV9IGpvaW5lZCBpbiAke3llYXJ9IHdpdGggYSBDR1BBIG9mICR7Y2dwYX1gKTsgICAvLyB0ZW1wbGF0ZSBsaXRlcmFsCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Use <code>const</code> by default and <code>let</code> when the value changes. Avoid the old <code>var</code>.</p>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>== vs ===</span></div><div class="callout-body"><p><code>==</code> converts types before comparing, with surprising results (<code>&quot;5&quot; == 5</code> is true, <code>0 == &quot;&quot;</code> is true). Always use <code>===</code> and <code>!==</code>, which compare value <strong>and</strong> type.</p>
+</div></aside>
+<figure class="code has-out" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;5&quot;</span> == <span class="hljs-number">5</span>, <span class="hljs-string">&quot;5&quot;</span> === <span class="hljs-number">5</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">0</span> == <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-number">0</span> === <span class="hljs-string">&quot;&quot;</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>);                  <span class="hljs-comment">// the same floating-point behaviour as C and Python</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;3&quot;</span> + <span class="hljs-number">4</span>, <span class="hljs-string">&quot;3&quot;</span> * <span class="hljs-number">4</span>);           <span class="hljs-comment">// + joins strings; * converts to numbers</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>true false
+true false
+0.30000000000000004
+34 12</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=js&amp;code=Y29uc29sZS5sb2coIjUiID09IDUsICI1IiA9PT0gNSk7CmNvbnNvbGUubG9nKDAgPT0gIiIsIDAgPT09ICIiKTsKY29uc29sZS5sb2coMC4xICsgMC4yKTsgICAgICAgICAgICAgICAgICAvLyB0aGUgc2FtZSBmbG9hdGluZy1wb2ludCBiZWhhdmlvdXIgYXMgQyBhbmQgUHl0aG9uCmNvbnNvbGUubG9nKCIzIiArIDQsICIzIiAqIDQpOyAgICAgICAgICAgLy8gKyBqb2lucyBzdHJpbmdzOyAqIGNvbnZlcnRzIHRvIG51bWJlcnMK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="javascript--functions"><a class="anchor" href="#javascript--functions" aria-hidden="true" tabindex="-1">#</a>Functions</h2>
+<figure class="code has-out" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">function</span> <span class="hljs-title function_">area</span>(<span class="hljs-params">length, width = length</span>) {        <span class="hljs-comment">// default parameter</span>
+  <span class="hljs-keyword">return</span> length * width;
+}
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">square</span> = x =&gt; x * x;                       <span class="hljs-comment">// arrow function</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">greet</span> = (<span class="hljs-params">name</span>) =&gt; <span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">area</span>(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>), <span class="hljs-title function_">area</span>(<span class="hljs-number">3</span>), <span class="hljs-title function_">square</span>(<span class="hljs-number">9</span>), <span class="hljs-title function_">greet</span>(<span class="hljs-string">&quot;Ravi&quot;</span>));</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>20 9 81 Hello, Ravi!</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=js&amp;code=ZnVuY3Rpb24gYXJlYShsZW5ndGgsIHdpZHRoID0gbGVuZ3RoKSB7ICAgICAgICAvLyBkZWZhdWx0IHBhcmFtZXRlcgogIHJldHVybiBsZW5ndGggKiB3aWR0aDsKfQpjb25zdCBzcXVhcmUgPSB4ID0-IHggKiB4OyAgICAgICAgICAgICAgICAgICAgICAgLy8gYXJyb3cgZnVuY3Rpb24KY29uc3QgZ3JlZXQgPSAobmFtZSkgPT4gYEhlbGxvLCAke25hbWV9IWA7Cgpjb25zb2xlLmxvZyhhcmVhKDQsIDUpLCBhcmVhKDMpLCBzcXVhcmUoOSksIGdyZWV0KCJSYXZpIikpOwo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="javascript--arrays-and-objects"><a class="anchor" href="#javascript--arrays-and-objects" aria-hidden="true" tabindex="-1">#</a>Arrays and objects</h2>
+<figure class="code has-out" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">const</span> marks = [<span class="hljs-number">78</span>, <span class="hljs-number">92</span>, <span class="hljs-number">65</span>, <span class="hljs-number">88</span>];
+marks.<span class="hljs-title function_">push</span>(<span class="hljs-number">71</span>);
+<span class="hljs-keyword">const</span> total = marks.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, m</span>) =&gt;</span> sum + m, <span class="hljs-number">0</span>);
+<span class="hljs-keyword">const</span> passed = marks.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m &gt;= <span class="hljs-number">70</span>);
+<span class="hljs-keyword">const</span> curved = marks.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(<span class="hljs-number">100</span>, m + <span class="hljs-number">5</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(marks.<span class="hljs-property">length</span>, total, passed, curved);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([...marks].<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b));   <span class="hljs-comment">// numeric sort needs a compare function</span>
+
+<span class="hljs-keyword">const</span> student = { <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Meera&quot;</span>, <span class="hljs-attr">roll</span>: <span class="hljs-number">12</span>, <span class="hljs-attr">skills</span>: [<span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;JS&quot;</span>] };
+student.<span class="hljs-property">city</span> = <span class="hljs-string">&quot;Hyderabad&quot;</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(student.<span class="hljs-property">name</span>, student[<span class="hljs-string">&quot;roll&quot;</span>], student.<span class="hljs-property">skills</span>.<span class="hljs-title function_">join</span>(<span class="hljs-string">&quot;, &quot;</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(student));
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(student)) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`  <span class="hljs-subst">${key}</span>: <span class="hljs-subst">${value}</span>`</span>);</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>5 394 [ 78, 92, 88, 71 ] [ 83, 97, 70, 93, 76 ]
+[ 65, 71, 78, 88, 92 ]
+Meera 12 C, JS
+{&quot;name&quot;:&quot;Meera&quot;,&quot;roll&quot;:12,&quot;skills&quot;:[&quot;C&quot;,&quot;JS&quot;],&quot;city&quot;:&quot;Hyderabad&quot;}
+  name: Meera
+  roll: 12
+  skills: C,JS
+  city: Hyderabad</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=js&amp;code=Y29uc3QgbWFya3MgPSBbNzgsIDkyLCA2NSwgODhdOwptYXJrcy5wdXNoKDcxKTsKY29uc3QgdG90YWwgPSBtYXJrcy5yZWR1Y2UoKHN1bSwgbSkgPT4gc3VtICsgbSwgMCk7CmNvbnN0IHBhc3NlZCA9IG1hcmtzLmZpbHRlcihtID0-IG0gPj0gNzApOwpjb25zdCBjdXJ2ZWQgPSBtYXJrcy5tYXAobSA9PiBNYXRoLm1pbigxMDAsIG0gKyA1KSk7CmNvbnNvbGUubG9nKG1hcmtzLmxlbmd0aCwgdG90YWwsIHBhc3NlZCwgY3VydmVkKTsKY29uc29sZS5sb2coWy4uLm1hcmtzXS5zb3J0KChhLCBiKSA9PiBhIC0gYikpOyAgIC8vIG51bWVyaWMgc29ydCBuZWVkcyBhIGNvbXBhcmUgZnVuY3Rpb24KCmNvbnN0IHN0dWRlbnQgPSB7IG5hbWU6ICJNZWVyYSIsIHJvbGw6IDEyLCBza2lsbHM6IFsiQyIsICJKUyJdIH07CnN0dWRlbnQuY2l0eSA9ICJIeWRlcmFiYWQiOwpjb25zb2xlLmxvZyhzdHVkZW50Lm5hbWUsIHN0dWRlbnRbInJvbGwiXSwgc3R1ZGVudC5za2lsbHMuam9pbigiLCAiKSk7CmNvbnNvbGUubG9nKEpTT04uc3RyaW5naWZ5KHN0dWRlbnQpKTsKZm9yIChjb25zdCBba2V5LCB2YWx1ZV0gb2YgT2JqZWN0LmVudHJpZXMoc3R1ZGVudCkpIGNvbnNvbGUubG9nKGAgICR7a2V5fTogJHt2YWx1ZX1gKTsK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="javascript--control-flow"><a class="anchor" href="#javascript--control-flow" aria-hidden="true" tabindex="-1">#</a>Control flow</h2>
+<figure class="code has-out" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">15</span>; i++) {
+  <span class="hljs-keyword">if</span> (i % <span class="hljs-number">15</span> === <span class="hljs-number">0</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;FizzBuzz&quot;</span>);
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i % <span class="hljs-number">3</span> === <span class="hljs-number">0</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Fizz&quot;</span>);
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i % <span class="hljs-number">5</span> === <span class="hljs-number">0</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Buzz&quot;</span>);
+  <span class="hljs-keyword">else</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i);
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=js&amp;code=Zm9yIChsZXQgaSA9IDE7IGkgPD0gMTU7IGkrKykgewogIGlmIChpICUgMTUgPT09IDApIGNvbnNvbGUubG9nKCJGaXp6QnV6eiIpOwogIGVsc2UgaWYgKGkgJSAzID09PSAwKSBjb25zb2xlLmxvZygiRml6eiIpOwogIGVsc2UgaWYgKGkgJSA1ID09PSAwKSBjb25zb2xlLmxvZygiQnV6eiIpOwogIGVsc2UgY29uc29sZS5sb2coaSk7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p><code>if/else</code>, <code>for</code>, <code>while</code>, <code>switch</code>, <code>break</code> and <code>continue</code> work just like in C.</p>
+<h2 id="javascript--the-dom-making-pages-interactive"><a class="anchor" href="#javascript--the-dom-making-pages-interactive" aria-hidden="true" tabindex="-1">#</a>The DOM: making pages interactive</h2>
+<p>In the browser, JavaScript sees the page as a tree of objects — the <strong>Document Object Model (DOM)</strong>. You can <strong>select</strong> elements, <strong>change</strong> them and <strong>react to events</strong>:</p>
+<figure class="code" data-lang="html"><div class="code-head"><span class="code-lang">HTML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;like&quot;</span>&gt;</span>♥ Like<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span>0 likes<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">const</span> button = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;#like&quot;</span>);
+  <span class="hljs-keyword">const</span> count = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;#count&quot;</span>);
+  <span class="hljs-keyword">let</span> likes = <span class="hljs-number">0</span>;
+  button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    likes++;
+    count.<span class="hljs-property">textContent</span> = <span class="hljs-string">`<span class="hljs-subst">${likes}</span> like<span class="hljs-subst">${likes === <span class="hljs-number">1</span> ? <span class="hljs-string">&quot;&quot;</span> : <span class="hljs-string">&quot;s&quot;</span>}</span>`</span>;
+  });
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></figure>
+<p>Try it — click the button, then change the code:</p>
+<div class="widget" data-widget="web-playground" data-opts="{}" data-body="&lt;style&gt;
+  body { font-family: system-ui, sans-serif; margin: 24px; }
+  button { font-size: 18px; padding: 10px 18px; border-radius: 10px; border: 0; background: #e8443a; color: white; cursor: pointer; }
+  input { font-size: 16px; padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; }
+&lt;/style&gt;
+&lt;button id=&quot;like&quot;&gt;♥ Like&lt;/button&gt;
+&lt;p id=&quot;count&quot;&gt;0 likes&lt;/p&gt;
+&lt;p&gt;&lt;input id=&quot;name&quot; placeholder=&quot;Type your name&quot;&gt; &lt;span id=&quot;hello&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;script&gt;
+  const button = document.querySelector(&quot;#like&quot;);
+  const count = document.querySelector(&quot;#count&quot;);
+  let likes = 0;
+  button.addEventListener(&quot;click&quot;, () =&gt; {
+    likes++;
+    count.textContent = `${likes} like${likes === 1 ? &quot;&quot; : &quot;s&quot;}`;
+  });
+  document.querySelector(&quot;#name&quot;).addEventListener(&quot;input&quot;, e =&gt; {
+    document.querySelector(&quot;#hello&quot;).textContent = e.target.value ? `Hello, ${e.target.value}!` : &quot;&quot;;
+  });
+&lt;/script&gt;"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>DOM task</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Select one element</td>
+<td><code>document.querySelector(&quot;.card&quot;)</code></td>
+</tr>
+<tr>
+<td>Select many</td>
+<td><code>document.querySelectorAll(&quot;li&quot;)</code></td>
+</tr>
+<tr>
+<td>Change text</td>
+<td><code>el.textContent = &quot;Hi&quot;</code></td>
+</tr>
+<tr>
+<td>Change a style</td>
+<td><code>el.style.color = &quot;red&quot;</code> or <code>el.classList.add(&quot;active&quot;)</code></td>
+</tr>
+<tr>
+<td>React to events</td>
+<td><code>el.addEventListener(&quot;click&quot;, handler)</code></td>
+</tr>
+<tr>
+<td>Create elements</td>
+<td><code>document.createElement(&quot;li&quot;)</code> + <code>parent.append(li)</code></td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="javascript--fetching-data"><a class="anchor" href="#javascript--fetching-data" aria-hidden="true" tabindex="-1">#</a>Fetching data</h2>
+<p>Web apps load data from APIs without reloading the page:</p>
+<figure class="code" data-lang="js"><div class="code-head"><span class="code-lang">JavaScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&quot;https://api.github.com/users/octocat&quot;</span>);
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>();
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(user.<span class="hljs-property">name</span>, user.<span class="hljs-property">public_repos</span>);</code></pre></figure>
+<p><code>await</code> waits for the network without freezing the page — JavaScript is <strong>asynchronous</strong>.</p>
+<h2 id="javascript--where-to-go-next"><a class="anchor" href="#javascript--where-to-go-next" aria-hidden="true" tabindex="-1">#</a>Where to go next</h2>
+<p>JavaScript is the gateway to full-stack development: <strong>React</strong> for user interfaces, <strong>Node.js</strong> and <strong>Express</strong> for servers, and <strong>TypeScript</strong> for typed JavaScript in large projects.</p>
+</div></section>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

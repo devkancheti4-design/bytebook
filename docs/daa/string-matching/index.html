@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>String Matching · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Find a pattern in a text: the naive algorithm, Rabin–Karp&#39;s rolling hash, and the Knuth–Morris–Pratt algorithm with its prefix function — with complexities.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="String Matching · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Find a pattern in a text: the naive algorithm, Rabin–Karp&#39;s rolling hash, and the Knuth–Morris–Pratt algorithm with its prefix function — with complexities.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/string-matching" data-title="String Matching" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 19 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Search, Graphs &amp; Complexity</p>
+<h1>String Matching</h1>
+<p class="lede">Find a pattern in a text: the naive algorithm, Rabin–Karp&#39;s rolling hash, and the Knuth–Morris–Pratt algorithm with its prefix function — with complexities.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>3 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Given a <strong>text</strong> T of length n and a <strong>pattern</strong> P of length m, find every position where P occurs in T. This runs every time you press Ctrl+F, search DNA databases, or filter spam.</p>
+<h2 id="naive-algorithm"><a class="anchor" href="#naive-algorithm" aria-hidden="true" tabindex="-1">#</a>Naive algorithm</h2>
+<p>Try every alignment of P against T and compare character by character.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    string T = <span class="hljs-string">&quot;AABAACAADAABAABA&quot;</span>, P = <span class="hljs-string">&quot;AABA&quot;</span>;
+    <span class="hljs-type">int</span> comparisons = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> s = <span class="hljs-number">0</span>; s + P.<span class="hljs-built_in">size</span>() &lt;= T.<span class="hljs-built_in">size</span>(); s++) {
+        <span class="hljs-type">size_t</span> j = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (j &lt; P.<span class="hljs-built_in">size</span>()) { comparisons++; <span class="hljs-keyword">if</span> (T[s + j] != P[j]) <span class="hljs-keyword">break</span>; j++; }
+        <span class="hljs-keyword">if</span> (j == P.<span class="hljs-built_in">size</span>()) cout &lt;&lt; <span class="hljs-string">&quot;match at &quot;</span> &lt;&lt; s &lt;&lt; endl;
+    }
+    cout &lt;&lt; <span class="hljs-string">&quot;comparisons: &quot;</span> &lt;&lt; comparisons &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>match at 0
+match at 9
+match at 12
+comparisons: 30</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKSB7CiAgICBzdHJpbmcgVCA9ICJBQUJBQUNBQURBQUJBQUJBIiwgUCA9ICJBQUJBIjsKICAgIGludCBjb21wYXJpc29ucyA9IDA7CiAgICBmb3IgKHNpemVfdCBzID0gMDsgcyArIFAuc2l6ZSgpIDw9IFQuc2l6ZSgpOyBzKyspIHsKICAgICAgICBzaXplX3QgaiA9IDA7CiAgICAgICAgd2hpbGUgKGogPCBQLnNpemUoKSkgeyBjb21wYXJpc29ucysrOyBpZiAoVFtzICsgal0gIT0gUFtqXSkgYnJlYWs7IGorKzsgfQogICAgICAgIGlmIChqID09IFAuc2l6ZSgpKSBjb3V0IDw8ICJtYXRjaCBhdCAiIDw8IHMgPDwgZW5kbDsKICAgIH0KICAgIGNvdXQgPDwgImNvbXBhcmlzb25zOiAiIDw8IGNvbXBhcmlzb25zIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Worst case <strong>O((n − m + 1) · m)</strong>, e.g. T = &quot;aaaa…a&quot;, P = &quot;aaab&quot;.</p>
+<h2 id="rabin-karp"><a class="anchor" href="#rabin-karp" aria-hidden="true" tabindex="-1">#</a>Rabin–Karp</h2>
+<p>Compare <strong>hash values</strong> first, and only compare characters when the hashes match. The trick is a <strong>rolling hash</strong>: the hash of the next window is computed from the previous one in O(1) by removing the leading character and adding the trailing one.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    string T = <span class="hljs-string">&quot;31415926535897932384626&quot;</span>, P = <span class="hljs-string">&quot;26&quot;</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> base = <span class="hljs-number">10</span>, mod = <span class="hljs-number">13</span>;
+    <span class="hljs-type">int</span> n = T.<span class="hljs-built_in">size</span>(), m = P.<span class="hljs-built_in">size</span>();
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> h = <span class="hljs-number">1</span>;                                   <span class="hljs-comment">// base^(m-1) % mod</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m - <span class="hljs-number">1</span>; i++) h = h * base % mod;
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> hp = <span class="hljs-number">0</span>, ht = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) { hp = (hp * base + (P[i] - <span class="hljs-string">&#x27;0&#x27;</span>)) % mod; ht = (ht * base + (T[i] - <span class="hljs-string">&#x27;0&#x27;</span>)) % mod; }
+    <span class="hljs-type">int</span> spurious = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">0</span>; s + m &lt;= n; s++) {
+        <span class="hljs-keyword">if</span> (hp == ht) {
+            <span class="hljs-keyword">if</span> (T.<span class="hljs-built_in">compare</span>(s, m, P) == <span class="hljs-number">0</span>) cout &lt;&lt; <span class="hljs-string">&quot;match at &quot;</span> &lt;&lt; s &lt;&lt; endl;
+            <span class="hljs-keyword">else</span> spurious++;                                 <span class="hljs-comment">// hash collision</span>
+        }
+        <span class="hljs-keyword">if</span> (s + m &lt; n) ht = ((ht - (T[s] - <span class="hljs-string">&#x27;0&#x27;</span>) * h % mod + mod) * base + (T[s + m] - <span class="hljs-string">&#x27;0&#x27;</span>)) % mod;   <span class="hljs-comment">// roll</span>
+    }
+    cout &lt;&lt; <span class="hljs-string">&quot;spurious hits: &quot;</span> &lt;&lt; spurious &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>match at 6
+match at 21
+spurious hits: 1</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKSB7CiAgICBzdHJpbmcgVCA9ICIzMTQxNTkyNjUzNTg5NzkzMjM4NDYyNiIsIFAgPSAiMjYiOwogICAgY29uc3QgbG9uZyBsb25nIGJhc2UgPSAxMCwgbW9kID0gMTM7CiAgICBpbnQgbiA9IFQuc2l6ZSgpLCBtID0gUC5zaXplKCk7CiAgICBsb25nIGxvbmcgaCA9IDE7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBiYXNlXihtLTEpICUgbW9kCiAgICBmb3IgKGludCBpID0gMDsgaSA8IG0gLSAxOyBpKyspIGggPSBoICogYmFzZSAlIG1vZDsKICAgIGxvbmcgbG9uZyBocCA9IDAsIGh0ID0gMDsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgbTsgaSsrKSB7IGhwID0gKGhwICogYmFzZSArIChQW2ldIC0gJzAnKSkgJSBtb2Q7IGh0ID0gKGh0ICogYmFzZSArIChUW2ldIC0gJzAnKSkgJSBtb2Q7IH0KICAgIGludCBzcHVyaW91cyA9IDA7CiAgICBmb3IgKGludCBzID0gMDsgcyArIG0gPD0gbjsgcysrKSB7CiAgICAgICAgaWYgKGhwID09IGh0KSB7CiAgICAgICAgICAgIGlmIChULmNvbXBhcmUocywgbSwgUCkgPT0gMCkgY291dCA8PCAibWF0Y2ggYXQgIiA8PCBzIDw8IGVuZGw7CiAgICAgICAgICAgIGVsc2Ugc3B1cmlvdXMrKzsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBoYXNoIGNvbGxpc2lvbgogICAgICAgIH0KICAgICAgICBpZiAocyArIG0gPCBuKSBodCA9ICgoaHQgLSAoVFtzXSAtICcwJykgKiBoICUgbW9kICsgbW9kKSAqIGJhc2UgKyAoVFtzICsgbV0gLSAnMCcpKSAlIG1vZDsgICAvLyByb2xsCiAgICB9CiAgICBjb3V0IDw8ICJzcHVyaW91cyBoaXRzOiAiIDw8IHNwdXJpb3VzIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Expected time <strong>O(n + m)</strong>; worst case O(nm) if many hashes collide (a &quot;spurious hit&quot;). Rabin–Karp shines when searching for <strong>many patterns</strong> at once.</p>
+<h2 id="knuth-morris-pratt-kmp"><a class="anchor" href="#knuth-morris-pratt-kmp" aria-hidden="true" tabindex="-1">#</a>Knuth–Morris–Pratt (KMP)</h2>
+<p>When a mismatch happens, the naive algorithm slides the pattern by one and re-checks characters it has already seen. KMP <strong>never moves backwards in the text</strong>. It precomputes the <strong>prefix function</strong> π (also called the LPS array): π[q] = the length of the longest proper prefix of P[0..q] that is also a suffix of it. On a mismatch, it shifts the pattern so that this already-matched prefix lines up.</p>
+<p>For P = &quot;ABABCABAB&quot;: π = [0, 0, 1, 2, 0, 1, 2, 3, 4].</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">prefixFunction</span><span class="hljs-params">(<span class="hljs-type">const</span> string &amp;P)</span> </span>{
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">pi</span><span class="hljs-params">(P.size(), <span class="hljs-number">0</span>)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> q = <span class="hljs-number">1</span>, k = <span class="hljs-number">0</span>; q &lt; P.<span class="hljs-built_in">size</span>(); q++) {
+        <span class="hljs-keyword">while</span> (k &gt; <span class="hljs-number">0</span> &amp;&amp; P[k] != P[q]) k = pi[k - <span class="hljs-number">1</span>];     <span class="hljs-comment">// fall back to a shorter border</span>
+        <span class="hljs-keyword">if</span> (P[k] == P[q]) k++;
+        pi[q] = k;
+    }
+    <span class="hljs-keyword">return</span> pi;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    string T = <span class="hljs-string">&quot;ABABDABACDABABCABABABABCABAB&quot;</span>, P = <span class="hljs-string">&quot;ABABCABAB&quot;</span>;
+    vector&lt;<span class="hljs-type">int</span>&gt; pi = <span class="hljs-built_in">prefixFunction</span>(P);
+    cout &lt;&lt; <span class="hljs-string">&quot;pi:&quot;</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x : pi) cout &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; x;
+    cout &lt;&lt; endl;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>, q = <span class="hljs-number">0</span>; i &lt; T.<span class="hljs-built_in">size</span>(); i++) {
+        <span class="hljs-keyword">while</span> (q &gt; <span class="hljs-number">0</span> &amp;&amp; P[q] != T[i]) q = pi[q - <span class="hljs-number">1</span>];
+        <span class="hljs-keyword">if</span> (P[q] == T[i]) q++;
+        <span class="hljs-keyword">if</span> (q == P.<span class="hljs-built_in">size</span>()) { cout &lt;&lt; <span class="hljs-string">&quot;match at &quot;</span> &lt;&lt; i - P.<span class="hljs-built_in">size</span>() + <span class="hljs-number">1</span> &lt;&lt; endl; q = pi[q - <span class="hljs-number">1</span>]; }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>pi: 0 0 1 2 0 1 2 3 4
+match at 10
+match at 19</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgojaW5jbHVkZSA8dmVjdG9yPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKdmVjdG9yPGludD4gcHJlZml4RnVuY3Rpb24oY29uc3Qgc3RyaW5nICZQKSB7CiAgICB2ZWN0b3I8aW50PiBwaShQLnNpemUoKSwgMCk7CiAgICBmb3IgKHNpemVfdCBxID0gMSwgayA9IDA7IHEgPCBQLnNpemUoKTsgcSsrKSB7CiAgICAgICAgd2hpbGUgKGsgPiAwICYmIFBba10gIT0gUFtxXSkgayA9IHBpW2sgLSAxXTsgICAgIC8vIGZhbGwgYmFjayB0byBhIHNob3J0ZXIgYm9yZGVyCiAgICAgICAgaWYgKFBba10gPT0gUFtxXSkgaysrOwogICAgICAgIHBpW3FdID0gazsKICAgIH0KICAgIHJldHVybiBwaTsKfQoKaW50IG1haW4oKSB7CiAgICBzdHJpbmcgVCA9ICJBQkFCREFCQUNEQUJBQkNBQkFCQUJBQkNBQkFCIiwgUCA9ICJBQkFCQ0FCQUIiOwogICAgdmVjdG9yPGludD4gcGkgPSBwcmVmaXhGdW5jdGlvbihQKTsKICAgIGNvdXQgPDwgInBpOiI7CiAgICBmb3IgKGludCB4IDogcGkpIGNvdXQgPDwgIiAiIDw8IHg7CiAgICBjb3V0IDw8IGVuZGw7CiAgICBmb3IgKHNpemVfdCBpID0gMCwgcSA9IDA7IGkgPCBULnNpemUoKTsgaSsrKSB7CiAgICAgICAgd2hpbGUgKHEgPiAwICYmIFBbcV0gIT0gVFtpXSkgcSA9IHBpW3EgLSAxXTsKICAgICAgICBpZiAoUFtxXSA9PSBUW2ldKSBxKys7CiAgICAgICAgaWYgKHEgPT0gUC5zaXplKCkpIHsgY291dCA8PCAibWF0Y2ggYXQgIiA8PCBpIC0gUC5zaXplKCkgKyAxIDw8IGVuZGw7IHEgPSBwaVtxIC0gMV07IH0KICAgIH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Preprocessing O(m) + matching O(n) = <strong>O(n + m)</strong> in the worst case.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Preprocessing</th>
+<th>Matching (worst)</th>
+<th>Idea</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Naive</td>
+<td>none</td>
+<td>O((n − m + 1)m)</td>
+<td>try every shift</td>
+</tr>
+<tr>
+<td>Rabin–Karp</td>
+<td>O(m)</td>
+<td>O((n − m + 1)m), expected O(n + m)</td>
+<td>rolling hash</td>
+</tr>
+<tr>
+<td>KMP</td>
+<td>O(m)</td>
+<td><strong>O(n)</strong></td>
+<td>prefix function, never backtrack in T</td>
+</tr>
+<tr>
+<td>Finite automaton</td>
+<td>O(m·</td>
+<td>Σ</td>
+<td>)</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="daa/string-matching" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is the worst-case time of the naive matcher?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(n)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O((n − m + 1) · m)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(n log m)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(m)</span></button></div><div class="q-why" hidden>Every one of the n − m + 1 shifts may compare up to m characters.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is a spurious hit in Rabin–Karp?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The hashes match but the strings do not</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The strings match but the hashes do not</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The pattern is longer than the text</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The text contains no digits</span></button></div><div class="q-why" hidden>Different strings can share a hash value modulo q.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What is the prefix function of &quot;AAAA&quot;?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">[0, 0, 0, 0]</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">[0, 1, 2, 3]</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">[1, 2, 3, 4]</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">[0, 1, 1, 1]</span></button></div><div class="q-why" hidden>For each prefix, the longest proper border grows by one.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Why is KMP O(n + m) in the worst case?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It uses hashing</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">It never re-examines text characters after a mismatch</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It sorts the text first</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It only works on binary strings</span></button></div><div class="q-why" hidden>The text pointer only moves forward; the prefix function decides the pattern shift.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/string-matching"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/graph-algorithms/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Topological Sort &amp; Connectivity</strong></a><a class="next" href="../../daa/np-completeness/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>P, NP, NP-Complete &amp; NP-Hard</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#naive-algorithm">Naive algorithm</a></li><li><a class="d2" href="#rabin-karp">Rabin–Karp</a></li><li><a class="d2" href="#knuth-morris-pratt-kmp">Knuth–Morris–Pratt (KMP)</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

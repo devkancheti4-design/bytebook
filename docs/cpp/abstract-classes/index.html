@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Abstract Classes &amp; Interfaces · C++ OOP | Bytebook</title>
+<meta name="description" content="Pure virtual functions, abstract base classes that cannot be instantiated, interfaces, and the final keyword — designing a clean class hierarchy.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Abstract Classes &amp; Interfaces · C++ OOP | Bytebook">
+<meta property="og:description" content="Pure virtual functions, abstract base classes that cannot be instantiated, interfaces, and the final keyword — designing a clean class hierarchy.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="cpp">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp" class="active" aria-current="true"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="cpp" aria-label="Object-Oriented Programming with C++ lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../cpp/"><span class="chip" data-c="cpp">OOPS</span><strong>Object-Oriented Programming with C++</strong></a>
+<div class="side-progress" data-course="cpp" data-total="19"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 19 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>From C to C++</h4><ol><li><a href="../../cpp/intro/" data-lesson="cpp/intro"><span class="tick" aria-hidden="true"></span><span>C++ Introduction</span></a></li><li><a href="../../cpp/io-references/" data-lesson="cpp/io-references"><span class="tick" aria-hidden="true"></span><span>Input/Output, Strings &amp; References</span></a></li><li><a href="../../cpp/functions/" data-lesson="cpp/functions"><span class="tick" aria-hidden="true"></span><span>Functions: Overloading, Defaults &amp; Inline</span></a></li></ol></div>
+<div class="side-unit"><h4>Classes &amp; Objects</h4><ol><li><a href="../../cpp/oop-concepts/" data-lesson="cpp/oop-concepts"><span class="tick" aria-hidden="true"></span><span>OOP Concepts</span></a></li><li><a href="../../cpp/classes-objects/" data-lesson="cpp/classes-objects"><span class="tick" aria-hidden="true"></span><span>Classes &amp; Objects</span></a></li><li><a href="../../cpp/constructors/" data-lesson="cpp/constructors"><span class="tick" aria-hidden="true"></span><span>Constructors &amp; Destructors</span></a></li><li><a href="../../cpp/encapsulation/" data-lesson="cpp/encapsulation"><span class="tick" aria-hidden="true"></span><span>Encapsulation, this &amp; static Members</span></a></li><li><a href="../../cpp/friend/" data-lesson="cpp/friend"><span class="tick" aria-hidden="true"></span><span>Friend Functions &amp; Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Inheritance &amp; Polymorphism</h4><ol><li><a href="../../cpp/inheritance/" data-lesson="cpp/inheritance"><span class="tick" aria-hidden="true"></span><span>Inheritance</span></a></li><li><a href="../../cpp/operator-overloading/" data-lesson="cpp/operator-overloading"><span class="tick" aria-hidden="true"></span><span>Operator Overloading</span></a></li><li><a href="../../cpp/virtual-functions/" data-lesson="cpp/virtual-functions"><span class="tick" aria-hidden="true"></span><span>Virtual Functions &amp; Runtime Polymorphism</span></a></li><li><a href="../../cpp/abstract-classes/" data-lesson="cpp/abstract-classes" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Abstract Classes &amp; Interfaces</span></a></li></ol></div>
+<div class="side-unit"><h4>Beyond the Basics</h4><ol><li><a href="../../cpp/templates/" data-lesson="cpp/templates"><span class="tick" aria-hidden="true"></span><span>Templates</span></a></li><li><a href="../../cpp/exceptions/" data-lesson="cpp/exceptions"><span class="tick" aria-hidden="true"></span><span>Exception Handling</span></a></li><li><a href="../../cpp/memory/" data-lesson="cpp/memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory &amp; Smart Pointers</span></a></li><li><a href="../../cpp/stl-containers/" data-lesson="cpp/stl-containers"><span class="tick" aria-hidden="true"></span><span>STL Containers</span></a></li><li><a href="../../cpp/stl-algorithms/" data-lesson="cpp/stl-algorithms"><span class="tick" aria-hidden="true"></span><span>Iterators, Algorithms &amp; Lambdas</span></a></li><li><a href="../../cpp/file-io/" data-lesson="cpp/file-io"><span class="tick" aria-hidden="true"></span><span>File I/O with fstream</span></a></li><li><a href="../../cpp/cheatsheet/" data-lesson="cpp/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C++ OOP Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../cpp/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="cpp/abstract-classes" data-title="Abstract Classes &amp; Interfaces" data-course-title="Object-Oriented Programming with C++">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../cpp/">C++ OOP</a><span>/</span><span>Lesson 12 of 19</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Inheritance &amp; Polymorphism</p>
+<h1>Abstract Classes &amp; Interfaces</h1>
+<p class="lede">Pure virtual functions, abstract base classes that cannot be instantiated, interfaces, and the final keyword — designing a clean class hierarchy.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="pure-virtual-functions"><a class="anchor" href="#pure-virtual-functions" aria-hidden="true" tabindex="-1">#</a>Pure virtual functions</h2>
+<p>Sometimes a base class cannot sensibly implement a function. What is the area of a generic &quot;Shape&quot;? Declare it <strong>pure virtual</strong> with <code>= 0</code>: it has no body in the base, and <strong>every concrete derived class must override it</strong>.</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">double</span> <span class="hljs-title">area</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;   <span class="hljs-comment">// pure virtual</span></code></pre></figure>
+<h2 id="abstract-classes"><a class="anchor" href="#abstract-classes" aria-hidden="true" tabindex="-1">#</a>Abstract classes</h2>
+<p>A class with at least one pure virtual function is an <strong>abstract class</strong>:</p>
+<ul>
+<li>You <strong>cannot create objects</strong> of it: <code>Shape s;</code> is a compile error.</li>
+<li>You <strong>can</strong> have pointers and references to it.</li>
+<li>A derived class that does not override every pure virtual function is abstract too.</li>
+</ul>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cmath&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Shape</span> {                                    <span class="hljs-comment">// abstract base class</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">double</span> <span class="hljs-title">area</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">double</span> <span class="hljs-title">perimeter</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-title">name</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">describe</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{                      <span class="hljs-comment">// concrete function using the abstract ones</span>
+        cout &lt;&lt; <span class="hljs-built_in">name</span>() &lt;&lt; <span class="hljs-string">&quot;: area &quot;</span> &lt;&lt; <span class="hljs-built_in">area</span>() &lt;&lt; <span class="hljs-string">&quot;, perimeter &quot;</span> &lt;&lt; <span class="hljs-built_in">perimeter</span>() &lt;&lt; endl;
+    }
+    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Shape</span>() = <span class="hljs-keyword">default</span>;
+};
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Circle</span> : <span class="hljs-keyword">public</span> Shape {
+    <span class="hljs-type">double</span> r;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">Circle</span><span class="hljs-params">(<span class="hljs-type">double</span> r)</span> : r(r) {</span>}
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">area</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> M_PI * r * r; }
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">perimeter</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * M_PI * r; }
+    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-title">name</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Circle&quot;</span>; }
+};
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Square</span> : <span class="hljs-keyword">public</span> Shape {
+    <span class="hljs-type">double</span> s;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">Square</span><span class="hljs-params">(<span class="hljs-type">double</span> s)</span> : s(s) {</span>}
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">area</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> s * s; }
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">perimeter</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-number">4</span> * s; }
+    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-title">name</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Square&quot;</span>; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Shape s;              // error: cannot declare variable &#x27;s&#x27; to be of abstract type</span>
+    <span class="hljs-function">Circle <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span></span>;
+    <span class="hljs-function">Square <span class="hljs-title">q</span><span class="hljs-params">(<span class="hljs-number">2.5</span>)</span></span>;
+    <span class="hljs-type">const</span> Shape &amp;a = c, &amp;b = q;
+    a.<span class="hljs-built_in">describe</span>();
+    b.<span class="hljs-built_in">describe</span>();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Circle: area 3.14159, perimeter 6.28319
+Square: area 6.25, perimeter 10</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8Y21hdGg-CnVzaW5nIG5hbWVzcGFjZSBzdGQ7CgpjbGFzcyBTaGFwZSB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gYWJzdHJhY3QgYmFzZSBjbGFzcwpwdWJsaWM6CiAgICB2aXJ0dWFsIGRvdWJsZSBhcmVhKCkgY29uc3QgPSAwOwogICAgdmlydHVhbCBkb3VibGUgcGVyaW1ldGVyKCkgY29uc3QgPSAwOwogICAgdmlydHVhbCBjb25zdCBjaGFyICpuYW1lKCkgY29uc3QgPSAwOwogICAgdm9pZCBkZXNjcmliZSgpIGNvbnN0IHsgICAgICAgICAgICAgICAgICAgICAgLy8gY29uY3JldGUgZnVuY3Rpb24gdXNpbmcgdGhlIGFic3RyYWN0IG9uZXMKICAgICAgICBjb3V0IDw8IG5hbWUoKSA8PCAiOiBhcmVhICIgPDwgYXJlYSgpIDw8ICIsIHBlcmltZXRlciAiIDw8IHBlcmltZXRlcigpIDw8IGVuZGw7CiAgICB9CiAgICB2aXJ0dWFsIH5TaGFwZSgpID0gZGVmYXVsdDsKfTsKCmNsYXNzIENpcmNsZSA6IHB1YmxpYyBTaGFwZSB7CiAgICBkb3VibGUgcjsKcHVibGljOgogICAgZXhwbGljaXQgQ2lyY2xlKGRvdWJsZSByKSA6IHIocikge30KICAgIGRvdWJsZSBhcmVhKCkgY29uc3Qgb3ZlcnJpZGUgeyByZXR1cm4gTV9QSSAqIHIgKiByOyB9CiAgICBkb3VibGUgcGVyaW1ldGVyKCkgY29uc3Qgb3ZlcnJpZGUgeyByZXR1cm4gMiAqIE1fUEkgKiByOyB9CiAgICBjb25zdCBjaGFyICpuYW1lKCkgY29uc3Qgb3ZlcnJpZGUgeyByZXR1cm4gIkNpcmNsZSI7IH0KfTsKCmNsYXNzIFNxdWFyZSA6IHB1YmxpYyBTaGFwZSB7CiAgICBkb3VibGUgczsKcHVibGljOgogICAgZXhwbGljaXQgU3F1YXJlKGRvdWJsZSBzKSA6IHMocykge30KICAgIGRvdWJsZSBhcmVhKCkgY29uc3Qgb3ZlcnJpZGUgeyByZXR1cm4gcyAqIHM7IH0KICAgIGRvdWJsZSBwZXJpbWV0ZXIoKSBjb25zdCBvdmVycmlkZSB7IHJldHVybiA0ICogczsgfQogICAgY29uc3QgY2hhciAqbmFtZSgpIGNvbnN0IG92ZXJyaWRlIHsgcmV0dXJuICJTcXVhcmUiOyB9Cn07CgppbnQgbWFpbigpIHsKICAgIC8vIFNoYXBlIHM7ICAgICAgICAgICAgICAvLyBlcnJvcjogY2Fubm90IGRlY2xhcmUgdmFyaWFibGUgJ3MnIHRvIGJlIG9mIGFic3RyYWN0IHR5cGUKICAgIENpcmNsZSBjKDEpOwogICAgU3F1YXJlIHEoMi41KTsKICAgIGNvbnN0IFNoYXBlICZhID0gYywgJmIgPSBxOwogICAgYS5kZXNjcmliZSgpOwogICAgYi5kZXNjcmliZSgpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="interfaces"><a class="anchor" href="#interfaces" aria-hidden="true" tabindex="-1">#</a>Interfaces</h2>
+<p>C++ has no <code>interface</code> keyword (Java does). An <strong>interface</strong> in C++ is simply an abstract class with <strong>only pure virtual functions</strong> and a virtual destructor. A class can implement several interfaces through multiple inheritance:</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Printable</span> { <span class="hljs-keyword">public</span>: <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>; <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Printable</span>() = <span class="hljs-keyword">default</span>; };
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Payable</span>   { <span class="hljs-keyword">public</span>: <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">double</span> <span class="hljs-title">amountDue</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>; <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Payable</span>() = <span class="hljs-keyword">default</span>; };
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Invoice</span> : <span class="hljs-keyword">public</span> Printable, <span class="hljs-keyword">public</span> Payable {
+    string client;
+    <span class="hljs-type">double</span> hours, rate;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Invoice</span>(string c, <span class="hljs-type">double</span> h, <span class="hljs-type">double</span> r) : <span class="hljs-built_in">client</span>(c), <span class="hljs-built_in">hours</span>(h), <span class="hljs-built_in">rate</span>(r) {}
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">amountDue</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-keyword">return</span> hours * rate; }
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>{ cout &lt;&lt; <span class="hljs-string">&quot;Invoice for &quot;</span> &lt;&lt; client &lt;&lt; <span class="hljs-string">&quot;: Rs &quot;</span> &lt;&lt; <span class="hljs-built_in">amountDue</span>() &lt;&lt; endl; }
+};
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printAll</span><span class="hljs-params">(<span class="hljs-type">const</span> Printable *items[], <span class="hljs-type">int</span> n)</span> </span>{ <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) items[i]-&gt;<span class="hljs-built_in">print</span>(); }
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Invoice <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-string">&quot;Acme Labs&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-number">1500</span>)</span>, <span class="hljs-title">b</span><span class="hljs-params">(<span class="hljs-string">&quot;Nova Foods&quot;</span>, <span class="hljs-number">4.5</span>, <span class="hljs-number">2000</span>)</span></span>;
+    <span class="hljs-type">const</span> Printable *docs[] = {&amp;a, &amp;b};
+    <span class="hljs-built_in">printAll</span>(docs, <span class="hljs-number">2</span>);
+    <span class="hljs-type">const</span> Payable &amp;p = a;
+    cout &lt;&lt; <span class="hljs-string">&quot;Total due from Acme: &quot;</span> &lt;&lt; p.<span class="hljs-built_in">amountDue</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Invoice for Acme Labs: Rs 18000
+Invoice for Nova Foods: Rs 9000
+Total due from Acme: 18000</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgUHJpbnRhYmxlIHsgcHVibGljOiB2aXJ0dWFsIHZvaWQgcHJpbnQoKSBjb25zdCA9IDA7IHZpcnR1YWwgflByaW50YWJsZSgpID0gZGVmYXVsdDsgfTsKY2xhc3MgUGF5YWJsZSAgIHsgcHVibGljOiB2aXJ0dWFsIGRvdWJsZSBhbW91bnREdWUoKSBjb25zdCA9IDA7IHZpcnR1YWwgflBheWFibGUoKSA9IGRlZmF1bHQ7IH07CgpjbGFzcyBJbnZvaWNlIDogcHVibGljIFByaW50YWJsZSwgcHVibGljIFBheWFibGUgewogICAgc3RyaW5nIGNsaWVudDsKICAgIGRvdWJsZSBob3VycywgcmF0ZTsKcHVibGljOgogICAgSW52b2ljZShzdHJpbmcgYywgZG91YmxlIGgsIGRvdWJsZSByKSA6IGNsaWVudChjKSwgaG91cnMoaCksIHJhdGUocikge30KICAgIGRvdWJsZSBhbW91bnREdWUoKSBjb25zdCBvdmVycmlkZSB7IHJldHVybiBob3VycyAqIHJhdGU7IH0KICAgIHZvaWQgcHJpbnQoKSBjb25zdCBvdmVycmlkZSB7IGNvdXQgPDwgIkludm9pY2UgZm9yICIgPDwgY2xpZW50IDw8ICI6IFJzICIgPDwgYW1vdW50RHVlKCkgPDwgZW5kbDsgfQp9OwoKdm9pZCBwcmludEFsbChjb25zdCBQcmludGFibGUgKml0ZW1zW10sIGludCBuKSB7IGZvciAoaW50IGkgPSAwOyBpIDwgbjsgaSsrKSBpdGVtc1tpXS0-cHJpbnQoKTsgfQoKaW50IG1haW4oKSB7CiAgICBJbnZvaWNlIGEoIkFjbWUgTGFicyIsIDEyLCAxNTAwKSwgYigiTm92YSBGb29kcyIsIDQuNSwgMjAwMCk7CiAgICBjb25zdCBQcmludGFibGUgKmRvY3NbXSA9IHsmYSwgJmJ9OwogICAgcHJpbnRBbGwoZG9jcywgMik7CiAgICBjb25zdCBQYXlhYmxlICZwID0gYTsKICAgIGNvdXQgPDwgIlRvdGFsIGR1ZSBmcm9tIEFjbWU6ICIgPDwgcC5hbW91bnREdWUoKSA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="final"><a class="anchor" href="#final" aria-hidden="true" tabindex="-1">#</a>final</h2>
+<p><code>final</code> stops further overriding or inheritance:</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> { <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>; };
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Mid</span> : <span class="hljs-keyword">public</span> Base { <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">final</span></span>; };   <span class="hljs-comment">// no class may override f again</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Leaf</span> <span class="hljs-keyword">final</span> : <span class="hljs-keyword">public</span> Mid { };                       <span class="hljs-comment">// no class may inherit from Leaf</span></code></pre></figure>
+<h2 id="abstract-class-vs-concrete-class"><a class="anchor" href="#abstract-class-vs-concrete-class" aria-hidden="true" tabindex="-1">#</a>Abstract class vs concrete class</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Abstract class</th>
+<th>Concrete class</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>has at least one pure virtual function</td>
+<td>all functions have bodies</td>
+</tr>
+<tr>
+<td>cannot be instantiated</td>
+<td>can create objects</td>
+</tr>
+<tr>
+<td>defines a contract for derived classes</td>
+<td>provides a full implementation</td>
+</tr>
+<tr>
+<td>used through pointers/references</td>
+<td>used directly or through pointers</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Design question</span></div><div class="callout-body"><p>&quot;Design a class hierarchy for shapes / payments / employees using an abstract base class.&quot; Show the abstract base with pure virtual functions, two or three derived classes overriding them, and a <code>main</code> that stores base pointers in an array and calls the functions polymorphically.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="cpp/abstract-classes" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What makes a class abstract?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Having a constructor</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Having only private members</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Having at least one pure virtual function</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Being used as a base class</span></button></div><div class="q-why" hidden>A pure virtual function (<code>= 0</code>) makes the class abstract.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which statement about an abstract class <code>Shape</code> is true?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>Shape s;</code> creates a shape with default values</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">You can declare <code>Shape *p;</code> and point it at a derived object</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It cannot have any implemented functions</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It cannot have a constructor</span></button></div><div class="q-why" hidden>Abstract classes cannot be instantiated but can be used through pointers and references, and they may have constructors and ordinary functions.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>A class derives from an abstract class but overrides only some of its pure virtual functions. It is...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">a concrete class</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">also abstract</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">a compile error</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">an interface</span></button></div><div class="q-why" hidden>It still has an unimplemented pure virtual function.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>How is an &quot;interface&quot; usually written in C++?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">An abstract class with only pure virtual functions (and a virtual destructor)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">With the <code>interface</code> keyword</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">As a struct with no members</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">As a template</span></button></div><div class="q-why" hidden>C++ has no interface keyword; a pure abstract class plays that role.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="cpp/abstract-classes"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../cpp/virtual-functions/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Virtual Functions &amp; Runtime Polymorphism</strong></a><a class="next" href="../../cpp/templates/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Templates</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#pure-virtual-functions">Pure virtual functions</a></li><li><a class="d2" href="#abstract-classes">Abstract classes</a></li><li><a class="d2" href="#interfaces">Interfaces</a></li><li><a class="d2" href="#final">final</a></li><li><a class="d2" href="#abstract-class-vs-concrete-class">Abstract class vs concrete class</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

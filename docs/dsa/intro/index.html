@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introduction to Data Structures · Data Structures | Bytebook</title>
+<meta name="description" content="What a data structure is, abstract data types, linear vs non-linear structures, and why choosing well matters more than coding fast.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Introduction to Data Structures · Data Structures | Bytebook">
+<meta property="og:description" content="What a data structure is, abstract data types, linear vs non-linear structures, and why choosing well matters more than coding fast.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/intro" data-title="Introduction to Data Structures" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 1 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Foundations</p>
+<h1>Introduction to Data Structures</h1>
+<p class="lede">What a data structure is, abstract data types, linear vs non-linear structures, and why choosing well matters more than coding fast.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>data structure</strong> is a way of organising data in memory so that the operations you need — search, insert, delete, find the smallest — are <strong>fast</strong>. The same million phone numbers can be stored in an array, a linked list, a tree or a hash table; each choice makes some operations quick and others slow.</p>
+<blockquote>
+<p>Bad programmers worry about the code. Good programmers worry about data structures and their relationships. — Linus Torvalds</p>
+</blockquote>
+<h2 id="why-it-matters"><a class="anchor" href="#why-it-matters" aria-hidden="true" tabindex="-1">#</a>Why it matters</h2>
+<p>Imagine looking up a contact among 1,000,000 numbers:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Steps to find one number (worst case)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Unsorted array, linear search</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td>Sorted array, binary search</td>
+<td>about 20</td>
+</tr>
+<tr>
+<td>Hash table</td>
+<td>about 1</td>
+</tr>
+</tbody></table>
+</div>
+<p>Same data, same computer — a 1,000,000× difference, purely from how the data is organised.</p>
+<h2 id="abstract-data-types"><a class="anchor" href="#abstract-data-types" aria-hidden="true" tabindex="-1">#</a>Abstract data types</h2>
+<p>An <strong>abstract data type (ADT)</strong> describes <em>what</em> operations a structure supports, not <em>how</em> they are implemented. A data structure is a concrete implementation of an ADT.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ADT</th>
+<th>Operations</th>
+<th>Common implementations</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>List</td>
+<td>insert, delete, get(i), search</td>
+<td>array, linked list</td>
+</tr>
+<tr>
+<td>Stack</td>
+<td>push, pop, peek</td>
+<td>array, linked list</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>enqueue, dequeue, front</td>
+<td>circular array, linked list</td>
+</tr>
+<tr>
+<td>Priority queue</td>
+<td>insert, extract-min/max</td>
+<td>binary heap</td>
+</tr>
+<tr>
+<td>Map / dictionary</td>
+<td>put(key, value), get(key)</td>
+<td>hash table, balanced BST</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>add, remove, contains</td>
+<td>hash table, BST</td>
+</tr>
+</tbody></table>
+</div>
+<p>Think of an ADT as a remote control&#39;s buttons, and the data structure as the electronics inside.</p>
+<h2 id="classifying-data-structures"><a class="anchor" href="#classifying-data-structures" aria-hidden="true" tabindex="-1">#</a>Classifying data structures</h2>
+<figure class="diagram"><svg class="dg" viewBox="0 0 751 268" width="751" height="268" role="img" aria-label="Tree rooted at Data Structures"><path class="edge" d="M338,40 V60 H150.5 V80"/><path class="edge" d="M150.5,114 V134 H75.5 V154"/><path class="edge" d="M150.5,114 V134 H150.5 V154"/><path class="edge" d="M150.5,114 V134 H225.5 V154"/><path class="edge" d="M338,40 V60 H525.5 V80"/><path class="edge" d="M525.5,114 V134 H413 V154"/><path class="edge" d="M413,188 V208 H300.5 V228"/><path class="edge" d="M413,188 V208 H375.5 V228"/><path class="edge" d="M413,188 V208 H450.5 V228"/><path class="edge" d="M413,188 V208 H525.5 V228"/><path class="edge" d="M525.5,114 V134 H638 V154"/><path class="edge" d="M638,188 V208 H600.5 V228"/><path class="edge" d="M638,188 V208 H675.5 V228"/><rect class="box" x="52.8" y="154" width="45.4" height="34" rx="8"/><text class="t lbl small" x="75.5" y="171">int</text><rect class="box" x="120" y="154" width="61" height="34" rx="8"/><text class="t lbl small" x="150.5" y="171">float</text><rect class="box" x="198.9" y="154" width="53.2" height="34" rx="8"/><text class="t lbl small" x="225.5" y="171">char</text><rect class="box" x="104.4" y="80" width="92.2" height="34" rx="8"/><text class="t lbl small" x="150.5" y="97">Primitive</text><rect class="box" x="270" y="228" width="61" height="34" rx="8"/><text class="t lbl small" x="300.5" y="245">Array</text><rect class="box" x="348.9" y="228" width="53.2" height="34" rx="8"/><text class="t lbl small" x="375.5" y="245">List</text><rect class="box" x="420" y="228" width="61" height="34" rx="8"/><text class="t lbl small" x="450.5" y="245">Stack</text><rect class="box" x="495" y="228" width="61" height="34" rx="8"/><text class="t lbl small" x="525.5" y="245">Queue</text><rect class="box" x="378.6" y="154" width="68.8" height="34" rx="8"/><text class="t lbl small" x="413" y="171">Linear</text><rect class="box" x="573.9" y="228" width="53.2" height="34" rx="8"/><text class="t lbl small" x="600.5" y="245">Tree</text><rect class="box" x="645" y="228" width="61" height="34" rx="8"/><text class="t lbl small" x="675.5" y="245">Graph</text><rect class="box" x="588" y="154" width="100" height="34" rx="8"/><text class="t lbl small" x="638" y="171">Non-linear</text><rect class="box" x="463.8" y="80" width="123.4" height="34" rx="8"/><text class="t lbl small" x="525.5" y="97">Non-primitive</text><rect class="box" x="268.5" y="6" width="139" height="34" rx="8"/><text class="t lbl small" x="338" y="23">Data Structures</text></svg><figcaption>The classification examiners expect. Linear structures arrange elements in a sequence; non-linear ones branch.</figcaption></figure>
+<ul>
+<li><strong>Linear</strong>: elements form a sequence, each with at most one predecessor and successor — arrays, linked lists, stacks, queues.</li>
+<li><strong>Non-linear</strong>: an element can connect to many others — trees (hierarchies) and graphs (networks).</li>
+<li><strong>Static</strong>: size fixed at compile time (a C array).</li>
+<li><strong>Dynamic</strong>: grows and shrinks at run time (a linked list built with <code>malloc</code>).</li>
+</ul>
+<h2 id="the-operations-we-measure"><a class="anchor" href="#the-operations-we-measure" aria-hidden="true" tabindex="-1">#</a>The operations we measure</h2>
+<p>Every structure in this course is judged by the cost of a handful of operations:</p>
+<ol>
+<li><strong>Traversal</strong> — visit every element once.</li>
+<li><strong>Search</strong> — find an element with a given key.</li>
+<li><strong>Insertion</strong> — add an element.</li>
+<li><strong>Deletion</strong> — remove an element.</li>
+<li><strong>Sorting</strong> and <strong>merging</strong> — for collections of data.</li>
+</ol>
+<p>The next lesson gives you the language for comparing those costs: <strong>Big-O notation</strong>.</p>
+<h2 id="a-first-taste-the-same-job-two-structures"><a class="anchor" href="#a-first-taste-the-same-job-two-structures" aria-hidden="true" tabindex="-1">#</a>A first taste: the same job, two structures</h2>
+<p>Both programs below store marks and answer &quot;is 72 in the list?&quot;. The array keeps data in one block; the linked list chains separate nodes together with pointers. You will build both properly in this course.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> data; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span> } Node;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> arr[] = {<span class="hljs-number">55</span>, <span class="hljs-number">72</span>, <span class="hljs-number">81</span>, <span class="hljs-number">64</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++)
+        <span class="hljs-keyword">if</span> (arr[i] == <span class="hljs-number">72</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;array: found 72 at index %d\n&quot;</span>, i);
+
+    Node *head = <span class="hljs-literal">NULL</span>;                       <span class="hljs-comment">// build list 64 -&gt; 81 -&gt; 72 -&gt; 55 by inserting at the front</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+        Node *n = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node));
+        n-&gt;data = arr[i];
+        n-&gt;next = head;
+        head = n;
+    }
+    <span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (Node *p = head; p; p = p-&gt;next, pos++)
+        <span class="hljs-keyword">if</span> (p-&gt;data == <span class="hljs-number">72</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;list:  found 72 at node %d\n&quot;</span>, pos);
+    <span class="hljs-keyword">while</span> (head) { Node *t = head; head = head-&gt;next; <span class="hljs-built_in">free</span>(t); }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>array: found 72 at index 1
+list:  found 72 at node 2</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQgZGF0YTsgc3RydWN0IE5vZGUgKm5leHQ7IH0gTm9kZTsKCmludCBtYWluKHZvaWQpIHsKICAgIGludCBhcnJbXSA9IHs1NSwgNzIsIDgxLCA2NH07CiAgICBmb3IgKGludCBpID0gMDsgaSA8IDQ7IGkrKykKICAgICAgICBpZiAoYXJyW2ldID09IDcyKSBwcmludGYoImFycmF5OiBmb3VuZCA3MiBhdCBpbmRleCAlZFxuIiwgaSk7CgogICAgTm9kZSAqaGVhZCA9IE5VTEw7ICAgICAgICAgICAgICAgICAgICAgICAvLyBidWlsZCBsaXN0IDY0IC0-IDgxIC0-IDcyIC0-IDU1IGJ5IGluc2VydGluZyBhdCB0aGUgZnJvbnQKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgNDsgaSsrKSB7CiAgICAgICAgTm9kZSAqbiA9IG1hbGxvYyhzaXplb2YoTm9kZSkpOwogICAgICAgIG4tPmRhdGEgPSBhcnJbaV07CiAgICAgICAgbi0-bmV4dCA9IGhlYWQ7CiAgICAgICAgaGVhZCA9IG47CiAgICB9CiAgICBpbnQgcG9zID0gMDsKICAgIGZvciAoTm9kZSAqcCA9IGhlYWQ7IHA7IHAgPSBwLT5uZXh0LCBwb3MrKykKICAgICAgICBpZiAocC0-ZGF0YSA9PSA3MikgcHJpbnRmKCJsaXN0OiAgZm91bmQgNzIgYXQgbm9kZSAlZFxuIiwgcG9zKTsKICAgIHdoaWxlIChoZWFkKSB7IE5vZGUgKnQgPSBoZWFkOyBoZWFkID0gaGVhZC0-bmV4dDsgZnJlZSh0KTsgfQogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Define and classify</span></div><div class="callout-body"><p>Short-answer favourite: &quot;Define data structure. Classify with examples.&quot; Draw the tree above, then give one line each on linear vs non-linear and static vs dynamic.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="dsa/intro" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which of these is a <strong>non-linear</strong> data structure?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Stack</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Queue</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Tree</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Array</span></button></div><div class="q-why" hidden>Trees and graphs branch, so an element can have several successors.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does an abstract data type specify?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The operations and their behaviour, not the implementation</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The exact memory layout</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The programming language to use</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The time complexity of each operation</span></button></div><div class="q-why" hidden>An ADT is a contract (push, pop, …). Arrays or linked lists can implement the same ADT.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which structure is usually used to implement a priority queue?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Linked list</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Binary heap</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Stack</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Graph</span></button></div><div class="q-why" hidden>A binary heap gives O(log n) insert and extract-max/min.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>A C array declared as <code>int a[100];</code> is an example of a...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Static data structure</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Dynamic data structure</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Non-linear data structure</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Abstract data type</span></button></div><div class="q-why" hidden>Its size is fixed when the program is compiled.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/intro"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Overview</small><strong>Data Structures</strong></a><a class="next" href="../../dsa/complexity/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Time &amp; Space Complexity</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#why-it-matters">Why it matters</a></li><li><a class="d2" href="#abstract-data-types">Abstract data types</a></li><li><a class="d2" href="#classifying-data-structures">Classifying data structures</a></li><li><a class="d2" href="#the-operations-we-measure">The operations we measure</a></li><li><a class="d2" href="#a-first-taste-the-same-job-two-structures">A first taste: the same job, two structures</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Logic Gates &amp; Circuits · Foundations | Bytebook</title>
+<meta name="description" content="The building blocks of hardware: AND, OR, NOT, NAND, NOR and XOR gates with truth tables, building circuits, the half adder and full adder, and how they add numbers.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Logic Gates &amp; Circuits · Foundations | Bytebook">
+<meta property="og:description" content="The building blocks of hardware: AND, OR, NOT, NAND, NOR and XOR gates with truth tables, building circuits, the half adder and full adder, and how they add numbers.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="foundations">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations" class="active" aria-current="true"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="foundations" aria-label="First-Year Foundations lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../foundations/"><span class="chip" data-c="foundations">YEAR 1</span><strong>First-Year Foundations</strong></a>
+<div class="side-progress" data-course="foundations" data-total="11"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 11 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Computer Basics</h4><ol><li><a href="../../foundations/how-computers-work/" data-lesson="foundations/how-computers-work"><span class="tick" aria-hidden="true"></span><span>How Computers Work</span></a></li><li><a href="../../foundations/number-systems/" data-lesson="foundations/number-systems"><span class="tick" aria-hidden="true"></span><span>Number Systems</span></a></li><li><a href="../../foundations/data-representation/" data-lesson="foundations/data-representation"><span class="tick" aria-hidden="true"></span><span>Data Representation</span></a></li><li><a href="../../foundations/logic-gates/" data-lesson="foundations/logic-gates" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Logic Gates &amp; Circuits</span></a></li></ol></div>
+<div class="side-unit"><h4>Problem Solving</h4><ol><li><a href="../../foundations/algorithms-flowcharts/" data-lesson="foundations/algorithms-flowcharts"><span class="tick" aria-hidden="true"></span><span>Algorithms, Flowcharts &amp; Pseudocode</span></a></li><li><a href="../../foundations/from-code-to-program/" data-lesson="foundations/from-code-to-program"><span class="tick" aria-hidden="true"></span><span>From Code to Running Program</span></a></li></ol></div>
+<div class="side-unit"><h4>Developer Tools</h4><ol><li><a href="../../foundations/linux-command-line/" data-lesson="foundations/linux-command-line"><span class="tick" aria-hidden="true"></span><span>The Linux Command Line</span></a></li><li><a href="../../foundations/git-github/" data-lesson="foundations/git-github"><span class="tick" aria-hidden="true"></span><span>Git &amp; GitHub</span></a></li></ol></div>
+<div class="side-unit"><h4>The Web</h4><ol><li><a href="../../foundations/how-the-web-works/" data-lesson="foundations/how-the-web-works"><span class="tick" aria-hidden="true"></span><span>How the Internet &amp; Web Work</span></a></li><li><a href="../../foundations/html-css/" data-lesson="foundations/html-css"><span class="tick" aria-hidden="true"></span><span>HTML &amp; CSS Essentials</span></a></li><li><a href="../../foundations/javascript/" data-lesson="foundations/javascript"><span class="tick" aria-hidden="true"></span><span>JavaScript Essentials</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../foundations/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="foundations/logic-gates" data-title="Logic Gates &amp; Circuits" data-course-title="First-Year Foundations">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../foundations/">Foundations</a><span>/</span><span>Lesson 4 of 11</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Computer Basics</p>
+<h1>Logic Gates &amp; Circuits</h1>
+<p class="lede">The building blocks of hardware: AND, OR, NOT, NAND, NOR and XOR gates with truth tables, building circuits, the half adder and full adder, and how they add numbers.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>logic gate</strong> is a tiny electronic circuit (made of transistors) that takes one or more bits as input and produces a bit as output. Billions of them inside a CPU perform every calculation your programs do.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 934 112" width="934" height="112" role="img" aria-label="Logic gates: AND, OR, NOT, NAND, NOR, XOR, XNOR"><g class="gate" transform="translate(42,18)"><line class="wire" x1="-20" y1="12" x2="0" y2="12"/><line class="wire" x1="-20" y1="36" x2="0" y2="36"/><path class="body" d="M0,0 H26 A24,24 0 0 1 26,48 H0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="70" y="94">AND</text><g class="gate" transform="translate(174,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="202" y="94">OR</text><g class="gate" transform="translate(306,18)"><line class="wire" x1="-20" y1="24" x2="0" y2="24"/><path class="body" d="M0,2 L42,24 L0,46 Z"/><circle class="body" cx="46.5" cy="24" r="4.5"/><line class="wire" x1="51" y1="24" x2="69" y2="24"/></g><text class="t cap" x="334" y="94">NOT</text><g class="gate" transform="translate(438,18)"><line class="wire" x1="-20" y1="12" x2="0" y2="12"/><line class="wire" x1="-20" y1="36" x2="0" y2="36"/><path class="body" d="M0,0 H26 A24,24 0 0 1 26,48 H0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="466" y="94">NAND</text><g class="gate" transform="translate(570,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="598" y="94">NOR</text><g class="gate" transform="translate(702,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="wire" d="M-7,0 Q5,24 -7,48"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><line class="wire" x1="50" y1="24" x2="68" y2="24"/></g><text class="t cap" x="730" y="94">XOR</text><g class="gate" transform="translate(834,18)"><line class="wire" x1="-20" y1="12" x2="6" y2="12"/><line class="wire" x1="-20" y1="36" x2="6" y2="36"/><path class="wire" d="M-7,0 Q5,24 -7,48"/><path class="body" d="M0,0 Q22,0 50,24 Q22,48 0,48 Q12,24 0,0 Z"/><circle class="body" cx="54.5" cy="24" r="4.5"/><line class="wire" x1="59" y1="24" x2="77" y2="24"/></g><text class="t cap" x="862" y="94">XNOR</text></svg><figcaption>The seven standard gates. A small circle (bubble) on the output means the result is inverted.</figcaption></figure>
+<h2 id="truth-tables"><a class="anchor" href="#truth-tables" aria-hidden="true" tabindex="-1">#</a>Truth tables</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>AND</th>
+<th>OR</th>
+<th>NAND</th>
+<th>NOR</th>
+<th>XOR</th>
+<th>XNOR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</div>
+<p>NOT has one input: NOT 0 = 1, NOT 1 = 0.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Output is 1 when…</th>
+<th>Boolean expression</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AND</td>
+<td>all inputs are 1</td>
+<td>A · B</td>
+</tr>
+<tr>
+<td>OR</td>
+<td>at least one input is 1</td>
+<td>A + B</td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>the input is 0</td>
+<td>A′</td>
+</tr>
+<tr>
+<td>NAND</td>
+<td>not all inputs are 1</td>
+<td>(A · B)′</td>
+</tr>
+<tr>
+<td>NOR</td>
+<td>no input is 1</td>
+<td>(A + B)′</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>the inputs differ</td>
+<td>A ⊕ B</td>
+</tr>
+<tr>
+<td>XNOR</td>
+<td>the inputs are equal</td>
+<td>(A ⊕ B)′</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="building-circuits"><a class="anchor" href="#building-circuits" aria-hidden="true" tabindex="-1">#</a>Building circuits</h2>
+<p>Connect gates and you get a circuit for any Boolean expression. Explore one:</p>
+<div class="widget" data-widget="truth-table" data-opts="{&quot;expr&quot;:&quot;(A &amp; !B) | (!A &amp; B)&quot;}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<p>That expression, (A AND NOT B) OR (NOT A AND B), is exactly <strong>XOR</strong>.</p>
+<aside class="callout callout-info"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Universal gates</span></div><div class="callout-body"><p>NAND alone can build every other gate — chip makers often build entire processors mostly from NAND gates. NOR is universal too. The algebra behind this is in <a href="../../discrete/boolean-algebra/">Boolean Algebra</a>.</p>
+</div></aside>
+<h2 id="adding-binary-numbers"><a class="anchor" href="#adding-binary-numbers" aria-hidden="true" tabindex="-1">#</a>Adding binary numbers</h2>
+<p>Binary addition follows simple rules: 0 + 0 = 0, 0 + 1 = 1, 1 + 1 = 10 (0, carry 1), 1 + 1 + 1 = 11 (1, carry 1).</p>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">    1 0 1 1   (11)
+  + 0 1 1 1   ( 7)
+  ---------
+  1 0 0 1 0   (18)</code></pre></figure>
+<h3 id="half-adder"><a class="anchor" href="#half-adder" aria-hidden="true" tabindex="-1">#</a>Half adder</h3>
+<p>Adds two bits A and B:</p>
+<ul>
+<li><strong>Sum</strong> = A XOR B</li>
+<li><strong>Carry</strong> = A AND B</li>
+</ul>
+<h3 id="full-adder"><a class="anchor" href="#full-adder" aria-hidden="true" tabindex="-1">#</a>Full adder</h3>
+<p>Adds two bits <strong>plus a carry in</strong>, so adders can be chained for multi-bit numbers:</p>
+<ul>
+<li><strong>Sum</strong> = A XOR B XOR Cin</li>
+<li><strong>Carry out</strong> = (A AND B) OR (Cin AND (A XOR B))</li>
+</ul>
+<p>Chain 32 or 64 full adders, each passing its carry to the next, and you have the adder inside a CPU&#39;s ALU — a <strong>ripple-carry adder</strong>:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">full_adder</span>(<span class="hljs-params">a, b, carry_in</span>):
+    s = a ^ b ^ carry_in
+    carry_out = (a &amp; b) | (carry_in &amp; (a ^ b))
+    <span class="hljs-keyword">return</span> s, carry_out
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">add_bits</span>(<span class="hljs-params">x, y, width=<span class="hljs-number">8</span></span>):
+    carry, result = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(width):                       <span class="hljs-comment"># from the least significant bit</span>
+        bit, carry = full_adder((x &gt;&gt; i) &amp; <span class="hljs-number">1</span>, (y &gt;&gt; i) &amp; <span class="hljs-number">1</span>, carry)
+        result |= bit &lt;&lt; i
+    <span class="hljs-keyword">return</span> result, carry
+
+<span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> [(<span class="hljs-number">11</span>, <span class="hljs-number">7</span>), (<span class="hljs-number">100</span>, <span class="hljs-number">55</span>), (<span class="hljs-number">200</span>, <span class="hljs-number">100</span>)]:
+    total, overflow = add_bits(x, y)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{x:<span class="hljs-number">3</span>}</span> + <span class="hljs-subst">{y:<span class="hljs-number">3</span>}</span> = <span class="hljs-subst">{total:<span class="hljs-number">3</span>}</span>  (binary <span class="hljs-subst">{x:08b}</span> + <span class="hljs-subst">{y:08b}</span> = <span class="hljs-subst">{total:08b}</span>, carry out <span class="hljs-subst">{overflow}</span>)&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre> 11 +   7 =  18  (binary 00001011 + 00000111 = 00010010, carry out 0)
+100 +  55 = 155  (binary 01100100 + 00110111 = 10011011, carry out 0)
+200 + 100 =  44  (binary 11001000 + 01100100 = 00101100, carry out 1)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGZ1bGxfYWRkZXIoYSwgYiwgY2FycnlfaW4pOgogICAgcyA9IGEgXiBiIF4gY2FycnlfaW4KICAgIGNhcnJ5X291dCA9IChhICYgYikgfCAoY2FycnlfaW4gJiAoYSBeIGIpKQogICAgcmV0dXJuIHMsIGNhcnJ5X291dAoKZGVmIGFkZF9iaXRzKHgsIHksIHdpZHRoPTgpOgogICAgY2FycnksIHJlc3VsdCA9IDAsIDAKICAgIGZvciBpIGluIHJhbmdlKHdpZHRoKTogICAgICAgICAgICAgICAgICAgICAgICMgZnJvbSB0aGUgbGVhc3Qgc2lnbmlmaWNhbnQgYml0CiAgICAgICAgYml0LCBjYXJyeSA9IGZ1bGxfYWRkZXIoKHggPj4gaSkgJiAxLCAoeSA-PiBpKSAmIDEsIGNhcnJ5KQogICAgICAgIHJlc3VsdCB8PSBiaXQgPDwgaQogICAgcmV0dXJuIHJlc3VsdCwgY2FycnkKCmZvciB4LCB5IGluIFsoMTEsIDcpLCAoMTAwLCA1NSksICgyMDAsIDEwMCldOgogICAgdG90YWwsIG92ZXJmbG93ID0gYWRkX2JpdHMoeCwgeSkKICAgIHByaW50KGYie3g6M30gKyB7eTozfSA9IHt0b3RhbDozfSAgKGJpbmFyeSB7eDowOGJ9ICsge3k6MDhifSA9IHt0b3RhbDowOGJ9LCBjYXJyeSBvdXQge292ZXJmbG93fSkiKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The last line shows <strong>overflow</strong>: 300 does not fit in 8 bits, so the result wraps to 44 and the carry-out bit is 1.</p>
+<h2 id="beyond-adders"><a class="anchor" href="#beyond-adders" aria-hidden="true" tabindex="-1">#</a>Beyond adders</h2>
+<ul>
+<li><strong>Multiplexers</strong> select one of several inputs (the hardware version of <code>switch</code>).</li>
+<li><strong>Flip-flops</strong> use feedback between gates to <strong>remember</strong> a bit — the basis of registers and memory.</li>
+<li>Combining adders, multiplexers and flip-flops with a clock gives you a CPU.</li>
+</ul>
+<section class="quiz" id="quiz" data-quiz="foundations/logic-gates" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which gate outputs 1 only when both inputs are 1?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">AND</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">OR</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">XOR</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">NOR</span></button></div><div class="q-why" hidden>AND requires all inputs to be 1.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does XOR output for inputs 1 and 1?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">0</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">2</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">10</span></button></div><div class="q-why" hidden>XOR is 1 only when the inputs differ.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>In a half adder, which gate produces the carry?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">XOR</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">OR</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">AND</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">NOT</span></button></div><div class="q-why" hidden>The carry is 1 only when both bits are 1.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which is a universal gate?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">AND</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">XOR</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">NAND</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">OR</span></button></div><div class="q-why" hidden>Every Boolean function can be built from NAND gates alone.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="foundations/logic-gates"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../foundations/data-representation/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Data Representation</strong></a><a class="next" href="../../foundations/algorithms-flowcharts/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Algorithms, Flowcharts &amp; Pseudocode</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#truth-tables">Truth tables</a></li><li><a class="d2" href="#building-circuits">Building circuits</a></li><li><a class="d2" href="#adding-binary-numbers">Adding binary numbers</a></li><li><a class="d3" href="#half-adder">Half adder</a></li><li><a class="d3" href="#full-adder">Full adder</a></li><li><a class="d2" href="#beyond-adders">Beyond adders</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

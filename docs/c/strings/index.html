@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Strings · C | Bytebook</title>
+<meta name="description" content="Character arrays ending in &#39;\0&#39;: reading strings, the string.h functions, and writing length, reverse, palindrome and vowel-count programs yourself.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Strings · C | Bytebook">
+<meta property="og:description" content="Character arrays ending in &#39;\0&#39;: reading strings, the string.h functions, and writing length, reverse, palindrome and vowel-count programs yourself.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/strings" data-title="Strings" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 14 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Arrays &amp; Strings</p>
+<h1>Strings</h1>
+<p class="lede">Character arrays ending in &#39;\0&#39;: reading strings, the string.h functions, and writing length, reverse, palindrome and vowel-count programs yourself.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>5 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>C has no special string type. A <strong>string</strong> is a <code>char</code> array that ends with the <strong>null character</strong> <code>&#39;\0&#39;</code>. Every string function relies on that terminator to know where the text stops.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> name[] = <span class="hljs-string">&quot;ASHA&quot;</span>;            <span class="hljs-comment">// the compiler adds &#x27;\0&#x27; for you</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s has %zu bytes of storage\n&quot;</span>, name, <span class="hljs-keyword">sizeof</span>(name));
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; name[i] != <span class="hljs-string">&#x27;\0&#x27;</span>; i++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;name[%d] = &#x27;%c&#x27; (%d)\n&quot;</span>, i, name[i], name[i]);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>ASHA has 5 bytes of storage
+name[0] = &#39;A&#39; (65)
+name[1] = &#39;S&#39; (83)
+name[2] = &#39;H&#39; (72)
+name[3] = &#39;A&#39; (65)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBjaGFyIG5hbWVbXSA9ICJBU0hBIjsgICAgICAgICAgICAvLyB0aGUgY29tcGlsZXIgYWRkcyAnXDAnIGZvciB5b3UKICAgIHByaW50ZigiJXMgaGFzICV6dSBieXRlcyBvZiBzdG9yYWdlXG4iLCBuYW1lLCBzaXplb2YobmFtZSkpOwogICAgZm9yIChpbnQgaSA9IDA7IG5hbWVbaV0gIT0gJ1wwJzsgaSsrKQogICAgICAgIHByaW50ZigibmFtZVslZF0gPSAnJWMnICglZClcbiIsIGksIG5hbWVbaV0sIG5hbWVbaV0pOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<figure class="diagram"><svg class="dg" viewBox="0 0 319 80" width="319" height="80" role="img" aria-label="Array name with values A, S, H, A, \0"><defs><marker id="dg-ah-5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><text class="t lbl end" x="50.4" y="29">name</text><rect class="box cell" x="62.4" y="6" width="50" height="46" rx="0"/><text class="t" x="87.4" y="29">A</text><text class="s" x="87.4" y="68">0</text><rect class="box cell" x="112.4" y="6" width="50" height="46" rx="0"/><text class="t" x="137.4" y="29">S</text><text class="s" x="137.4" y="68">1</text><rect class="box cell" x="162.4" y="6" width="50" height="46" rx="0"/><text class="t" x="187.4" y="29">H</text><text class="s" x="187.4" y="68">2</text><rect class="box cell" x="212.4" y="6" width="50" height="46" rx="0"/><text class="t" x="237.4" y="29">A</text><text class="s" x="237.4" y="68">3</text><rect class="box cell hl" x="262.4" y="6" width="50" height="46" rx="0"/><text class="t" x="287.4" y="29">\0</text><text class="s" x="287.4" y="68">4</text><rect class="frame" x="62.4" y="6" width="250" height="46" rx="0"/></svg><figcaption><code>char name[] = &quot;ASHA&quot;</code> takes 5 bytes: four letters plus the terminating <code>&#39;\0&#39;</code>.</figcaption></figure>
+<h2 id="declaring-strings"><a class="anchor" href="#declaring-strings" aria-hidden="true" tabindex="-1">#</a>Declaring strings</h2>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">char</span> a[<span class="hljs-number">20</span>] = <span class="hljs-string">&quot;Hello&quot;</span>;        <span class="hljs-comment">// 20 bytes, &quot;Hello&quot; + &#x27;\0&#x27; + unused space</span>
+<span class="hljs-type">char</span> b[] = <span class="hljs-string">&quot;Hello&quot;</span>;          <span class="hljs-comment">// exactly 6 bytes</span>
+<span class="hljs-type">char</span> c[] = {<span class="hljs-string">&#x27;H&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;\0&#x27;</span>}; <span class="hljs-comment">// character by character — don&#x27;t forget &#x27;\0&#x27;</span></code></pre></figure>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>Comparing and copying with = and ==</span></div><div class="callout-body"><p><code>if (a == b)</code> compares <strong>addresses</strong>, not the text. <code>a = &quot;Hi&quot;;</code> does not compile for an array. Use <code>strcmp</code> and <code>strcpy</code>.</p>
+</div></aside>
+<h2 id="string-h-functions"><a class="anchor" href="#string-h-functions" aria-hidden="true" tabindex="-1">#</a>string.h functions</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>strlen(s)</code></td>
+<td>length, not counting <code>&#39;\0&#39;</code></td>
+</tr>
+<tr>
+<td><code>strcpy(dst, src)</code></td>
+<td>copy <code>src</code> into <code>dst</code></td>
+</tr>
+<tr>
+<td><code>strncpy(dst, src, n)</code></td>
+<td>copy at most <code>n</code> characters</td>
+</tr>
+<tr>
+<td><code>strcat(dst, src)</code></td>
+<td>append <code>src</code> to the end of <code>dst</code></td>
+</tr>
+<tr>
+<td><code>strcmp(a, b)</code></td>
+<td>0 if equal, negative if <code>a</code> &lt; <code>b</code>, positive if <code>a</code> &gt; <code>b</code> (dictionary order)</td>
+</tr>
+<tr>
+<td><code>strchr(s, c)</code></td>
+<td>pointer to first <code>c</code> in <code>s</code>, or <code>NULL</code></td>
+</tr>
+<tr>
+<td><code>strstr(s, t)</code></td>
+<td>pointer to first occurrence of <code>t</code> in <code>s</code>, or <code>NULL</code></td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> first[<span class="hljs-number">30</span>] = <span class="hljs-string">&quot;Data&quot;</span>;
+    <span class="hljs-type">char</span> second[] = <span class="hljs-string">&quot;Structures&quot;</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Length of \&quot;%s\&quot;: %zu\n&quot;</span>, first, <span class="hljs-built_in">strlen</span>(first));
+    <span class="hljs-built_in">strcat</span>(first, <span class="hljs-string">&quot; &quot;</span>);
+    <span class="hljs-built_in">strcat</span>(first, second);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Joined: %s\n&quot;</span>, first);
+
+    <span class="hljs-type">char</span> copy[<span class="hljs-number">30</span>];
+    <span class="hljs-built_in">strcpy</span>(copy, first);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Copy: %s\n&quot;</span>, copy);
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;strcmp(\&quot;apple\&quot;, \&quot;banana\&quot;) = %d\n&quot;</span>, <span class="hljs-built_in">strcmp</span>(<span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-string">&quot;banana&quot;</span>) &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">-1</span> : <span class="hljs-number">1</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;strcmp(\&quot;cat\&quot;, \&quot;cat\&quot;) = %d\n&quot;</span>, <span class="hljs-built_in">strcmp</span>(<span class="hljs-string">&quot;cat&quot;</span>, <span class="hljs-string">&quot;cat&quot;</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Found \&quot;Struct\&quot; at position %td\n&quot;</span>, <span class="hljs-built_in">strstr</span>(first, <span class="hljs-string">&quot;Struct&quot;</span>) - first);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Length of &quot;Data&quot;: 4
+Joined: Data Structures
+Copy: Data Structures
+strcmp(&quot;apple&quot;, &quot;banana&quot;) = -1
+strcmp(&quot;cat&quot;, &quot;cat&quot;) = 0
+Found &quot;Struct&quot; at position 5</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdHJpbmcuaD4KCmludCBtYWluKHZvaWQpIHsKICAgIGNoYXIgZmlyc3RbMzBdID0gIkRhdGEiOwogICAgY2hhciBzZWNvbmRbXSA9ICJTdHJ1Y3R1cmVzIjsKICAgIHByaW50ZigiTGVuZ3RoIG9mIFwiJXNcIjogJXp1XG4iLCBmaXJzdCwgc3RybGVuKGZpcnN0KSk7CiAgICBzdHJjYXQoZmlyc3QsICIgIik7CiAgICBzdHJjYXQoZmlyc3QsIHNlY29uZCk7CiAgICBwcmludGYoIkpvaW5lZDogJXNcbiIsIGZpcnN0KTsKCiAgICBjaGFyIGNvcHlbMzBdOwogICAgc3RyY3B5KGNvcHksIGZpcnN0KTsKICAgIHByaW50ZigiQ29weTogJXNcbiIsIGNvcHkpOwoKICAgIHByaW50Zigic3RyY21wKFwiYXBwbGVcIiwgXCJiYW5hbmFcIikgPSAlZFxuIiwgc3RyY21wKCJhcHBsZSIsICJiYW5hbmEiKSA8IDAgPyAtMSA6IDEpOwogICAgcHJpbnRmKCJzdHJjbXAoXCJjYXRcIiwgXCJjYXRcIikgPSAlZFxuIiwgc3RyY21wKCJjYXQiLCAiY2F0IikpOwogICAgcHJpbnRmKCJGb3VuZCBcIlN0cnVjdFwiIGF0IHBvc2l0aW9uICV0ZFxuIiwgc3Ryc3RyKGZpcnN0LCAiU3RydWN0IikgLSBmaXJzdCk7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>strcmp&#39;s exact value</span></div><div class="callout-body"><p>The C standard only promises the <strong>sign</strong> of <code>strcmp</code>&#39;s result (negative, zero or positive), not the exact number. Always test <code>strcmp(a, b) == 0</code> or <code>&lt; 0</code>, never <code>== -1</code>.</p>
+</div></aside>
+<h2 id="write-them-yourself"><a class="anchor" href="#write-them-yourself" aria-hidden="true" tabindex="-1">#</a>Write them yourself</h2>
+<p>Exams frequently say &quot;<strong>without using library functions</strong>&quot;. These four are the most common:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">myStrlen</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> s[])</span> {
+    <span class="hljs-type">int</span> n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (s[n] != <span class="hljs-string">&#x27;\0&#x27;</span>) n++;
+    <span class="hljs-keyword">return</span> n;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">myReverse</span><span class="hljs-params">(<span class="hljs-type">char</span> s[])</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = myStrlen(s) - <span class="hljs-number">1</span>; i &lt; j; i++, j--) {
+        <span class="hljs-type">char</span> t = s[i]; s[i] = s[j]; s[j] = t;
+    }
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">isPalindrome</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> s[])</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = myStrlen(s) - <span class="hljs-number">1</span>; i &lt; j; i++, j--)
+        <span class="hljs-keyword">if</span> (s[i] != s[j]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">countVowels</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> s[])</span> {
+    <span class="hljs-type">int</span> v = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; s[i]; i++) {
+        <span class="hljs-type">char</span> c = s[i] | <span class="hljs-number">32</span>;           <span class="hljs-comment">// quick lowercase for letters</span>
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;a&#x27;</span> || c == <span class="hljs-string">&#x27;e&#x27;</span> || c == <span class="hljs-string">&#x27;i&#x27;</span> || c == <span class="hljs-string">&#x27;o&#x27;</span> || c == <span class="hljs-string">&#x27;u&#x27;</span>) v++;
+    }
+    <span class="hljs-keyword">return</span> v;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> word[] = <span class="hljs-string">&quot;Programming&quot;</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Length: %d\n&quot;</span>, myStrlen(word));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Vowels: %d\n&quot;</span>, countVowels(word));
+    myReverse(word);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Reversed: %s\n&quot;</span>, word);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\&quot;madam\&quot; palindrome? %s\n&quot;</span>, isPalindrome(<span class="hljs-string">&quot;madam&quot;</span>) ? <span class="hljs-string">&quot;yes&quot;</span> : <span class="hljs-string">&quot;no&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\&quot;kalvium\&quot; palindrome? %s\n&quot;</span>, isPalindrome(<span class="hljs-string">&quot;kalvium&quot;</span>) ? <span class="hljs-string">&quot;yes&quot;</span> : <span class="hljs-string">&quot;no&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Length: 11
+Vowels: 3
+Reversed: gnimmargorP
+&quot;madam&quot; palindrome? yes
+&quot;kalvium&quot; palindrome? no</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbXlTdHJsZW4oY29uc3QgY2hhciBzW10pIHsKICAgIGludCBuID0gMDsKICAgIHdoaWxlIChzW25dICE9ICdcMCcpIG4rKzsKICAgIHJldHVybiBuOwp9Cgp2b2lkIG15UmV2ZXJzZShjaGFyIHNbXSkgewogICAgZm9yIChpbnQgaSA9IDAsIGogPSBteVN0cmxlbihzKSAtIDE7IGkgPCBqOyBpKyssIGotLSkgewogICAgICAgIGNoYXIgdCA9IHNbaV07IHNbaV0gPSBzW2pdOyBzW2pdID0gdDsKICAgIH0KfQoKaW50IGlzUGFsaW5kcm9tZShjb25zdCBjaGFyIHNbXSkgewogICAgZm9yIChpbnQgaSA9IDAsIGogPSBteVN0cmxlbihzKSAtIDE7IGkgPCBqOyBpKyssIGotLSkKICAgICAgICBpZiAoc1tpXSAhPSBzW2pdKSByZXR1cm4gMDsKICAgIHJldHVybiAxOwp9CgppbnQgY291bnRWb3dlbHMoY29uc3QgY2hhciBzW10pIHsKICAgIGludCB2ID0gMDsKICAgIGZvciAoaW50IGkgPSAwOyBzW2ldOyBpKyspIHsKICAgICAgICBjaGFyIGMgPSBzW2ldIHwgMzI7ICAgICAgICAgICAvLyBxdWljayBsb3dlcmNhc2UgZm9yIGxldHRlcnMKICAgICAgICBpZiAoYyA9PSAnYScgfHwgYyA9PSAnZScgfHwgYyA9PSAnaScgfHwgYyA9PSAnbycgfHwgYyA9PSAndScpIHYrKzsKICAgIH0KICAgIHJldHVybiB2Owp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBjaGFyIHdvcmRbXSA9ICJQcm9ncmFtbWluZyI7CiAgICBwcmludGYoIkxlbmd0aDogJWRcbiIsIG15U3RybGVuKHdvcmQpKTsKICAgIHByaW50ZigiVm93ZWxzOiAlZFxuIiwgY291bnRWb3dlbHMod29yZCkpOwogICAgbXlSZXZlcnNlKHdvcmQpOwogICAgcHJpbnRmKCJSZXZlcnNlZDogJXNcbiIsIHdvcmQpOwogICAgcHJpbnRmKCJcIm1hZGFtXCIgcGFsaW5kcm9tZT8gJXNcbiIsIGlzUGFsaW5kcm9tZSgibWFkYW0iKSA_ICJ5ZXMiIDogIm5vIik7CiAgICBwcmludGYoIlwia2Fsdml1bVwiIHBhbGluZHJvbWU_ICVzXG4iLCBpc1BhbGluZHJvbWUoImthbHZpdW0iKSA_ICJ5ZXMiIDogIm5vIik7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="changing-case-with-ctype-h"><a class="anchor" href="#changing-case-with-ctype-h" aria-hidden="true" tabindex="-1">#</a>Changing case with ctype.h</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ctype.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> line[<span class="hljs-number">100</span>];
+    <span class="hljs-type">int</span> letters = <span class="hljs-number">0</span>, digits = <span class="hljs-number">0</span>, spaces = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Type a line: &quot;</span>);
+    fgets(line, <span class="hljs-keyword">sizeof</span> line, <span class="hljs-built_in">stdin</span>);
+    line[<span class="hljs-built_in">strcspn</span>(line, <span class="hljs-string">&quot;\n&quot;</span>)] = <span class="hljs-string">&#x27;\0&#x27;</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; line[i]; i++) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isalpha</span>((<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)line[i])) letters++;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isdigit</span>((<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)line[i])) digits++;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (line[i] == <span class="hljs-string">&#x27; &#x27;</span>) spaces++;
+        line[i] = <span class="hljs-built_in">toupper</span>((<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)line[i]);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Upper case: %s\n&quot;</span>, line);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Letters %d, digits %d, spaces %d\n&quot;</span>, letters, digits, spaces);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Type a line: <span class="in">Hello, CSE 101!</span>
+Upper case: HELLO, CSE 101!
+Letters 8, digits 3, spaces 2</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxjdHlwZS5oPgojaW5jbHVkZSA8c3RyaW5nLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBjaGFyIGxpbmVbMTAwXTsKICAgIGludCBsZXR0ZXJzID0gMCwgZGlnaXRzID0gMCwgc3BhY2VzID0gMDsKICAgIHByaW50ZigiVHlwZSBhIGxpbmU6ICIpOwogICAgZmdldHMobGluZSwgc2l6ZW9mIGxpbmUsIHN0ZGluKTsKICAgIGxpbmVbc3RyY3NwbihsaW5lLCAiXG4iKV0gPSAnXDAnOwogICAgZm9yIChpbnQgaSA9IDA7IGxpbmVbaV07IGkrKykgewogICAgICAgIGlmIChpc2FscGhhKCh1bnNpZ25lZCBjaGFyKWxpbmVbaV0pKSBsZXR0ZXJzKys7CiAgICAgICAgZWxzZSBpZiAoaXNkaWdpdCgodW5zaWduZWQgY2hhcilsaW5lW2ldKSkgZGlnaXRzKys7CiAgICAgICAgZWxzZSBpZiAobGluZVtpXSA9PSAnICcpIHNwYWNlcysrOwogICAgICAgIGxpbmVbaV0gPSB0b3VwcGVyKCh1bnNpZ25lZCBjaGFyKWxpbmVbaV0pOwogICAgfQogICAgcHJpbnRmKCJVcHBlciBjYXNlOiAlc1xuIiwgbGluZSk7CiAgICBwcmludGYoIkxldHRlcnMgJWQsIGRpZ2l0cyAlZCwgc3BhY2VzICVkXG4iLCBsZXR0ZXJzLCBkaWdpdHMsIHNwYWNlcyk7CiAgICByZXR1cm4gMDsKfQo&amp;stdin=SGVsbG8sIENTRSAxMDEhCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="arrays-of-strings"><a class="anchor" href="#arrays-of-strings" aria-hidden="true" tabindex="-1">#</a>Arrays of strings</h2>
+<p>A list of words is a 2D <code>char</code> array — one row per word:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> days[<span class="hljs-number">7</span>][<span class="hljs-number">10</span>] = {<span class="hljs-string">&quot;Mon&quot;</span>, <span class="hljs-string">&quot;Tue&quot;</span>, <span class="hljs-string">&quot;Wed&quot;</span>, <span class="hljs-string">&quot;Thu&quot;</span>, <span class="hljs-string">&quot;Fri&quot;</span>, <span class="hljs-string">&quot;Sat&quot;</span>, <span class="hljs-string">&quot;Sun&quot;</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">7</span>; i++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: %s\n&quot;</span>, i + <span class="hljs-number">1</span>, days[i]);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1: Mon
+2: Tue
+3: Wed
+4: Thu
+5: Fri
+6: Sat
+7: Sun</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBjaGFyIGRheXNbN11bMTBdID0geyJNb24iLCAiVHVlIiwgIldlZCIsICJUaHUiLCAiRnJpIiwgIlNhdCIsICJTdW4ifTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgNzsgaSsrKQogICAgICAgIHByaW50ZigiJWQ6ICVzXG4iLCBpICsgMSwgZGF5c1tpXSk7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<section class="quiz" id="quiz" data-quiz="c/strings" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>How many bytes does <code>char s[] = &quot;C101&quot;;</code> occupy?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">8</span></button></div><div class="q-why" hidden>Four characters plus the terminating <code>&#39;\0&#39;</code>.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does <code>strlen(&quot;Kalvium&quot;)</code> return?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">7</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">8</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">9</span></button></div><div class="q-why" hidden><code>strlen</code> counts characters before <code>&#39;\0&#39;</code> and does not include it.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>How should you check if two strings <code>a</code> and <code>b</code> have the same text?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>if (a == b)</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>if (a = b)</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>if (strcmp(a, b) == 0)</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>if (strlen(a) == strlen(b))</code></span></button></div><div class="q-why" hidden><code>==</code> compares addresses. <code>strcmp</code> returns 0 when the contents match.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What does <code>&#39;\0&#39;</code> mark?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A new line</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A space</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The end of a string</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A tab</span></button></div><div class="q-why" hidden>Every C string ends with the null character so functions know where to stop.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/strings"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/2d-arrays/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>2D Arrays &amp; Matrices</strong></a><a class="next" href="../../c/pointers/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Pointers</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#declaring-strings">Declaring strings</a></li><li><a class="d2" href="#string-h-functions">string.h functions</a></li><li><a class="d2" href="#write-them-yourself">Write them yourself</a></li><li><a class="d2" href="#changing-case-with-ctype-h">Changing case with ctype.h</a></li><li><a class="d2" href="#arrays-of-strings">Arrays of strings</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

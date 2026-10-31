@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inheritance · C++ OOP | Bytebook</title>
+<meta name="description" content="Reuse and extend classes: base and derived classes, public/protected/private inheritance, the five types of inheritance, constructor order, and the diamond problem.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Inheritance · C++ OOP | Bytebook">
+<meta property="og:description" content="Reuse and extend classes: base and derived classes, public/protected/private inheritance, the five types of inheritance, constructor order, and the diamond problem.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="cpp">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp" class="active" aria-current="true"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="cpp" aria-label="Object-Oriented Programming with C++ lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../cpp/"><span class="chip" data-c="cpp">OOPS</span><strong>Object-Oriented Programming with C++</strong></a>
+<div class="side-progress" data-course="cpp" data-total="19"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 19 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>From C to C++</h4><ol><li><a href="../../cpp/intro/" data-lesson="cpp/intro"><span class="tick" aria-hidden="true"></span><span>C++ Introduction</span></a></li><li><a href="../../cpp/io-references/" data-lesson="cpp/io-references"><span class="tick" aria-hidden="true"></span><span>Input/Output, Strings &amp; References</span></a></li><li><a href="../../cpp/functions/" data-lesson="cpp/functions"><span class="tick" aria-hidden="true"></span><span>Functions: Overloading, Defaults &amp; Inline</span></a></li></ol></div>
+<div class="side-unit"><h4>Classes &amp; Objects</h4><ol><li><a href="../../cpp/oop-concepts/" data-lesson="cpp/oop-concepts"><span class="tick" aria-hidden="true"></span><span>OOP Concepts</span></a></li><li><a href="../../cpp/classes-objects/" data-lesson="cpp/classes-objects"><span class="tick" aria-hidden="true"></span><span>Classes &amp; Objects</span></a></li><li><a href="../../cpp/constructors/" data-lesson="cpp/constructors"><span class="tick" aria-hidden="true"></span><span>Constructors &amp; Destructors</span></a></li><li><a href="../../cpp/encapsulation/" data-lesson="cpp/encapsulation"><span class="tick" aria-hidden="true"></span><span>Encapsulation, this &amp; static Members</span></a></li><li><a href="../../cpp/friend/" data-lesson="cpp/friend"><span class="tick" aria-hidden="true"></span><span>Friend Functions &amp; Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Inheritance &amp; Polymorphism</h4><ol><li><a href="../../cpp/inheritance/" data-lesson="cpp/inheritance" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Inheritance</span></a></li><li><a href="../../cpp/operator-overloading/" data-lesson="cpp/operator-overloading"><span class="tick" aria-hidden="true"></span><span>Operator Overloading</span></a></li><li><a href="../../cpp/virtual-functions/" data-lesson="cpp/virtual-functions"><span class="tick" aria-hidden="true"></span><span>Virtual Functions &amp; Runtime Polymorphism</span></a></li><li><a href="../../cpp/abstract-classes/" data-lesson="cpp/abstract-classes"><span class="tick" aria-hidden="true"></span><span>Abstract Classes &amp; Interfaces</span></a></li></ol></div>
+<div class="side-unit"><h4>Beyond the Basics</h4><ol><li><a href="../../cpp/templates/" data-lesson="cpp/templates"><span class="tick" aria-hidden="true"></span><span>Templates</span></a></li><li><a href="../../cpp/exceptions/" data-lesson="cpp/exceptions"><span class="tick" aria-hidden="true"></span><span>Exception Handling</span></a></li><li><a href="../../cpp/memory/" data-lesson="cpp/memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory &amp; Smart Pointers</span></a></li><li><a href="../../cpp/stl-containers/" data-lesson="cpp/stl-containers"><span class="tick" aria-hidden="true"></span><span>STL Containers</span></a></li><li><a href="../../cpp/stl-algorithms/" data-lesson="cpp/stl-algorithms"><span class="tick" aria-hidden="true"></span><span>Iterators, Algorithms &amp; Lambdas</span></a></li><li><a href="../../cpp/file-io/" data-lesson="cpp/file-io"><span class="tick" aria-hidden="true"></span><span>File I/O with fstream</span></a></li><li><a href="../../cpp/cheatsheet/" data-lesson="cpp/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C++ OOP Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../cpp/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="cpp/inheritance" data-title="Inheritance" data-course-title="Object-Oriented Programming with C++">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../cpp/">C++ OOP</a><span>/</span><span>Lesson 9 of 19</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Inheritance &amp; Polymorphism</p>
+<h1>Inheritance</h1>
+<p class="lede">Reuse and extend classes: base and derived classes, public/protected/private inheritance, the five types of inheritance, constructor order, and the diamond problem.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>6 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>5 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p><strong>Inheritance</strong> lets a new class (the <strong>derived</strong> or child class) take on the members of an existing class (the <strong>base</strong> or parent class), then add its own or change some. It models an <strong>is-a</strong> relationship and avoids writing the same code twice.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> {                                   <span class="hljs-comment">// base class</span>
+<span class="hljs-keyword">protected</span>:
+    string name;
+    <span class="hljs-type">int</span> age;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Person</span>(<span class="hljs-type">const</span> string &amp;n, <span class="hljs-type">int</span> a) : <span class="hljs-built_in">name</span>(n), <span class="hljs-built_in">age</span>(a) {}
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">introduce</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; <span class="hljs-string">&quot;I am &quot;</span> &lt;&lt; name &lt;&lt; <span class="hljs-string">&quot;, &quot;</span> &lt;&lt; age &lt;&lt; <span class="hljs-string">&quot; years old.&quot;</span> &lt;&lt; endl; }
+};
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> : <span class="hljs-keyword">public</span> Person {                  <span class="hljs-comment">// Student is-a Person</span>
+    string course;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Student</span>(<span class="hljs-type">const</span> string &amp;n, <span class="hljs-type">int</span> a, <span class="hljs-type">const</span> string &amp;c) : <span class="hljs-built_in">Person</span>(n, a), <span class="hljs-built_in">course</span>(c) {}
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">study</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; name &lt;&lt; <span class="hljs-string">&quot; is studying &quot;</span> &lt;&lt; course &lt;&lt; <span class="hljs-string">&quot;.&quot;</span> &lt;&lt; endl; }   <span class="hljs-comment">// can use protected name</span>
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Student <span class="hljs-title">s</span><span class="hljs-params">(<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-number">19</span>, <span class="hljs-string">&quot;Data Structures&quot;</span>)</span></span>;
+    s.<span class="hljs-built_in">introduce</span>();      <span class="hljs-comment">// inherited from Person</span>
+    s.<span class="hljs-built_in">study</span>();          <span class="hljs-comment">// Student&#x27;s own</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>I am Asha, 19 years old.
+Asha is studying Data Structures.</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgUGVyc29uIHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIGJhc2UgY2xhc3MKcHJvdGVjdGVkOgogICAgc3RyaW5nIG5hbWU7CiAgICBpbnQgYWdlOwpwdWJsaWM6CiAgICBQZXJzb24oY29uc3Qgc3RyaW5nICZuLCBpbnQgYSkgOiBuYW1lKG4pLCBhZ2UoYSkge30KICAgIHZvaWQgaW50cm9kdWNlKCkgY29uc3QgeyBjb3V0IDw8ICJJIGFtICIgPDwgbmFtZSA8PCAiLCAiIDw8IGFnZSA8PCAiIHllYXJzIG9sZC4iIDw8IGVuZGw7IH0KfTsKCmNsYXNzIFN0dWRlbnQgOiBwdWJsaWMgUGVyc29uIHsgICAgICAgICAgICAgICAgICAvLyBTdHVkZW50IGlzLWEgUGVyc29uCiAgICBzdHJpbmcgY291cnNlOwpwdWJsaWM6CiAgICBTdHVkZW50KGNvbnN0IHN0cmluZyAmbiwgaW50IGEsIGNvbnN0IHN0cmluZyAmYykgOiBQZXJzb24obiwgYSksIGNvdXJzZShjKSB7fQogICAgdm9pZCBzdHVkeSgpIGNvbnN0IHsgY291dCA8PCBuYW1lIDw8ICIgaXMgc3R1ZHlpbmcgIiA8PCBjb3Vyc2UgPDwgIi4iIDw8IGVuZGw7IH0gICAvLyBjYW4gdXNlIHByb3RlY3RlZCBuYW1lCn07CgppbnQgbWFpbigpIHsKICAgIFN0dWRlbnQgcygiQXNoYSIsIDE5LCAiRGF0YSBTdHJ1Y3R1cmVzIik7CiAgICBzLmludHJvZHVjZSgpOyAgICAgIC8vIGluaGVyaXRlZCBmcm9tIFBlcnNvbgogICAgcy5zdHVkeSgpOyAgICAgICAgICAvLyBTdHVkZW50J3Mgb3duCiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="access-in-derived-classes"><a class="anchor" href="#access-in-derived-classes" aria-hidden="true" tabindex="-1">#</a>Access in derived classes</h2>
+<p>A derived class can use the base&#39;s <code>public</code> and <code>protected</code> members, but <strong>never</strong> its <code>private</code> ones. The <strong>mode</strong> of inheritance (<code>public</code>, <code>protected</code>, <code>private</code>) then decides how inherited members appear to the outside world:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Base member</th>
+<th><code>public</code> inheritance</th>
+<th><code>protected</code> inheritance</th>
+<th><code>private</code> inheritance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>public</code></td>
+<td>public</td>
+<td>protected</td>
+<td>private</td>
+</tr>
+<tr>
+<td><code>protected</code></td>
+<td>protected</td>
+<td>protected</td>
+<td>private</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>not accessible</td>
+<td>not accessible</td>
+<td>not accessible</td>
+</tr>
+</tbody></table>
+</div>
+<p><code>public</code> inheritance is by far the most common — it is the one that means &quot;is-a&quot;.</p>
+<h2 id="types-of-inheritance"><a class="anchor" href="#types-of-inheritance" aria-hidden="true" tabindex="-1">#</a>Types of inheritance</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Single</strong></td>
+<td>one base → one derived</td>
+<td><code>Car : Vehicle</code></td>
+</tr>
+<tr>
+<td><strong>Multilevel</strong></td>
+<td>chain: A → B → C</td>
+<td><code>Vehicle → Car → ElectricCar</code></td>
+</tr>
+<tr>
+<td><strong>Multiple</strong></td>
+<td>one class, several bases</td>
+<td><code>SmartPhone : Phone, Camera</code></td>
+</tr>
+<tr>
+<td><strong>Hierarchical</strong></td>
+<td>one base, several derived</td>
+<td><code>Shape → Circle, Square, Triangle</code></td>
+</tr>
+<tr>
+<td><strong>Hybrid</strong></td>
+<td>a mix of the above</td>
+<td>multiple + multilevel together</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="diagram"><svg class="dg" viewBox="0 0 378 194" width="378" height="194" role="img" aria-label="Tree rooted at Vehicle"><path class="edge" d="M188.7,40 V60 H66.9 V80"/><path class="edge" d="M66.9,114 V134 H66.9 V154"/><path class="edge" d="M188.7,40 V60 H188.7 V80"/><path class="edge" d="M188.7,40 V60 H310.5 V80"/><rect class="box" x="13" y="154" width="107.8" height="34" rx="8"/><text class="t lbl small" x="66.9" y="171">ElectricCar</text><rect class="box" x="44.2" y="80" width="45.4" height="34" rx="8"/><text class="t lbl small" x="66.9" y="97">Car</text><rect class="box" x="162.1" y="80" width="53.2" height="34" rx="8"/><text class="t lbl small" x="188.7" y="97">Bike</text><rect class="box" x="280" y="80" width="61" height="34" rx="8"/><text class="t lbl small" x="310.5" y="97">Truck</text><rect class="box" x="150.4" y="6" width="76.6" height="34" rx="8"/><text class="t lbl small" x="188.7" y="23">Vehicle</text></svg><figcaption>Multilevel (Vehicle → Car → ElectricCar) and hierarchical (Vehicle → Car, Bike, Truck) inheritance in one picture.</figcaption></figure>
+<h2 id="multilevel-inheritance-and-constructor-order"><a class="anchor" href="#multilevel-inheritance-and-constructor-order" aria-hidden="true" tabindex="-1">#</a>Multilevel inheritance and constructor order</h2>
+<p>Constructors run from the <strong>base down</strong> to the most derived class; destructors run in the <strong>reverse</strong> order.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Vehicle</span> {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Vehicle</span>()  { cout &lt;&lt; <span class="hljs-string">&quot;Vehicle constructor&quot;</span> &lt;&lt; endl; }
+    ~<span class="hljs-built_in">Vehicle</span>() { cout &lt;&lt; <span class="hljs-string">&quot;Vehicle destructor&quot;</span> &lt;&lt; endl; }
+};
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Car</span> : <span class="hljs-keyword">public</span> Vehicle {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Car</span>()  { cout &lt;&lt; <span class="hljs-string">&quot;  Car constructor&quot;</span> &lt;&lt; endl; }
+    ~<span class="hljs-built_in">Car</span>() { cout &lt;&lt; <span class="hljs-string">&quot;  Car destructor&quot;</span> &lt;&lt; endl; }
+};
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ElectricCar</span> : <span class="hljs-keyword">public</span> Car {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">ElectricCar</span>()  { cout &lt;&lt; <span class="hljs-string">&quot;    ElectricCar constructor&quot;</span> &lt;&lt; endl; }
+    ~<span class="hljs-built_in">ElectricCar</span>() { cout &lt;&lt; <span class="hljs-string">&quot;    ElectricCar destructor&quot;</span> &lt;&lt; endl; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    ElectricCar tesla;
+    cout &lt;&lt; <span class="hljs-string">&quot;--- object in use ---&quot;</span> &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Vehicle constructor
+  Car constructor
+    ElectricCar constructor
+--- object in use ---
+    ElectricCar destructor
+  Car destructor
+Vehicle destructor</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgVmVoaWNsZSB7CnB1YmxpYzoKICAgIFZlaGljbGUoKSAgeyBjb3V0IDw8ICJWZWhpY2xlIGNvbnN0cnVjdG9yIiA8PCBlbmRsOyB9CiAgICB-VmVoaWNsZSgpIHsgY291dCA8PCAiVmVoaWNsZSBkZXN0cnVjdG9yIiA8PCBlbmRsOyB9Cn07CmNsYXNzIENhciA6IHB1YmxpYyBWZWhpY2xlIHsKcHVibGljOgogICAgQ2FyKCkgIHsgY291dCA8PCAiICBDYXIgY29uc3RydWN0b3IiIDw8IGVuZGw7IH0KICAgIH5DYXIoKSB7IGNvdXQgPDwgIiAgQ2FyIGRlc3RydWN0b3IiIDw8IGVuZGw7IH0KfTsKY2xhc3MgRWxlY3RyaWNDYXIgOiBwdWJsaWMgQ2FyIHsKcHVibGljOgogICAgRWxlY3RyaWNDYXIoKSAgeyBjb3V0IDw8ICIgICAgRWxlY3RyaWNDYXIgY29uc3RydWN0b3IiIDw8IGVuZGw7IH0KICAgIH5FbGVjdHJpY0NhcigpIHsgY291dCA8PCAiICAgIEVsZWN0cmljQ2FyIGRlc3RydWN0b3IiIDw8IGVuZGw7IH0KfTsKCmludCBtYWluKCkgewogICAgRWxlY3RyaWNDYXIgdGVzbGE7CiAgICBjb3V0IDw8ICItLS0gb2JqZWN0IGluIHVzZSAtLS0iIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="multiple-inheritance"><a class="anchor" href="#multiple-inheritance" aria-hidden="true" tabindex="-1">#</a>Multiple inheritance</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Camera</span> {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">takePhoto</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; <span class="hljs-string">&quot;Click! Photo saved.&quot;</span> &lt;&lt; endl; }
+};
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Phone</span> {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">call</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *who)</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; <span class="hljs-string">&quot;Calling &quot;</span> &lt;&lt; who &lt;&lt; <span class="hljs-string">&quot;...&quot;</span> &lt;&lt; endl; }
+};
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SmartPhone</span> : <span class="hljs-keyword">public</span> Phone, <span class="hljs-keyword">public</span> Camera {      <span class="hljs-comment">// two bases</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">browse</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; <span class="hljs-string">&quot;Opening browser.&quot;</span> &lt;&lt; endl; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    SmartPhone p;
+    p.<span class="hljs-built_in">call</span>(<span class="hljs-string">&quot;Mom&quot;</span>);
+    p.<span class="hljs-built_in">takePhoto</span>();
+    p.<span class="hljs-built_in">browse</span>();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Calling Mom...
+Click! Photo saved.
+Opening browser.</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgQ2FtZXJhIHsKcHVibGljOgogICAgdm9pZCB0YWtlUGhvdG8oKSBjb25zdCB7IGNvdXQgPDwgIkNsaWNrISBQaG90byBzYXZlZC4iIDw8IGVuZGw7IH0KfTsKY2xhc3MgUGhvbmUgewpwdWJsaWM6CiAgICB2b2lkIGNhbGwoY29uc3QgY2hhciAqd2hvKSBjb25zdCB7IGNvdXQgPDwgIkNhbGxpbmcgIiA8PCB3aG8gPDwgIi4uLiIgPDwgZW5kbDsgfQp9OwpjbGFzcyBTbWFydFBob25lIDogcHVibGljIFBob25lLCBwdWJsaWMgQ2FtZXJhIHsgICAgICAvLyB0d28gYmFzZXMKcHVibGljOgogICAgdm9pZCBicm93c2UoKSBjb25zdCB7IGNvdXQgPDwgIk9wZW5pbmcgYnJvd3Nlci4iIDw8IGVuZGw7IH0KfTsKCmludCBtYWluKCkgewogICAgU21hcnRQaG9uZSBwOwogICAgcC5jYWxsKCJNb20iKTsKICAgIHAudGFrZVBob3RvKCk7CiAgICBwLmJyb3dzZSgpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="the-diamond-problem-and-virtual-base-classes"><a class="anchor" href="#the-diamond-problem-and-virtual-base-classes" aria-hidden="true" tabindex="-1">#</a>The diamond problem and virtual base classes</h2>
+<p>In hybrid inheritance, a class can inherit the <strong>same base twice</strong>:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 299 299" width="299" height="299" role="img" aria-label="Directed graph with vertices Person, Student, Employee, TA"><defs><marker id="dg-ah-28" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><line class="edge" x1="88.1" y1="118.7" x2="117.3" y2="89.5" marker-end="url(#dg-ah-28)"/><line class="edge" x1="210.7" y1="118.7" x2="181.5" y2="89.5" marker-end="url(#dg-ah-28)"/><line class="edge" x1="118.7" y1="210.7" x2="89.5" y2="181.5" marker-end="url(#dg-ah-28)"/><line class="edge" x1="180.1" y1="210.7" x2="209.3" y2="181.5" marker-end="url(#dg-ah-28)"/><circle class="node" cx="149.4" cy="57.4" r="43.4"/><text class="t" x="149.4" y="57.4">Person</text><circle class="node" cx="57.4" cy="149.4" r="43.4"/><text class="t" x="57.4" y="149.4">Student</text><circle class="node" cx="241.4" cy="149.4" r="43.4"/><text class="t" x="241.4" y="149.4">Employee</text><circle class="node" cx="149.4" cy="241.4" r="43.4"/><text class="t" x="149.4" y="241.4">TA</text></svg><figcaption>The diamond: a teaching assistant is both a Student and an Employee, and both are Persons. Arrows point from derived to base.</figcaption></figure>
+<p>Without help, <code>TA</code> would contain <strong>two</strong> copies of <code>Person</code>, and <code>ta.name</code> would be <strong>ambiguous</strong>. Declaring the shared base <code>virtual</code> makes the derived classes share <strong>one</strong> copy:</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> {
+<span class="hljs-keyword">public</span>:
+    string name;
+    <span class="hljs-built_in">Person</span>(<span class="hljs-type">const</span> string &amp;n = <span class="hljs-string">&quot;&quot;</span>) : <span class="hljs-built_in">name</span>(n) { cout &lt;&lt; <span class="hljs-string">&quot;Person(&quot;</span> &lt;&lt; n &lt;&lt; <span class="hljs-string">&quot;)&quot;</span> &lt;&lt; endl; }
+};
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span>  : <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">public</span> Person { <span class="hljs-keyword">public</span>: <span class="hljs-built_in">Student</span>()  { cout &lt;&lt; <span class="hljs-string">&quot;Student&quot;</span> &lt;&lt; endl; } };
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> : <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">public</span> Person { <span class="hljs-keyword">public</span>: <span class="hljs-built_in">Employee</span>() { cout &lt;&lt; <span class="hljs-string">&quot;Employee&quot;</span> &lt;&lt; endl; } };
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">TA</span> : <span class="hljs-keyword">public</span> Student, <span class="hljs-keyword">public</span> Employee {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">TA</span>(<span class="hljs-type">const</span> string &amp;n) : <span class="hljs-built_in">Person</span>(n) { cout &lt;&lt; <span class="hljs-string">&quot;TA&quot;</span> &lt;&lt; endl; }   <span class="hljs-comment">// the most derived class builds the shared base</span>
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">TA <span class="hljs-title">ta</span><span class="hljs-params">(<span class="hljs-string">&quot;Nikhil&quot;</span>)</span></span>;
+    cout &lt;&lt; <span class="hljs-string">&quot;name = &quot;</span> &lt;&lt; ta.name &lt;&lt; <span class="hljs-string">&quot; (only one Person inside)&quot;</span> &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Person(Nikhil)
+Student
+Employee
+TA
+name = Nikhil (only one Person inside)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgUGVyc29uIHsKcHVibGljOgogICAgc3RyaW5nIG5hbWU7CiAgICBQZXJzb24oY29uc3Qgc3RyaW5nICZuID0gIiIpIDogbmFtZShuKSB7IGNvdXQgPDwgIlBlcnNvbigiIDw8IG4gPDwgIikiIDw8IGVuZGw7IH0KfTsKY2xhc3MgU3R1ZGVudCAgOiB2aXJ0dWFsIHB1YmxpYyBQZXJzb24geyBwdWJsaWM6IFN0dWRlbnQoKSAgeyBjb3V0IDw8ICJTdHVkZW50IiA8PCBlbmRsOyB9IH07CmNsYXNzIEVtcGxveWVlIDogdmlydHVhbCBwdWJsaWMgUGVyc29uIHsgcHVibGljOiBFbXBsb3llZSgpIHsgY291dCA8PCAiRW1wbG95ZWUiIDw8IGVuZGw7IH0gfTsKCmNsYXNzIFRBIDogcHVibGljIFN0dWRlbnQsIHB1YmxpYyBFbXBsb3llZSB7CnB1YmxpYzoKICAgIFRBKGNvbnN0IHN0cmluZyAmbikgOiBQZXJzb24obikgeyBjb3V0IDw8ICJUQSIgPDwgZW5kbDsgfSAgIC8vIHRoZSBtb3N0IGRlcml2ZWQgY2xhc3MgYnVpbGRzIHRoZSBzaGFyZWQgYmFzZQp9OwoKaW50IG1haW4oKSB7CiAgICBUQSB0YSgiTmlraGlsIik7CiAgICBjb3V0IDw8ICJuYW1lID0gIiA8PCB0YS5uYW1lIDw8ICIgKG9ubHkgb25lIFBlcnNvbiBpbnNpZGUpIiA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="overriding-redefining-base-functions"><a class="anchor" href="#overriding-redefining-base-functions" aria-hidden="true" tabindex="-1">#</a>Overriding (redefining) base functions</h2>
+<p>A derived class can define a function with the same signature as the base, replacing its behaviour. The base version is still reachable with <code>Base::function()</code>:</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Account</span> {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">interestRate</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-number">3.0</span>; }
+};
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SeniorCitizenAccount</span> : <span class="hljs-keyword">public</span> Account {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">interestRate</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> Account::<span class="hljs-built_in">interestRate</span>() + <span class="hljs-number">0.5</span>; }   <span class="hljs-comment">// reuse, then extend</span>
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Account a;
+    SeniorCitizenAccount s;
+    cout &lt;&lt; <span class="hljs-string">&quot;regular: &quot;</span> &lt;&lt; a.<span class="hljs-built_in">interestRate</span>() &lt;&lt; <span class="hljs-string">&quot;%, senior: &quot;</span> &lt;&lt; s.<span class="hljs-built_in">interestRate</span>() &lt;&lt; <span class="hljs-string">&quot;%&quot;</span> &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>regular: 3%, senior: 3.5%</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgQWNjb3VudCB7CnB1YmxpYzoKICAgIGRvdWJsZSBpbnRlcmVzdFJhdGUoKSBjb25zdCB7IHJldHVybiAzLjA7IH0KfTsKY2xhc3MgU2VuaW9yQ2l0aXplbkFjY291bnQgOiBwdWJsaWMgQWNjb3VudCB7CnB1YmxpYzoKICAgIGRvdWJsZSBpbnRlcmVzdFJhdGUoKSBjb25zdCB7IHJldHVybiBBY2NvdW50OjppbnRlcmVzdFJhdGUoKSArIDAuNTsgfSAgIC8vIHJldXNlLCB0aGVuIGV4dGVuZAp9OwoKaW50IG1haW4oKSB7CiAgICBBY2NvdW50IGE7CiAgICBTZW5pb3JDaXRpemVuQWNjb3VudCBzOwogICAgY291dCA8PCAicmVndWxhcjogIiA8PCBhLmludGVyZXN0UmF0ZSgpIDw8ICIlLCBzZW5pb3I6ICIgPDwgcy5pbnRlcmVzdFJhdGUoKSA8PCAiJSIgPDwgZW5kbDsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Without <code>virtual</code>, which version runs depends on the <strong>declared type</strong> of the pointer or reference — the problem that <a href="../../cpp/virtual-functions/">virtual functions</a> solve.</p>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Questions to expect</span></div><div class="callout-body"><ol>
+<li>Define inheritance and list its types with diagrams.</li>
+<li>Table of access specifiers vs inheritance modes (above).</li>
+<li>Order of constructor and destructor calls in multilevel inheritance.</li>
+<li>What is the diamond problem and how do virtual base classes solve it?</li>
+</ol>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="cpp/inheritance" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Can a derived class access its base class&#39;s <code>private</code> members directly?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Yes, always</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Only with public inheritance</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">No, never</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Only in constructors</span></button></div><div class="q-why" hidden>Private members are only accessible inside the class that declares them (and its friends). Use <code>protected</code> for members derived classes need.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>With <code>class B : protected A</code>, a <code>public</code> member of A becomes...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">public in B</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">protected in B</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">private in B</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">inaccessible in B</span></button></div><div class="q-why" hidden>Protected inheritance demotes public members to protected.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Constructing an object of <code>C</code> where <code>C : B</code> and <code>B : A</code> runs constructors in which order?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A, B, C</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">C, B, A</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">B, A, C</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Only C</span></button></div><div class="q-why" hidden>Base classes are constructed first; destructors run in the reverse order.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What does a virtual base class prevent?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Calling virtual functions</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Duplicate copies of a shared base class in diamond inheritance</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Creating objects of the base class</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Multiple inheritance</span></button></div><div class="q-why" hidden><code>virtual</code> inheritance makes all paths share a single base subobject.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="cpp/inheritance"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../cpp/friend/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Friend Functions &amp; Classes</strong></a><a class="next" href="../../cpp/operator-overloading/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Operator Overloading</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#access-in-derived-classes">Access in derived classes</a></li><li><a class="d2" href="#types-of-inheritance">Types of inheritance</a></li><li><a class="d2" href="#multilevel-inheritance-and-constructor-order">Multilevel inheritance and constructor order</a></li><li><a class="d2" href="#multiple-inheritance">Multiple inheritance</a></li><li><a class="d2" href="#the-diamond-problem-and-virtual-base-classes">The diamond problem and virtual base classes</a></li><li><a class="d2" href="#overriding-redefining-base-functions">Overriding (redefining) base functions</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

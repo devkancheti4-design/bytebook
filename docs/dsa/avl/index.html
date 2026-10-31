@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AVL Trees · Data Structures | Bytebook</title>
+<meta name="description" content="Self-balancing BSTs: balance factors, the four rotation cases (LL, RR, LR, RL), and an insertion that stays O(log n) whatever order the keys arrive in.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="AVL Trees · Data Structures | Bytebook">
+<meta property="og:description" content="Self-balancing BSTs: balance factors, the four rotation cases (LL, RR, LR, RL), and an insertion that stays O(log n) whatever order the keys arrive in.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/avl" data-title="AVL Trees" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 13 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Trees</p>
+<h1>AVL Trees</h1>
+<p class="lede">Self-balancing BSTs: balance factors, the four rotation cases (LL, RR, LR, RL), and an insertion that stays O(log n) whatever order the keys arrive in.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>An <strong>AVL tree</strong> (named after Adelson-Velsky and Landis, 1962) is a BST that keeps itself <strong>balanced</strong>. After every insertion or deletion it checks each node&#39;s <strong>balance factor</strong> and fixes any imbalance with <strong>rotations</strong>.</p>
+<h2 id="balance-factor"><a class="anchor" href="#balance-factor" aria-hidden="true" tabindex="-1">#</a>Balance factor</h2>
+<blockquote>
+<p>balance factor = height(left subtree) − height(right subtree)</p>
+</blockquote>
+<p>In an AVL tree, every node&#39;s balance factor must be <strong>−1, 0 or +1</strong>. If an insertion makes some node&#39;s balance factor <strong>+2 or −2</strong>, that node is rebalanced. This keeps the height at most about 1.44 log₂ n, so search, insert and delete are all <strong>O(log n)</strong> guaranteed.</p>
+<h2 id="the-four-imbalance-cases"><a class="anchor" href="#the-four-imbalance-cases" aria-hidden="true" tabindex="-1">#</a>The four imbalance cases</h2>
+<p>Let <strong>Z</strong> be the lowest unbalanced node on the path from the inserted key up to the root.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Inserted into</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LL</strong></td>
+<td>left subtree of Z&#39;s left child</td>
+<td>one <strong>right</strong> rotation at Z</td>
+</tr>
+<tr>
+<td><strong>RR</strong></td>
+<td>right subtree of Z&#39;s right child</td>
+<td>one <strong>left</strong> rotation at Z</td>
+</tr>
+<tr>
+<td><strong>LR</strong></td>
+<td>right subtree of Z&#39;s left child</td>
+<td>left rotation at the child, then right rotation at Z</td>
+</tr>
+<tr>
+<td><strong>RL</strong></td>
+<td>left subtree of Z&#39;s right child</td>
+<td>right rotation at the child, then left rotation at Z</td>
+</tr>
+</tbody></table>
+</div>
+<h3 id="ll-case-right-rotation"><a class="anchor" href="#ll-case-right-rotation" aria-hidden="true" tabindex="-1">#</a>LL case: right rotation</h3>
+<p>Inserting 30, 20, 10 makes 30 left-heavy (balance factor +2):</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 158 194" width="158" height="194" role="img" aria-label="Tree rooted at 30"><line class="edge" x1="92" y1="27" x2="53" y2="97"/><line class="edge" x1="53" y1="97" x2="27" y2="167"/><circle class="node" cx="27" cy="167" r="19"/><text class="t" x="27" y="167">10</text><circle class="node" cx="53" cy="97" r="19"/><text class="t" x="53" y="97">20</text><circle class="node hl" cx="92" cy="27" r="19"/><text class="t" x="92" y="27">30</text></svg><figcaption>Before: 30 has balance factor +2 (left-heavy).</figcaption></figure>
+<p>Rotate <strong>right</strong> at 30: the left child <strong>20 moves up</strong> to become the root, <strong>30 moves down</strong> to become 20&#39;s right child, and 20&#39;s old right subtree (empty here) becomes 30&#39;s new left subtree.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 106 124" width="106" height="124" role="img" aria-label="Tree rooted at 20"><line class="edge" x1="53" y1="27" x2="27" y2="97"/><line class="edge" x1="53" y1="27" x2="79" y2="97"/><circle class="node" cx="27" cy="97" r="19"/><text class="t" x="27" y="97">10</text><circle class="node" cx="79" cy="97" r="19"/><text class="t" x="79" y="97">30</text><circle class="node hl" cx="53" cy="27" r="19"/><text class="t" x="53" y="27">20</text></svg><figcaption>After one right rotation the tree is balanced.</figcaption></figure>
+<h3 id="rr-case-left-rotation"><a class="anchor" href="#rr-case-left-rotation" aria-hidden="true" tabindex="-1">#</a>RR case: left rotation</h3>
+<p>Inserting 10, 20, 30 is the mirror image: rotate <strong>left</strong> at 10 and 20 becomes the root.</p>
+<h3 id="lr-case-double-rotation"><a class="anchor" href="#lr-case-double-rotation" aria-hidden="true" tabindex="-1">#</a>LR case: double rotation</h3>
+<p>Inserting 30, 10, 20: the imbalance is at 30 (left-heavy), but the new key went into the <strong>right</strong> of the left child. A single right rotation would not fix it. First rotate <strong>left at 10</strong> (turning it into the LL case), then rotate <strong>right at 30</strong>. The result is again 20 with children 10 and 30.</p>
+<h2 id="insertion-in-c"><a class="anchor" href="#insertion-in-c" aria-hidden="true" tabindex="-1">#</a>Insertion in C</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> key, height; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">left</span>, *<span class="hljs-title">right</span>;</span> } Node;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">h</span><span class="hljs-params">(Node *n)</span> { <span class="hljs-keyword">return</span> n ? n-&gt;height : <span class="hljs-number">0</span>; }
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> { <span class="hljs-keyword">return</span> a &gt; b ? a : b; }
+<span class="hljs-type">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">(Node *n)</span> { n-&gt;height = <span class="hljs-number">1</span> + max(h(n-&gt;left), h(n-&gt;right)); }
+<span class="hljs-type">int</span> <span class="hljs-title function_">balance</span><span class="hljs-params">(Node *n)</span> { <span class="hljs-keyword">return</span> n ? h(n-&gt;left) - h(n-&gt;right) : <span class="hljs-number">0</span>; }
+
+Node *<span class="hljs-title function_">rotateRight</span><span class="hljs-params">(Node *z)</span> {
+    Node *y = z-&gt;left, *t = y-&gt;right;
+    y-&gt;right = z;
+    z-&gt;left = t;
+    update(z); update(y);
+    <span class="hljs-keyword">return</span> y;
+}
+
+Node *<span class="hljs-title function_">rotateLeft</span><span class="hljs-params">(Node *z)</span> {
+    Node *y = z-&gt;right, *t = y-&gt;left;
+    y-&gt;left = z;
+    z-&gt;right = t;
+    update(z); update(y);
+    <span class="hljs-keyword">return</span> y;
+}
+
+Node *<span class="hljs-title function_">insert</span><span class="hljs-params">(Node *n, <span class="hljs-type">int</span> key)</span> {
+    <span class="hljs-keyword">if</span> (!n) { n = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node)); n-&gt;key = key; n-&gt;height = <span class="hljs-number">1</span>; n-&gt;left = n-&gt;right = <span class="hljs-literal">NULL</span>; <span class="hljs-keyword">return</span> n; }
+    <span class="hljs-keyword">if</span> (key &lt; n-&gt;key) n-&gt;left = insert(n-&gt;left, key);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; n-&gt;key) n-&gt;right = insert(n-&gt;right, key);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> n;
+
+    update(n);
+    <span class="hljs-type">int</span> b = balance(n);
+    <span class="hljs-keyword">if</span> (b &gt; <span class="hljs-number">1</span> &amp;&amp; key &lt; n-&gt;left-&gt;key)  { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  LL at %d\n&quot;</span>, n-&gt;key); <span class="hljs-keyword">return</span> rotateRight(n); }
+    <span class="hljs-keyword">if</span> (b &lt; <span class="hljs-number">-1</span> &amp;&amp; key &gt; n-&gt;right-&gt;key) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  RR at %d\n&quot;</span>, n-&gt;key); <span class="hljs-keyword">return</span> rotateLeft(n); }
+    <span class="hljs-keyword">if</span> (b &gt; <span class="hljs-number">1</span> &amp;&amp; key &gt; n-&gt;left-&gt;key)  { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  LR at %d\n&quot;</span>, n-&gt;key); n-&gt;left = rotateLeft(n-&gt;left); <span class="hljs-keyword">return</span> rotateRight(n); }
+    <span class="hljs-keyword">if</span> (b &lt; <span class="hljs-number">-1</span> &amp;&amp; key &lt; n-&gt;right-&gt;key) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  RL at %d\n&quot;</span>, n-&gt;key); n-&gt;right = rotateRight(n-&gt;right); <span class="hljs-keyword">return</span> rotateLeft(n); }
+    <span class="hljs-keyword">return</span> n;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">preorder</span><span class="hljs-params">(Node *r)</span> { <span class="hljs-keyword">if</span> (r) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, r-&gt;key); preorder(r-&gt;left); preorder(r-&gt;right); } }
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> keys[] = {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">25</span>};
+    Node *root = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;insert %d\n&quot;</span>, keys[i]);
+        root = insert(root, keys[i]);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Preorder: &quot;</span>);
+    preorder(root);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\nHeight: %d (a plain BST built from the same keys has height 5)\n&quot;</span>, h(root));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>insert 10
+insert 20
+insert 30
+  RR at 10
+insert 40
+insert 50
+  RR at 30
+insert 25
+  RL at 20
+Preorder: 30 20 10 25 40 50 
+Height: 3 (a plain BST built from the same keys has height 5)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQga2V5LCBoZWlnaHQ7IHN0cnVjdCBOb2RlICpsZWZ0LCAqcmlnaHQ7IH0gTm9kZTsKCmludCBoKE5vZGUgKm4pIHsgcmV0dXJuIG4gPyBuLT5oZWlnaHQgOiAwOyB9CmludCBtYXgoaW50IGEsIGludCBiKSB7IHJldHVybiBhID4gYiA_IGEgOiBiOyB9CnZvaWQgdXBkYXRlKE5vZGUgKm4pIHsgbi0-aGVpZ2h0ID0gMSArIG1heChoKG4tPmxlZnQpLCBoKG4tPnJpZ2h0KSk7IH0KaW50IGJhbGFuY2UoTm9kZSAqbikgeyByZXR1cm4gbiA_IGgobi0-bGVmdCkgLSBoKG4tPnJpZ2h0KSA6IDA7IH0KCk5vZGUgKnJvdGF0ZVJpZ2h0KE5vZGUgKnopIHsKICAgIE5vZGUgKnkgPSB6LT5sZWZ0LCAqdCA9IHktPnJpZ2h0OwogICAgeS0-cmlnaHQgPSB6OwogICAgei0-bGVmdCA9IHQ7CiAgICB1cGRhdGUoeik7IHVwZGF0ZSh5KTsKICAgIHJldHVybiB5Owp9CgpOb2RlICpyb3RhdGVMZWZ0KE5vZGUgKnopIHsKICAgIE5vZGUgKnkgPSB6LT5yaWdodCwgKnQgPSB5LT5sZWZ0OwogICAgeS0-bGVmdCA9IHo7CiAgICB6LT5yaWdodCA9IHQ7CiAgICB1cGRhdGUoeik7IHVwZGF0ZSh5KTsKICAgIHJldHVybiB5Owp9CgpOb2RlICppbnNlcnQoTm9kZSAqbiwgaW50IGtleSkgewogICAgaWYgKCFuKSB7IG4gPSBtYWxsb2Moc2l6ZW9mKE5vZGUpKTsgbi0-a2V5ID0ga2V5OyBuLT5oZWlnaHQgPSAxOyBuLT5sZWZ0ID0gbi0-cmlnaHQgPSBOVUxMOyByZXR1cm4gbjsgfQogICAgaWYgKGtleSA8IG4tPmtleSkgbi0-bGVmdCA9IGluc2VydChuLT5sZWZ0LCBrZXkpOwogICAgZWxzZSBpZiAoa2V5ID4gbi0-a2V5KSBuLT5yaWdodCA9IGluc2VydChuLT5yaWdodCwga2V5KTsKICAgIGVsc2UgcmV0dXJuIG47CgogICAgdXBkYXRlKG4pOwogICAgaW50IGIgPSBiYWxhbmNlKG4pOwogICAgaWYgKGIgPiAxICYmIGtleSA8IG4tPmxlZnQtPmtleSkgIHsgcHJpbnRmKCIgIExMIGF0ICVkXG4iLCBuLT5rZXkpOyByZXR1cm4gcm90YXRlUmlnaHQobik7IH0KICAgIGlmIChiIDwgLTEgJiYga2V5ID4gbi0-cmlnaHQtPmtleSkgeyBwcmludGYoIiAgUlIgYXQgJWRcbiIsIG4tPmtleSk7IHJldHVybiByb3RhdGVMZWZ0KG4pOyB9CiAgICBpZiAoYiA-IDEgJiYga2V5ID4gbi0-bGVmdC0-a2V5KSAgeyBwcmludGYoIiAgTFIgYXQgJWRcbiIsIG4tPmtleSk7IG4tPmxlZnQgPSByb3RhdGVMZWZ0KG4tPmxlZnQpOyByZXR1cm4gcm90YXRlUmlnaHQobik7IH0KICAgIGlmIChiIDwgLTEgJiYga2V5IDwgbi0-cmlnaHQtPmtleSkgeyBwcmludGYoIiAgUkwgYXQgJWRcbiIsIG4tPmtleSk7IG4tPnJpZ2h0ID0gcm90YXRlUmlnaHQobi0-cmlnaHQpOyByZXR1cm4gcm90YXRlTGVmdChuKTsgfQogICAgcmV0dXJuIG47Cn0KCnZvaWQgcHJlb3JkZXIoTm9kZSAqcikgeyBpZiAocikgeyBwcmludGYoIiVkICIsIHItPmtleSk7IHByZW9yZGVyKHItPmxlZnQpOyBwcmVvcmRlcihyLT5yaWdodCk7IH0gfQoKaW50IG1haW4odm9pZCkgewogICAgaW50IGtleXNbXSA9IHsxMCwgMjAsIDMwLCA0MCwgNTAsIDI1fTsKICAgIE5vZGUgKnJvb3QgPSBOVUxMOwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCA2OyBpKyspIHsKICAgICAgICBwcmludGYoImluc2VydCAlZFxuIiwga2V5c1tpXSk7CiAgICAgICAgcm9vdCA9IGluc2VydChyb290LCBrZXlzW2ldKTsKICAgIH0KICAgIHByaW50ZigiUHJlb3JkZXI6ICIpOwogICAgcHJlb3JkZXIocm9vdCk7CiAgICBwcmludGYoIlxuSGVpZ2h0OiAlZCAoYSBwbGFpbiBCU1QgYnVpbHQgZnJvbSB0aGUgc2FtZSBrZXlzIGhhcyBoZWlnaHQgNSlcbiIsIGgocm9vdCkpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The final AVL tree for 10, 20, 30, 40, 50, 25:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 210 194" width="210" height="194" role="img" aria-label="Tree rooted at 30"><line class="edge" x1="105" y1="27" x2="53" y2="97"/><line class="edge" x1="53" y1="97" x2="27" y2="167"/><line class="edge" x1="53" y1="97" x2="79" y2="167"/><line class="edge" x1="105" y1="27" x2="157" y2="97"/><line class="edge" x1="157" y1="97" x2="183" y2="167"/><circle class="node" cx="27" cy="167" r="19"/><text class="t" x="27" y="167">10</text><circle class="node" cx="79" cy="167" r="19"/><text class="t" x="79" y="167">25</text><circle class="node" cx="53" cy="97" r="19"/><text class="t" x="53" y="97">20</text><circle class="node" cx="183" cy="167" r="19"/><text class="t" x="183" y="167">50</text><circle class="node" cx="157" cy="97" r="19"/><text class="t" x="157" y="97">40</text><circle class="node" cx="105" cy="27" r="19"/><text class="t" x="105" y="27">30</text></svg><figcaption>Sorted-ish input that would make a plain BST a chain stays balanced with height 3 (counting nodes).</figcaption></figure>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Typical question</span></div><div class="callout-body"><p>&quot;Construct an AVL tree by inserting 14, 17, 11, 7, 53, 4, 13, 12, 8.&quot; Draw the tree after <strong>each</strong> insertion, label each node&#39;s balance factor, and name the rotation (LL, RR, LR or RL) whenever one happens.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="dsa/avl" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What balance factors are allowed in an AVL tree?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">0 only</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">0 and 1</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">−1, 0 and +1</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Any value between −2 and +2</span></button></div><div class="q-why" hidden>A node whose balance factor reaches ±2 must be rotated.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Insert 10, 20, 30 into an empty AVL tree. Which rotation happens?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">LL (right rotation)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">RR (left rotation)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">LR</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">RL</span></button></div><div class="q-why" hidden>The tree becomes right-heavy along a straight line, so one left rotation at 10 fixes it.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Inserting 30, 10, 20 creates which case?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">LL</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">RR</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">LR</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">RL</span></button></div><div class="q-why" hidden>The new key went into the right subtree of the left child of 30 — a double rotation is needed.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Why are AVL operations O(log n) in the worst case?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Rotations keep the height proportional to log n</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">AVL trees store keys in an array</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Rotations sort the keys</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">AVL trees never have more than 100 nodes</span></button></div><div class="q-why" hidden>Bounded height guarantees logarithmic search, insert and delete.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/avl"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/bst/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Binary Search Tree</strong></a><a class="next" href="../../dsa/heaps/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Heaps &amp; Heap Sort</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#balance-factor">Balance factor</a></li><li><a class="d2" href="#the-four-imbalance-cases">The four imbalance cases</a></li><li><a class="d3" href="#ll-case-right-rotation">LL case: right rotation</a></li><li><a class="d3" href="#rr-case-left-rotation">RR case: left rotation</a></li><li><a class="d3" href="#lr-case-double-rotation">LR case: double rotation</a></li><li><a class="d2" href="#insertion-in-c">Insertion in C</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

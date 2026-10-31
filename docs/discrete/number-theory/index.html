@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Number Theory · Discrete Math | Bytebook</title>
+<meta name="description" content="Divisibility, primes and the fundamental theorem of arithmetic, GCD and LCM with Euclid&#39;s algorithm, modular arithmetic, congruences, modular inverses, fast exponentiation and an RSA preview.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Number Theory · Discrete Math | Bytebook">
+<meta property="og:description" content="Divisibility, primes and the fundamental theorem of arithmetic, GCD and LCM with Euclid&#39;s algorithm, modular arithmetic, congruences, modular inverses, fast exponentiation and an RSA preview.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="discrete">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete" class="active" aria-current="true"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="discrete" aria-label="Discrete Mathematics lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../discrete/"><span class="chip" data-c="discrete">DMS</span><strong>Discrete Mathematics</strong></a>
+<div class="side-progress" data-course="discrete" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Logic &amp; Proofs</h4><ol><li><a href="../../discrete/propositional-logic/" data-lesson="discrete/propositional-logic"><span class="tick" aria-hidden="true"></span><span>Propositional Logic</span></a></li><li><a href="../../discrete/logical-equivalence/" data-lesson="discrete/logical-equivalence"><span class="tick" aria-hidden="true"></span><span>Logical Equivalences &amp; Normal Forms</span></a></li><li><a href="../../discrete/predicate-logic/" data-lesson="discrete/predicate-logic"><span class="tick" aria-hidden="true"></span><span>Predicates &amp; Quantifiers</span></a></li><li><a href="../../discrete/proofs/" data-lesson="discrete/proofs"><span class="tick" aria-hidden="true"></span><span>Proof Techniques</span></a></li><li><a href="../../discrete/induction/" data-lesson="discrete/induction"><span class="tick" aria-hidden="true"></span><span>Mathematical Induction</span></a></li></ol></div>
+<div class="side-unit"><h4>Sets, Relations &amp; Functions</h4><ol><li><a href="../../discrete/sets/" data-lesson="discrete/sets"><span class="tick" aria-hidden="true"></span><span>Sets</span></a></li><li><a href="../../discrete/relations/" data-lesson="discrete/relations"><span class="tick" aria-hidden="true"></span><span>Relations</span></a></li><li><a href="../../discrete/partial-orders/" data-lesson="discrete/partial-orders"><span class="tick" aria-hidden="true"></span><span>Partial Orders &amp; Lattices</span></a></li><li><a href="../../discrete/functions/" data-lesson="discrete/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li></ol></div>
+<div class="side-unit"><h4>Counting</h4><ol><li><a href="../../discrete/counting/" data-lesson="discrete/counting"><span class="tick" aria-hidden="true"></span><span>Counting Principles &amp; Pigeonhole</span></a></li><li><a href="../../discrete/permutations-combinations/" data-lesson="discrete/permutations-combinations"><span class="tick" aria-hidden="true"></span><span>Permutations &amp; Combinations</span></a></li><li><a href="../../discrete/inclusion-exclusion/" data-lesson="discrete/inclusion-exclusion"><span class="tick" aria-hidden="true"></span><span>Inclusion–Exclusion &amp; the Binomial Theorem</span></a></li><li><a href="../../discrete/recurrences/" data-lesson="discrete/recurrences"><span class="tick" aria-hidden="true"></span><span>Recurrence Relations</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs, Number Theory &amp; Algebra</h4><ol><li><a href="../../discrete/graph-theory/" data-lesson="discrete/graph-theory"><span class="tick" aria-hidden="true"></span><span>Graph Theory</span></a></li><li><a href="../../discrete/trees/" data-lesson="discrete/trees"><span class="tick" aria-hidden="true"></span><span>Trees</span></a></li><li><a href="../../discrete/number-theory/" data-lesson="discrete/number-theory" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Number Theory</span></a></li><li><a href="../../discrete/boolean-algebra/" data-lesson="discrete/boolean-algebra"><span class="tick" aria-hidden="true"></span><span>Boolean Algebra</span></a></li><li><a href="../../discrete/cheatsheet/" data-lesson="discrete/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Discrete Mathematics Formula Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../discrete/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="discrete/number-theory" data-title="Number Theory" data-course-title="Discrete Mathematics">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../discrete/">Discrete Math</a><span>/</span><span>Lesson 16 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Graphs, Number Theory &amp; Algebra</p>
+<h1>Number Theory</h1>
+<p class="lede">Divisibility, primes and the fundamental theorem of arithmetic, GCD and LCM with Euclid&#39;s algorithm, modular arithmetic, congruences, modular inverses, fast exponentiation and an RSA preview.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>4 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Number theory studies the integers. Once called the &quot;purest&quot; mathematics, it now secures every HTTPS connection and UPI payment through cryptography.</p>
+<h2 id="divisibility"><a class="anchor" href="#divisibility" aria-hidden="true" tabindex="-1">#</a>Divisibility</h2>
+<p>a <strong>divides</strong> b (written a | b) if b = a·k for some integer k. Examples: 3 | 12, 7 ∤ 12.</p>
+<p><strong>Division algorithm</strong>: for integers a and d &gt; 0, there are unique q and r with a = d·q + r and <strong>0 ≤ r &lt; d</strong>. Here q = a div d and r = a mod d.</p>
+<h2 id="primes"><a class="anchor" href="#primes" aria-hidden="true" tabindex="-1">#</a>Primes</h2>
+<p>A <strong>prime</strong> is an integer p &gt; 1 whose only positive divisors are 1 and p. Every integer &gt; 1 is either prime or <strong>composite</strong>.</p>
+<p><strong>Fundamental theorem of arithmetic</strong>: every integer &gt; 1 can be written as a product of primes in exactly one way (up to order): 360 = 2³ · 3² · 5.</p>
+<p>There are <strong>infinitely many primes</strong> (Euclid&#39;s proof is in the <a href="../../discrete/proofs/">proofs lesson</a>). To test n, try divisors up to √n; to list all primes up to n, use the <strong>Sieve of Eratosthenes</strong>:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sieve</span>(<span class="hljs-params">n</span>):
+    is_prime = [<span class="hljs-literal">True</span>] * (n + <span class="hljs-number">1</span>)
+    is_prime[<span class="hljs-number">0</span>] = is_prime[<span class="hljs-number">1</span>] = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">int</span>(n ** <span class="hljs-number">0.5</span>) + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">if</span> is_prime[p]:
+            <span class="hljs-keyword">for</span> multiple <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(p * p, n + <span class="hljs-number">1</span>, p):   <span class="hljs-comment"># cross off multiples of p</span>
+                is_prime[multiple] = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">return</span> [i <span class="hljs-keyword">for</span> i, ok <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(is_prime) <span class="hljs-keyword">if</span> ok]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">factorise</span>(<span class="hljs-params">n</span>):
+    factors, d = {}, <span class="hljs-number">2</span>
+    <span class="hljs-keyword">while</span> d * d &lt;= n:
+        <span class="hljs-keyword">while</span> n % d == <span class="hljs-number">0</span>:
+            factors[d] = factors.get(d, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
+            n //= d
+        d += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">1</span>:
+        factors[n] = factors.get(n, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> factors
+
+<span class="hljs-built_in">print</span>(sieve(<span class="hljs-number">60</span>))
+<span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> (<span class="hljs-number">360</span>, <span class="hljs-number">1001</span>, <span class="hljs-number">97</span>, <span class="hljs-number">2026</span>):
+    <span class="hljs-built_in">print</span>(n, <span class="hljs-string">&quot;=&quot;</span>, <span class="hljs-string">&quot; · &quot;</span>.join(<span class="hljs-string">f&quot;<span class="hljs-subst">{p}</span>^<span class="hljs-subst">{e}</span>&quot;</span> <span class="hljs-keyword">if</span> e &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-built_in">str</span>(p) <span class="hljs-keyword">for</span> p, e <span class="hljs-keyword">in</span> factorise(n).items()))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]
+360 = 2^3 · 3^2 · 5
+1001 = 7 · 11 · 13
+97 = 97
+2026 = 2 · 1013</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIHNpZXZlKG4pOgogICAgaXNfcHJpbWUgPSBbVHJ1ZV0gKiAobiArIDEpCiAgICBpc19wcmltZVswXSA9IGlzX3ByaW1lWzFdID0gRmFsc2UKICAgIGZvciBwIGluIHJhbmdlKDIsIGludChuICoqIDAuNSkgKyAxKToKICAgICAgICBpZiBpc19wcmltZVtwXToKICAgICAgICAgICAgZm9yIG11bHRpcGxlIGluIHJhbmdlKHAgKiBwLCBuICsgMSwgcCk6ICAgIyBjcm9zcyBvZmYgbXVsdGlwbGVzIG9mIHAKICAgICAgICAgICAgICAgIGlzX3ByaW1lW211bHRpcGxlXSA9IEZhbHNlCiAgICByZXR1cm4gW2kgZm9yIGksIG9rIGluIGVudW1lcmF0ZShpc19wcmltZSkgaWYgb2tdCgpkZWYgZmFjdG9yaXNlKG4pOgogICAgZmFjdG9ycywgZCA9IHt9LCAyCiAgICB3aGlsZSBkICogZCA8PSBuOgogICAgICAgIHdoaWxlIG4gJSBkID09IDA6CiAgICAgICAgICAgIGZhY3RvcnNbZF0gPSBmYWN0b3JzLmdldChkLCAwKSArIDEKICAgICAgICAgICAgbiAvLz0gZAogICAgICAgIGQgKz0gMQogICAgaWYgbiA-IDE6CiAgICAgICAgZmFjdG9yc1tuXSA9IGZhY3RvcnMuZ2V0KG4sIDApICsgMQogICAgcmV0dXJuIGZhY3RvcnMKCnByaW50KHNpZXZlKDYwKSkKZm9yIG4gaW4gKDM2MCwgMTAwMSwgOTcsIDIwMjYpOgogICAgcHJpbnQobiwgIj0iLCAiIMK3ICIuam9pbihmIntwfV57ZX0iIGlmIGUgPiAxIGVsc2Ugc3RyKHApIGZvciBwLCBlIGluIGZhY3RvcmlzZShuKS5pdGVtcygpKSkK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="gcd-and-lcm"><a class="anchor" href="#gcd-and-lcm" aria-hidden="true" tabindex="-1">#</a>GCD and LCM</h2>
+<ul>
+<li><strong>gcd(a, b)</strong>: the largest integer dividing both. gcd(84, 36) = 12.</li>
+<li><strong>lcm(a, b)</strong>: the smallest positive integer divisible by both. lcm(4, 6) = 12.</li>
+<li><strong>gcd(a, b) · lcm(a, b) = a · b</strong>.</li>
+<li>a and b are <strong>coprime</strong> (relatively prime) if gcd(a, b) = 1.</li>
+</ul>
+<p><strong>Euclid&#39;s algorithm</strong>: gcd(a, b) = gcd(b, a mod b), and gcd(a, 0) = a. It takes O(log min(a, b)) steps.</p>
+<p><strong>Bézout&#39;s identity</strong>: there exist integers s, t with gcd(a, b) = s·a + t·b. The <strong>extended Euclidean algorithm</strong> finds them.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">extended_gcd</span>(<span class="hljs-params">a, b</span>):
+    <span class="hljs-keyword">if</span> b == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> a, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+    g, s, t = extended_gcd(b, a % b)
+    <span class="hljs-keyword">return</span> g, t, s - (a // b) * t
+
+a, b = <span class="hljs-number">252</span>, <span class="hljs-number">198</span>
+x, y = a, b
+<span class="hljs-keyword">while</span> y:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;gcd(<span class="hljs-subst">{x}</span>, <span class="hljs-subst">{y}</span>)&quot;</span>, end=<span class="hljs-string">&quot; = &quot;</span>)
+    x, y = y, x % y
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;gcd(<span class="hljs-subst">{x}</span>, 0) = <span class="hljs-subst">{x}</span>&quot;</span>)
+g, s, t = extended_gcd(a, b)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Bezout: <span class="hljs-subst">{g}</span> = <span class="hljs-subst">{s}</span>*<span class="hljs-subst">{a}</span> + <span class="hljs-subst">{t}</span>*<span class="hljs-subst">{b}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;lcm =&quot;</span>, a * b // g)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>gcd(252, 198) = gcd(198, 54) = gcd(54, 36) = gcd(36, 18) = gcd(18, 0) = 18
+Bezout: 18 = 4*252 + -5*198
+lcm = 2772</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGV4dGVuZGVkX2djZChhLCBiKToKICAgIGlmIGIgPT0gMDoKICAgICAgICByZXR1cm4gYSwgMSwgMAogICAgZywgcywgdCA9IGV4dGVuZGVkX2djZChiLCBhICUgYikKICAgIHJldHVybiBnLCB0LCBzIC0gKGEgLy8gYikgKiB0CgphLCBiID0gMjUyLCAxOTgKeCwgeSA9IGEsIGIKd2hpbGUgeToKICAgIHByaW50KGYiZ2NkKHt4fSwge3l9KSIsIGVuZD0iID0gIikKICAgIHgsIHkgPSB5LCB4ICUgeQpwcmludChmImdjZCh7eH0sIDApID0ge3h9IikKZywgcywgdCA9IGV4dGVuZGVkX2djZChhLCBiKQpwcmludChmIkJlem91dDoge2d9ID0ge3N9KnthfSArIHt0fSp7Yn0iKQpwcmludCgibGNtID0iLCBhICogYiAvLyBnKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="modular-arithmetic"><a class="anchor" href="#modular-arithmetic" aria-hidden="true" tabindex="-1">#</a>Modular arithmetic</h2>
+<p>a ≡ b (mod m) — &quot;a is <strong>congruent</strong> to b modulo m&quot; — means m | (a − b): a and b leave the same remainder when divided by m. Clock arithmetic is mod 12; days of the week are mod 7.</p>
+<p>Congruences can be added and multiplied: if a ≡ b and c ≡ d (mod m), then a + c ≡ b + d and a·c ≡ b·d (mod m). So you can reduce at every step:</p>
+<blockquote>
+<p>(a + b) mod m = ((a mod m) + (b mod m)) mod m
+(a · b) mod m = ((a mod m) · (b mod m)) mod m</p>
+</blockquote>
+<h3 id="fast-modular-exponentiation"><a class="anchor" href="#fast-modular-exponentiation" aria-hidden="true" tabindex="-1">#</a>Fast modular exponentiation</h3>
+<p>Compute aᵉ mod m by <strong>repeated squaring</strong> in O(log e) multiplications:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">mod_pow</span>(<span class="hljs-params">a, e, m</span>):
+    result = <span class="hljs-number">1</span>
+    a %= m
+    <span class="hljs-keyword">while</span> e &gt; <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">if</span> e &amp; <span class="hljs-number">1</span>:                 <span class="hljs-comment"># this bit of the exponent is set</span>
+            result = result * a % m
+        a = a * a % m             <span class="hljs-comment"># square for the next bit</span>
+        e &gt;&gt;= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-built_in">print</span>(mod_pow(<span class="hljs-number">3</span>, <span class="hljs-number">200</span>, <span class="hljs-number">13</span>), <span class="hljs-built_in">pow</span>(<span class="hljs-number">3</span>, <span class="hljs-number">200</span>, <span class="hljs-number">13</span>))          <span class="hljs-comment"># Python&#x27;s pow does the same</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;last 3 digits of 7^2026:&quot;</span>, mod_pow(<span class="hljs-number">7</span>, <span class="hljs-number">2026</span>, <span class="hljs-number">1000</span>))
+days = [<span class="hljs-string">&quot;Mon&quot;</span>, <span class="hljs-string">&quot;Tue&quot;</span>, <span class="hljs-string">&quot;Wed&quot;</span>, <span class="hljs-string">&quot;Thu&quot;</span>, <span class="hljs-string">&quot;Fri&quot;</span>, <span class="hljs-string">&quot;Sat&quot;</span>, <span class="hljs-string">&quot;Sun&quot;</span>]
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;100 days after a Saturday is a&quot;</span>, days[(days.index(<span class="hljs-string">&quot;Sat&quot;</span>) + <span class="hljs-number">100</span>) % <span class="hljs-number">7</span>])</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>9 9
+last 3 digits of 7^2026: 649
+100 days after a Saturday is a Mon</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIG1vZF9wb3coYSwgZSwgbSk6CiAgICByZXN1bHQgPSAxCiAgICBhICU9IG0KICAgIHdoaWxlIGUgPiAwOgogICAgICAgIGlmIGUgJiAxOiAgICAgICAgICAgICAgICAgIyB0aGlzIGJpdCBvZiB0aGUgZXhwb25lbnQgaXMgc2V0CiAgICAgICAgICAgIHJlc3VsdCA9IHJlc3VsdCAqIGEgJSBtCiAgICAgICAgYSA9IGEgKiBhICUgbSAgICAgICAgICAgICAjIHNxdWFyZSBmb3IgdGhlIG5leHQgYml0CiAgICAgICAgZSA-Pj0gMQogICAgcmV0dXJuIHJlc3VsdAoKcHJpbnQobW9kX3BvdygzLCAyMDAsIDEzKSwgcG93KDMsIDIwMCwgMTMpKSAgICAgICAgICAjIFB5dGhvbidzIHBvdyBkb2VzIHRoZSBzYW1lCnByaW50KCJsYXN0IDMgZGlnaXRzIG9mIDdeMjAyNjoiLCBtb2RfcG93KDcsIDIwMjYsIDEwMDApKQpkYXlzID0gWyJNb24iLCAiVHVlIiwgIldlZCIsICJUaHUiLCAiRnJpIiwgIlNhdCIsICJTdW4iXQpwcmludCgiMTAwIGRheXMgYWZ0ZXIgYSBTYXR1cmRheSBpcyBhIiwgZGF5c1soZGF5cy5pbmRleCgiU2F0IikgKyAxMDApICUgN10pCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="modular-inverses"><a class="anchor" href="#modular-inverses" aria-hidden="true" tabindex="-1">#</a>Modular inverses</h2>
+<p>The <strong>inverse</strong> of a modulo m is a number a⁻¹ with a·a⁻¹ ≡ 1 (mod m). It exists <strong>iff gcd(a, m) = 1</strong>, and the extended Euclidean algorithm finds it. Example: 3⁻¹ mod 7 = 5, since 3·5 = 15 ≡ 1.</p>
+<p><strong>Fermat&#39;s little theorem</strong>: if p is prime and p ∤ a, then aᵖ⁻¹ ≡ 1 (mod p). So a⁻¹ ≡ aᵖ⁻² (mod p).</p>
+<h2 id="applications"><a class="anchor" href="#applications" aria-hidden="true" tabindex="-1">#</a>Applications</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Number theory used</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hash functions h(k) = k mod m</td>
+<td>division, choosing prime m</td>
+</tr>
+<tr>
+<td>ISBN and Aadhaar-style check digits</td>
+<td>weighted sums mod 11 / Verhoeff checks</td>
+</tr>
+<tr>
+<td>Pseudo-random generators xₙ₊₁ = (a·xₙ + c) mod m</td>
+<td>linear congruences</td>
+</tr>
+<tr>
+<td><strong>RSA encryption</strong></td>
+<td>n = p·q for large primes; e·d ≡ 1 mod (p−1)(q−1); encrypt c = mᵉ mod n</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">p, q = <span class="hljs-number">61</span>, <span class="hljs-number">53</span>                      <span class="hljs-comment"># toy RSA (real keys use primes with hundreds of digits)</span>
+n, phi = p * q, (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>)
+e = <span class="hljs-number">17</span>                             <span class="hljs-comment"># public exponent, coprime with phi</span>
+d = <span class="hljs-built_in">pow</span>(e, -<span class="hljs-number">1</span>, phi)                <span class="hljs-comment"># private exponent: modular inverse (Python 3.8+)</span>
+message = <span class="hljs-number">65</span>
+cipher = <span class="hljs-built_in">pow</span>(message, e, n)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;n=<span class="hljs-subst">{n}</span>, e=<span class="hljs-subst">{e}</span>, d=<span class="hljs-subst">{d}</span>&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;encrypt <span class="hljs-subst">{message}</span> -&gt; <span class="hljs-subst">{cipher}</span>, decrypt -&gt; <span class="hljs-subst">{<span class="hljs-built_in">pow</span>(cipher, d, n)}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>n=3233, e=17, d=2753
+encrypt 65 -&gt; 2790, decrypt -&gt; 65</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=cCwgcSA9IDYxLCA1MyAgICAgICAgICAgICAgICAgICAgICAjIHRveSBSU0EgKHJlYWwga2V5cyB1c2UgcHJpbWVzIHdpdGggaHVuZHJlZHMgb2YgZGlnaXRzKQpuLCBwaGkgPSBwICogcSwgKHAgLSAxKSAqIChxIC0gMSkKZSA9IDE3ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIHB1YmxpYyBleHBvbmVudCwgY29wcmltZSB3aXRoIHBoaQpkID0gcG93KGUsIC0xLCBwaGkpICAgICAgICAgICAgICAgICMgcHJpdmF0ZSBleHBvbmVudDogbW9kdWxhciBpbnZlcnNlIChQeXRob24gMy44KykKbWVzc2FnZSA9IDY1CmNpcGhlciA9IHBvdyhtZXNzYWdlLCBlLCBuKQpwcmludChmIm49e259LCBlPXtlfSwgZD17ZH0iKQpwcmludChmImVuY3J5cHQge21lc3NhZ2V9IC0-IHtjaXBoZXJ9LCBkZWNyeXB0IC0-IHtwb3coY2lwaGVyLCBkLCBuKX0iKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<section class="quiz" id="quiz" data-quiz="discrete/number-theory" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is 47 mod 9?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">2</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">7</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">4</span></button></div><div class="q-why" hidden>47 = 9 × 5 + 2.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is gcd(84, 120)?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">12</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">24</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">4</span></button></div><div class="q-why" hidden>84 = 2²·3·7 and 120 = 2³·3·5 share 2²·3 = 12.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which number has an inverse modulo 12?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">9</span></button></div><div class="q-why" hidden>Only numbers coprime to 12 have inverses; 5·5 = 25 ≡ 1 (mod 12).</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What is 2¹⁰ mod 7?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">2</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">3</span></button></div><div class="q-why" hidden>2³ = 8 ≡ 1, so 2¹⁰ = (2³)³·2 ≡ 2.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="discrete/number-theory"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../discrete/trees/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Trees</strong></a><a class="next" href="../../discrete/boolean-algebra/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Boolean Algebra</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#divisibility">Divisibility</a></li><li><a class="d2" href="#primes">Primes</a></li><li><a class="d2" href="#gcd-and-lcm">GCD and LCM</a></li><li><a class="d2" href="#modular-arithmetic">Modular arithmetic</a></li><li><a class="d3" href="#fast-modular-exponentiation">Fast modular exponentiation</a></li><li><a class="d2" href="#modular-inverses">Modular inverses</a></li><li><a class="d2" href="#applications">Applications</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

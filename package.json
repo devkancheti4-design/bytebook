@@ -1,0 +1,15 @@
+{
+  "name": "bytebook",
+  "private": true,
+  "type": "module",
+  "description": "Bytebook: an interactive CS ebook for Kalvium students, semesters 1 to 3",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "python3 -m http.server 8131 --bind 127.0.0.1 --directory docs"
+  },
+  "dependencies": {
+    "codemirror": "5.65.21",
+    "highlight.js": "11.12.0",
+    "marked": "18.1.2"
+  }
+}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Queue &amp; Circular Queue · Data Structures | Bytebook</title>
+<meta name="description" content="First in, first out: enqueue and dequeue, why a simple array queue wastes space, and how the circular queue fixes it — plus a linked-list queue.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Queue &amp; Circular Queue · Data Structures | Bytebook">
+<meta property="og:description" content="First in, first out: enqueue and dequeue, why a simple array queue wastes space, and how the circular queue fixes it — plus a linked-list queue.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/queue" data-title="Queue &amp; Circular Queue" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 9 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Stacks &amp; Queues</p>
+<h1>Queue &amp; Circular Queue</h1>
+<p class="lede">First in, first out: enqueue and dequeue, why a simple array queue wastes space, and how the circular queue fixes it — plus a linked-list queue.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>queue</strong> adds at one end (the <strong>rear</strong>) and removes from the other (the <strong>front</strong>): <strong>FIFO</strong> — First In, First Out. It models every real queue: people at a ticket counter, print jobs, network packets, processes waiting for the CPU.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 372 100" width="372" height="100" role="img" aria-label="Queue: front 10, rear 40"><defs><marker id="dg-ah-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box cell hl" x="86" y="10" width="50" height="46" rx="0"/><text class="t" x="111" y="33">10</text><rect class="box cell" x="136" y="10" width="50" height="46" rx="0"/><text class="t" x="161" y="33">20</text><rect class="box cell" x="186" y="10" width="50" height="46" rx="0"/><text class="t" x="211" y="33">30</text><rect class="box cell hl" x="236" y="10" width="50" height="46" rx="0"/><text class="t" x="261" y="33">40</text><rect class="frame" x="86" y="10" width="200" height="46" rx="0"/><line class="edge ptr" x1="111" y1="78" x2="111" y2="60" marker-end="url(#dg-ah-18)"/><text class="s ptr" x="111" y="90">front</text><line class="edge ptr" x1="261" y1="78" x2="261" y2="60" marker-end="url(#dg-ah-18)"/><text class="s ptr" x="261" y="90">rear</text><line class="edge" x1="78" y1="33" x2="20" y2="33" marker-end="url(#dg-ah-18)"/><text class="s" x="46" y="20">dequeue</text><line class="edge" x1="352" y1="33" x2="294" y2="33" marker-end="url(#dg-ah-18)"/><text class="s" x="326" y="20">enqueue</text></svg><figcaption>Enqueue at the rear, dequeue from the front. 10 arrived first, so it leaves first.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Meaning</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>enqueue(x)</code></td>
+<td>add <code>x</code> at the rear</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>dequeue()</code></td>
+<td>remove and return the front item</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>front()</code> / <code>peek()</code></td>
+<td>look at the front item</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>isEmpty()</code>, <code>isFull()</code></td>
+<td>status checks</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="the-problem-with-a-simple-array-queue"><a class="anchor" href="#the-problem-with-a-simple-array-queue" aria-hidden="true" tabindex="-1">#</a>The problem with a simple array queue</h2>
+<p>Use <code>front</code> and <code>rear</code> indexes into an array. Enqueue does <code>a[++rear] = x</code>; dequeue does <code>front++</code>. But after a few dequeues, the empty slots at the start of the array are <strong>never reused</strong>: the queue reports &quot;full&quot; when <code>rear</code> reaches the end, even if it is mostly empty.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 262 122" width="262" height="122" role="img" aria-label="Array  with values _, _, _, 40, 50"><defs><marker id="dg-ah-19" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box cell" x="6" y="48" width="50" height="46" rx="0"/><text class="t" x="31" y="71">_</text><text class="s" x="31" y="110">0</text><rect class="box cell" x="56" y="48" width="50" height="46" rx="0"/><text class="t" x="81" y="71">_</text><text class="s" x="81" y="110">1</text><rect class="box cell" x="106" y="48" width="50" height="46" rx="0"/><text class="t" x="131" y="71">_</text><text class="s" x="131" y="110">2</text><rect class="box cell" x="156" y="48" width="50" height="46" rx="0"/><text class="t" x="181" y="71">40</text><text class="s" x="181" y="110">3</text><rect class="box cell" x="206" y="48" width="50" height="46" rx="0"/><text class="t" x="231" y="71">50</text><text class="s" x="231" y="110">4</text><rect class="frame" x="6" y="48" width="250" height="46" rx="0"/><text class="s ptr" x="181" y="13">front</text><line class="edge ptr" x1="181" y1="22" x2="181" y2="45" marker-end="url(#dg-ah-19)"/><text class="s ptr" x="231" y="13">rear</text><line class="edge ptr" x1="231" y1="22" x2="231" y2="45" marker-end="url(#dg-ah-19)"/></svg><figcaption>Linear queue after three dequeues: slots 0–2 are wasted, and <code>rear</code> is already at the end.</figcaption></figure>
+<h2 id="circular-queue"><a class="anchor" href="#circular-queue" aria-hidden="true" tabindex="-1">#</a>Circular queue</h2>
+<p>The fix: let the indexes <strong>wrap around</strong> to 0 using <code>% capacity</code>. The array behaves like a ring.</p>
+<ul>
+<li>enqueue: <code>rear = (rear + 1) % N; a[rear] = x;</code></li>
+<li>dequeue: <code>x = a[front]; front = (front + 1) % N;</code></li>
+<li>keep a <code>count</code> to tell full from empty.</li>
+</ul>
+<div class="widget" data-widget="queue" data-opts="{}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> N 5</span>
+
+<span class="hljs-type">int</span> q[N], front = <span class="hljs-number">0</span>, rear = <span class="hljs-number">-1</span>, count = <span class="hljs-number">0</span>;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">enqueue</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> {
+    <span class="hljs-keyword">if</span> (count == N) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Queue full, cannot add %d\n&quot;</span>, x); <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; }
+    rear = (rear + <span class="hljs-number">1</span>) % N;
+    q[rear] = x;
+    count++;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">dequeue</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">if</span> (count == <span class="hljs-number">0</span>) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Queue empty\n&quot;</span>); <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>; }
+    <span class="hljs-type">int</span> x = q[front];
+    front = (front + <span class="hljs-number">1</span>) % N;
+    count--;
+    <span class="hljs-keyword">return</span> x;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;queue (front -&gt; rear): &quot;</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; count; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, q[(front + i) % N]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;  [front=%d rear=%d]\n&quot;</span>, front, rear);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) enqueue(i * <span class="hljs-number">10</span>);
+    show();
+    enqueue(<span class="hljs-number">60</span>);                         <span class="hljs-comment">// full</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;dequeued %d\n&quot;</span>, dequeue());
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;dequeued %d\n&quot;</span>, dequeue());
+    enqueue(<span class="hljs-number">60</span>);                         <span class="hljs-comment">// reuses slot 0</span>
+    enqueue(<span class="hljs-number">70</span>);                         <span class="hljs-comment">// reuses slot 1</span>
+    show();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>queue (front -&gt; rear): 10 20 30 40 50   [front=0 rear=4]
+Queue full, cannot add 60
+dequeued 10
+dequeued 20
+queue (front -&gt; rear): 30 40 50 60 70   [front=2 rear=1]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNkZWZpbmUgTiA1CgppbnQgcVtOXSwgZnJvbnQgPSAwLCByZWFyID0gLTEsIGNvdW50ID0gMDsKCmludCBlbnF1ZXVlKGludCB4KSB7CiAgICBpZiAoY291bnQgPT0gTikgeyBwcmludGYoIlF1ZXVlIGZ1bGwsIGNhbm5vdCBhZGQgJWRcbiIsIHgpOyByZXR1cm4gMDsgfQogICAgcmVhciA9IChyZWFyICsgMSkgJSBOOwogICAgcVtyZWFyXSA9IHg7CiAgICBjb3VudCsrOwogICAgcmV0dXJuIDE7Cn0KCmludCBkZXF1ZXVlKHZvaWQpIHsKICAgIGlmIChjb3VudCA9PSAwKSB7IHByaW50ZigiUXVldWUgZW1wdHlcbiIpOyByZXR1cm4gLTE7IH0KICAgIGludCB4ID0gcVtmcm9udF07CiAgICBmcm9udCA9IChmcm9udCArIDEpICUgTjsKICAgIGNvdW50LS07CiAgICByZXR1cm4geDsKfQoKdm9pZCBzaG93KHZvaWQpIHsKICAgIHByaW50ZigicXVldWUgKGZyb250IC0-IHJlYXIpOiAiKTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgY291bnQ7IGkrKykgcHJpbnRmKCIlZCAiLCBxWyhmcm9udCArIGkpICUgTl0pOwogICAgcHJpbnRmKCIgIFtmcm9udD0lZCByZWFyPSVkXVxuIiwgZnJvbnQsIHJlYXIpOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBmb3IgKGludCBpID0gMTsgaSA8PSA1OyBpKyspIGVucXVldWUoaSAqIDEwKTsKICAgIHNob3coKTsKICAgIGVucXVldWUoNjApOyAgICAgICAgICAgICAgICAgICAgICAgICAvLyBmdWxsCiAgICBwcmludGYoImRlcXVldWVkICVkXG4iLCBkZXF1ZXVlKCkpOwogICAgcHJpbnRmKCJkZXF1ZXVlZCAlZFxuIiwgZGVxdWV1ZSgpKTsKICAgIGVucXVldWUoNjApOyAgICAgICAgICAgICAgICAgICAgICAgICAvLyByZXVzZXMgc2xvdCAwCiAgICBlbnF1ZXVlKDcwKTsgICAgICAgICAgICAgICAgICAgICAgICAgLy8gcmV1c2VzIHNsb3QgMQogICAgc2hvdygpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Without a count variable</span></div><div class="callout-body"><p>Many textbooks leave one slot empty instead: the queue is <strong>empty</strong> when <code>front == rear</code> and <strong>full</strong> when <code>(rear + 1) % N == front</code>. Both approaches are correct — know whichever your teacher uses.</p>
+</div></aside>
+<h2 id="linked-list-queue"><a class="anchor" href="#linked-list-queue" aria-hidden="true" tabindex="-1">#</a>Linked-list queue</h2>
+<p>Keep pointers to <strong>both</strong> ends: enqueue at the tail, dequeue at the head. Both are O(1), and there is no fixed capacity.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> data; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span> } Node;
+Node *front = <span class="hljs-literal">NULL</span>, *rear = <span class="hljs-literal">NULL</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">enqueue</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> {
+    Node *n = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node));
+    n-&gt;data = x; n-&gt;next = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">if</span> (rear == <span class="hljs-literal">NULL</span>) front = rear = n;
+    <span class="hljs-keyword">else</span> { rear-&gt;next = n; rear = n; }
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">dequeue</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">if</span> (front == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    Node *t = front;
+    <span class="hljs-type">int</span> x = t-&gt;data;
+    front = front-&gt;next;
+    <span class="hljs-keyword">if</span> (front == <span class="hljs-literal">NULL</span>) rear = <span class="hljs-literal">NULL</span>;      <span class="hljs-comment">// queue became empty</span>
+    <span class="hljs-built_in">free</span>(t);
+    <span class="hljs-keyword">return</span> x;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *jobs[] = {<span class="hljs-string">&quot;report.pdf&quot;</span>, <span class="hljs-string">&quot;notes.docx&quot;</span>, <span class="hljs-string">&quot;photo.png&quot;</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) { enqueue(i); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;queued %s\n&quot;</span>, jobs[i]); }
+    <span class="hljs-type">int</span> j;
+    <span class="hljs-keyword">while</span> ((j = dequeue()) != <span class="hljs-number">-1</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;printing %s\n&quot;</span>, jobs[j]);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>queued report.pdf
+queued notes.docx
+queued photo.png
+printing report.pdf
+printing notes.docx
+printing photo.png</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQgZGF0YTsgc3RydWN0IE5vZGUgKm5leHQ7IH0gTm9kZTsKTm9kZSAqZnJvbnQgPSBOVUxMLCAqcmVhciA9IE5VTEw7Cgp2b2lkIGVucXVldWUoaW50IHgpIHsKICAgIE5vZGUgKm4gPSBtYWxsb2Moc2l6ZW9mKE5vZGUpKTsKICAgIG4tPmRhdGEgPSB4OyBuLT5uZXh0ID0gTlVMTDsKICAgIGlmIChyZWFyID09IE5VTEwpIGZyb250ID0gcmVhciA9IG47CiAgICBlbHNlIHsgcmVhci0-bmV4dCA9IG47IHJlYXIgPSBuOyB9Cn0KCmludCBkZXF1ZXVlKHZvaWQpIHsKICAgIGlmIChmcm9udCA9PSBOVUxMKSByZXR1cm4gLTE7CiAgICBOb2RlICp0ID0gZnJvbnQ7CiAgICBpbnQgeCA9IHQtPmRhdGE7CiAgICBmcm9udCA9IGZyb250LT5uZXh0OwogICAgaWYgKGZyb250ID09IE5VTEwpIHJlYXIgPSBOVUxMOyAgICAgIC8vIHF1ZXVlIGJlY2FtZSBlbXB0eQogICAgZnJlZSh0KTsKICAgIHJldHVybiB4Owp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBjb25zdCBjaGFyICpqb2JzW10gPSB7InJlcG9ydC5wZGYiLCAibm90ZXMuZG9jeCIsICJwaG90by5wbmcifTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgMzsgaSsrKSB7IGVucXVldWUoaSk7IHByaW50ZigicXVldWVkICVzXG4iLCBqb2JzW2ldKTsgfQogICAgaW50IGo7CiAgICB3aGlsZSAoKGogPSBkZXF1ZXVlKCkpICE9IC0xKSBwcmludGYoInByaW50aW5nICVzXG4iLCBqb2JzW2pdKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="stack-vs-queue"><a class="anchor" href="#stack-vs-queue" aria-hidden="true" tabindex="-1">#</a>Stack vs queue</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Stack</th>
+<th>Queue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Order</td>
+<td>LIFO</td>
+<td>FIFO</td>
+</tr>
+<tr>
+<td>Insert at</td>
+<td>top</td>
+<td>rear</td>
+</tr>
+<tr>
+<td>Remove from</td>
+<td>top</td>
+<td>front</td>
+</tr>
+<tr>
+<td>Typical uses</td>
+<td>undo, recursion, DFS, parsing</td>
+<td>scheduling, buffering, BFS</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="dsa/queue" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Enqueue 5, 8, 3, then dequeue once. What is at the front?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">8</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">3</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The queue is empty</span></button></div><div class="q-why" hidden>FIFO: 5 leaves first, so 8 is now at the front.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>In a circular queue of size 6, <code>rear</code> is 5. Where does the next element go?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Index 0</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Index 6</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Index 5 again</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Nowhere, the queue is full</span></button></div><div class="q-why" hidden><code>(5 + 1) % 6 = 0</code>, provided the queue is not full.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What problem does a circular queue solve?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It makes dequeue O(1)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Space freed at the front of a linear array queue can be reused</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It allows random access</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It sorts the elements</span></button></div><div class="q-why" hidden>Wrapping indexes around turns the array into a ring.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which algorithm uses a queue?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Depth-first search</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Breadth-first search</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Infix-to-postfix conversion</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Recursion</span></button></div><div class="q-why" hidden>BFS explores level by level, processing vertices in the order they were discovered.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/queue"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/stack-applications/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Stack Applications</strong></a><a class="next" href="../../dsa/deque-priority/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Deque &amp; Priority Queue</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#the-problem-with-a-simple-array-queue">The problem with a simple array queue</a></li><li><a class="d2" href="#circular-queue">Circular queue</a></li><li><a class="d2" href="#linked-list-queue">Linked-list queue</a></li><li><a class="d2" href="#stack-vs-queue">Stack vs queue</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

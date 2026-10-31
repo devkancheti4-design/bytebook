@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deque &amp; Priority Queue · Data Structures | Bytebook</title>
+<meta name="description" content="Two useful queue variations: the double-ended queue and the priority queue, with array-based implementations and where each one shines.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Deque &amp; Priority Queue · Data Structures | Bytebook">
+<meta property="og:description" content="Two useful queue variations: the double-ended queue and the priority queue, with array-based implementations and where each one shines.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/deque-priority" data-title="Deque &amp; Priority Queue" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 10 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Stacks &amp; Queues</p>
+<h1>Deque &amp; Priority Queue</h1>
+<p class="lede">Two useful queue variations: the double-ended queue and the priority queue, with array-based implementations and where each one shines.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="deque-double-ended-queue"><a class="anchor" href="#deque-double-ended-queue" aria-hidden="true" tabindex="-1">#</a>Deque (double-ended queue)</h2>
+<p>A <strong>deque</strong> (pronounced &quot;deck&quot;) allows insertion and deletion at <strong>both ends</strong>. It can act as a stack <em>or</em> a queue.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pushFront(x)</code> / <code>pushBack(x)</code></td>
+<td>insert at the front / rear</td>
+</tr>
+<tr>
+<td><code>popFront()</code> / <code>popBack()</code></td>
+<td>remove from the front / rear</td>
+</tr>
+</tbody></table>
+</div>
+<p>Special cases: an <strong>input-restricted deque</strong> allows insertion at one end only; an <strong>output-restricted deque</strong> allows deletion at one end only.</p>
+<p>A circular array makes every deque operation O(1):</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> N 8</span>
+
+<span class="hljs-type">int</span> d[N], front = <span class="hljs-number">0</span>, size = <span class="hljs-number">0</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">pushBack</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span>  { d[(front + size) % N] = x; size++; }
+<span class="hljs-type">void</span> <span class="hljs-title function_">pushFront</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> { front = (front - <span class="hljs-number">1</span> + N) % N; d[front] = x; size++; }
+<span class="hljs-type">int</span> <span class="hljs-title function_">popFront</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>    { <span class="hljs-type">int</span> x = d[front]; front = (front + <span class="hljs-number">1</span>) % N; size--; <span class="hljs-keyword">return</span> x; }
+<span class="hljs-type">int</span> <span class="hljs-title function_">popBack</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>     { size--; <span class="hljs-keyword">return</span> d[(front + size) % N]; }
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *msg)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%-14s [&quot;</span>, msg);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) <span class="hljs-built_in">printf</span>(i ? <span class="hljs-string">&quot; %d&quot;</span> : <span class="hljs-string">&quot;%d&quot;</span>, d[(front + i) % N]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;]\n&quot;</span>);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    pushBack(<span class="hljs-number">20</span>); pushBack(<span class="hljs-number">30</span>); show(<span class="hljs-string">&quot;pushBack x2:&quot;</span>);
+    pushFront(<span class="hljs-number">10</span>); show(<span class="hljs-string">&quot;pushFront 10:&quot;</span>);
+    pushBack(<span class="hljs-number">40</span>); show(<span class="hljs-string">&quot;pushBack 40:&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;popFront -&gt; %d\n&quot;</span>, popFront());
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;popBack  -&gt; %d\n&quot;</span>, popBack());
+    show(<span class="hljs-string">&quot;now:&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>pushBack x2:   [20 30]
+pushFront 10:  [10 20 30]
+pushBack 40:   [10 20 30 40]
+popFront -&gt; 10
+popBack  -&gt; 40
+now:           [20 30]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNkZWZpbmUgTiA4CgppbnQgZFtOXSwgZnJvbnQgPSAwLCBzaXplID0gMDsKCnZvaWQgcHVzaEJhY2soaW50IHgpICB7IGRbKGZyb250ICsgc2l6ZSkgJSBOXSA9IHg7IHNpemUrKzsgfQp2b2lkIHB1c2hGcm9udChpbnQgeCkgeyBmcm9udCA9IChmcm9udCAtIDEgKyBOKSAlIE47IGRbZnJvbnRdID0geDsgc2l6ZSsrOyB9CmludCBwb3BGcm9udCh2b2lkKSAgICB7IGludCB4ID0gZFtmcm9udF07IGZyb250ID0gKGZyb250ICsgMSkgJSBOOyBzaXplLS07IHJldHVybiB4OyB9CmludCBwb3BCYWNrKHZvaWQpICAgICB7IHNpemUtLTsgcmV0dXJuIGRbKGZyb250ICsgc2l6ZSkgJSBOXTsgfQoKdm9pZCBzaG93KGNvbnN0IGNoYXIgKm1zZykgewogICAgcHJpbnRmKCIlLTE0cyBbIiwgbXNnKTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgc2l6ZTsgaSsrKSBwcmludGYoaSA_ICIgJWQiIDogIiVkIiwgZFsoZnJvbnQgKyBpKSAlIE5dKTsKICAgIHByaW50ZigiXVxuIik7Cn0KCmludCBtYWluKHZvaWQpIHsKICAgIHB1c2hCYWNrKDIwKTsgcHVzaEJhY2soMzApOyBzaG93KCJwdXNoQmFjayB4MjoiKTsKICAgIHB1c2hGcm9udCgxMCk7IHNob3coInB1c2hGcm9udCAxMDoiKTsKICAgIHB1c2hCYWNrKDQwKTsgc2hvdygicHVzaEJhY2sgNDA6Iik7CiAgICBwcmludGYoInBvcEZyb250IC0-ICVkXG4iLCBwb3BGcm9udCgpKTsKICAgIHByaW50ZigicG9wQmFjayAgLT4gJWRcbiIsIHBvcEJhY2soKSk7CiAgICBzaG93KCJub3c6Iik7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-info"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Sliding-window problems</span></div><div class="callout-body"><p>Deques power a famous trick: the maximum of every window of size k in an array, in O(n) total, by keeping indexes of useful candidates in a deque.</p>
+</div></aside>
+<h2 id="priority-queue"><a class="anchor" href="#priority-queue" aria-hidden="true" tabindex="-1">#</a>Priority queue</h2>
+<p>In a <strong>priority queue</strong>, each element has a priority, and <code>dequeue</code> always removes the element with the <strong>highest priority</strong> (or lowest, for a min-priority queue) — not the oldest. Hospital emergency rooms, CPU scheduling and Dijkstra&#39;s shortest-path algorithm all use one.</p>
+<p>Possible implementations:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Implementation</th>
+<th>Insert</th>
+<th>Remove highest</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Unsorted array</td>
+<td>O(1)</td>
+<td>O(n) — scan for the max</td>
+</tr>
+<tr>
+<td>Sorted array</td>
+<td>O(n) — shift into place</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><strong>Binary heap</strong></td>
+<td><strong>O(log n)</strong></td>
+<td><strong>O(log n)</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p>A sorted array is simple and fine for small inputs:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span> <span class="hljs-type">char</span> name[<span class="hljs-number">12</span>]; <span class="hljs-type">int</span> priority; } Patient;
+Patient pq[<span class="hljs-number">10</span>];
+<span class="hljs-type">int</span> n = <span class="hljs-number">0</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insert</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *name, <span class="hljs-type">int</span> pr)</span> {           <span class="hljs-comment">// keep sorted by priority, highest last</span>
+    <span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">while</span> (i &gt;= <span class="hljs-number">0</span> &amp;&amp; pq[i].priority &gt; pr) { pq[i + <span class="hljs-number">1</span>] = pq[i]; i--; }
+    <span class="hljs-built_in">snprintf</span>(pq[i + <span class="hljs-number">1</span>].name, <span class="hljs-keyword">sizeof</span> pq[i + <span class="hljs-number">1</span>].name, <span class="hljs-string">&quot;%s&quot;</span>, name);
+    pq[i + <span class="hljs-number">1</span>].priority = pr;
+    n++;
+}
+
+Patient <span class="hljs-title function_">removeMax</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> { <span class="hljs-keyword">return</span> pq[--n]; }
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    insert(<span class="hljs-string">&quot;Anil&quot;</span>, <span class="hljs-number">2</span>);     <span class="hljs-comment">// 1 = mild ... 5 = critical</span>
+    insert(<span class="hljs-string">&quot;Bhavna&quot;</span>, <span class="hljs-number">5</span>);
+    insert(<span class="hljs-string">&quot;Chetan&quot;</span>, <span class="hljs-number">1</span>);
+    insert(<span class="hljs-string">&quot;Divya&quot;</span>, <span class="hljs-number">4</span>);
+    <span class="hljs-keyword">while</span> (n &gt; <span class="hljs-number">0</span>) {
+        Patient p = removeMax();
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;treating %-7s (priority %d)\n&quot;</span>, p.name, p.priority);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>treating Bhavna  (priority 5)
+treating Divya   (priority 4)
+treating Anil    (priority 2)
+treating Chetan  (priority 1)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgp0eXBlZGVmIHN0cnVjdCB7IGNoYXIgbmFtZVsxMl07IGludCBwcmlvcml0eTsgfSBQYXRpZW50OwpQYXRpZW50IHBxWzEwXTsKaW50IG4gPSAwOwoKdm9pZCBpbnNlcnQoY29uc3QgY2hhciAqbmFtZSwgaW50IHByKSB7ICAgICAgICAgICAvLyBrZWVwIHNvcnRlZCBieSBwcmlvcml0eSwgaGlnaGVzdCBsYXN0CiAgICBpbnQgaSA9IG4gLSAxOwogICAgd2hpbGUgKGkgPj0gMCAmJiBwcVtpXS5wcmlvcml0eSA-IHByKSB7IHBxW2kgKyAxXSA9IHBxW2ldOyBpLS07IH0KICAgIHNucHJpbnRmKHBxW2kgKyAxXS5uYW1lLCBzaXplb2YgcHFbaSArIDFdLm5hbWUsICIlcyIsIG5hbWUpOwogICAgcHFbaSArIDFdLnByaW9yaXR5ID0gcHI7CiAgICBuKys7Cn0KClBhdGllbnQgcmVtb3ZlTWF4KHZvaWQpIHsgcmV0dXJuIHBxWy0tbl07IH0KCmludCBtYWluKHZvaWQpIHsKICAgIGluc2VydCgiQW5pbCIsIDIpOyAgICAgLy8gMSA9IG1pbGQgLi4uIDUgPSBjcml0aWNhbAogICAgaW5zZXJ0KCJCaGF2bmEiLCA1KTsKICAgIGluc2VydCgiQ2hldGFuIiwgMSk7CiAgICBpbnNlcnQoIkRpdnlhIiwgNCk7CiAgICB3aGlsZSAobiA-IDApIHsKICAgICAgICBQYXRpZW50IHAgPSByZW1vdmVNYXgoKTsKICAgICAgICBwcmludGYoInRyZWF0aW5nICUtN3MgKHByaW9yaXR5ICVkKVxuIiwgcC5uYW1lLCBwLnByaW9yaXR5KTsKICAgIH0KICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>For large inputs, use a <strong>binary heap</strong>, which gives O(log n) for both operations — covered in <a href="../../dsa/heaps/">Heaps &amp; Heap Sort</a>.</p>
+<section class="quiz" id="quiz" data-quiz="dsa/deque-priority" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which structure allows insertion and deletion at both ends?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Stack</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Queue</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Deque</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Priority queue</span></button></div><div class="q-why" hidden>A double-ended queue supports push and pop at the front and rear.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>In a max-priority queue, which element is removed first?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The oldest</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The newest</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The one with the highest priority</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A random one</span></button></div><div class="q-why" hidden>Priority, not arrival time, decides the order.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What is the best common implementation of a priority queue?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Sorted linked list</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Binary heap</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Stack</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Circular queue</span></button></div><div class="q-why" hidden>A heap gives O(log n) insertion and removal.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>An output-restricted deque allows deletion at...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">only one end</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">both ends</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">no end</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">the middle</span></button></div><div class="q-why" hidden>Output-restricted means removals happen at one end only, while insertions can happen at both.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/deque-priority"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/queue/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Queue &amp; Circular Queue</strong></a><a class="next" href="../../dsa/trees/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Trees &amp; Binary Trees</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#deque-double-ended-queue">Deque (double-ended queue)</a></li><li><a class="d2" href="#priority-queue">Priority queue</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

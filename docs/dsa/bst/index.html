@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Binary Search Tree · Data Structures | Bytebook</title>
+<meta name="description" content="A binary tree that keeps itself sorted: search, insert, find min and max, and the three cases of deletion — plus why balance matters.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Binary Search Tree · Data Structures | Bytebook">
+<meta property="og:description" content="A binary tree that keeps itself sorted: search, insert, find min and max, and the three cases of deletion — plus why balance matters.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/bst" data-title="Binary Search Tree" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 12 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Trees</p>
+<h1>Binary Search Tree</h1>
+<p class="lede">A binary tree that keeps itself sorted: search, insert, find min and max, and the three cases of deletion — plus why balance matters.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>binary search tree (BST)</strong> is a binary tree with one rule at <strong>every</strong> node:</p>
+<blockquote>
+<p>All keys in the <strong>left</strong> subtree are <strong>smaller</strong>, and all keys in the <strong>right</strong> subtree are <strong>larger</strong>.</p>
+</blockquote>
+<figure class="diagram"><svg class="dg" viewBox="0 0 210 194" width="210" height="194" role="img" aria-label="Tree rooted at 50"><line class="edge" x1="105" y1="27" x2="53" y2="97"/><line class="edge" x1="53" y1="97" x2="27" y2="167"/><line class="edge" x1="53" y1="97" x2="79" y2="167"/><line class="edge" x1="105" y1="27" x2="157" y2="97"/><line class="edge" x1="157" y1="97" x2="131" y2="167"/><line class="edge" x1="157" y1="97" x2="183" y2="167"/><circle class="node" cx="27" cy="167" r="19"/><text class="t" x="27" y="167">20</text><circle class="node" cx="79" cy="167" r="19"/><text class="t" x="79" y="167">40</text><circle class="node" cx="53" cy="97" r="19"/><text class="t" x="53" y="97">30</text><circle class="node" cx="131" cy="167" r="19"/><text class="t" x="131" y="167">60</text><circle class="node" cx="183" cy="167" r="19"/><text class="t" x="183" y="167">80</text><circle class="node" cx="157" cy="97" r="19"/><text class="t" x="157" y="97">70</text><circle class="node" cx="105" cy="27" r="19"/><text class="t" x="105" y="27">50</text></svg><figcaption>A BST. Every key left of 50 is smaller than 50; every key right of 50 is larger. The same holds at 30 and 70.</figcaption></figure>
+<p>Because of that rule, an <strong>inorder traversal of a BST prints the keys in sorted order</strong>, and searching can discard half the remaining tree at each step — like binary search.</p>
+<h2 id="try-it"><a class="anchor" href="#try-it" aria-hidden="true" tabindex="-1">#</a>Try it</h2>
+<p>Insert, search and delete keys, and watch the tree and its traversals update:</p>
+<div class="widget" data-widget="bst" data-opts="{}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="search-and-insert"><a class="anchor" href="#search-and-insert" aria-hidden="true" tabindex="-1">#</a>Search and insert</h2>
+<p>To search, start at the root: go left if the key is smaller, right if it is larger, stop if equal. Insertion searches for the key and attaches a new leaf where the search fell off the tree.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> key; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">left</span>, *<span class="hljs-title">right</span>;</span> } Node;
+
+Node *<span class="hljs-title function_">insert</span><span class="hljs-params">(Node *root, <span class="hljs-type">int</span> key)</span> {
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) {
+        Node *n = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node));
+        n-&gt;key = key; n-&gt;left = n-&gt;right = <span class="hljs-literal">NULL</span>;
+        <span class="hljs-keyword">return</span> n;
+    }
+    <span class="hljs-keyword">if</span> (key &lt; root-&gt;key)      root-&gt;left = insert(root-&gt;left, key);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; root-&gt;key) root-&gt;right = insert(root-&gt;right, key);
+    <span class="hljs-keyword">return</span> root;                                  <span class="hljs-comment">// duplicates are ignored</span>
+}
+
+Node *<span class="hljs-title function_">search</span><span class="hljs-params">(Node *root, <span class="hljs-type">int</span> key)</span> {
+    <span class="hljs-keyword">while</span> (root != <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;key != key)
+        root = (key &lt; root-&gt;key) ? root-&gt;left : root-&gt;right;
+    <span class="hljs-keyword">return</span> root;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">inorder</span><span class="hljs-params">(Node *r)</span> { <span class="hljs-keyword">if</span> (r) { inorder(r-&gt;left); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, r-&gt;key); inorder(r-&gt;right); } }
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> keys[] = {<span class="hljs-number">50</span>, <span class="hljs-number">30</span>, <span class="hljs-number">70</span>, <span class="hljs-number">20</span>, <span class="hljs-number">40</span>, <span class="hljs-number">60</span>, <span class="hljs-number">80</span>, <span class="hljs-number">35</span>};
+    Node *root = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++) root = insert(root, keys[i]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Inorder (sorted): &quot;</span>);
+    inorder(root);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;search 60: %s\n&quot;</span>, search(root, <span class="hljs-number">60</span>) ? <span class="hljs-string">&quot;found&quot;</span> : <span class="hljs-string">&quot;not found&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;search 65: %s\n&quot;</span>, search(root, <span class="hljs-number">65</span>) ? <span class="hljs-string">&quot;found&quot;</span> : <span class="hljs-string">&quot;not found&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Inorder (sorted): 20 30 35 40 50 60 70 80 
+search 60: found
+search 65: not found</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQga2V5OyBzdHJ1Y3QgTm9kZSAqbGVmdCwgKnJpZ2h0OyB9IE5vZGU7CgpOb2RlICppbnNlcnQoTm9kZSAqcm9vdCwgaW50IGtleSkgewogICAgaWYgKHJvb3QgPT0gTlVMTCkgewogICAgICAgIE5vZGUgKm4gPSBtYWxsb2Moc2l6ZW9mKE5vZGUpKTsKICAgICAgICBuLT5rZXkgPSBrZXk7IG4tPmxlZnQgPSBuLT5yaWdodCA9IE5VTEw7CiAgICAgICAgcmV0dXJuIG47CiAgICB9CiAgICBpZiAoa2V5IDwgcm9vdC0-a2V5KSAgICAgIHJvb3QtPmxlZnQgPSBpbnNlcnQocm9vdC0-bGVmdCwga2V5KTsKICAgIGVsc2UgaWYgKGtleSA-IHJvb3QtPmtleSkgcm9vdC0-cmlnaHQgPSBpbnNlcnQocm9vdC0-cmlnaHQsIGtleSk7CiAgICByZXR1cm4gcm9vdDsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gZHVwbGljYXRlcyBhcmUgaWdub3JlZAp9CgpOb2RlICpzZWFyY2goTm9kZSAqcm9vdCwgaW50IGtleSkgewogICAgd2hpbGUgKHJvb3QgIT0gTlVMTCAmJiByb290LT5rZXkgIT0ga2V5KQogICAgICAgIHJvb3QgPSAoa2V5IDwgcm9vdC0-a2V5KSA_IHJvb3QtPmxlZnQgOiByb290LT5yaWdodDsKICAgIHJldHVybiByb290Owp9Cgp2b2lkIGlub3JkZXIoTm9kZSAqcikgeyBpZiAocikgeyBpbm9yZGVyKHItPmxlZnQpOyBwcmludGYoIiVkICIsIHItPmtleSk7IGlub3JkZXIoci0-cmlnaHQpOyB9IH0KCmludCBtYWluKHZvaWQpIHsKICAgIGludCBrZXlzW10gPSB7NTAsIDMwLCA3MCwgMjAsIDQwLCA2MCwgODAsIDM1fTsKICAgIE5vZGUgKnJvb3QgPSBOVUxMOwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCA4OyBpKyspIHJvb3QgPSBpbnNlcnQocm9vdCwga2V5c1tpXSk7CiAgICBwcmludGYoIklub3JkZXIgKHNvcnRlZCk6ICIpOwogICAgaW5vcmRlcihyb290KTsKICAgIHByaW50ZigiXG4iKTsKICAgIHByaW50Zigic2VhcmNoIDYwOiAlc1xuIiwgc2VhcmNoKHJvb3QsIDYwKSA_ICJmb3VuZCIgOiAibm90IGZvdW5kIik7CiAgICBwcmludGYoInNlYXJjaCA2NTogJXNcbiIsIHNlYXJjaChyb290LCA2NSkgPyAiZm91bmQiIDogIm5vdCBmb3VuZCIpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="minimum-and-maximum"><a class="anchor" href="#minimum-and-maximum" aria-hidden="true" tabindex="-1">#</a>Minimum and maximum</h2>
+<p>The smallest key is the <strong>leftmost</strong> node; the largest is the <strong>rightmost</strong>:</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">Node *<span class="hljs-title function_">minNode</span><span class="hljs-params">(Node *r)</span> { <span class="hljs-keyword">while</span> (r &amp;&amp; r-&gt;left)  r = r-&gt;left;  <span class="hljs-keyword">return</span> r; }
+Node *<span class="hljs-title function_">maxNode</span><span class="hljs-params">(Node *r)</span> { <span class="hljs-keyword">while</span> (r &amp;&amp; r-&gt;right) r = r-&gt;right; <span class="hljs-keyword">return</span> r; }</code></pre></figure>
+<h2 id="deletion-three-cases"><a class="anchor" href="#deletion-three-cases" aria-hidden="true" tabindex="-1">#</a>Deletion: three cases</h2>
+<ol>
+<li><strong>Leaf</strong> — just remove it.</li>
+<li><strong>One child</strong> — replace the node with its child.</li>
+<li><strong>Two children</strong> — replace the node&#39;s key with its <strong>inorder successor</strong> (the smallest key in its right subtree), then delete that successor from the right subtree. (The inorder predecessor works too.)</li>
+</ol>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> key; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">left</span>, *<span class="hljs-title">right</span>;</span> } Node;
+
+Node *<span class="hljs-title function_">insert</span><span class="hljs-params">(Node *r, <span class="hljs-type">int</span> k)</span> {
+    <span class="hljs-keyword">if</span> (!r) { r = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node)); r-&gt;key = k; r-&gt;left = r-&gt;right = <span class="hljs-literal">NULL</span>; <span class="hljs-keyword">return</span> r; }
+    <span class="hljs-keyword">if</span> (k &lt; r-&gt;key) r-&gt;left = insert(r-&gt;left, k); <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (k &gt; r-&gt;key) r-&gt;right = insert(r-&gt;right, k);
+    <span class="hljs-keyword">return</span> r;
+}
+
+Node *<span class="hljs-title function_">deleteKey</span><span class="hljs-params">(Node *root, <span class="hljs-type">int</span> key)</span> {
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">if</span> (key &lt; root-&gt;key)      root-&gt;left = deleteKey(root-&gt;left, key);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; root-&gt;key) root-&gt;right = deleteKey(root-&gt;right, key);
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">NULL</span>)  { Node *r = root-&gt;right; <span class="hljs-built_in">free</span>(root); <span class="hljs-keyword">return</span> r; }   <span class="hljs-comment">// cases 1 and 2</span>
+        <span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">NULL</span>) { Node *l = root-&gt;left;  <span class="hljs-built_in">free</span>(root); <span class="hljs-keyword">return</span> l; }
+        Node *succ = root-&gt;right;                                                   <span class="hljs-comment">// case 3</span>
+        <span class="hljs-keyword">while</span> (succ-&gt;left) succ = succ-&gt;left;
+        root-&gt;key = succ-&gt;key;
+        root-&gt;right = deleteKey(root-&gt;right, succ-&gt;key);
+    }
+    <span class="hljs-keyword">return</span> root;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">preorder</span><span class="hljs-params">(Node *r)</span> { <span class="hljs-keyword">if</span> (r) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, r-&gt;key); preorder(r-&gt;left); preorder(r-&gt;right); } }
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> keys[] = {<span class="hljs-number">50</span>, <span class="hljs-number">30</span>, <span class="hljs-number">70</span>, <span class="hljs-number">20</span>, <span class="hljs-number">40</span>, <span class="hljs-number">60</span>, <span class="hljs-number">80</span>};
+    Node *root = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">7</span>; i++) root = insert(root, keys[i]);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;start:            &quot;</span>); preorder(root); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    root = deleteKey(root, <span class="hljs-number">20</span>);  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;delete 20 (leaf): &quot;</span>); preorder(root); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    root = deleteKey(root, <span class="hljs-number">30</span>);  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;delete 30 (one):  &quot;</span>); preorder(root); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    root = deleteKey(root, <span class="hljs-number">50</span>);  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;delete 50 (two):  &quot;</span>); preorder(root); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>start:            50 30 20 40 70 60 80 
+delete 20 (leaf): 50 30 40 70 60 80 
+delete 30 (one):  50 40 70 60 80 
+delete 50 (two):  60 40 70 80</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQga2V5OyBzdHJ1Y3QgTm9kZSAqbGVmdCwgKnJpZ2h0OyB9IE5vZGU7CgpOb2RlICppbnNlcnQoTm9kZSAqciwgaW50IGspIHsKICAgIGlmICghcikgeyByID0gbWFsbG9jKHNpemVvZihOb2RlKSk7IHItPmtleSA9IGs7IHItPmxlZnQgPSByLT5yaWdodCA9IE5VTEw7IHJldHVybiByOyB9CiAgICBpZiAoayA8IHItPmtleSkgci0-bGVmdCA9IGluc2VydChyLT5sZWZ0LCBrKTsgZWxzZSBpZiAoayA-IHItPmtleSkgci0-cmlnaHQgPSBpbnNlcnQoci0-cmlnaHQsIGspOwogICAgcmV0dXJuIHI7Cn0KCk5vZGUgKmRlbGV0ZUtleShOb2RlICpyb290LCBpbnQga2V5KSB7CiAgICBpZiAocm9vdCA9PSBOVUxMKSByZXR1cm4gTlVMTDsKICAgIGlmIChrZXkgPCByb290LT5rZXkpICAgICAgcm9vdC0-bGVmdCA9IGRlbGV0ZUtleShyb290LT5sZWZ0LCBrZXkpOwogICAgZWxzZSBpZiAoa2V5ID4gcm9vdC0-a2V5KSByb290LT5yaWdodCA9IGRlbGV0ZUtleShyb290LT5yaWdodCwga2V5KTsKICAgIGVsc2UgewogICAgICAgIGlmIChyb290LT5sZWZ0ID09IE5VTEwpICB7IE5vZGUgKnIgPSByb290LT5yaWdodDsgZnJlZShyb290KTsgcmV0dXJuIHI7IH0gICAvLyBjYXNlcyAxIGFuZCAyCiAgICAgICAgaWYgKHJvb3QtPnJpZ2h0ID09IE5VTEwpIHsgTm9kZSAqbCA9IHJvb3QtPmxlZnQ7ICBmcmVlKHJvb3QpOyByZXR1cm4gbDsgfQogICAgICAgIE5vZGUgKnN1Y2MgPSByb290LT5yaWdodDsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBjYXNlIDMKICAgICAgICB3aGlsZSAoc3VjYy0-bGVmdCkgc3VjYyA9IHN1Y2MtPmxlZnQ7CiAgICAgICAgcm9vdC0-a2V5ID0gc3VjYy0-a2V5OwogICAgICAgIHJvb3QtPnJpZ2h0ID0gZGVsZXRlS2V5KHJvb3QtPnJpZ2h0LCBzdWNjLT5rZXkpOwogICAgfQogICAgcmV0dXJuIHJvb3Q7Cn0KCnZvaWQgcHJlb3JkZXIoTm9kZSAqcikgeyBpZiAocikgeyBwcmludGYoIiVkICIsIHItPmtleSk7IHByZW9yZGVyKHItPmxlZnQpOyBwcmVvcmRlcihyLT5yaWdodCk7IH0gfQoKaW50IG1haW4odm9pZCkgewogICAgaW50IGtleXNbXSA9IHs1MCwgMzAsIDcwLCAyMCwgNDAsIDYwLCA4MH07CiAgICBOb2RlICpyb290ID0gTlVMTDsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgNzsgaSsrKSByb290ID0gaW5zZXJ0KHJvb3QsIGtleXNbaV0pOwogICAgcHJpbnRmKCJzdGFydDogICAgICAgICAgICAiKTsgcHJlb3JkZXIocm9vdCk7IHByaW50ZigiXG4iKTsKICAgIHJvb3QgPSBkZWxldGVLZXkocm9vdCwgMjApOyAgcHJpbnRmKCJkZWxldGUgMjAgKGxlYWYpOiAiKTsgcHJlb3JkZXIocm9vdCk7IHByaW50ZigiXG4iKTsKICAgIHJvb3QgPSBkZWxldGVLZXkocm9vdCwgMzApOyAgcHJpbnRmKCJkZWxldGUgMzAgKG9uZSk6ICAiKTsgcHJlb3JkZXIocm9vdCk7IHByaW50ZigiXG4iKTsKICAgIHJvb3QgPSBkZWxldGVLZXkocm9vdCwgNTApOyAgcHJpbnRmKCJkZWxldGUgNTAgKHR3byk6ICAiKTsgcHJlb3JkZXIocm9vdCk7IHByaW50ZigiXG4iKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>After deleting 50, its inorder successor <strong>60</strong> takes its place as the new root.</p>
+<h2 id="why-balance-matters"><a class="anchor" href="#why-balance-matters" aria-hidden="true" tabindex="-1">#</a>Why balance matters</h2>
+<p>Every BST operation costs <strong>O(h)</strong>, where <code>h</code> is the height.</p>
+<ul>
+<li>A <strong>balanced</strong> BST with <code>n</code> keys has height about log₂ n → operations are <strong>O(log n)</strong>.</li>
+<li>Insert keys in sorted order (10, 20, 30, 40…) and every new key goes right: the tree becomes a <strong>skewed</strong> chain with height n − 1 → <strong>O(n)</strong>, no better than a linked list.</li>
+</ul>
+<figure class="diagram"><svg class="dg" viewBox="0 0 210 264" width="210" height="264" role="img" aria-label="Tree rooted at 10"><line class="edge" x1="72.5" y1="27" x2="118" y2="97"/><line class="edge" x1="118" y1="97" x2="157" y2="167"/><line class="edge" x1="157" y1="167" x2="183" y2="237"/><circle class="node" cx="183" cy="237" r="19"/><text class="t" x="183" y="237">40</text><circle class="node" cx="157" cy="167" r="19"/><text class="t" x="157" y="167">30</text><circle class="node" cx="118" cy="97" r="19"/><text class="t" x="118" y="97">20</text><circle class="node" cx="72.5" cy="27" r="19"/><text class="t" x="72.5" y="27">10</text></svg><figcaption>Inserting 10, 20, 30, 40 in order produces a skewed BST — effectively a linked list.</figcaption></figure>
+<p>That is why self-balancing trees such as <strong>AVL trees</strong> (next lesson) and red-black trees exist.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Balanced BST</th>
+<th>Skewed BST</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Search</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Insert</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Inorder traversal</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="dsa/bst" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which traversal of a BST lists the keys in ascending order?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Preorder</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Inorder</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Postorder</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Level order</span></button></div><div class="q-why" hidden>Left subtree (smaller), node, right subtree (larger) — sorted order.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Insert 45 into the BST with root 50, left child 30 (children 20, 40) and right child 70. Where does 45 go?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Left child of 30</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Left child of 70</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Right child of 40</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Left child of 40</span></button></div><div class="q-why" hidden>45 &lt; 50 → go left to 30; 45 &gt; 30 → right to 40; 45 &gt; 40 → right child of 40.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>When deleting a node with two children, what replaces it?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Its left child</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Its parent</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Its inorder successor (smallest key in the right subtree)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The root</span></button></div><div class="q-why" hidden>The successor keeps the BST ordering intact (the inorder predecessor also works).</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What is the worst-case search time in a BST with <code>n</code> nodes?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(1)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(log n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(n)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(n log n)</span></button></div><div class="q-why" hidden>A skewed BST has height n − 1, so search may visit every node.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/bst"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/trees/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Trees &amp; Binary Trees</strong></a><a class="next" href="../../dsa/avl/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>AVL Trees</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#try-it">Try it</a></li><li><a class="d2" href="#search-and-insert">Search and insert</a></li><li><a class="d2" href="#minimum-and-maximum">Minimum and maximum</a></li><li><a class="d2" href="#deletion-three-cases">Deletion: three cases</a></li><li><a class="d2" href="#why-balance-matters">Why balance matters</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

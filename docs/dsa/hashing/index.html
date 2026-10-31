@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hashing · Data Structures | Bytebook</title>
+<meta name="description" content="Near O(1) search with hash tables: hash functions, collisions, separate chaining, linear and quadratic probing, double hashing and the load factor.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Hashing · Data Structures | Bytebook">
+<meta property="og:description" content="Near O(1) search with hash tables: hash functions, collisions, separate chaining, linear and quadratic probing, double hashing and the load factor.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/hashing" data-title="Hashing" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 17 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Graphs &amp; Hashing</p>
+<h1>Hashing</h1>
+<p class="lede">Near O(1) search with hash tables: hash functions, collisions, separate chaining, linear and quadratic probing, double hashing and the load factor.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Arrays give O(1) access <strong>by index</strong>. What if you could turn any key — a roll number, a name — into an index? That is <strong>hashing</strong>: a <strong>hash function</strong> converts a key into an index of an array called a <strong>hash table</strong>.</p>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">h(key) = key % tableSize
+
+h(23) = 23 % 10 = 3   -&gt; store 23 in slot 3
+h(47) = 47 % 10 = 7   -&gt; store 47 in slot 7</code></pre></figure>
+<p>Search, insert and delete then take <strong>O(1) on average</strong>.</p>
+<h2 id="good-hash-functions"><a class="anchor" href="#good-hash-functions" aria-hidden="true" tabindex="-1">#</a>Good hash functions</h2>
+<p>A good hash function is <strong>fast</strong>, <strong>deterministic</strong>, and spreads keys <strong>uniformly</strong> over the table.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Formula</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Division</td>
+<td><code>h(k) = k mod m</code></td>
+<td>choose <code>m</code> prime, away from powers of 2</td>
+</tr>
+<tr>
+<td>Multiplication</td>
+<td><code>h(k) = ⌊m × frac(k × A)⌋</code>, 0 &lt; A &lt; 1</td>
+<td><code>m</code> can be anything</td>
+</tr>
+<tr>
+<td>Mid-square</td>
+<td>square <code>k</code>, take the middle digits</td>
+<td>old textbook method</td>
+</tr>
+<tr>
+<td>Folding</td>
+<td>split <code>k</code> into parts and add them</td>
+<td>for long keys like phone numbers</td>
+</tr>
+<tr>
+<td>Strings</td>
+<td><code>h = h × 31 + c</code> for each character</td>
+<td>how Java hashes strings</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="collisions"><a class="anchor" href="#collisions" aria-hidden="true" tabindex="-1">#</a>Collisions</h2>
+<p>Two keys can hash to the same slot: with <code>m = 10</code>, both 23 and 33 go to slot 3. That is a <strong>collision</strong>, and every hash table needs a strategy for it.</p>
+<h2 id="separate-chaining"><a class="anchor" href="#separate-chaining" aria-hidden="true" tabindex="-1">#</a>Separate chaining</h2>
+<p>Each slot holds a <strong>linked list</strong> of all keys that hash there.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 330 268" width="330" height="268" role="img" aria-label="Hash table of size 7 using chain"><defs><marker id="dg-ah-25" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><text class="s end" x="30" y="26">0</text><rect class="box cell hl" x="44" y="8" width="44" height="36" rx="0"/><circle class="dot" cx="66" cy="26" r="3.4"/><line class="edge" x1="66" y1="26" x2="113" y2="26" marker-end="url(#dg-ah-25)"/><rect class="box" x="114" y="12" width="50" height="28" rx="5"/><text class="t" x="139" y="26">700</text><text class="s end" x="30" y="62">1</text><rect class="box cell hl" x="44" y="44" width="44" height="36" rx="0"/><circle class="dot" cx="66" cy="62" r="3.4"/><line class="edge" x1="66" y1="62" x2="113" y2="62" marker-end="url(#dg-ah-25)"/><rect class="box" x="114" y="48" width="50" height="28" rx="5"/><text class="t" x="139" y="62">50</text><line class="edge" x1="164" y1="62" x2="189" y2="62" marker-end="url(#dg-ah-25)"/><rect class="box" x="190" y="48" width="50" height="28" rx="5"/><text class="t" x="215" y="62">85</text><line class="edge" x1="240" y1="62" x2="265" y2="62" marker-end="url(#dg-ah-25)"/><rect class="box" x="266" y="48" width="50" height="28" rx="5"/><text class="t" x="291" y="62">92</text><text class="s end" x="30" y="98">2</text><rect class="box cell" x="44" y="80" width="44" height="36" rx="0"/><line class="slash" x1="54" y1="107" x2="78" y2="89"/><text class="s end" x="30" y="134">3</text><rect class="box cell hl" x="44" y="116" width="44" height="36" rx="0"/><circle class="dot" cx="66" cy="134" r="3.4"/><line class="edge" x1="66" y1="134" x2="113" y2="134" marker-end="url(#dg-ah-25)"/><rect class="box" x="114" y="120" width="50" height="28" rx="5"/><text class="t" x="139" y="134">73</text><line class="edge" x1="164" y1="134" x2="189" y2="134" marker-end="url(#dg-ah-25)"/><rect class="box" x="190" y="120" width="50" height="28" rx="5"/><text class="t" x="215" y="134">101</text><text class="s end" x="30" y="170">4</text><rect class="box cell" x="44" y="152" width="44" height="36" rx="0"/><line class="slash" x1="54" y1="179" x2="78" y2="161"/><text class="s end" x="30" y="206">5</text><rect class="box cell" x="44" y="188" width="44" height="36" rx="0"/><line class="slash" x1="54" y1="215" x2="78" y2="197"/><text class="s end" x="30" y="242">6</text><rect class="box cell hl" x="44" y="224" width="44" height="36" rx="0"/><circle class="dot" cx="66" cy="242" r="3.4"/><line class="edge" x1="66" y1="242" x2="113" y2="242" marker-end="url(#dg-ah-25)"/><rect class="box" x="114" y="228" width="50" height="28" rx="5"/><text class="t" x="139" y="242">76</text><rect class="frame" x="44" y="8" width="44" height="252" rx="0"/></svg><figcaption>Separate chaining with h(k) = k mod 7. 50, 85 and 92 all hash to slot 1 and share a chain.</figcaption></figure>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> M 7</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> key; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span> } Node;
+Node *table[M];
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">h</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> { <span class="hljs-keyword">return</span> k % M; }
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> {
+    Node *n = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node));
+    n-&gt;key = k;
+    n-&gt;next = <span class="hljs-literal">NULL</span>;
+    Node **p = &amp;table[h(k)];
+    <span class="hljs-keyword">while</span> (*p) p = &amp;(*p)-&gt;next;       <span class="hljs-comment">// walk to the end of the chain</span>
+    *p = n;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">search</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> {
+    <span class="hljs-keyword">for</span> (Node *p = table[h(k)]; p; p = p-&gt;next)
+        <span class="hljs-keyword">if</span> (p-&gt;key == k) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> keys[] = {<span class="hljs-number">50</span>, <span class="hljs-number">700</span>, <span class="hljs-number">76</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>, <span class="hljs-number">73</span>, <span class="hljs-number">101</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">7</span>; i++) insert(keys[i]);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d:&quot;</span>, i);
+        <span class="hljs-keyword">for</span> (Node *p = table[i]; p; p = p-&gt;next) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; %d -&gt;&quot;</span>, p-&gt;key);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; NULL\n&quot;</span>);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;search 92: %s, search 15: %s\n&quot;</span>, search(<span class="hljs-number">92</span>) ? <span class="hljs-string">&quot;found&quot;</span> : <span class="hljs-string">&quot;missing&quot;</span>, search(<span class="hljs-number">15</span>) ? <span class="hljs-string">&quot;found&quot;</span> : <span class="hljs-string">&quot;missing&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>0: 700 -&gt; NULL
+1: 50 -&gt; 85 -&gt; 92 -&gt; NULL
+2: NULL
+3: 73 -&gt; 101 -&gt; NULL
+4: NULL
+5: NULL
+6: 76 -&gt; NULL
+search 92: found, search 15: missing</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCiNkZWZpbmUgTSA3CnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQga2V5OyBzdHJ1Y3QgTm9kZSAqbmV4dDsgfSBOb2RlOwpOb2RlICp0YWJsZVtNXTsKCmludCBoKGludCBrKSB7IHJldHVybiBrICUgTTsgfQoKdm9pZCBpbnNlcnQoaW50IGspIHsKICAgIE5vZGUgKm4gPSBtYWxsb2Moc2l6ZW9mKE5vZGUpKTsKICAgIG4tPmtleSA9IGs7CiAgICBuLT5uZXh0ID0gTlVMTDsKICAgIE5vZGUgKipwID0gJnRhYmxlW2goayldOwogICAgd2hpbGUgKCpwKSBwID0gJigqcCktPm5leHQ7ICAgICAgIC8vIHdhbGsgdG8gdGhlIGVuZCBvZiB0aGUgY2hhaW4KICAgICpwID0gbjsKfQoKaW50IHNlYXJjaChpbnQgaykgewogICAgZm9yIChOb2RlICpwID0gdGFibGVbaChrKV07IHA7IHAgPSBwLT5uZXh0KQogICAgICAgIGlmIChwLT5rZXkgPT0gaykgcmV0dXJuIDE7CiAgICByZXR1cm4gMDsKfQoKaW50IG1haW4odm9pZCkgewogICAgaW50IGtleXNbXSA9IHs1MCwgNzAwLCA3NiwgODUsIDkyLCA3MywgMTAxfTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgNzsgaSsrKSBpbnNlcnQoa2V5c1tpXSk7CiAgICBmb3IgKGludCBpID0gMDsgaSA8IE07IGkrKykgewogICAgICAgIHByaW50ZigiJWQ6IiwgaSk7CiAgICAgICAgZm9yIChOb2RlICpwID0gdGFibGVbaV07IHA7IHAgPSBwLT5uZXh0KSBwcmludGYoIiAlZCAtPiIsIHAtPmtleSk7CiAgICAgICAgcHJpbnRmKCIgTlVMTFxuIik7CiAgICB9CiAgICBwcmludGYoInNlYXJjaCA5MjogJXMsIHNlYXJjaCAxNTogJXNcbiIsIHNlYXJjaCg5MikgPyAiZm91bmQiIDogIm1pc3NpbmciLCBzZWFyY2goMTUpID8gImZvdW5kIiA6ICJtaXNzaW5nIik7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="open-addressing"><a class="anchor" href="#open-addressing" aria-hidden="true" tabindex="-1">#</a>Open addressing</h2>
+<p>All keys live <strong>inside the array</strong>. On a collision, <strong>probe</strong> other slots in a fixed sequence until an empty one is found.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Probing</th>
+<th>Try slots</th>
+<th>Weakness</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Linear</strong></td>
+<td>h, h+1, h+2, … (mod m)</td>
+<td><strong>primary clustering</strong> — long runs of filled slots</td>
+</tr>
+<tr>
+<td><strong>Quadratic</strong></td>
+<td>h, h+1², h+2², h+3², …</td>
+<td><strong>secondary clustering</strong>; may miss empty slots</td>
+</tr>
+<tr>
+<td><strong>Double hashing</strong></td>
+<td>h, h + h₂(k), h + 2·h₂(k), …</td>
+<td>best spread; needs h₂(k) ≠ 0</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="diagram"><svg class="dg" viewBox="0 0 140 268" width="140" height="268" role="img" aria-label="Hash table of size 7 using linear"><defs><marker id="dg-ah-26" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><text class="s end" x="30" y="26">0</text><rect class="box cell hl" x="44" y="8" width="44" height="36" rx="0"/><text class="t" x="66" y="26">700</text><text class="s end" x="30" y="62">1</text><rect class="box cell hl" x="44" y="44" width="44" height="36" rx="0"/><text class="t" x="66" y="62">50</text><text class="s end" x="30" y="98">2</text><rect class="box cell hl" x="44" y="80" width="44" height="36" rx="0"/><text class="t" x="66" y="98">85</text><text class="s end" x="30" y="134">3</text><rect class="box cell hl" x="44" y="116" width="44" height="36" rx="0"/><text class="t" x="66" y="134">92</text><text class="s end" x="30" y="170">4</text><rect class="box cell hl" x="44" y="152" width="44" height="36" rx="0"/><text class="t" x="66" y="170">73</text><text class="s end" x="30" y="206">5</text><rect class="box cell hl" x="44" y="188" width="44" height="36" rx="0"/><text class="t" x="66" y="206">101</text><text class="s end" x="30" y="242">6</text><rect class="box cell hl" x="44" y="224" width="44" height="36" rx="0"/><text class="t" x="66" y="242">76</text><rect class="frame" x="44" y="8" width="44" height="252" rx="0"/></svg><figcaption>The same keys with linear probing. 85 wanted slot 1 (taken by 50) and moved to 2; 92 wanted 1 and ended in 3.</figcaption></figure>
+<h2 id="try-it"><a class="anchor" href="#try-it" aria-hidden="true" tabindex="-1">#</a>Try it</h2>
+<p>Insert keys and compare chaining, linear probing and quadratic probing:</p>
+<div class="widget" data-widget="hash-table" data-opts="{}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> M 7</span>
+<span class="hljs-type">int</span> table[M];
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i++) {
+        <span class="hljs-type">int</span> slot = (k % M + i) % M;              <span class="hljs-comment">// linear probing</span>
+        <span class="hljs-keyword">if</span> (table[slot] == <span class="hljs-number">-1</span>) {
+            table[slot] = k;
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%3d -&gt; slot %d%s\n&quot;</span>, k, slot, i ? <span class="hljs-string">&quot; (after collision)&quot;</span> : <span class="hljs-string">&quot;&quot;</span>);
+            <span class="hljs-keyword">return</span>;
+        }
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;table full, cannot insert %d\n&quot;</span>, k);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i++) table[i] = <span class="hljs-number">-1</span>;
+    <span class="hljs-type">int</span> keys[] = {<span class="hljs-number">50</span>, <span class="hljs-number">700</span>, <span class="hljs-number">76</span>, <span class="hljs-number">85</span>, <span class="hljs-number">92</span>, <span class="hljs-number">73</span>, <span class="hljs-number">101</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">7</span>; i++) insert(keys[i]);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre> 50 -&gt; slot 1
+700 -&gt; slot 0
+ 76 -&gt; slot 6
+ 85 -&gt; slot 2 (after collision)
+ 92 -&gt; slot 3 (after collision)
+ 73 -&gt; slot 4 (after collision)
+101 -&gt; slot 5 (after collision)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgojZGVmaW5lIE0gNwppbnQgdGFibGVbTV07Cgp2b2lkIGluc2VydChpbnQgaykgewogICAgZm9yIChpbnQgaSA9IDA7IGkgPCBNOyBpKyspIHsKICAgICAgICBpbnQgc2xvdCA9IChrICUgTSArIGkpICUgTTsgICAgICAgICAgICAgIC8vIGxpbmVhciBwcm9iaW5nCiAgICAgICAgaWYgKHRhYmxlW3Nsb3RdID09IC0xKSB7CiAgICAgICAgICAgIHRhYmxlW3Nsb3RdID0gazsKICAgICAgICAgICAgcHJpbnRmKCIlM2QgLT4gc2xvdCAlZCVzXG4iLCBrLCBzbG90LCBpID8gIiAoYWZ0ZXIgY29sbGlzaW9uKSIgOiAiIik7CiAgICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICB9CiAgICBwcmludGYoInRhYmxlIGZ1bGwsIGNhbm5vdCBpbnNlcnQgJWRcbiIsIGspOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBmb3IgKGludCBpID0gMDsgaSA8IE07IGkrKykgdGFibGVbaV0gPSAtMTsKICAgIGludCBrZXlzW10gPSB7NTAsIDcwMCwgNzYsIDg1LCA5MiwgNzMsIDEwMX07CiAgICBmb3IgKGludCBpID0gMDsgaSA8IDc7IGkrKykgaW5zZXJ0KGtleXNbaV0pOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>Deleting with open addressing</span></div><div class="callout-body"><p>You cannot simply empty a slot: a later search would stop at the hole and miss keys that probed past it. Mark deleted slots with a special <strong>tombstone</strong> value instead.</p>
+</div></aside>
+<h2 id="load-factor-and-rehashing"><a class="anchor" href="#load-factor-and-rehashing" aria-hidden="true" tabindex="-1">#</a>Load factor and rehashing</h2>
+<p>The <strong>load factor</strong> α = n / m (keys stored ÷ table size) measures how full the table is.</p>
+<ul>
+<li>Chaining: average chain length is α, so keep α around 1.</li>
+<li>Open addressing: performance falls sharply as α approaches 1; keep α below about 0.7.</li>
+<li>When α gets too high, <strong>rehash</strong>: allocate a table about twice the size and reinsert every key.</li>
+</ul>
+<h2 id="costs"><a class="anchor" href="#costs" aria-hidden="true" tabindex="-1">#</a>Costs</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Average</th>
+<th>Worst case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Search / insert / delete</td>
+<td><strong>O(1)</strong></td>
+<td>O(n) — everything collides</td>
+</tr>
+</tbody></table>
+</div>
+<p>Hash tables power dictionaries in Python, <code>unordered_map</code> in C++, database indexes, caches and compilers&#39; symbol tables.</p>
+<section class="quiz" id="quiz" data-quiz="dsa/hashing" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Using h(k) = k mod 11, which slot does 46 go to?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">2</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">11</span></button></div><div class="q-why" hidden>46 = 4 × 11 + 2, so the remainder is 2.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which collision technique stores colliding keys in linked lists?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Separate chaining</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Linear probing</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Quadratic probing</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Double hashing</span></button></div><div class="q-why" hidden>Each slot points to a chain of all keys with that hash value.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What is primary clustering?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Keys spread evenly</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Long runs of occupied slots forming in linear probing</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Two keys with identical values</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A table that is exactly full</span></button></div><div class="q-why" hidden>Linear probing tends to grow existing runs, making future collisions longer.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>A table of size 20 holds 15 keys. What is the load factor?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">1.33</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">0.75</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">15</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">0.25</span></button></div><div class="q-why" hidden>α = n / m = 15 / 20 = 0.75.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/hashing"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/bfs-dfs/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Graph Traversal: BFS &amp; DFS</strong></a><a class="next" href="../../dsa/searching/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Linear &amp; Binary Search</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#good-hash-functions">Good hash functions</a></li><li><a class="d2" href="#collisions">Collisions</a></li><li><a class="d2" href="#separate-chaining">Separate chaining</a></li><li><a class="d2" href="#open-addressing">Open addressing</a></li><li><a class="d2" href="#try-it">Try it</a></li><li><a class="d2" href="#load-factor-and-rehashing">Load factor and rehashing</a></li><li><a class="d2" href="#costs">Costs</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

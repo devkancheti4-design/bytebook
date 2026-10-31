@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Analysing Loops &amp; Recursive Code · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Turn code into running times: independent and dependent nested loops, logarithmic loops, writing recurrences for recursive functions, and an introduction to amortised analysis.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Analysing Loops &amp; Recursive Code · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Turn code into running times: independent and dependent nested loops, logarithmic loops, writing recurrences for recursive functions, and an introduction to amortised analysis.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/analyzing-code" data-title="Analysing Loops &amp; Recursive Code" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 3 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Analysis of Algorithms</p>
+<h1>Analysing Loops &amp; Recursive Code</h1>
+<p class="lede">Turn code into running times: independent and dependent nested loops, logarithmic loops, writing recurrences for recursive functions, and an introduction to amortised analysis.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="independent-loops"><a class="anchor" href="#independent-loops" aria-hidden="true" tabindex="-1">#</a>Independent loops</h2>
+<p>Count the iterations of each loop and multiply when they are nested:</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)          <span class="hljs-comment">// n times</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++)      <span class="hljs-comment">// m times each</span>
+        <span class="hljs-built_in">work</span>();                      <span class="hljs-comment">// total n·m → O(nm)</span></code></pre></figure>
+<h2 id="dependent-loops-sum-the-iterations"><a class="anchor" href="#dependent-loops-sum-the-iterations" aria-hidden="true" tabindex="-1">#</a>Dependent loops: sum the iterations</h2>
+<p>When the inner loop depends on the outer one, add up its iteration counts:</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j++)     <span class="hljs-comment">// runs i times</span>
+        <span class="hljs-built_in">work</span>();</code></pre></figure>
+<p>Total = 1 + 2 + … + n = n(n + 1)/2 = <strong>Θ(n²)</strong>.</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j += i)  <span class="hljs-comment">// runs about n/i times</span>
+        <span class="hljs-built_in">work</span>();</code></pre></figure>
+<p>Total = n/1 + n/2 + … + n/n = n·(1 + 1/2 + … + 1/n) ≈ n ln n = <strong>Θ(n log n)</strong> (the harmonic series).</p>
+<h2 id="logarithmic-loops"><a class="anchor" href="#logarithmic-loops" aria-hidden="true" tabindex="-1">#</a>Logarithmic loops</h2>
+<p>A loop variable that is <strong>multiplied or divided</strong> by a constant each step runs Θ(log n) times:</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i *= <span class="hljs-number">2</span>) <span class="hljs-built_in">work</span>();       <span class="hljs-comment">// log2 n iterations</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n; i &gt; <span class="hljs-number">0</span>; i /= <span class="hljs-number">3</span>) <span class="hljs-built_in">work</span>();       <span class="hljs-comment">// log3 n iterations</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt; n; i = i * i) <span class="hljs-built_in">work</span>();    <span class="hljs-comment">// log log n iterations</span></code></pre></figure>
+<h2 id="measure-it-yourself"><a class="anchor" href="#measure-it-yourself" aria-hidden="true" tabindex="-1">#</a>Measure it yourself</h2>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdio&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> n = <span class="hljs-number">1000</span>; n &lt;= <span class="hljs-number">1000000</span>; n *= <span class="hljs-number">10</span>) {
+        <span class="hljs-type">long</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>, c = <span class="hljs-number">0</span>, d = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> i = <span class="hljs-number">1</span>; i &lt; n; i *= <span class="hljs-number">2</span>) a++;                         <span class="hljs-comment">// log n</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> j = <span class="hljs-number">1</span>; j &lt;= n; j += i) b++;   <span class="hljs-comment">// n log n (harmonic)</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> i = <span class="hljs-number">2</span>; i &lt; n; i = i * i) c++;                      <span class="hljs-comment">// log log n</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">long</span> i = <span class="hljs-number">1</span>; i * i &lt;= n; i++) d++;                       <span class="hljs-comment">// sqrt n</span>
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;n=%8ld  log:%3ld  harmonic:%9ld  loglog:%2ld  sqrt:%5ld\n&quot;</span>, n, a, b, c, d);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>n=    1000  log: 10  harmonic:     8053  loglog: 4  sqrt:   31
+n=   10000  log: 14  harmonic:   103643  loglog: 4  sqrt:  100
+n=  100000  log: 17  harmonic:  1266714  loglog: 5  sqrt:  316
+n= 1000000  log: 20  harmonic: 14969985  loglog: 5  sqrt: 1000</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGNzdGRpbz4KCmludCBtYWluKCkgewogICAgZm9yIChsb25nIG4gPSAxMDAwOyBuIDw9IDEwMDAwMDA7IG4gKj0gMTApIHsKICAgICAgICBsb25nIGEgPSAwLCBiID0gMCwgYyA9IDAsIGQgPSAwOwogICAgICAgIGZvciAobG9uZyBpID0gMTsgaSA8IG47IGkgKj0gMikgYSsrOyAgICAgICAgICAgICAgICAgICAgICAgICAvLyBsb2cgbgogICAgICAgIGZvciAobG9uZyBpID0gMTsgaSA8PSBuOyBpKyspIGZvciAobG9uZyBqID0gMTsgaiA8PSBuOyBqICs9IGkpIGIrKzsgICAvLyBuIGxvZyBuIChoYXJtb25pYykKICAgICAgICBmb3IgKGxvbmcgaSA9IDI7IGkgPCBuOyBpID0gaSAqIGkpIGMrKzsgICAgICAgICAgICAgICAgICAgICAgLy8gbG9nIGxvZyBuCiAgICAgICAgZm9yIChsb25nIGkgPSAxOyBpICogaSA8PSBuOyBpKyspIGQrKzsgICAgICAgICAgICAgICAgICAgICAgIC8vIHNxcnQgbgogICAgICAgIHByaW50Zigibj0lOGxkICBsb2c6JTNsZCAgaGFybW9uaWM6JTlsZCAgbG9nbG9nOiUybGQgIHNxcnQ6JTVsZFxuIiwgbiwgYSwgYiwgYywgZCk7CiAgICB9CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="common-patterns"><a class="anchor" href="#common-patterns" aria-hidden="true" tabindex="-1">#</a>Common patterns</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Code shape</th>
+<th>Running time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>single loop to n</td>
+<td>Θ(n)</td>
+</tr>
+<tr>
+<td>two nested loops to n</td>
+<td>Θ(n²)</td>
+</tr>
+<tr>
+<td><code>i</code> doubles each step</td>
+<td>Θ(log n)</td>
+</tr>
+<tr>
+<td>loop to n with an inner doubling loop</td>
+<td>Θ(n log n)</td>
+</tr>
+<tr>
+<td>inner loop runs <code>i</code> times</td>
+<td>Θ(n²)</td>
+</tr>
+<tr>
+<td>inner loop runs <code>n/i</code> times</td>
+<td>Θ(n log n)</td>
+</tr>
+<tr>
+<td>loop while <code>i*i &lt;= n</code></td>
+<td>Θ(√n)</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="recursive-code-write-a-recurrence"><a class="anchor" href="#recursive-code-write-a-recurrence" aria-hidden="true" tabindex="-1">#</a>Recursive code: write a recurrence</h2>
+<p>For a recursive function, write <strong>T(n)</strong> in terms of T on smaller inputs plus the work done outside the recursive calls:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Recurrence</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>factorial(n) = n · factorial(n−1)</td>
+<td>T(n) = T(n−1) + O(1)</td>
+<td>Θ(n)</td>
+</tr>
+<tr>
+<td>binary search</td>
+<td>T(n) = T(n/2) + O(1)</td>
+<td>Θ(log n)</td>
+</tr>
+<tr>
+<td>merge sort</td>
+<td>T(n) = 2T(n/2) + O(n)</td>
+<td>Θ(n log n)</td>
+</tr>
+<tr>
+<td>naive Fibonacci</td>
+<td>T(n) = T(n−1) + T(n−2) + O(1)</td>
+<td>Θ(φⁿ) ≈ Θ(1.618ⁿ)</td>
+</tr>
+<tr>
+<td>Tower of Hanoi</td>
+<td>T(n) = 2T(n−1) + O(1)</td>
+<td>Θ(2ⁿ)</td>
+</tr>
+<tr>
+<td>selection sort, recursive</td>
+<td>T(n) = T(n−1) + O(n)</td>
+<td>Θ(n²)</td>
+</tr>
+</tbody></table>
+</div>
+<p>The next lesson shows how to <strong>solve</strong> recurrences like these.</p>
+<h2 id="best-worst-and-average-case"><a class="anchor" href="#best-worst-and-average-case" aria-hidden="true" tabindex="-1">#</a>Best, worst and average case</h2>
+<p>For linear search on n items:</p>
+<ul>
+<li><strong>Best case</strong>: key at position 1 → 1 comparison → Θ(1).</li>
+<li><strong>Worst case</strong>: key absent → n comparisons → Θ(n).</li>
+<li><strong>Average case</strong>: if the key is equally likely to be at any position, expected comparisons = (1 + 2 + … + n)/n = (n + 1)/2 → Θ(n).</li>
+</ul>
+<h2 id="amortised-analysis"><a class="anchor" href="#amortised-analysis" aria-hidden="true" tabindex="-1">#</a>Amortised analysis</h2>
+<p>Some operations are usually cheap but occasionally expensive. <strong>Amortised analysis</strong> averages the cost over a sequence of operations (no probability involved).</p>
+<p>Example: <code>vector::push_back</code> doubles the capacity when full, copying all elements. A single push can cost O(n), but over n pushes the total copying is 1 + 2 + 4 + … + n &lt; 2n, so each push costs <strong>O(1) amortised</strong>.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;<span class="hljs-type">int</span>&gt; v;
+    <span class="hljs-type">long</span> copies = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000</span>; i++) {
+        <span class="hljs-keyword">if</span> (v.<span class="hljs-built_in">size</span>() == v.<span class="hljs-built_in">capacity</span>()) copies += v.<span class="hljs-built_in">size</span>();     <span class="hljs-comment">// a reallocation copies everything</span>
+        v.<span class="hljs-built_in">push_back</span>(i);
+    }
+    cout &lt;&lt; <span class="hljs-string">&quot;1000 pushes, total elements copied: &quot;</span> &lt;&lt; copies &lt;&lt; <span class="hljs-string">&quot; (less than 2 x 1000)&quot;</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class="hljs-string">&quot;final capacity: &quot;</span> &lt;&lt; v.<span class="hljs-built_in">capacity</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1000 pushes, total elements copied: 1023 (less than 2 x 1000)
+final capacity: 1024</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKSB7CiAgICB2ZWN0b3I8aW50PiB2OwogICAgbG9uZyBjb3BpZXMgPSAwOwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDAwOyBpKyspIHsKICAgICAgICBpZiAodi5zaXplKCkgPT0gdi5jYXBhY2l0eSgpKSBjb3BpZXMgKz0gdi5zaXplKCk7ICAgICAvLyBhIHJlYWxsb2NhdGlvbiBjb3BpZXMgZXZlcnl0aGluZwogICAgICAgIHYucHVzaF9iYWNrKGkpOwogICAgfQogICAgY291dCA8PCAiMTAwMCBwdXNoZXMsIHRvdGFsIGVsZW1lbnRzIGNvcGllZDogIiA8PCBjb3BpZXMgPDwgIiAobGVzcyB0aGFuIDIgeCAxMDAwKSIgPDwgZW5kbDsKICAgIGNvdXQgPDwgImZpbmFsIGNhcGFjaXR5OiAiIDw8IHYuY2FwYWNpdHkoKSA8PCBlbmRsOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The three classic methods are the <strong>aggregate</strong>, <strong>accounting</strong> and <strong>potential</strong> methods.</p>
+<section class="quiz" id="quiz" data-quiz="daa/analyzing-code" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is the running time of this code?</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i *= <span class="hljs-number">3</span>)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)
+        x++;</code></pre></figure>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Θ(n²)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Θ(n log n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Θ(n)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Θ(log n)</span></button></div><div class="q-why" hidden>The outer loop runs log₃ n times and the inner loop n times each.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is the recurrence of binary search?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">T(n) = T(n/2) + O(1)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">T(n) = 2T(n/2) + O(n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">T(n) = T(n − 1) + O(1)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">T(n) = 2T(n − 1) + O(1)</span></button></div><div class="q-why" hidden>One recursive call on half the input, plus constant work.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>How many times does <code>for (i = 1; i * i &lt;= n; i++)</code> iterate?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">n</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">log n</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">about √n</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">n²</span></button></div><div class="q-why" hidden>It stops when i exceeds √n.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What is the amortised cost of <code>push_back</code> on a doubling dynamic array?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(n)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(log n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(1)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(n²)</span></button></div><div class="q-why" hidden>The rare O(n) copies add up to less than 2n over n pushes.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/analyzing-code"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/asymptotic/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Asymptotic Notations</strong></a><a class="next" href="../../daa/recurrences/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Solving Recurrences &amp; the Master Theorem</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#independent-loops">Independent loops</a></li><li><a class="d2" href="#dependent-loops-sum-the-iterations">Dependent loops: sum the iterations</a></li><li><a class="d2" href="#logarithmic-loops">Logarithmic loops</a></li><li><a class="d2" href="#measure-it-yourself">Measure it yourself</a></li><li><a class="d2" href="#common-patterns">Common patterns</a></li><li><a class="d2" href="#recursive-code-write-a-recurrence">Recursive code: write a recurrence</a></li><li><a class="d2" href="#best-worst-and-average-case">Best, worst and average case</a></li><li><a class="d2" href="#amortised-analysis">Amortised analysis</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

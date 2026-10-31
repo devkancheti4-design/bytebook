@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shortest Paths: Dijkstra &amp; Bellman–Ford · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Single-source shortest paths in weighted graphs: relaxation, Dijkstra&#39;s greedy algorithm with a priority queue, why it fails on negative edges, and Bellman–Ford with negative-cycle detection.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Shortest Paths: Dijkstra &amp; Bellman–Ford · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Single-source shortest paths in weighted graphs: relaxation, Dijkstra&#39;s greedy algorithm with a priority queue, why it fails on negative edges, and Bellman–Ford with negative-cycle detection.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/shortest-paths" data-title="Shortest Paths: Dijkstra &amp; Bellman–Ford" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 10 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Greedy Algorithms</p>
+<h1>Shortest Paths: Dijkstra &amp; Bellman–Ford</h1>
+<p class="lede">Single-source shortest paths in weighted graphs: relaxation, Dijkstra&#39;s greedy algorithm with a priority queue, why it fails on negative edges, and Bellman–Ford with negative-cycle detection.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Given a weighted graph and a <strong>source</strong> vertex s, find the shortest-path distance from s to <strong>every</strong> other vertex. (BFS solves this only when all edges have the same weight.)</p>
+<h2 id="relaxation"><a class="anchor" href="#relaxation" aria-hidden="true" tabindex="-1">#</a>Relaxation</h2>
+<p>Both algorithms repeatedly <strong>relax</strong> edges. For an edge u → v with weight w:</p>
+<figure class="code" data-lang="pseudo"><div class="code-head"><span class="code-lang">Pseudocode</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">RELAX(u, v, w)
+    if dist[u] + w &lt; dist[v]
+        dist[v] = dist[u] + w
+        parent[v] = u</code></pre></figure>
+<p>&quot;If going through u gives a shorter route to v, use it.&quot;</p>
+<h2 id="dijkstra-s-algorithm"><a class="anchor" href="#dijkstra-s-algorithm" aria-hidden="true" tabindex="-1">#</a>Dijkstra&#39;s algorithm</h2>
+<p><strong>Greedy rule:</strong> repeatedly pick the unvisited vertex with the <strong>smallest known distance</strong>, mark it final, and relax its outgoing edges. Works when <strong>all edge weights are non-negative</strong>.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 480 232" width="480" height="232" role="img" aria-label="Directed graph with vertices S, A, B, C, D, T"><defs><marker id="dg-ah-39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><line class="edge" x1="49.3" y1="106" x2="153" y2="43.8" marker-end="url(#dg-ah-39)"/><line class="edge" x1="49.3" y1="125.6" x2="153" y2="187.8" marker-end="url(#dg-ah-39)"/><line class="edge" x1="171" y1="179.6" x2="171" y2="54" marker-end="url(#dg-ah-39)"/><line class="edge" x1="190" y1="33" x2="288" y2="33" marker-end="url(#dg-ah-39)"/><line class="edge" x1="190" y1="198.6" x2="288" y2="198.6" marker-end="url(#dg-ah-39)"/><line class="edge" x1="183.2" y1="184" x2="295.6" y2="49.1" marker-end="url(#dg-ah-39)"/><line class="edge" x1="325.3" y1="42.8" x2="429" y2="105" marker-end="url(#dg-ah-39)"/><line class="edge" x1="325.3" y1="188.8" x2="429" y2="126.6" marker-end="url(#dg-ah-39)"/><line class="edge" x1="309" y1="52" x2="309" y2="177.6" marker-end="url(#dg-ah-39)"/><rect class="wbg" x="89.4" y="64.4" width="25.2" height="20" rx="10"/><text class="s w" x="102" y="74.4">10</text><rect class="wbg" x="93.2" y="147.2" width="17.6" height="20" rx="10"/><text class="s w" x="102" y="157.2">3</text><rect class="wbg" x="162.2" y="105.8" width="17.6" height="20" rx="10"/><text class="s w" x="171" y="115.8">4</text><rect class="wbg" x="231.2" y="23" width="17.6" height="20" rx="10"/><text class="s w" x="240" y="33">2</text><rect class="wbg" x="231.2" y="188.6" width="17.6" height="20" rx="10"/><text class="s w" x="240" y="198.6">8</text><rect class="wbg" x="231.2" y="105.8" width="17.6" height="20" rx="10"/><text class="s w" x="240" y="115.8">9</text><rect class="wbg" x="369.2" y="64.4" width="17.6" height="20" rx="10"/><text class="s w" x="378" y="74.4">4</text><rect class="wbg" x="369.2" y="147.2" width="17.6" height="20" rx="10"/><text class="s w" x="378" y="157.2">5</text><rect class="wbg" x="300.2" y="105.8" width="17.6" height="20" rx="10"/><text class="s w" x="309" y="115.8">1</text><circle class="node" cx="33" cy="115.8" r="19"/><text class="t" x="33" y="115.8">S</text><circle class="node" cx="171" cy="33" r="19"/><text class="t" x="171" y="33">A</text><circle class="node" cx="171" cy="198.6" r="19"/><text class="t" x="171" y="198.6">B</text><circle class="node" cx="309" cy="33" r="19"/><text class="t" x="309" y="33">C</text><circle class="node" cx="309" cy="198.6" r="19"/><text class="t" x="309" y="198.6">D</text><circle class="node" cx="447" cy="115.8" r="19"/><text class="t" x="447" y="115.8">T</text></svg><figcaption>A directed weighted graph. The shortest path S → B → A → C → T has length 3 + 4 + 2 + 4 = 13.</figcaption></figure>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;climits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">const</span> string name = <span class="hljs-string">&quot;SABCDT&quot;</span>;
+    <span class="hljs-type">int</span> V = <span class="hljs-number">6</span>;
+    vector&lt;vector&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt;&gt; <span class="hljs-built_in">adj</span>(V);
+    <span class="hljs-type">int</span> e[][<span class="hljs-number">3</span>] = {{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>},{<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">8</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">9</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>},{<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>}};
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;x : e) adj[x[<span class="hljs-number">0</span>]].<span class="hljs-built_in">push_back</span>({x[<span class="hljs-number">1</span>], x[<span class="hljs-number">2</span>]});
+
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dist</span><span class="hljs-params">(V, INT_MAX)</span>, <span class="hljs-title">parent</span><span class="hljs-params">(V, <span class="hljs-number">-1</span>)</span></span>;
+    priority_queue&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, vector&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt;, greater&lt;&gt;&gt; pq;   <span class="hljs-comment">// (distance, vertex)</span>
+    dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    pq.<span class="hljs-built_in">push</span>({<span class="hljs-number">0</span>, <span class="hljs-number">0</span>});
+    <span class="hljs-keyword">while</span> (!pq.<span class="hljs-built_in">empty</span>()) {
+        <span class="hljs-keyword">auto</span> [d, u] = pq.<span class="hljs-built_in">top</span>(); pq.<span class="hljs-built_in">pop</span>();
+        <span class="hljs-keyword">if</span> (d &gt; dist[u]) <span class="hljs-keyword">continue</span>;                         <span class="hljs-comment">// outdated entry</span>
+        cout &lt;&lt; <span class="hljs-string">&quot;finalise &quot;</span> &lt;&lt; name[u] &lt;&lt; <span class="hljs-string">&quot; at distance &quot;</span> &lt;&lt; d &lt;&lt; endl;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w] : adj[u])
+            <span class="hljs-keyword">if</span> (dist[u] + w &lt; dist[v]) {                   <span class="hljs-comment">// relax</span>
+                dist[v] = dist[u] + w;
+                parent[v] = u;
+                pq.<span class="hljs-built_in">push</span>({dist[v], v});
+            }
+    }
+    string path;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">5</span>; v != <span class="hljs-number">-1</span>; v = parent[v]) path = <span class="hljs-built_in">string</span>(<span class="hljs-number">1</span>, name[v]) + (path.<span class="hljs-built_in">empty</span>() ? <span class="hljs-string">&quot;&quot;</span> : <span class="hljs-string">&quot; -&gt; &quot;</span>) + path;
+    cout &lt;&lt; <span class="hljs-string">&quot;shortest S to T: &quot;</span> &lt;&lt; dist[<span class="hljs-number">5</span>] &lt;&lt; <span class="hljs-string">&quot; via &quot;</span> &lt;&lt; path &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>finalise S at distance 0
+finalise B at distance 3
+finalise A at distance 7
+finalise C at distance 9
+finalise D at distance 10
+finalise T at distance 13
+shortest S to T: 13 via S -&gt; B -&gt; A -&gt; C -&gt; T</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgojaW5jbHVkZSA8cXVldWU-CiNpbmNsdWRlIDxjbGltaXRzPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKSB7CiAgICBjb25zdCBzdHJpbmcgbmFtZSA9ICJTQUJDRFQiOwogICAgaW50IFYgPSA2OwogICAgdmVjdG9yPHZlY3RvcjxwYWlyPGludCwgaW50Pj4-IGFkaihWKTsKICAgIGludCBlW11bM10gPSB7ezAsMSwxMH0sezAsMiwzfSx7MiwxLDR9LHsxLDMsMn0sezIsNCw4fSx7MiwzLDl9LHszLDUsNH0sezQsNSw1fSx7Myw0LDF9fTsKICAgIGZvciAoYXV0byAmeCA6IGUpIGFkalt4WzBdXS5wdXNoX2JhY2soe3hbMV0sIHhbMl19KTsKCiAgICB2ZWN0b3I8aW50PiBkaXN0KFYsIElOVF9NQVgpLCBwYXJlbnQoViwgLTEpOwogICAgcHJpb3JpdHlfcXVldWU8cGFpcjxpbnQsIGludD4sIHZlY3RvcjxwYWlyPGludCwgaW50Pj4sIGdyZWF0ZXI8Pj4gcHE7ICAgLy8gKGRpc3RhbmNlLCB2ZXJ0ZXgpCiAgICBkaXN0WzBdID0gMDsKICAgIHBxLnB1c2goezAsIDB9KTsKICAgIHdoaWxlICghcHEuZW1wdHkoKSkgewogICAgICAgIGF1dG8gW2QsIHVdID0gcHEudG9wKCk7IHBxLnBvcCgpOwogICAgICAgIGlmIChkID4gZGlzdFt1XSkgY29udGludWU7ICAgICAgICAgICAgICAgICAgICAgICAgIC8vIG91dGRhdGVkIGVudHJ5CiAgICAgICAgY291dCA8PCAiZmluYWxpc2UgIiA8PCBuYW1lW3VdIDw8ICIgYXQgZGlzdGFuY2UgIiA8PCBkIDw8IGVuZGw7CiAgICAgICAgZm9yIChhdXRvIFt2LCB3XSA6IGFkalt1XSkKICAgICAgICAgICAgaWYgKGRpc3RbdV0gKyB3IDwgZGlzdFt2XSkgeyAgICAgICAgICAgICAgICAgICAvLyByZWxheAogICAgICAgICAgICAgICAgZGlzdFt2XSA9IGRpc3RbdV0gKyB3OwogICAgICAgICAgICAgICAgcGFyZW50W3ZdID0gdTsKICAgICAgICAgICAgICAgIHBxLnB1c2goe2Rpc3Rbdl0sIHZ9KTsKICAgICAgICAgICAgfQogICAgfQogICAgc3RyaW5nIHBhdGg7CiAgICBmb3IgKGludCB2ID0gNTsgdiAhPSAtMTsgdiA9IHBhcmVudFt2XSkgcGF0aCA9IHN0cmluZygxLCBuYW1lW3ZdKSArIChwYXRoLmVtcHR5KCkgPyAiIiA6ICIgLT4gIikgKyBwYXRoOwogICAgY291dCA8PCAic2hvcnRlc3QgUyB0byBUOiAiIDw8IGRpc3RbNV0gPDwgIiB2aWEgIiA8PCBwYXRoIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Time with a binary heap: <strong>O((V + E) log V)</strong>.</p>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>Negative edges break Dijkstra</span></div><div class="callout-body"><p>Dijkstra assumes that once a vertex is finalised, no later path can be shorter. A negative edge discovered later can violate that. Use Bellman–Ford instead.</p>
+</div></aside>
+<h2 id="bellman-ford"><a class="anchor" href="#bellman-ford" aria-hidden="true" tabindex="-1">#</a>Bellman–Ford</h2>
+<p>Relax <strong>every edge</strong>, V − 1 times. After round k, every shortest path using at most k edges is correct, and a shortest path never needs more than V − 1 edges. A <strong>V-th</strong> round that still improves some distance proves a <strong>negative cycle</strong> is reachable (no shortest path exists).</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;climits&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> { <span class="hljs-type">int</span> u, v, w; };
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bellmanFord</span><span class="hljs-params">(<span class="hljs-type">int</span> V, <span class="hljs-type">const</span> vector&lt;Edge&gt; &amp;edges, <span class="hljs-type">int</span> src)</span> </span>{
+    <span class="hljs-function">vector&lt;<span class="hljs-type">long</span>&gt; <span class="hljs-title">dist</span><span class="hljs-params">(V, LONG_MAX)</span></span>;
+    dist[src] = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> round = <span class="hljs-number">1</span>; round &lt; V; round++)
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Edge &amp;e : edges)
+            <span class="hljs-keyword">if</span> (dist[e.u] != LONG_MAX &amp;&amp; dist[e.u] + e.w &lt; dist[e.v]) dist[e.v] = dist[e.u] + e.w;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Edge &amp;e : edges)
+        <span class="hljs-keyword">if</span> (dist[e.u] != LONG_MAX &amp;&amp; dist[e.u] + e.w &lt; dist[e.v]) { cout &lt;&lt; <span class="hljs-string">&quot;negative cycle detected!&quot;</span> &lt;&lt; endl; <span class="hljs-keyword">return</span>; }
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>; v &lt; V; v++) cout &lt;&lt; <span class="hljs-string">&quot;dist[&quot;</span> &lt;&lt; v &lt;&lt; <span class="hljs-string">&quot;] = &quot;</span> &lt;&lt; dist[v] &lt;&lt; endl;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;Edge&gt; g1 = {{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">6</span>},{<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">7</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">-4</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">-3</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">-2</span>},{<span class="hljs-number">4</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>},{<span class="hljs-number">4</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>}};
+    <span class="hljs-built_in">bellmanFord</span>(<span class="hljs-number">5</span>, g1, <span class="hljs-number">0</span>);
+    cout &lt;&lt; <span class="hljs-string">&quot;---&quot;</span> &lt;&lt; endl;
+    vector&lt;Edge&gt; g2 = {{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">-1</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">-1</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>}};      <span class="hljs-comment">// cycle 1 -&gt; 2 -&gt; 3 -&gt; 1 has weight -3</span>
+    <span class="hljs-built_in">bellmanFord</span>(<span class="hljs-number">4</span>, g2, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>dist[0] = 0
+dist[1] = 2
+dist[2] = 7
+dist[3] = 4
+dist[4] = -2
+---
+negative cycle detected!</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgojaW5jbHVkZSA8Y2xpbWl0cz4KdXNpbmcgbmFtZXNwYWNlIHN0ZDsKCnN0cnVjdCBFZGdlIHsgaW50IHUsIHYsIHc7IH07Cgp2b2lkIGJlbGxtYW5Gb3JkKGludCBWLCBjb25zdCB2ZWN0b3I8RWRnZT4gJmVkZ2VzLCBpbnQgc3JjKSB7CiAgICB2ZWN0b3I8bG9uZz4gZGlzdChWLCBMT05HX01BWCk7CiAgICBkaXN0W3NyY10gPSAwOwogICAgZm9yIChpbnQgcm91bmQgPSAxOyByb3VuZCA8IFY7IHJvdW5kKyspCiAgICAgICAgZm9yIChjb25zdCBFZGdlICZlIDogZWRnZXMpCiAgICAgICAgICAgIGlmIChkaXN0W2UudV0gIT0gTE9OR19NQVggJiYgZGlzdFtlLnVdICsgZS53IDwgZGlzdFtlLnZdKSBkaXN0W2Uudl0gPSBkaXN0W2UudV0gKyBlLnc7CiAgICBmb3IgKGNvbnN0IEVkZ2UgJmUgOiBlZGdlcykKICAgICAgICBpZiAoZGlzdFtlLnVdICE9IExPTkdfTUFYICYmIGRpc3RbZS51XSArIGUudyA8IGRpc3RbZS52XSkgeyBjb3V0IDw8ICJuZWdhdGl2ZSBjeWNsZSBkZXRlY3RlZCEiIDw8IGVuZGw7IHJldHVybjsgfQogICAgZm9yIChpbnQgdiA9IDA7IHYgPCBWOyB2KyspIGNvdXQgPDwgImRpc3RbIiA8PCB2IDw8ICJdID0gIiA8PCBkaXN0W3ZdIDw8IGVuZGw7Cn0KCmludCBtYWluKCkgewogICAgdmVjdG9yPEVkZ2U-IGcxID0ge3swLDEsNn0sezAsMiw3fSx7MSwyLDh9LHsxLDMsNX0sezEsNCwtNH0sezIsMywtM30sezIsNCw5fSx7MywxLC0yfSx7NCwwLDJ9LHs0LDMsN319OwogICAgYmVsbG1hbkZvcmQoNSwgZzEsIDApOwogICAgY291dCA8PCAiLS0tIiA8PCBlbmRsOwogICAgdmVjdG9yPEVkZ2U-IGcyID0ge3swLDEsMX0sezEsMiwtMX0sezIsMywtMX0sezMsMSwtMX19OyAgICAgIC8vIGN5Y2xlIDEgLT4gMiAtPiAzIC0-IDEgaGFzIHdlaWdodCAtMwogICAgYmVsbG1hbkZvcmQoNCwgZzIsIDApOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Time: <strong>O(V · E)</strong> — slower than Dijkstra but handles negative weights.</p>
+<h2 id="comparison"><a class="anchor" href="#comparison" aria-hidden="true" tabindex="-1">#</a>Comparison</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>BFS</th>
+<th>Dijkstra</th>
+<th>Bellman–Ford</th>
+<th>Floyd–Warshall</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Edge weights</td>
+<td>all equal</td>
+<td>non-negative</td>
+<td>any (detects negative cycles)</td>
+<td>any (no negative cycles)</td>
+</tr>
+<tr>
+<td>Sources</td>
+<td>single</td>
+<td>single</td>
+<td>single</td>
+<td><strong>all pairs</strong></td>
+</tr>
+<tr>
+<td>Time</td>
+<td>O(V + E)</td>
+<td>O((V + E) log V)</td>
+<td>O(VE)</td>
+<td>O(V³)</td>
+</tr>
+<tr>
+<td>Technique</td>
+<td>traversal</td>
+<td>greedy</td>
+<td>dynamic programming</td>
+<td><a href="../../daa/floyd-warshall/">dynamic programming</a></td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="daa/shortest-paths" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What condition must edge weights satisfy for Dijkstra&#39;s algorithm to be correct?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">All weights equal</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">All weights non-negative</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">All weights distinct</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">No condition</span></button></div><div class="q-why" hidden>A negative edge can make a &quot;finalised&quot; distance wrong.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>How many rounds of relaxing all edges does Bellman–Ford perform before the cycle check?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">V</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">V − 1</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">E</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">log V</span></button></div><div class="q-why" hidden>A shortest simple path has at most V − 1 edges.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>How does Bellman–Ford detect a negative cycle?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">If an extra round still decreases some distance</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">If a distance becomes zero</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">If the graph is disconnected</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">If two edges have equal weight</span></button></div><div class="q-why" hidden>Without negative cycles, distances are final after V − 1 rounds.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What is the time complexity of Dijkstra with a binary heap?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(V²)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O((V + E) log V)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(VE)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(V³)</span></button></div><div class="q-why" hidden>Each vertex is extracted once and each edge may cause a heap insertion.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/shortest-paths"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/mst/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Minimum Spanning Trees</strong></a><a class="next" href="../../daa/dp-intro/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Dynamic Programming</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#relaxation">Relaxation</a></li><li><a class="d2" href="#dijkstra-s-algorithm">Dijkstra&#39;s algorithm</a></li><li><a class="d2" href="#bellman-ford">Bellman–Ford</a></li><li><a class="d2" href="#comparison">Comparison</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

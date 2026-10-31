@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minimum Spanning Trees · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Connect every vertex at minimum total cost: spanning trees, Kruskal&#39;s algorithm with union-find, Prim&#39;s algorithm with a priority queue, traced on the same graph.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Minimum Spanning Trees · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Connect every vertex at minimum total cost: spanning trees, Kruskal&#39;s algorithm with union-find, Prim&#39;s algorithm with a priority queue, traced on the same graph.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/mst" data-title="Minimum Spanning Trees" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 9 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Greedy Algorithms</p>
+<h1>Minimum Spanning Trees</h1>
+<p class="lede">Connect every vertex at minimum total cost: spanning trees, Kruskal&#39;s algorithm with union-find, Prim&#39;s algorithm with a priority queue, traced on the same graph.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>spanning tree</strong> of a connected, undirected graph is a subset of its edges that connects <strong>all</strong> vertices with <strong>no cycles</strong> — exactly V − 1 edges. A <strong>minimum spanning tree (MST)</strong> is a spanning tree with the smallest possible total edge weight.</p>
+<p>Uses: laying cable or pipelines to connect cities at minimum cost, designing networks, clustering, and approximating harder problems like TSP.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 507 234" width="507" height="234" role="img" aria-label="Undirected graph with vertices A, B, C, D, E, F"><defs><marker id="dg-ah-38" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><line class="edge hl" x1="49.5" y1="107.6" x2="163.5" y2="42.4"/><line class="edge hl" x1="49.5" y1="126.4" x2="163.5" y2="191.6"/><line class="edge" x1="199" y1="33" x2="308" y2="33"/><line class="edge" x1="180" y1="52" x2="180" y2="182"/><line class="edge hl" x1="343.5" y1="42.4" x2="457.5" y2="107.6"/><line class="edge hl" x1="327" y1="52" x2="327" y2="182"/><line class="edge hl" x1="314.5" y1="47.3" x2="192.5" y2="186.7"/><line class="edge" x1="457.5" y1="126.4" x2="343.5" y2="191.6"/><line class="edge" x1="308" y1="201" x2="199" y2="201"/><line class="edge" x1="455.7" y1="122.2" x2="198.3" y2="195.8"/><rect class="wbg" x="97.7" y="65" width="17.6" height="20" rx="10"/><text class="s w" x="106.5" y="75">4</text><rect class="wbg" x="97.7" y="149" width="17.6" height="20" rx="10"/><text class="s w" x="106.5" y="159">8</text><rect class="wbg" x="240.9" y="23" width="25.2" height="20" rx="10"/><text class="s w" x="253.5" y="33">10</text><rect class="wbg" x="167.4" y="107" width="25.2" height="20" rx="10"/><text class="s w" x="180" y="117">11</text><rect class="wbg" x="391.7" y="65" width="17.6" height="20" rx="10"/><text class="s w" x="400.5" y="75">7</text><rect class="wbg" x="318.2" y="107" width="17.6" height="20" rx="10"/><text class="s w" x="327" y="117">2</text><rect class="wbg" x="244.7" y="107" width="17.6" height="20" rx="10"/><text class="s w" x="253.5" y="117">5</text><rect class="wbg" x="391.7" y="149" width="17.6" height="20" rx="10"/><text class="s w" x="400.5" y="159">9</text><rect class="wbg" x="244.7" y="191" width="17.6" height="20" rx="10"/><text class="s w" x="253.5" y="201">6</text><rect class="wbg" x="314.4" y="149" width="25.2" height="20" rx="10"/><text class="s w" x="327" y="159">14</text><circle class="node" cx="33" cy="117" r="19"/><text class="t" x="33" y="117">A</text><circle class="node" cx="180" cy="33" r="19"/><text class="t" x="180" y="33">B</text><circle class="node" cx="327" cy="33" r="19"/><text class="t" x="327" y="33">C</text><circle class="node" cx="474" cy="117" r="19"/><text class="t" x="474" y="117">D</text><circle class="node" cx="327" cy="201" r="19"/><text class="t" x="327" y="201">E</text><circle class="node" cx="180" cy="201" r="19"/><text class="t" x="180" y="201">F</text></svg><figcaption>A weighted graph with its minimum spanning tree highlighted: C–E (2), A–B (4), C–F (5), C–D (7) and A–F (8), total weight 26. Because all weights are distinct, this MST is unique.</figcaption></figure>
+<h2 id="kruskal-s-algorithm"><a class="anchor" href="#kruskal-s-algorithm" aria-hidden="true" tabindex="-1">#</a>Kruskal&#39;s algorithm</h2>
+<p><strong>Greedy rule:</strong> consider edges from <strong>lightest to heaviest</strong>; add an edge if it does <strong>not create a cycle</strong>.</p>
+<p>To test &quot;would this edge create a cycle?&quot; quickly, Kruskal uses a <strong>union-find</strong> (disjoint set) structure: each vertex starts in its own set; an edge (u, v) creates a cycle exactly when u and v are already in the same set.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;numeric&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> { <span class="hljs-type">int</span> u, v, w; };
+vector&lt;<span class="hljs-type">int</span>&gt; parent;
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>{ <span class="hljs-keyword">return</span> parent[x] == x ? x : parent[x] = <span class="hljs-built_in">find</span>(parent[x]); }   <span class="hljs-comment">// path compression</span>
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *name = <span class="hljs-string">&quot;ABCDEF&quot;</span>;
+    vector&lt;Edge&gt; edges = {{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>},{<span class="hljs-number">0</span>,<span class="hljs-number">5</span>,<span class="hljs-number">8</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">10</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>},{<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">14</span>}};
+    <span class="hljs-built_in">sort</span>(edges.<span class="hljs-built_in">begin</span>(), edges.<span class="hljs-built_in">end</span>(), [](<span class="hljs-type">const</span> Edge &amp;a, <span class="hljs-type">const</span> Edge &amp;b) { <span class="hljs-keyword">return</span> a.w &lt; b.w; });
+    parent.<span class="hljs-built_in">resize</span>(<span class="hljs-number">6</span>);
+    <span class="hljs-built_in">iota</span>(parent.<span class="hljs-built_in">begin</span>(), parent.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> total = <span class="hljs-number">0</span>, used = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Edge &amp;e : edges) {
+        <span class="hljs-type">int</span> ru = <span class="hljs-built_in">find</span>(e.u), rv = <span class="hljs-built_in">find</span>(e.v);
+        cout &lt;&lt; name[e.u] &lt;&lt; <span class="hljs-string">&quot;-&quot;</span> &lt;&lt; name[e.v] &lt;&lt; <span class="hljs-string">&quot; (&quot;</span> &lt;&lt; e.w &lt;&lt; <span class="hljs-string">&quot;): &quot;</span>;
+        <span class="hljs-keyword">if</span> (ru == rv) { cout &lt;&lt; <span class="hljs-string">&quot;skip, would form a cycle&quot;</span> &lt;&lt; endl; <span class="hljs-keyword">continue</span>; }
+        parent[ru] = rv;                                   <span class="hljs-comment">// union the two trees</span>
+        total += e.w;
+        cout &lt;&lt; <span class="hljs-string">&quot;take&quot;</span> &lt;&lt; endl;
+        <span class="hljs-keyword">if</span> (++used == <span class="hljs-number">5</span>) <span class="hljs-keyword">break</span>;                            <span class="hljs-comment">// V - 1 edges: done</span>
+    }
+    cout &lt;&lt; <span class="hljs-string">&quot;MST weight = &quot;</span> &lt;&lt; total &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>C-E (2): take
+A-B (4): take
+C-F (5): take
+E-F (6): skip, would form a cycle
+C-D (7): take
+A-F (8): take
+MST weight = 26</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgojaW5jbHVkZSA8YWxnb3JpdGhtPgojaW5jbHVkZSA8bnVtZXJpYz4KdXNpbmcgbmFtZXNwYWNlIHN0ZDsKCnN0cnVjdCBFZGdlIHsgaW50IHUsIHYsIHc7IH07CnZlY3RvcjxpbnQ-IHBhcmVudDsKaW50IGZpbmQoaW50IHgpIHsgcmV0dXJuIHBhcmVudFt4XSA9PSB4ID8geCA6IHBhcmVudFt4XSA9IGZpbmQocGFyZW50W3hdKTsgfSAgIC8vIHBhdGggY29tcHJlc3Npb24KCmludCBtYWluKCkgewogICAgY29uc3QgY2hhciAqbmFtZSA9ICJBQkNERUYiOwogICAgdmVjdG9yPEVkZ2U-IGVkZ2VzID0ge3swLDEsNH0sezAsNSw4fSx7MSwyLDEwfSx7MSw1LDExfSx7MiwzLDd9LHsyLDQsMn0sezIsNSw1fSx7Myw0LDl9LHs0LDUsNn0sezMsNSwxNH19OwogICAgc29ydChlZGdlcy5iZWdpbigpLCBlZGdlcy5lbmQoKSwgW10oY29uc3QgRWRnZSAmYSwgY29uc3QgRWRnZSAmYikgeyByZXR1cm4gYS53IDwgYi53OyB9KTsKICAgIHBhcmVudC5yZXNpemUoNik7CiAgICBpb3RhKHBhcmVudC5iZWdpbigpLCBwYXJlbnQuZW5kKCksIDApOwogICAgaW50IHRvdGFsID0gMCwgdXNlZCA9IDA7CiAgICBmb3IgKGNvbnN0IEVkZ2UgJmUgOiBlZGdlcykgewogICAgICAgIGludCBydSA9IGZpbmQoZS51KSwgcnYgPSBmaW5kKGUudik7CiAgICAgICAgY291dCA8PCBuYW1lW2UudV0gPDwgIi0iIDw8IG5hbWVbZS52XSA8PCAiICgiIDw8IGUudyA8PCAiKTogIjsKICAgICAgICBpZiAocnUgPT0gcnYpIHsgY291dCA8PCAic2tpcCwgd291bGQgZm9ybSBhIGN5Y2xlIiA8PCBlbmRsOyBjb250aW51ZTsgfQogICAgICAgIHBhcmVudFtydV0gPSBydjsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIHVuaW9uIHRoZSB0d28gdHJlZXMKICAgICAgICB0b3RhbCArPSBlLnc7CiAgICAgICAgY291dCA8PCAidGFrZSIgPDwgZW5kbDsKICAgICAgICBpZiAoKyt1c2VkID09IDUpIGJyZWFrOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBWIC0gMSBlZGdlczogZG9uZQogICAgfQogICAgY291dCA8PCAiTVNUIHdlaWdodCA9ICIgPDwgdG90YWwgPDwgZW5kbDsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Time: sorting dominates → <strong>O(E log E)</strong> (= O(E log V)).</p>
+<h2 id="prim-s-algorithm"><a class="anchor" href="#prim-s-algorithm" aria-hidden="true" tabindex="-1">#</a>Prim&#39;s algorithm</h2>
+<p><strong>Greedy rule:</strong> grow <strong>one tree</strong> from a start vertex; at each step add the <strong>cheapest edge connecting the tree to a new vertex</strong>. A min-priority queue holds the candidate edges.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *name = <span class="hljs-string">&quot;ABCDEF&quot;</span>;
+    <span class="hljs-type">int</span> V = <span class="hljs-number">6</span>;
+    vector&lt;vector&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt;&gt; <span class="hljs-built_in">adj</span>(V);          <span class="hljs-comment">// (neighbour, weight)</span>
+    <span class="hljs-type">int</span> e[][<span class="hljs-number">3</span>] = {{<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>},{<span class="hljs-number">0</span>,<span class="hljs-number">5</span>,<span class="hljs-number">8</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">10</span>},{<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>},{<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">14</span>}};
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;x : e) { adj[x[<span class="hljs-number">0</span>]].<span class="hljs-built_in">push_back</span>({x[<span class="hljs-number">1</span>], x[<span class="hljs-number">2</span>]}); adj[x[<span class="hljs-number">1</span>]].<span class="hljs-built_in">push_back</span>({x[<span class="hljs-number">0</span>], x[<span class="hljs-number">2</span>]}); }
+
+    <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">inTree</span><span class="hljs-params">(V, <span class="hljs-literal">false</span>)</span></span>;
+    priority_queue&lt;tuple&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, vector&lt;tuple&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt;, greater&lt;&gt;&gt; pq;   <span class="hljs-comment">// (weight, vertex, from)</span>
+    pq.<span class="hljs-built_in">push</span>({<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>});
+    <span class="hljs-type">int</span> total = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (!pq.<span class="hljs-built_in">empty</span>()) {
+        <span class="hljs-keyword">auto</span> [w, v, from] = pq.<span class="hljs-built_in">top</span>(); pq.<span class="hljs-built_in">pop</span>();
+        <span class="hljs-keyword">if</span> (inTree[v]) <span class="hljs-keyword">continue</span>;                     <span class="hljs-comment">// stale entry</span>
+        inTree[v] = <span class="hljs-literal">true</span>;
+        total += w;
+        <span class="hljs-keyword">if</span> (from &gt;= <span class="hljs-number">0</span>) cout &lt;&lt; <span class="hljs-string">&quot;add &quot;</span> &lt;&lt; name[from] &lt;&lt; <span class="hljs-string">&quot;-&quot;</span> &lt;&lt; name[v] &lt;&lt; <span class="hljs-string">&quot; (&quot;</span> &lt;&lt; w &lt;&lt; <span class="hljs-string">&quot;)&quot;</span> &lt;&lt; endl;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [to, wt] : adj[v])
+            <span class="hljs-keyword">if</span> (!inTree[to]) pq.<span class="hljs-built_in">push</span>({wt, to, v});
+    }
+    cout &lt;&lt; <span class="hljs-string">&quot;MST weight = &quot;</span> &lt;&lt; total &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>add A-B (4)
+add A-F (8)
+add F-C (5)
+add C-E (2)
+add C-D (7)
+MST weight = 26</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8dmVjdG9yPgojaW5jbHVkZSA8cXVldWU-CnVzaW5nIG5hbWVzcGFjZSBzdGQ7CgppbnQgbWFpbigpIHsKICAgIGNvbnN0IGNoYXIgKm5hbWUgPSAiQUJDREVGIjsKICAgIGludCBWID0gNjsKICAgIHZlY3Rvcjx2ZWN0b3I8cGFpcjxpbnQsIGludD4-PiBhZGooVik7ICAgICAgICAgIC8vIChuZWlnaGJvdXIsIHdlaWdodCkKICAgIGludCBlW11bM10gPSB7ezAsMSw0fSx7MCw1LDh9LHsxLDIsMTB9LHsxLDUsMTF9LHsyLDMsN30sezIsNCwyfSx7Miw1LDV9LHszLDQsOX0sezQsNSw2fSx7Myw1LDE0fX07CiAgICBmb3IgKGF1dG8gJnggOiBlKSB7IGFkalt4WzBdXS5wdXNoX2JhY2soe3hbMV0sIHhbMl19KTsgYWRqW3hbMV1dLnB1c2hfYmFjayh7eFswXSwgeFsyXX0pOyB9CgogICAgdmVjdG9yPGJvb2w-IGluVHJlZShWLCBmYWxzZSk7CiAgICBwcmlvcml0eV9xdWV1ZTx0dXBsZTxpbnQsIGludCwgaW50PiwgdmVjdG9yPHR1cGxlPGludCwgaW50LCBpbnQ-PiwgZ3JlYXRlcjw-PiBwcTsgICAvLyAod2VpZ2h0LCB2ZXJ0ZXgsIGZyb20pCiAgICBwcS5wdXNoKHswLCAwLCAtMX0pOwogICAgaW50IHRvdGFsID0gMDsKICAgIHdoaWxlICghcHEuZW1wdHkoKSkgewogICAgICAgIGF1dG8gW3csIHYsIGZyb21dID0gcHEudG9wKCk7IHBxLnBvcCgpOwogICAgICAgIGlmIChpblRyZWVbdl0pIGNvbnRpbnVlOyAgICAgICAgICAgICAgICAgICAgIC8vIHN0YWxlIGVudHJ5CiAgICAgICAgaW5UcmVlW3ZdID0gdHJ1ZTsKICAgICAgICB0b3RhbCArPSB3OwogICAgICAgIGlmIChmcm9tID49IDApIGNvdXQgPDwgImFkZCAiIDw8IG5hbWVbZnJvbV0gPDwgIi0iIDw8IG5hbWVbdl0gPDwgIiAoIiA8PCB3IDw8ICIpIiA8PCBlbmRsOwogICAgICAgIGZvciAoYXV0byBbdG8sIHd0XSA6IGFkalt2XSkKICAgICAgICAgICAgaWYgKCFpblRyZWVbdG9dKSBwcS5wdXNoKHt3dCwgdG8sIHZ9KTsKICAgIH0KICAgIGNvdXQgPDwgIk1TVCB3ZWlnaHQgPSAiIDw8IHRvdGFsIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Time with a binary heap: <strong>O(E log V)</strong>. With an adjacency matrix and no heap: O(V²), which is better for dense graphs.</p>
+<h2 id="kruskal-vs-prim"><a class="anchor" href="#kruskal-vs-prim" aria-hidden="true" tabindex="-1">#</a>Kruskal vs Prim</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Kruskal</th>
+<th>Prim</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Grows</td>
+<td>a forest that merges into one tree</td>
+<td>a single tree</td>
+</tr>
+<tr>
+<td>Picks</td>
+<td>globally lightest safe edge</td>
+<td>lightest edge leaving the tree</td>
+</tr>
+<tr>
+<td>Data structure</td>
+<td>sorted edges + union-find</td>
+<td>priority queue</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>O(E log E)</td>
+<td>O(E log V) with a heap; O(V²) with a matrix</td>
+</tr>
+<tr>
+<td>Better for</td>
+<td>sparse graphs</td>
+<td>dense graphs</td>
+</tr>
+</tbody></table>
+</div>
+<p>Both always find a minimum spanning tree. If all edge weights are distinct, the MST is <strong>unique</strong>, so both find the same one.</p>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Trace in a table</span></div><div class="callout-body"><p>For Kruskal, list edges in sorted order and mark each &quot;take&quot; or &quot;reject (cycle)&quot;. For Prim, show the tree after each step and the edge added. Always state the final MST weight.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="daa/mst" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>How many edges does a spanning tree of a graph with 10 vertices have?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">10</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">9</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">45</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It depends on the graph</span></button></div><div class="q-why" hidden>Every spanning tree of V vertices has V − 1 edges.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does Kruskal&#39;s algorithm use to detect cycles efficiently?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">DFS from scratch each time</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Union-find (disjoint sets)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">A priority queue</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">An adjacency matrix</span></button></div><div class="q-why" hidden>Two endpoints in the same set means the edge would close a cycle.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which algorithm grows a single tree from a start vertex?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Kruskal</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Prim</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Dijkstra</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Bellman–Ford</span></button></div><div class="q-why" hidden>Prim adds the cheapest edge leaving the current tree.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What is Kruskal&#39;s running time?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(E log E)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(V²)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(E + V)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(V³)</span></button></div><div class="q-why" hidden>Sorting the edges dominates; union-find operations are nearly constant.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/mst"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/huffman/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Huffman Coding</strong></a><a class="next" href="../../daa/shortest-paths/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Shortest Paths: Dijkstra &amp; Bellman–Ford</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#kruskal-s-algorithm">Kruskal&#39;s algorithm</a></li><li><a class="d2" href="#prim-s-algorithm">Prim&#39;s algorithm</a></li><li><a class="d2" href="#kruskal-vs-prim">Kruskal vs Prim</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Algorithms, Flowcharts &amp; Pseudocode · Foundations | Bytebook</title>
+<meta name="description" content="Think before you code: computational thinking, writing step-by-step algorithms, drawing flowcharts with the standard symbols, and writing clear pseudocode.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Algorithms, Flowcharts &amp; Pseudocode · Foundations | Bytebook">
+<meta property="og:description" content="Think before you code: computational thinking, writing step-by-step algorithms, drawing flowcharts with the standard symbols, and writing clear pseudocode.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="foundations">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations" class="active" aria-current="true"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="foundations" aria-label="First-Year Foundations lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../foundations/"><span class="chip" data-c="foundations">YEAR 1</span><strong>First-Year Foundations</strong></a>
+<div class="side-progress" data-course="foundations" data-total="11"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 11 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Computer Basics</h4><ol><li><a href="../../foundations/how-computers-work/" data-lesson="foundations/how-computers-work"><span class="tick" aria-hidden="true"></span><span>How Computers Work</span></a></li><li><a href="../../foundations/number-systems/" data-lesson="foundations/number-systems"><span class="tick" aria-hidden="true"></span><span>Number Systems</span></a></li><li><a href="../../foundations/data-representation/" data-lesson="foundations/data-representation"><span class="tick" aria-hidden="true"></span><span>Data Representation</span></a></li><li><a href="../../foundations/logic-gates/" data-lesson="foundations/logic-gates"><span class="tick" aria-hidden="true"></span><span>Logic Gates &amp; Circuits</span></a></li></ol></div>
+<div class="side-unit"><h4>Problem Solving</h4><ol><li><a href="../../foundations/algorithms-flowcharts/" data-lesson="foundations/algorithms-flowcharts" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Algorithms, Flowcharts &amp; Pseudocode</span></a></li><li><a href="../../foundations/from-code-to-program/" data-lesson="foundations/from-code-to-program"><span class="tick" aria-hidden="true"></span><span>From Code to Running Program</span></a></li></ol></div>
+<div class="side-unit"><h4>Developer Tools</h4><ol><li><a href="../../foundations/linux-command-line/" data-lesson="foundations/linux-command-line"><span class="tick" aria-hidden="true"></span><span>The Linux Command Line</span></a></li><li><a href="../../foundations/git-github/" data-lesson="foundations/git-github"><span class="tick" aria-hidden="true"></span><span>Git &amp; GitHub</span></a></li></ol></div>
+<div class="side-unit"><h4>The Web</h4><ol><li><a href="../../foundations/how-the-web-works/" data-lesson="foundations/how-the-web-works"><span class="tick" aria-hidden="true"></span><span>How the Internet &amp; Web Work</span></a></li><li><a href="../../foundations/html-css/" data-lesson="foundations/html-css"><span class="tick" aria-hidden="true"></span><span>HTML &amp; CSS Essentials</span></a></li><li><a href="../../foundations/javascript/" data-lesson="foundations/javascript"><span class="tick" aria-hidden="true"></span><span>JavaScript Essentials</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../foundations/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="foundations/algorithms-flowcharts" data-title="Algorithms, Flowcharts &amp; Pseudocode" data-course-title="First-Year Foundations">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../foundations/">Foundations</a><span>/</span><span>Lesson 5 of 11</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Problem Solving</p>
+<h1>Algorithms, Flowcharts &amp; Pseudocode</h1>
+<p class="lede">Think before you code: computational thinking, writing step-by-step algorithms, drawing flowcharts with the standard symbols, and writing clear pseudocode.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Most programming mistakes happen <strong>before</strong> any code is typed: the plan was wrong or vague. Professional developers plan solutions first. This lesson gives you three tools for planning.</p>
+<h2 id="computational-thinking"><a class="anchor" href="#computational-thinking" aria-hidden="true" tabindex="-1">#</a>Computational thinking</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Meaning</th>
+<th>Example: &quot;find the class topper&quot;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Decomposition</strong></td>
+<td>break a big problem into smaller ones</td>
+<td>read marks; compare; report</td>
+</tr>
+<tr>
+<td><strong>Pattern recognition</strong></td>
+<td>spot similarities with problems you have solved</td>
+<td>&quot;it&#39;s just finding a maximum&quot;</td>
+</tr>
+<tr>
+<td><strong>Abstraction</strong></td>
+<td>ignore details that do not matter</td>
+<td>names do not matter until the end</td>
+</tr>
+<tr>
+<td><strong>Algorithm design</strong></td>
+<td>write precise steps that always work</td>
+<td>keep the best so far, update it</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="algorithms"><a class="anchor" href="#algorithms" aria-hidden="true" tabindex="-1">#</a>Algorithms</h2>
+<p>An <strong>algorithm</strong> is a finite, ordered list of unambiguous steps that solves a problem. A recipe is an algorithm for cooking.</p>
+<p><strong>Algorithm: find the largest of three numbers</strong></p>
+<ol>
+<li>Start.</li>
+<li>Read A, B, C.</li>
+<li>If A ≥ B and A ≥ C, then LARGEST = A.</li>
+<li>Otherwise, if B ≥ C, then LARGEST = B.</li>
+<li>Otherwise, LARGEST = C.</li>
+<li>Print LARGEST.</li>
+<li>Stop.</li>
+</ol>
+<p>A good algorithm is <strong>correct</strong> for every input (what if two numbers are equal?), <strong>finite</strong>, <strong>unambiguous</strong> and <strong>efficient</strong>.</p>
+<h2 id="flowcharts"><a class="anchor" href="#flowcharts" aria-hidden="true" tabindex="-1">#</a>Flowcharts</h2>
+<p>A <strong>flowchart</strong> draws an algorithm as connected shapes:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Shape</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Terminal</td>
+<td>rounded rectangle (oval)</td>
+<td>Start / Stop</td>
+</tr>
+<tr>
+<td>Input/Output</td>
+<td>parallelogram</td>
+<td>Read or print data</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>rectangle</td>
+<td>a calculation or assignment</td>
+</tr>
+<tr>
+<td>Decision</td>
+<td>diamond</td>
+<td>a yes/no question, two exits</td>
+</tr>
+<tr>
+<td>Flow line</td>
+<td>arrow</td>
+<td>the order of steps</td>
+</tr>
+<tr>
+<td>Connector</td>
+<td>small circle</td>
+<td>joins parts of a long chart</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="diagram"><svg class="dg" viewBox="0 0 420 412" width="420" height="412" role="img" aria-label="Flowchart: Start → Read a number n → n % 2 == 0 ? → Print &quot;Even&quot; → Print &quot;Odd&quot; → Stop"><defs><marker id="dg-ah-43" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="115" y="10" width="190" height="44" rx="22"/><text class="t" x="210" y="32">Start</text><line class="edge" x1="210" y1="54" x2="210" y2="82" marker-end="url(#dg-ah-43)"/><path class="fc io" d="M129,84 H305 L291,128 H115 Z"/><text class="t" x="210" y="106">Read a number n</text><line class="edge" x1="210" y1="128" x2="210" y2="156" marker-end="url(#dg-ah-43)"/><path class="fc dec" d="M210,158 L325,193 L210,228 L95,193 Z"/><text class="t" x="210" y="193">n % 2 == 0 ?</text><path class="edge" d="M95,193 H98 V260" marker-end="url(#dg-ah-43)"/><text class="s yes" x="77" y="181">Yes</text><path class="fc io" d="M27,262 H183 L169,306 H13 Z"/><text class="t" x="98" y="284">Print &quot;Even&quot;</text><path class="edge" d="M325,193 H322 V260" marker-end="url(#dg-ah-43)"/><text class="s no" x="341" y="181">No</text><path class="fc io" d="M251,262 H407 L393,306 H237 Z"/><text class="t" x="322" y="284">Print &quot;Odd&quot;</text><path class="edge" d="M98,306 V328 H322 V306"/><line class="edge" x1="210" y1="328" x2="210" y2="336"/><line class="edge" x1="210" y1="336" x2="210" y2="356" marker-end="url(#dg-ah-43)"/><rect class="fc term" x="115" y="358" width="190" height="44" rx="22"/><text class="t" x="210" y="380">Stop</text></svg><figcaption>Flowchart for checking whether a number is even or odd.</figcaption></figure>
+<p>Loops appear as an arrow going <strong>back</strong> to an earlier step:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 707 386" width="707" height="386" role="img" aria-label="Flowchart: Start → sum = 0, i = 1 → i &lt;= n ? → sum = sum + i, then i = i + 1 → Print sum → Stop"><defs><marker id="dg-ah-44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="115" y="10" width="190" height="44" rx="22"/><text class="t" x="210" y="32">Start</text><line class="edge" x1="210" y1="54" x2="210" y2="82" marker-end="url(#dg-ah-44)"/><rect class="fc proc" x="115" y="84" width="190" height="44" rx="4"/><text class="t" x="210" y="106">sum = 0, i = 1</text><line class="edge" x1="210" y1="128" x2="210" y2="156" marker-end="url(#dg-ah-44)"/><path class="fc dec" d="M210,158 L325,193 L210,228 L95,193 Z"/><text class="t" x="210" y="193">i &lt;= n ?</text><line class="edge" x1="325" y1="193" x2="353" y2="193" marker-end="url(#dg-ah-44)"/><text class="s yes" x="340" y="181">Yes</text><rect class="fc proc" x="355" y="171" width="256.4" height="44" rx="4"/><text class="t" x="483.2" y="193">sum = sum + i, then i = i + 1</text><path class="edge" d="M483.2,171 V142 H210"/><text class="s no" x="226" y="240">No</text><line class="edge" x1="210" y1="228" x2="210" y2="256" marker-end="url(#dg-ah-44)"/><path class="fc io" d="M129,258 H305 L291,302 H115 Z"/><text class="t" x="210" y="280">Print sum</text><line class="edge" x1="210" y1="302" x2="210" y2="330" marker-end="url(#dg-ah-44)"/><rect class="fc term" x="115" y="332" width="190" height="44" rx="22"/><text class="t" x="210" y="354">Stop</text></svg><figcaption>Flowchart for the sum 1 + 2 + … + n. The &quot;Yes&quot; branch loops back to the condition.</figcaption></figure>
+<h2 id="pseudocode"><a class="anchor" href="#pseudocode" aria-hidden="true" tabindex="-1">#</a>Pseudocode</h2>
+<p><strong>Pseudocode</strong> writes an algorithm in structured, code-like English — precise like code, but free of any one language&#39;s syntax.</p>
+<figure class="code" data-lang="pseudo"><div class="code-head"><span class="code-lang">Pseudocode</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">ALGORITHM SumOfDigits
+    INPUT n
+    sum ← 0
+    WHILE n &gt; 0 DO
+        digit ← n MOD 10
+        sum ← sum + digit
+        n ← n DIV 10
+    END WHILE
+    OUTPUT sum
+END</code></pre></figure>
+<p>Common conventions: <code>←</code> for assignment, <code>IF … THEN … ELSE … END IF</code>, <code>FOR i ← 1 TO n DO … END FOR</code>, <code>WHILE … DO … END WHILE</code>, <code>INPUT</code> and <code>OUTPUT</code>, and indentation to show blocks.</p>
+<h2 id="from-plan-to-program"><a class="anchor" href="#from-plan-to-program" aria-hidden="true" tabindex="-1">#</a>From plan to program</h2>
+<p>The pseudocode translates almost line by line into any language:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n, sum = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter a number: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+    <span class="hljs-keyword">while</span> (n &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-type">int</span> digit = n % <span class="hljs-number">10</span>;
+        sum = sum + digit;
+        n = n / <span class="hljs-number">10</span>;
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sum of digits = %d\n&quot;</span>, sum);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter a number: <span class="in">40213</span>
+Sum of digits = 10</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbiwgc3VtID0gMDsKICAgIHByaW50ZigiRW50ZXIgYSBudW1iZXI6ICIpOwogICAgc2NhbmYoIiVkIiwgJm4pOwogICAgd2hpbGUgKG4gPiAwKSB7CiAgICAgICAgaW50IGRpZ2l0ID0gbiAlIDEwOwogICAgICAgIHN1bSA9IHN1bSArIGRpZ2l0OwogICAgICAgIG4gPSBuIC8gMTA7CiAgICB9CiAgICBwcmludGYoIlN1bSBvZiBkaWdpdHMgPSAlZFxuIiwgc3VtKTsKICAgIHJldHVybiAwOwp9Cg&amp;stdin=NDAyMTMK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;Enter a number: &quot;</span>))
+total = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+    total += n % <span class="hljs-number">10</span>
+    n //= <span class="hljs-number">10</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sum of digits =&quot;</span>, total)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter a number: <span class="in">40213</span>
+Sum of digits = 10</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=python&amp;code=biA9IGludChpbnB1dCgiRW50ZXIgYSBudW1iZXI6ICIpKQp0b3RhbCA9IDAKd2hpbGUgbiA-IDA6CiAgICB0b3RhbCArPSBuICUgMTAKICAgIG4gLy89IDEwCnByaW50KCJTdW0gb2YgZGlnaXRzID0iLCB0b3RhbCkK&amp;stdin=NDAyMTMK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="dry-runs"><a class="anchor" href="#dry-runs" aria-hidden="true" tabindex="-1">#</a>Dry runs</h2>
+<p>Before running code, <strong>trace</strong> it by hand with a table of variables — the single best debugging habit:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>n</th>
+<th>digit</th>
+<th>sum</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>start</td>
+<td>40213</td>
+<td>–</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4021</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>402</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>40</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>4</td>
+<td>10</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>The problem-solving routine</span></div><div class="callout-body"><ol>
+<li>Restate the problem in your own words. 2. Work two or three small examples by hand, including an edge case. 3. Write the algorithm or pseudocode. 4. Dry-run it. 5. Only then code it, and test with your examples.</li>
+</ol>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="foundations/algorithms-flowcharts" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="2"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which flowchart symbol represents a decision?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Rectangle</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Parallelogram</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Diamond</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Oval</span></button></div><div class="q-why" hidden>A diamond has one entry and a Yes and a No exit.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which flowchart symbol is used for &quot;Read marks&quot;?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Rectangle</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Parallelogram</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Diamond</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Circle</span></button></div><div class="q-why" hidden>Input and output use the parallelogram.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Breaking a problem into smaller sub-problems is called...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Decomposition</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Abstraction</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Compilation</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Iteration</span></button></div><div class="q-why" hidden>Decomposition is the first step of computational thinking.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>In a dry run of the digit-sum algorithm for n = 123, what is <code>sum</code> after the second pass of the loop?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">3</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">1</span></button></div><div class="q-why" hidden>After the first pass sum = 3; after the second, 3 + 2 = 5.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="foundations/algorithms-flowcharts"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../foundations/logic-gates/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Logic Gates &amp; Circuits</strong></a><a class="next" href="../../foundations/from-code-to-program/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>From Code to Running Program</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#computational-thinking">Computational thinking</a></li><li><a class="d2" href="#algorithms">Algorithms</a></li><li><a class="d2" href="#flowcharts">Flowcharts</a></li><li><a class="d2" href="#pseudocode">Pseudocode</a></li><li><a class="d2" href="#from-plan-to-program">From plan to program</a></li><li><a class="d2" href="#dry-runs">Dry runs</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Singly Linked List · Data Structures | Bytebook</title>
+<meta name="description" content="Nodes joined by pointers: create, traverse, insert at the head, tail or a position, delete, and search — with every operation&#39;s cost.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Singly Linked List · Data Structures | Bytebook">
+<meta property="og:description" content="Nodes joined by pointers: create, traverse, insert at the head, tail or a position, delete, and search — with every operation&#39;s cost.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/singly-linked-list" data-title="Singly Linked List" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 4 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Linked Lists</p>
+<h1>Singly Linked List</h1>
+<p class="lede">Nodes joined by pointers: create, traverse, insert at the head, tail or a position, delete, and search — with every operation&#39;s cost.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>linked list</strong> stores elements in separate <strong>nodes</strong> scattered around memory. Each node holds its <strong>data</strong> and a <strong>pointer to the next node</strong>. The list is reached through a pointer to the first node, called the <strong>head</strong>; the last node points to <code>NULL</code>.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 524 108" width="524" height="108" role="img" aria-label="singly linked list: 10 → 20 → 30 → 40"><defs><marker id="dg-ah-10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box" x="8" y="50" width="72" height="46" rx="7"/><line class="div" x1="52" y1="50" x2="52" y2="96"/><text class="t" x="30" y="73">10</text><circle class="dot" cx="66" cy="73" r="3.6"/><line class="edge" x1="66" y1="73" x2="123" y2="73" marker-end="url(#dg-ah-10)"/><rect class="box" x="124" y="50" width="72" height="46" rx="7"/><line class="div" x1="168" y1="50" x2="168" y2="96"/><text class="t" x="146" y="73">20</text><circle class="dot" cx="182" cy="73" r="3.6"/><line class="edge" x1="182" y1="73" x2="239" y2="73" marker-end="url(#dg-ah-10)"/><rect class="box" x="240" y="50" width="72" height="46" rx="7"/><line class="div" x1="284" y1="50" x2="284" y2="96"/><text class="t" x="262" y="73">30</text><circle class="dot" cx="298" cy="73" r="3.6"/><line class="edge" x1="298" y1="73" x2="355" y2="73" marker-end="url(#dg-ah-10)"/><rect class="box" x="356" y="50" width="72" height="46" rx="7"/><line class="div" x1="400" y1="50" x2="400" y2="96"/><text class="t" x="378" y="73">40</text><circle class="dot" cx="414" cy="73" r="3.6"/><line class="edge" x1="414" y1="73" x2="466" y2="73" marker-end="url(#dg-ah-10)"/><text class="t null" x="490" y="73">NULL</text><text class="s ptr" x="30" y="13">head</text><line class="edge ptr" x1="30" y1="22" x2="30" y2="47" marker-end="url(#dg-ah-10)"/></svg><figcaption>A singly linked list. Each box is a node: data on the left, the <code>next</code> pointer on the right.</figcaption></figure>
+<p>Unlike an array, a linked list can grow one node at a time and insert anywhere <strong>without shifting</strong> other elements — you only rewire pointers.</p>
+<h2 id="the-node"><a class="anchor" href="#the-node" aria-hidden="true" tabindex="-1">#</a>The node</h2>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span>
+    <span class="hljs-type">int</span> data;
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span>     <span class="hljs-comment">// a pointer to another node of the same type</span>
+} Node;</code></pre></figure>
+<p>A structure that contains a pointer to its own type is called <strong>self-referential</strong>.</p>
+<h2 id="try-it"><a class="anchor" href="#try-it" aria-hidden="true" tabindex="-1">#</a>Try it</h2>
+<p>Insert and delete nodes and watch the pointers change:</p>
+<div class="widget" data-widget="linked-list" data-opts="{}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="the-complete-program"><a class="anchor" href="#the-complete-program" aria-hidden="true" tabindex="-1">#</a>The complete program</h2>
+<p>Every function receives <code>Node **head</code> (a pointer to the head pointer) when it may need to change which node is first.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> {</span> <span class="hljs-type">int</span> data; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span> } Node;
+
+Node *<span class="hljs-title function_">newNode</span><span class="hljs-params">(<span class="hljs-type">int</span> data)</span> {
+    Node *n = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Node));
+    n-&gt;data = data;
+    n-&gt;next = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">return</span> n;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insertHead</span><span class="hljs-params">(Node **head, <span class="hljs-type">int</span> data)</span> {          <span class="hljs-comment">// O(1)</span>
+    Node *n = newNode(data);
+    n-&gt;next = *head;
+    *head = n;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insertTail</span><span class="hljs-params">(Node **head, <span class="hljs-type">int</span> data)</span> {          <span class="hljs-comment">// O(n): walk to the end</span>
+    Node *n = newNode(data);
+    <span class="hljs-keyword">if</span> (*head == <span class="hljs-literal">NULL</span>) { *head = n; <span class="hljs-keyword">return</span>; }
+    Node *p = *head;
+    <span class="hljs-keyword">while</span> (p-&gt;next != <span class="hljs-literal">NULL</span>) p = p-&gt;next;
+    p-&gt;next = n;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insertAt</span><span class="hljs-params">(Node **head, <span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> data)</span> {   <span class="hljs-comment">// pos 0 = new head</span>
+    <span class="hljs-keyword">if</span> (pos == <span class="hljs-number">0</span>) { insertHead(head, data); <span class="hljs-keyword">return</span>; }
+    Node *p = *head;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; p != <span class="hljs-literal">NULL</span> &amp;&amp; i &lt; pos - <span class="hljs-number">1</span>; i++) p = p-&gt;next;
+    <span class="hljs-keyword">if</span> (p == <span class="hljs-literal">NULL</span>) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;position %d out of range\n&quot;</span>, pos); <span class="hljs-keyword">return</span>; }
+    Node *n = newNode(data);
+    n-&gt;next = p-&gt;next;                            <span class="hljs-comment">// 1. new node points to the rest</span>
+    p-&gt;next = n;                                  <span class="hljs-comment">// 2. previous node points to new node</span>
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">deleteValue</span><span class="hljs-params">(Node **head, <span class="hljs-type">int</span> key)</span> {
+    Node *p = *head, *prev = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">while</span> (p != <span class="hljs-literal">NULL</span> &amp;&amp; p-&gt;data != key) { prev = p; p = p-&gt;next; }
+    <span class="hljs-keyword">if</span> (p == <span class="hljs-literal">NULL</span>) { <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d not found\n&quot;</span>, key); <span class="hljs-keyword">return</span>; }
+    <span class="hljs-keyword">if</span> (prev == <span class="hljs-literal">NULL</span>) *head = p-&gt;next;            <span class="hljs-comment">// deleting the head</span>
+    <span class="hljs-keyword">else</span> prev-&gt;next = p-&gt;next;                    <span class="hljs-comment">// bypass the node</span>
+    <span class="hljs-built_in">free</span>(p);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">search</span><span class="hljs-params">(Node *head, <span class="hljs-type">int</span> key)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; head != <span class="hljs-literal">NULL</span>; head = head-&gt;next, i++)
+        <span class="hljs-keyword">if</span> (head-&gt;data == key) <span class="hljs-keyword">return</span> i;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">print</span><span class="hljs-params">(Node *head)</span> {
+    <span class="hljs-keyword">for</span> (; head != <span class="hljs-literal">NULL</span>; head = head-&gt;next) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d -&gt; &quot;</span>, head-&gt;data);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;NULL\n&quot;</span>);
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">freeList</span><span class="hljs-params">(Node **head)</span> {
+    <span class="hljs-keyword">while</span> (*head) { Node *t = *head; *head = t-&gt;next; <span class="hljs-built_in">free</span>(t); }
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    Node *head = <span class="hljs-literal">NULL</span>;
+    insertTail(&amp;head, <span class="hljs-number">20</span>);
+    insertTail(&amp;head, <span class="hljs-number">30</span>);
+    insertHead(&amp;head, <span class="hljs-number">10</span>);
+    print(head);
+    insertAt(&amp;head, <span class="hljs-number">2</span>, <span class="hljs-number">25</span>);
+    print(head);
+    deleteValue(&amp;head, <span class="hljs-number">10</span>);
+    print(head);
+    deleteValue(&amp;head, <span class="hljs-number">99</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;30 is at position %d\n&quot;</span>, search(head, <span class="hljs-number">30</span>));
+    freeList(&amp;head);
+    print(head);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>10 -&gt; 20 -&gt; 30 -&gt; NULL
+10 -&gt; 20 -&gt; 25 -&gt; 30 -&gt; NULL
+20 -&gt; 25 -&gt; 30 -&gt; NULL
+99 not found
+30 is at position 2
+NULL</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxzdGRsaWIuaD4KCnR5cGVkZWYgc3RydWN0IE5vZGUgeyBpbnQgZGF0YTsgc3RydWN0IE5vZGUgKm5leHQ7IH0gTm9kZTsKCk5vZGUgKm5ld05vZGUoaW50IGRhdGEpIHsKICAgIE5vZGUgKm4gPSBtYWxsb2Moc2l6ZW9mKE5vZGUpKTsKICAgIG4tPmRhdGEgPSBkYXRhOwogICAgbi0-bmV4dCA9IE5VTEw7CiAgICByZXR1cm4gbjsKfQoKdm9pZCBpbnNlcnRIZWFkKE5vZGUgKipoZWFkLCBpbnQgZGF0YSkgeyAgICAgICAgICAvLyBPKDEpCiAgICBOb2RlICpuID0gbmV3Tm9kZShkYXRhKTsKICAgIG4tPm5leHQgPSAqaGVhZDsKICAgICpoZWFkID0gbjsKfQoKdm9pZCBpbnNlcnRUYWlsKE5vZGUgKipoZWFkLCBpbnQgZGF0YSkgeyAgICAgICAgICAvLyBPKG4pOiB3YWxrIHRvIHRoZSBlbmQKICAgIE5vZGUgKm4gPSBuZXdOb2RlKGRhdGEpOwogICAgaWYgKCpoZWFkID09IE5VTEwpIHsgKmhlYWQgPSBuOyByZXR1cm47IH0KICAgIE5vZGUgKnAgPSAqaGVhZDsKICAgIHdoaWxlIChwLT5uZXh0ICE9IE5VTEwpIHAgPSBwLT5uZXh0OwogICAgcC0-bmV4dCA9IG47Cn0KCnZvaWQgaW5zZXJ0QXQoTm9kZSAqKmhlYWQsIGludCBwb3MsIGludCBkYXRhKSB7ICAgLy8gcG9zIDAgPSBuZXcgaGVhZAogICAgaWYgKHBvcyA9PSAwKSB7IGluc2VydEhlYWQoaGVhZCwgZGF0YSk7IHJldHVybjsgfQogICAgTm9kZSAqcCA9ICpoZWFkOwogICAgZm9yIChpbnQgaSA9IDA7IHAgIT0gTlVMTCAmJiBpIDwgcG9zIC0gMTsgaSsrKSBwID0gcC0-bmV4dDsKICAgIGlmIChwID09IE5VTEwpIHsgcHJpbnRmKCJwb3NpdGlvbiAlZCBvdXQgb2YgcmFuZ2VcbiIsIHBvcyk7IHJldHVybjsgfQogICAgTm9kZSAqbiA9IG5ld05vZGUoZGF0YSk7CiAgICBuLT5uZXh0ID0gcC0-bmV4dDsgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gMS4gbmV3IG5vZGUgcG9pbnRzIHRvIHRoZSByZXN0CiAgICBwLT5uZXh0ID0gbjsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gMi4gcHJldmlvdXMgbm9kZSBwb2ludHMgdG8gbmV3IG5vZGUKfQoKdm9pZCBkZWxldGVWYWx1ZShOb2RlICoqaGVhZCwgaW50IGtleSkgewogICAgTm9kZSAqcCA9ICpoZWFkLCAqcHJldiA9IE5VTEw7CiAgICB3aGlsZSAocCAhPSBOVUxMICYmIHAtPmRhdGEgIT0ga2V5KSB7IHByZXYgPSBwOyBwID0gcC0-bmV4dDsgfQogICAgaWYgKHAgPT0gTlVMTCkgeyBwcmludGYoIiVkIG5vdCBmb3VuZFxuIiwga2V5KTsgcmV0dXJuOyB9CiAgICBpZiAocHJldiA9PSBOVUxMKSAqaGVhZCA9IHAtPm5leHQ7ICAgICAgICAgICAgLy8gZGVsZXRpbmcgdGhlIGhlYWQKICAgIGVsc2UgcHJldi0-bmV4dCA9IHAtPm5leHQ7ICAgICAgICAgICAgICAgICAgICAvLyBieXBhc3MgdGhlIG5vZGUKICAgIGZyZWUocCk7Cn0KCmludCBzZWFyY2goTm9kZSAqaGVhZCwgaW50IGtleSkgewogICAgZm9yIChpbnQgaSA9IDA7IGhlYWQgIT0gTlVMTDsgaGVhZCA9IGhlYWQtPm5leHQsIGkrKykKICAgICAgICBpZiAoaGVhZC0-ZGF0YSA9PSBrZXkpIHJldHVybiBpOwogICAgcmV0dXJuIC0xOwp9Cgp2b2lkIHByaW50KE5vZGUgKmhlYWQpIHsKICAgIGZvciAoOyBoZWFkICE9IE5VTEw7IGhlYWQgPSBoZWFkLT5uZXh0KSBwcmludGYoIiVkIC0-ICIsIGhlYWQtPmRhdGEpOwogICAgcHJpbnRmKCJOVUxMXG4iKTsKfQoKdm9pZCBmcmVlTGlzdChOb2RlICoqaGVhZCkgewogICAgd2hpbGUgKCpoZWFkKSB7IE5vZGUgKnQgPSAqaGVhZDsgKmhlYWQgPSB0LT5uZXh0OyBmcmVlKHQpOyB9Cn0KCmludCBtYWluKHZvaWQpIHsKICAgIE5vZGUgKmhlYWQgPSBOVUxMOwogICAgaW5zZXJ0VGFpbCgmaGVhZCwgMjApOwogICAgaW5zZXJ0VGFpbCgmaGVhZCwgMzApOwogICAgaW5zZXJ0SGVhZCgmaGVhZCwgMTApOwogICAgcHJpbnQoaGVhZCk7CiAgICBpbnNlcnRBdCgmaGVhZCwgMiwgMjUpOwogICAgcHJpbnQoaGVhZCk7CiAgICBkZWxldGVWYWx1ZSgmaGVhZCwgMTApOwogICAgcHJpbnQoaGVhZCk7CiAgICBkZWxldGVWYWx1ZSgmaGVhZCwgOTkpOwogICAgcHJpbnRmKCIzMCBpcyBhdCBwb3NpdGlvbiAlZFxuIiwgc2VhcmNoKGhlYWQsIDMwKSk7CiAgICBmcmVlTGlzdCgmaGVhZCk7CiAgICBwcmludChoZWFkKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="inserting-in-the-middle-step-by-step"><a class="anchor" href="#inserting-in-the-middle-step-by-step" aria-hidden="true" tabindex="-1">#</a>Inserting in the middle, step by step</h2>
+<p>To insert 25 after node 20:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 408 108" width="408" height="108" role="img" aria-label="singly linked list: 10 → 20 → 30"><defs><marker id="dg-ah-11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box" x="8" y="50" width="72" height="46" rx="7"/><line class="div" x1="52" y1="50" x2="52" y2="96"/><text class="t" x="30" y="73">10</text><circle class="dot" cx="66" cy="73" r="3.6"/><line class="edge" x1="66" y1="73" x2="123" y2="73" marker-end="url(#dg-ah-11)"/><rect class="box hl" x="124" y="50" width="72" height="46" rx="7"/><line class="div" x1="168" y1="50" x2="168" y2="96"/><text class="t" x="146" y="73">20</text><circle class="dot" cx="182" cy="73" r="3.6"/><line class="edge" x1="182" y1="73" x2="239" y2="73" marker-end="url(#dg-ah-11)"/><rect class="box" x="240" y="50" width="72" height="46" rx="7"/><line class="div" x1="284" y1="50" x2="284" y2="96"/><text class="t" x="262" y="73">30</text><circle class="dot" cx="298" cy="73" r="3.6"/><line class="edge" x1="298" y1="73" x2="350" y2="73" marker-end="url(#dg-ah-11)"/><text class="t null" x="374" y="73">NULL</text><text class="s ptr" x="30" y="13">head</text><line class="edge ptr" x1="30" y1="22" x2="30" y2="47" marker-end="url(#dg-ah-11)"/></svg><figcaption>Before: <code>p</code> points at 20.</figcaption></figure>
+<ol>
+<li>Create the new node: <code>n-&gt;data = 25</code>.</li>
+<li>Point it at the rest of the list: <code>n-&gt;next = p-&gt;next;</code> (25 → 30).</li>
+<li>Point 20 at it: <code>p-&gt;next = n;</code> (20 → 25).</li>
+</ol>
+<figure class="diagram"><svg class="dg" viewBox="0 0 524 108" width="524" height="108" role="img" aria-label="singly linked list: 10 → 20 → 25 → 30"><defs><marker id="dg-ah-12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box" x="8" y="50" width="72" height="46" rx="7"/><line class="div" x1="52" y1="50" x2="52" y2="96"/><text class="t" x="30" y="73">10</text><circle class="dot" cx="66" cy="73" r="3.6"/><line class="edge" x1="66" y1="73" x2="123" y2="73" marker-end="url(#dg-ah-12)"/><rect class="box" x="124" y="50" width="72" height="46" rx="7"/><line class="div" x1="168" y1="50" x2="168" y2="96"/><text class="t" x="146" y="73">20</text><circle class="dot" cx="182" cy="73" r="3.6"/><line class="edge" x1="182" y1="73" x2="239" y2="73" marker-end="url(#dg-ah-12)"/><rect class="box hl" x="240" y="50" width="72" height="46" rx="7"/><line class="div" x1="284" y1="50" x2="284" y2="96"/><text class="t" x="262" y="73">25</text><circle class="dot" cx="298" cy="73" r="3.6"/><line class="edge" x1="298" y1="73" x2="355" y2="73" marker-end="url(#dg-ah-12)"/><rect class="box" x="356" y="50" width="72" height="46" rx="7"/><line class="div" x1="400" y1="50" x2="400" y2="96"/><text class="t" x="378" y="73">30</text><circle class="dot" cx="414" cy="73" r="3.6"/><line class="edge" x1="414" y1="73" x2="466" y2="73" marker-end="url(#dg-ah-12)"/><text class="t null" x="490" y="73">NULL</text><text class="s ptr" x="30" y="13">head</text><line class="edge ptr" x1="30" y1="22" x2="30" y2="47" marker-end="url(#dg-ah-12)"/></svg><figcaption>After: only two pointers changed. No other node moved.</figcaption></figure>
+<aside class="callout callout-warn"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9.5v4M12 17.2v.1"/></svg><span>Order matters</span></div><div class="callout-body"><p>If you do step 3 before step 2, <code>p-&gt;next</code> already points at the new node, and the link to 30 (and everything after it) is lost forever.</p>
+</div></aside>
+<h2 id="deleting-a-node"><a class="anchor" href="#deleting-a-node" aria-hidden="true" tabindex="-1">#</a>Deleting a node</h2>
+<p>Find the node <strong>and the one before it</strong>, make the previous node skip over it, then <code>free</code> it. Deleting the head is a special case: move <code>head</code> forward.</p>
+<h2 id="costs-array-vs-linked-list"><a class="anchor" href="#costs-array-vs-linked-list" aria-hidden="true" tabindex="-1">#</a>Costs: array vs linked list</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Array</th>
+<th>Singly linked list</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Access the i-th element</td>
+<td><strong>O(1)</strong></td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Insert / delete at the front</td>
+<td>O(n)</td>
+<td><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Insert / delete at the end</td>
+<td>O(1)</td>
+<td>O(n), or O(1) with a tail pointer</td>
+</tr>
+<tr>
+<td>Insert / delete after a known node</td>
+<td>O(n)</td>
+<td><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Search</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Extra memory</td>
+<td>none</td>
+<td>one pointer per node</td>
+</tr>
+<tr>
+<td>Memory layout</td>
+<td>contiguous, cache-friendly</td>
+<td>scattered</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Advantages and disadvantages</span></div><div class="callout-body"><p><strong>Advantages:</strong> dynamic size, O(1) insertion/deletion once you have the position, no wasted capacity.
+<strong>Disadvantages:</strong> no random access (no binary search), extra memory for pointers, poor cache performance, can only be traversed forwards.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="dsa/singly-linked-list" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does the last node of a singly linked list point to?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The head</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>NULL</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Itself</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The previous node</span></button></div><div class="q-why" hidden><code>NULL</code> marks the end of a (non-circular) singly linked list.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is the cost of inserting a node at the head of a linked list with <code>n</code> nodes?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">O(1)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">O(log n)</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">O(n)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">O(n²)</span></button></div><div class="q-why" hidden>Only the new node&#39;s <code>next</code> and the <code>head</code> pointer change.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Why do insertion functions take <code>Node **head</code> instead of <code>Node *head</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Double pointers are faster</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">So the function can change the caller&#39;s head pointer</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">To store two nodes</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It is required by <code>malloc</code></span></button></div><div class="q-why" hidden>Inserting or deleting at the front changes which node is the head. Changing <code>main</code>&#39;s pointer needs its address.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which operation is <strong>slower</strong> on a linked list than on an array?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Inserting at the front</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Deleting the first element</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Accessing the 500th element</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Inserting after a given node</span></button></div><div class="q-why" hidden>A list must be walked node by node; an array computes the address directly.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/singly-linked-list"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/arrays-ds/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Arrays as a Data Structure</strong></a><a class="next" href="../../dsa/linked-list-problems/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Linked List Problems</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#the-node">The node</a></li><li><a class="d2" href="#try-it">Try it</a></li><li><a class="d2" href="#the-complete-program">The complete program</a></li><li><a class="d2" href="#inserting-in-the-middle-step-by-step">Inserting in the middle, step by step</a></li><li><a class="d2" href="#deleting-a-node">Deleting a node</a></li><li><a class="d2" href="#costs-array-vs-linked-list">Costs: array vs linked list</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+[
+  {
+    "id": "c",
+    "title": "Programming in C",
+    "short": "C",
+    "code": "CSE 101",
+    "color": "#2F6AE0",
+    "dark": "#7DA6FF",
+    "blurb": "Start from zero and learn to think like a programmer in C: variables, decisions, loops, functions, arrays, strings, pointers, memory, structures and files.",
+    "learn": [
+      "Write, compile and run complete C programs",
+      "Use `if`, `switch` and loops to solve pattern and number problems",
+      "Break programs into functions and solve problems recursively",
+      "Work with arrays, strings and 2D matrices",
+      "Understand pointers, addresses and dynamic memory",
+      "Model data with structures and save it to files"
+    ]
+  },
+  {
+    "id": "dsa",
+    "title": "Data Structures",
+    "short": "Data Structures",
+    "code": "CSE 102",
+    "color": "#0B8A7C",
+    "dark": "#3FD0BC",
+    "blurb": "Build every classic data structure in C — linked lists, stacks, queues, trees, heaps, graphs and hash tables — and learn exactly when to use each one.",
+    "learn": [
+      "Measure code with Big-O time and space complexity",
+      "Implement linked lists, stacks and queues from scratch",
+      "Build and traverse binary trees, BSTs, AVL trees and heaps",
+      "Represent graphs and run BFS and DFS",
+      "Use hashing and resolve collisions",
+      "Pick the right searching and sorting algorithm"
+    ]
+  },
+  {
+    "id": "cpp",
+    "title": "Object-Oriented Programming with C++",
+    "short": "C++ OOP",
+    "code": "OOPS",
+    "color": "#7048E0",
+    "dark": "#A78BFF",
+    "blurb": "Move from C to C++ and master object-oriented design: classes, constructors, inheritance, polymorphism, templates, exceptions and the STL.",
+    "learn": [
+      "Explain the four pillars of OOP with real code",
+      "Design classes with constructors, destructors and access control",
+      "Use inheritance, virtual functions and abstract classes",
+      "Overload functions and operators",
+      "Write generic code with templates",
+      "Use STL containers and algorithms productively"
+    ]
+  },
+  {
+    "id": "python",
+    "title": "Python Programming",
+    "short": "Python",
+    "code": "PYTHON",
+    "color": "#B7740C",
+    "dark": "#F2B545",
+    "blurb": "Python from first print() to real programs: data types, control flow, lists, dictionaries, functions, files, exceptions, OOP and generators.",
+    "learn": [
+      "Write clean Python with the right built-in types",
+      "Use lists, tuples, sets and dictionaries fluently",
+      "Write reusable functions, lambdas and comprehensions",
+      "Read and write files and handle errors gracefully",
+      "Build classes with inheritance and dunder methods",
+      "Use iterators, generators and the standard library"
+    ]
+  },
+  {
+    "id": "discrete",
+    "title": "Discrete Mathematics",
+    "short": "Discrete Math",
+    "code": "DMS",
+    "color": "#CC3366",
+    "dark": "#FF7FA6",
+    "blurb": "The mathematics under computer science: logic, proofs, sets, relations, functions, counting, recurrences, graph theory, number theory and Boolean algebra.",
+    "learn": [
+      "Build truth tables and simplify logical expressions",
+      "Write direct, contradiction and induction proofs",
+      "Work with sets, relations, functions and partial orders",
+      "Count with permutations, combinations and inclusion–exclusion",
+      "Solve recurrence relations",
+      "Reason about graphs, trees, modular arithmetic and Boolean algebra"
+    ]
+  },
+  {
+    "id": "daa",
+    "title": "Design and Analysis of Algorithms",
+    "short": "Algorithms (DAA)",
+    "code": "DAA",
+    "color": "#DD5A12",
+    "dark": "#FF9555",
+    "blurb": "Analyse and design efficient algorithms: asymptotic analysis, recurrences, divide and conquer, greedy methods, dynamic programming, backtracking, graph algorithms and NP-completeness.",
+    "learn": [
+      "Analyse running time with O, Ω and Θ",
+      "Solve recurrences with the Master Theorem",
+      "Design divide-and-conquer and greedy algorithms",
+      "Solve problems with dynamic programming tables",
+      "Use backtracking and branch and bound",
+      "Explain P, NP, NP-complete and NP-hard"
+    ]
+  },
+  {
+    "id": "foundations",
+    "title": "First-Year Foundations",
+    "short": "Foundations",
+    "code": "YEAR 1",
+    "color": "#2E8B47",
+    "dark": "#62D287",
+    "blurb": "How computers, code and the web really work: number systems, logic gates, algorithms and flowcharts, the Linux terminal, Git and GitHub, HTML, CSS and JavaScript.",
+    "learn": [
+      "Explain what happens inside a computer when a program runs",
+      "Convert between binary, octal, decimal and hexadecimal",
+      "Plan solutions with algorithms, flowcharts and pseudocode",
+      "Get comfortable in the Linux command line",
+      "Use Git and GitHub to save and share your work",
+      "Build a simple web page with HTML, CSS and JavaScript"
+    ]
+  }
+]

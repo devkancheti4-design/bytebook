@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graph Theory · Discrete Math | Bytebook</title>
+<meta name="description" content="Graphs as mathematics: simple graphs and multigraphs, degree and the handshake lemma, special graphs, isomorphism, Euler and Hamilton paths, planarity and graph colouring.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Graph Theory · Discrete Math | Bytebook">
+<meta property="og:description" content="Graphs as mathematics: simple graphs and multigraphs, degree and the handshake lemma, special graphs, isomorphism, Euler and Hamilton paths, planarity and graph colouring.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="discrete">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete" class="active" aria-current="true"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="discrete" aria-label="Discrete Mathematics lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../discrete/"><span class="chip" data-c="discrete">DMS</span><strong>Discrete Mathematics</strong></a>
+<div class="side-progress" data-course="discrete" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Logic &amp; Proofs</h4><ol><li><a href="../../discrete/propositional-logic/" data-lesson="discrete/propositional-logic"><span class="tick" aria-hidden="true"></span><span>Propositional Logic</span></a></li><li><a href="../../discrete/logical-equivalence/" data-lesson="discrete/logical-equivalence"><span class="tick" aria-hidden="true"></span><span>Logical Equivalences &amp; Normal Forms</span></a></li><li><a href="../../discrete/predicate-logic/" data-lesson="discrete/predicate-logic"><span class="tick" aria-hidden="true"></span><span>Predicates &amp; Quantifiers</span></a></li><li><a href="../../discrete/proofs/" data-lesson="discrete/proofs"><span class="tick" aria-hidden="true"></span><span>Proof Techniques</span></a></li><li><a href="../../discrete/induction/" data-lesson="discrete/induction"><span class="tick" aria-hidden="true"></span><span>Mathematical Induction</span></a></li></ol></div>
+<div class="side-unit"><h4>Sets, Relations &amp; Functions</h4><ol><li><a href="../../discrete/sets/" data-lesson="discrete/sets"><span class="tick" aria-hidden="true"></span><span>Sets</span></a></li><li><a href="../../discrete/relations/" data-lesson="discrete/relations"><span class="tick" aria-hidden="true"></span><span>Relations</span></a></li><li><a href="../../discrete/partial-orders/" data-lesson="discrete/partial-orders"><span class="tick" aria-hidden="true"></span><span>Partial Orders &amp; Lattices</span></a></li><li><a href="../../discrete/functions/" data-lesson="discrete/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li></ol></div>
+<div class="side-unit"><h4>Counting</h4><ol><li><a href="../../discrete/counting/" data-lesson="discrete/counting"><span class="tick" aria-hidden="true"></span><span>Counting Principles &amp; Pigeonhole</span></a></li><li><a href="../../discrete/permutations-combinations/" data-lesson="discrete/permutations-combinations"><span class="tick" aria-hidden="true"></span><span>Permutations &amp; Combinations</span></a></li><li><a href="../../discrete/inclusion-exclusion/" data-lesson="discrete/inclusion-exclusion"><span class="tick" aria-hidden="true"></span><span>Inclusion–Exclusion &amp; the Binomial Theorem</span></a></li><li><a href="../../discrete/recurrences/" data-lesson="discrete/recurrences"><span class="tick" aria-hidden="true"></span><span>Recurrence Relations</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs, Number Theory &amp; Algebra</h4><ol><li><a href="../../discrete/graph-theory/" data-lesson="discrete/graph-theory" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Graph Theory</span></a></li><li><a href="../../discrete/trees/" data-lesson="discrete/trees"><span class="tick" aria-hidden="true"></span><span>Trees</span></a></li><li><a href="../../discrete/number-theory/" data-lesson="discrete/number-theory"><span class="tick" aria-hidden="true"></span><span>Number Theory</span></a></li><li><a href="../../discrete/boolean-algebra/" data-lesson="discrete/boolean-algebra"><span class="tick" aria-hidden="true"></span><span>Boolean Algebra</span></a></li><li><a href="../../discrete/cheatsheet/" data-lesson="discrete/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Discrete Mathematics Formula Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../discrete/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="discrete/graph-theory" data-title="Graph Theory" data-course-title="Discrete Mathematics">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../discrete/">Discrete Math</a><span>/</span><span>Lesson 14 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Graphs, Number Theory &amp; Algebra</p>
+<h1>Graph Theory</h1>
+<p class="lede">Graphs as mathematics: simple graphs and multigraphs, degree and the handshake lemma, special graphs, isomorphism, Euler and Hamilton paths, planarity and graph colouring.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>graph</strong> G = (V, E) has a set of <strong>vertices</strong> V and a set of <strong>edges</strong> E, each joining two vertices. Graph theory began in 1736 when Leonhard Euler proved that nobody could walk across all seven bridges of Königsberg exactly once.</p>
+<h2 id="kinds-of-graphs"><a class="anchor" href="#kinds-of-graphs" aria-hidden="true" tabindex="-1">#</a>Kinds of graphs</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Allows</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Simple graph</strong></td>
+<td>undirected edges, no loops, no multiple edges</td>
+</tr>
+<tr>
+<td><strong>Multigraph</strong></td>
+<td>multiple edges between the same pair</td>
+</tr>
+<tr>
+<td><strong>Pseudograph</strong></td>
+<td>loops and multiple edges</td>
+</tr>
+<tr>
+<td><strong>Directed graph</strong></td>
+<td>edges with direction (arcs)</td>
+</tr>
+<tr>
+<td><strong>Weighted graph</strong></td>
+<td>a number on each edge</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="degree-and-the-handshake-lemma"><a class="anchor" href="#degree-and-the-handshake-lemma" aria-hidden="true" tabindex="-1">#</a>Degree and the handshake lemma</h2>
+<p>The <strong>degree</strong> deg(v) is the number of edges at v (a loop counts twice). In every undirected graph:</p>
+<blockquote>
+<p>Σ deg(v) = 2|E|</p>
+</blockquote>
+<p>So the number of <strong>odd-degree vertices is always even</strong>. In a directed graph, Σ in-degree = Σ out-degree = |E|.</p>
+<h2 id="special-graphs"><a class="anchor" href="#special-graphs" aria-hidden="true" tabindex="-1">#</a>Special graphs</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Graph</th>
+<th>Description</th>
+<th>Edges</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Complete graph Kₙ</td>
+<td>every pair of vertices adjacent</td>
+<td>n(n − 1)/2</td>
+</tr>
+<tr>
+<td>Cycle Cₙ</td>
+<td>a single ring of n vertices</td>
+<td>n</td>
+</tr>
+<tr>
+<td>Wheel Wₙ</td>
+<td>a cycle Cₙ plus a hub joined to all</td>
+<td>2n</td>
+</tr>
+<tr>
+<td>Hypercube Qₙ</td>
+<td>vertices are n-bit strings; edges join strings differing in one bit</td>
+<td>n·2ⁿ⁻¹</td>
+</tr>
+<tr>
+<td>Bipartite</td>
+<td>vertices split into two sets, edges only between sets</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Complete bipartite Kₘ,ₙ</td>
+<td>every vertex of one side joined to every vertex of the other</td>
+<td>m·n</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="diagram"><svg class="dg" viewBox="0 0 346 300" width="346" height="300" role="img" aria-label="Undirected graph with vertices 1, 2, 3, 4, 5"><defs><marker id="dg-ah-37" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><line class="edge" x1="189" y1="43.2" x2="297" y2="111.8"/><line class="edge" x1="179.6" y1="50.8" x2="252.9" y2="248.2"/><line class="edge" x1="166.4" y1="50.8" x2="93.1" y2="248.2"/><line class="edge" x1="157" y1="43.2" x2="49" y2="111.8"/><line class="edge" x1="306.4" y1="139.8" x2="266.1" y2="248.2"/><line class="edge" x1="297" y1="132.2" x2="102.5" y2="255.8"/><line class="edge" x1="294" y1="122" x2="52" y2="122"/><line class="edge" x1="240.5" y1="266" x2="105.5" y2="266"/><line class="edge" x1="243.5" y1="255.8" x2="49" y2="132.2"/><line class="edge" x1="79.9" y1="248.2" x2="39.6" y2="139.8"/><circle class="node" cx="173" cy="33" r="19"/><text class="t" x="173" y="33">1</text><circle class="node" cx="313" cy="122" r="19"/><text class="t" x="313" y="122">2</text><circle class="node" cx="259.5" cy="266" r="19"/><text class="t" x="259.5" y="266">3</text><circle class="node" cx="86.5" cy="266" r="19"/><text class="t" x="86.5" y="266">4</text><circle class="node" cx="33" cy="122" r="19"/><text class="t" x="33" y="122">5</text></svg><figcaption>The complete graph K₅: 5 vertices, C(5, 2) = 10 edges. It is the smallest graph that cannot be drawn in the plane without crossings.</figcaption></figure>
+<p>A graph is <strong>bipartite if and only if it has no odd-length cycle</strong> — checkable by 2-colouring with BFS.</p>
+<h2 id="isomorphism"><a class="anchor" href="#isomorphism" aria-hidden="true" tabindex="-1">#</a>Isomorphism</h2>
+<p>Two graphs are <strong>isomorphic</strong> if there is a bijection between their vertices that preserves adjacency — they are the same graph drawn differently. Isomorphic graphs share every <strong>invariant</strong>: number of vertices and edges, degree sequence, number of cycles of each length, connectedness. Different invariants prove two graphs are <strong>not</strong> isomorphic; equal invariants do not prove that they are.</p>
+<h2 id="paths-circuits-and-connectivity"><a class="anchor" href="#paths-circuits-and-connectivity" aria-hidden="true" tabindex="-1">#</a>Paths, circuits and connectivity</h2>
+<ul>
+<li>A <strong>path</strong> is a sequence of edges from one vertex to another; a <strong>circuit</strong> (cycle) returns to its start.</li>
+<li>A graph is <strong>connected</strong> if every pair of vertices has a path between them.</li>
+<li>A <strong>cut vertex</strong> (articulation point) or <strong>bridge</strong> is a vertex or edge whose removal disconnects the graph.</li>
+</ul>
+<h2 id="euler-paths-and-circuits"><a class="anchor" href="#euler-paths-and-circuits" aria-hidden="true" tabindex="-1">#</a>Euler paths and circuits</h2>
+<p>An <strong>Euler circuit</strong> uses <strong>every edge exactly once</strong> and returns to the start; an <strong>Euler path</strong> uses every edge once without returning.</p>
+<blockquote>
+<p>A connected graph has an <strong>Euler circuit</strong> iff <strong>every vertex has even degree</strong>.
+It has an <strong>Euler path</strong> (but no circuit) iff it has <strong>exactly two</strong> odd-degree vertices — the path starts at one and ends at the other.</p>
+</blockquote>
+<p>Königsberg had four land masses with degrees 5, 3, 3, 3 — four odd vertices, so no Euler path exists.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">euler_status</span>(<span class="hljs-params">edges</span>):
+    deg = Counter()
+    <span class="hljs-keyword">for</span> u, v <span class="hljs-keyword">in</span> edges:
+        deg[u] += <span class="hljs-number">1</span>
+        deg[v] += <span class="hljs-number">1</span>
+    odd = [v <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> deg <span class="hljs-keyword">if</span> deg[v] % <span class="hljs-number">2</span>]
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> odd:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Euler circuit exists&quot;</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(odd) == <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;Euler path from <span class="hljs-subst">{odd[<span class="hljs-number">0</span>]}</span> to <span class="hljs-subst">{odd[<span class="hljs-number">1</span>]}</span>&quot;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;neither (<span class="hljs-subst">{<span class="hljs-built_in">len</span>(odd)}</span> odd vertices)&quot;</span>
+
+konigsberg = [(<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;B&quot;</span>), (<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;B&quot;</span>), (<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;C&quot;</span>), (<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;C&quot;</span>), (<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;D&quot;</span>), (<span class="hljs-string">&quot;B&quot;</span>,<span class="hljs-string">&quot;D&quot;</span>), (<span class="hljs-string">&quot;C&quot;</span>,<span class="hljs-string">&quot;D&quot;</span>)]
+house = [(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>), (<span class="hljs-number">2</span>,<span class="hljs-number">3</span>), (<span class="hljs-number">3</span>,<span class="hljs-number">4</span>), (<span class="hljs-number">4</span>,<span class="hljs-number">1</span>), (<span class="hljs-number">1</span>,<span class="hljs-number">5</span>), (<span class="hljs-number">2</span>,<span class="hljs-number">5</span>), (<span class="hljs-number">1</span>,<span class="hljs-number">3</span>), (<span class="hljs-number">2</span>,<span class="hljs-number">4</span>)]
+square = [(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>), (<span class="hljs-number">2</span>,<span class="hljs-number">3</span>), (<span class="hljs-number">3</span>,<span class="hljs-number">4</span>), (<span class="hljs-number">4</span>,<span class="hljs-number">1</span>)]
+<span class="hljs-keyword">for</span> name, g <span class="hljs-keyword">in</span> [(<span class="hljs-string">&quot;Konigsberg&quot;</span>, konigsberg), (<span class="hljs-string">&quot;envelope house&quot;</span>, house), (<span class="hljs-string">&quot;square&quot;</span>, square)]:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{name:<span class="hljs-number">15</span>}</span> <span class="hljs-subst">{euler_status(g)}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Konigsberg      neither (4 odd vertices)
+envelope house  Euler path from 3 to 4
+square          Euler circuit exists</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZnJvbSBjb2xsZWN0aW9ucyBpbXBvcnQgQ291bnRlcgoKZGVmIGV1bGVyX3N0YXR1cyhlZGdlcyk6CiAgICBkZWcgPSBDb3VudGVyKCkKICAgIGZvciB1LCB2IGluIGVkZ2VzOgogICAgICAgIGRlZ1t1XSArPSAxCiAgICAgICAgZGVnW3ZdICs9IDEKICAgIG9kZCA9IFt2IGZvciB2IGluIGRlZyBpZiBkZWdbdl0gJSAyXQogICAgaWYgbm90IG9kZDoKICAgICAgICByZXR1cm4gIkV1bGVyIGNpcmN1aXQgZXhpc3RzIgogICAgaWYgbGVuKG9kZCkgPT0gMjoKICAgICAgICByZXR1cm4gZiJFdWxlciBwYXRoIGZyb20ge29kZFswXX0gdG8ge29kZFsxXX0iCiAgICByZXR1cm4gZiJuZWl0aGVyICh7bGVuKG9kZCl9IG9kZCB2ZXJ0aWNlcykiCgprb25pZ3NiZXJnID0gWygiQSIsIkIiKSwgKCJBIiwiQiIpLCAoIkEiLCJDIiksICgiQSIsIkMiKSwgKCJBIiwiRCIpLCAoIkIiLCJEIiksICgiQyIsIkQiKV0KaG91c2UgPSBbKDEsMiksICgyLDMpLCAoMyw0KSwgKDQsMSksICgxLDUpLCAoMiw1KSwgKDEsMyksICgyLDQpXQpzcXVhcmUgPSBbKDEsMiksICgyLDMpLCAoMyw0KSwgKDQsMSldCmZvciBuYW1lLCBnIGluIFsoIktvbmlnc2JlcmciLCBrb25pZ3NiZXJnKSwgKCJlbnZlbG9wZSBob3VzZSIsIGhvdXNlKSwgKCJzcXVhcmUiLCBzcXVhcmUpXToKICAgIHByaW50KGYie25hbWU6MTV9IHtldWxlcl9zdGF0dXMoZyl9IikK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="hamilton-paths-and-circuits"><a class="anchor" href="#hamilton-paths-and-circuits" aria-hidden="true" tabindex="-1">#</a>Hamilton paths and circuits</h2>
+<p>A <strong>Hamilton circuit</strong> visits <strong>every vertex exactly once</strong> and returns to the start. Unlike the Euler case, <strong>no simple test is known</strong> — deciding whether one exists is NP-complete. Sufficient conditions exist: <strong>Dirac&#39;s theorem</strong> says a simple graph with n ≥ 3 vertices where every vertex has degree ≥ n/2 has a Hamilton circuit.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Euler</th>
+<th>Hamilton</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Visits every</td>
+<td><strong>edge</strong> once</td>
+<td><strong>vertex</strong> once</td>
+</tr>
+<tr>
+<td>Easy test</td>
+<td>yes — degrees</td>
+<td>no — NP-complete</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>route inspection, drawing without lifting the pen</td>
+<td>travelling salesperson</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="planar-graphs"><a class="anchor" href="#planar-graphs" aria-hidden="true" tabindex="-1">#</a>Planar graphs</h2>
+<p>A graph is <strong>planar</strong> if it can be drawn without edges crossing. For a connected planar graph, <strong>Euler&#39;s formula</strong> holds:</p>
+<blockquote>
+<p><strong>V − E + F = 2</strong> (F = number of faces, including the outer one)</p>
+</blockquote>
+<p>Consequence: a connected simple planar graph with V ≥ 3 has E ≤ 3V − 6. K₅ has E = 10 &gt; 3·5 − 6 = 9, so <strong>K₅ is not planar</strong>. By <strong>Kuratowski&#39;s theorem</strong>, a graph is planar iff it contains no subdivision of K₅ or K₃,₃.</p>
+<h2 id="graph-colouring"><a class="anchor" href="#graph-colouring" aria-hidden="true" tabindex="-1">#</a>Graph colouring</h2>
+<p>A <strong>proper colouring</strong> gives adjacent vertices different colours; the minimum number of colours is the <strong>chromatic number</strong> χ(G).</p>
+<ul>
+<li>χ(Kₙ) = n; χ(Cₙ) = 2 if n is even, 3 if odd; χ of a bipartite graph = 2.</li>
+<li><strong>Four colour theorem</strong> (1976, proved with a computer): every planar graph has χ ≤ 4.</li>
+<li>Applications: exam timetabling (subjects sharing a student cannot share a slot), register allocation in compilers, frequency assignment.</li>
+</ul>
+<section class="quiz" id="quiz" data-quiz="discrete/graph-theory" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>A graph has degrees 4, 3, 3, 2, 2. How many edges?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">14</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">7</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">5</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">6</span></button></div><div class="q-why" hidden>Sum of degrees 14 = 2|E|.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>When does a connected graph have an Euler circuit?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">When every vertex has even degree</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">When every vertex has odd degree</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">When it has exactly two vertices</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">When it is complete</span></button></div><div class="q-why" hidden>Each visit to a vertex uses one edge in and one edge out.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>How many edges does K₆ have?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">12</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">15</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">30</span></button></div><div class="q-why" hidden>n(n − 1)/2 = 6 × 5 / 2 = 15.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>A connected planar graph has 8 vertices and 12 edges. How many faces?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">20</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">2</span></button></div><div class="q-why" hidden>V − E + F = 2 → 8 − 12 + F = 2 → F = 6.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="discrete/graph-theory"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../discrete/recurrences/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Recurrence Relations</strong></a><a class="next" href="../../discrete/trees/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Trees</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#kinds-of-graphs">Kinds of graphs</a></li><li><a class="d2" href="#degree-and-the-handshake-lemma">Degree and the handshake lemma</a></li><li><a class="d2" href="#special-graphs">Special graphs</a></li><li><a class="d2" href="#isomorphism">Isomorphism</a></li><li><a class="d2" href="#paths-circuits-and-connectivity">Paths, circuits and connectivity</a></li><li><a class="d2" href="#euler-paths-and-circuits">Euler paths and circuits</a></li><li><a class="d2" href="#hamilton-paths-and-circuits">Hamilton paths and circuits</a></li><li><a class="d2" href="#planar-graphs">Planar graphs</a></li><li><a class="d2" href="#graph-colouring">Graph colouring</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

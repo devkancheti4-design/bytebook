@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tuples &amp; Sets · Python | Bytebook</title>
+<meta name="description" content="Immutable tuples for fixed records and packing/unpacking, and sets for uniqueness and fast membership — with union, intersection and difference.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Tuples &amp; Sets · Python | Bytebook">
+<meta property="og:description" content="Immutable tuples for fixed records and packing/unpacking, and sets for uniqueness and fast membership — with union, intersection and difference.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="python">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python" class="active" aria-current="true"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="python" aria-label="Python Programming lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../python/"><span class="chip" data-c="python">PYTHON</span><strong>Python Programming</strong></a>
+<div class="side-progress" data-course="python" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Python Basics</h4><ol><li><a href="../../python/intro/" data-lesson="python/intro"><span class="tick" aria-hidden="true"></span><span>Python Introduction</span></a></li><li><a href="../../python/variables/" data-lesson="python/variables"><span class="tick" aria-hidden="true"></span><span>Variables &amp; Data Types</span></a></li><li><a href="../../python/operators-input/" data-lesson="python/operators-input"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Input</span></a></li><li><a href="../../python/strings/" data-lesson="python/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../python/conditions/" data-lesson="python/conditions"><span class="tick" aria-hidden="true"></span><span>If, Elif, Else &amp; match</span></a></li><li><a href="../../python/loops/" data-lesson="python/loops"><span class="tick" aria-hidden="true"></span><span>Loops: for, while &amp; range</span></a></li></ol></div>
+<div class="side-unit"><h4>Data Structures in Python</h4><ol><li><a href="../../python/lists/" data-lesson="python/lists"><span class="tick" aria-hidden="true"></span><span>Lists</span></a></li><li><a href="../../python/tuples-sets/" data-lesson="python/tuples-sets" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Tuples &amp; Sets</span></a></li><li><a href="../../python/dictionaries/" data-lesson="python/dictionaries"><span class="tick" aria-hidden="true"></span><span>Dictionaries</span></a></li><li><a href="../../python/comprehensions/" data-lesson="python/comprehensions"><span class="tick" aria-hidden="true"></span><span>Comprehensions</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions &amp; Modules</h4><ol><li><a href="../../python/functions/" data-lesson="python/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../python/lambda-recursion/" data-lesson="python/lambda-recursion"><span class="tick" aria-hidden="true"></span><span>Lambda, map/filter &amp; Recursion</span></a></li><li><a href="../../python/modules/" data-lesson="python/modules"><span class="tick" aria-hidden="true"></span><span>Modules, Packages &amp; the Standard Library</span></a></li></ol></div>
+<div class="side-unit"><h4>Real Programs</h4><ol><li><a href="../../python/files/" data-lesson="python/files"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../python/exceptions/" data-lesson="python/exceptions"><span class="tick" aria-hidden="true"></span><span>Exceptions</span></a></li><li><a href="../../python/oop/" data-lesson="python/oop"><span class="tick" aria-hidden="true"></span><span>Object-Oriented Python</span></a></li><li><a href="../../python/iterators-generators/" data-lesson="python/iterators-generators"><span class="tick" aria-hidden="true"></span><span>Iterators &amp; Generators</span></a></li><li><a href="../../python/cheatsheet/" data-lesson="python/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Python Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../python/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="python/tuples-sets" data-title="Tuples &amp; Sets" data-course-title="Python Programming">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../python/">Python</a><span>/</span><span>Lesson 8 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Data Structures in Python</p>
+<h1>Tuples &amp; Sets</h1>
+<p class="lede">Immutable tuples for fixed records and packing/unpacking, and sets for uniqueness and fast membership — with union, intersection and difference.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>4 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="tuples"><a class="anchor" href="#tuples" aria-hidden="true" tabindex="-1">#</a>Tuples</h2>
+<p>A <strong>tuple</strong> is an ordered, <strong>immutable</strong> sequence. Use it for fixed groups of values: coordinates, RGB colours, a database row, multiple return values.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">point = (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+rgb = <span class="hljs-number">255</span>, <span class="hljs-number">128</span>, <span class="hljs-number">0</span>              <span class="hljs-comment"># brackets are optional</span>
+single = (<span class="hljs-number">42</span>,)                 <span class="hljs-comment"># a one-item tuple needs a trailing comma</span>
+<span class="hljs-built_in">print</span>(point[<span class="hljs-number">0</span>], rgb, <span class="hljs-built_in">type</span>(single), <span class="hljs-built_in">len</span>(rgb))
+
+x, y = point                   <span class="hljs-comment"># unpacking</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;x=<span class="hljs-subst">{x}</span>, y=<span class="hljs-subst">{y}</span>&quot;</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">min_max</span>(<span class="hljs-params">values</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">min</span>(values), <span class="hljs-built_in">max</span>(values)    <span class="hljs-comment"># returns a tuple</span>
+
+lo, hi = min_max([<span class="hljs-number">7</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">4</span>])
+<span class="hljs-built_in">print</span>(lo, hi)
+<span class="hljs-comment"># point[0] = 5                 # TypeError: tuples are immutable</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>3 (255, 128, 0) &lt;class &#39;tuple&#39;&gt; 3
+x=3, y=4
+2 9</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=cG9pbnQgPSAoMywgNCkKcmdiID0gMjU1LCAxMjgsIDAgICAgICAgICAgICAgICMgYnJhY2tldHMgYXJlIG9wdGlvbmFsCnNpbmdsZSA9ICg0MiwpICAgICAgICAgICAgICAgICAjIGEgb25lLWl0ZW0gdHVwbGUgbmVlZHMgYSB0cmFpbGluZyBjb21tYQpwcmludChwb2ludFswXSwgcmdiLCB0eXBlKHNpbmdsZSksIGxlbihyZ2IpKQoKeCwgeSA9IHBvaW50ICAgICAgICAgICAgICAgICAgICMgdW5wYWNraW5nCnByaW50KGYieD17eH0sIHk9e3l9IikKCmRlZiBtaW5fbWF4KHZhbHVlcyk6CiAgICByZXR1cm4gbWluKHZhbHVlcyksIG1heCh2YWx1ZXMpICAgICMgcmV0dXJucyBhIHR1cGxlCgpsbywgaGkgPSBtaW5fbWF4KFs3LCAyLCA5LCA0XSkKcHJpbnQobG8sIGhpKQojIHBvaW50WzBdID0gNSAgICAgICAgICAgICAgICAgIyBUeXBlRXJyb3I6IHR1cGxlcyBhcmUgaW1tdXRhYmxlCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>List</th>
+<th>Tuple</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[1, 2, 3]</code></td>
+<td><code>(1, 2, 3)</code></td>
+</tr>
+<tr>
+<td>mutable</td>
+<td><strong>immutable</strong></td>
+</tr>
+<tr>
+<td>many methods</td>
+<td>only <code>count</code> and <code>index</code></td>
+</tr>
+<tr>
+<td>variable collections</td>
+<td>fixed records</td>
+</tr>
+<tr>
+<td>cannot be a dict key</td>
+<td><strong>can</strong> be a dict key (if its items are hashable)</td>
+</tr>
+<tr>
+<td>slightly more memory</td>
+<td>slightly less memory</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">distances = {(<span class="hljs-string">&quot;Delhi&quot;</span>, <span class="hljs-string">&quot;Agra&quot;</span>): <span class="hljs-number">233</span>, (<span class="hljs-string">&quot;Mumbai&quot;</span>, <span class="hljs-string">&quot;Pune&quot;</span>): <span class="hljs-number">149</span>}   <span class="hljs-comment"># tuple keys</span>
+<span class="hljs-built_in">print</span>(distances[(<span class="hljs-string">&quot;Mumbai&quot;</span>, <span class="hljs-string">&quot;Pune&quot;</span>)])
+
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> namedtuple
+Student = namedtuple(<span class="hljs-string">&quot;Student&quot;</span>, [<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;roll&quot;</span>, <span class="hljs-string">&quot;cgpa&quot;</span>])
+s = Student(<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-number">101</span>, <span class="hljs-number">9.1</span>)
+<span class="hljs-built_in">print</span>(s.name, s.cgpa, s)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>149
+Asha 9.1 Student(name=&#39;Asha&#39;, roll=101, cgpa=9.1)</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGlzdGFuY2VzID0geygiRGVsaGkiLCAiQWdyYSIpOiAyMzMsICgiTXVtYmFpIiwgIlB1bmUiKTogMTQ5fSAgICMgdHVwbGUga2V5cwpwcmludChkaXN0YW5jZXNbKCJNdW1iYWkiLCAiUHVuZSIpXSkKCmZyb20gY29sbGVjdGlvbnMgaW1wb3J0IG5hbWVkdHVwbGUKU3R1ZGVudCA9IG5hbWVkdHVwbGUoIlN0dWRlbnQiLCBbIm5hbWUiLCAicm9sbCIsICJjZ3BhIl0pCnMgPSBTdHVkZW50KCJBc2hhIiwgMTAxLCA5LjEpCnByaW50KHMubmFtZSwgcy5jZ3BhLCBzKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="sets"><a class="anchor" href="#sets" aria-hidden="true" tabindex="-1">#</a>Sets</h2>
+<p>A <strong>set</strong> is an unordered collection of <strong>unique</strong>, hashable items. It is a hash table underneath, so membership tests are <strong>O(1)</strong> on average.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">nums = [<span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>]
+unique = <span class="hljs-built_in">set</span>(nums)
+<span class="hljs-built_in">print</span>(unique, <span class="hljs-built_in">len</span>(unique))
+unique.add(<span class="hljs-number">7</span>)
+unique.discard(<span class="hljs-number">100</span>)            <span class="hljs-comment"># no error if missing (remove() would raise KeyError)</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-number">4</span> <span class="hljs-keyword">in</span> unique, <span class="hljs-number">8</span> <span class="hljs-keyword">in</span> unique)
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(unique))
+empty = <span class="hljs-built_in">set</span>()                  <span class="hljs-comment"># {} would be an empty DICT</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>{1, 2, 3, 4, 5, 6, 9} 7
+True False
+[1, 2, 3, 4, 5, 6, 7, 9]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bnVtcyA9IFszLCAxLCA0LCAxLCA1LCA5LCAyLCA2LCA1LCAzXQp1bmlxdWUgPSBzZXQobnVtcykKcHJpbnQodW5pcXVlLCBsZW4odW5pcXVlKSkKdW5pcXVlLmFkZCg3KQp1bmlxdWUuZGlzY2FyZCgxMDApICAgICAgICAgICAgIyBubyBlcnJvciBpZiBtaXNzaW5nIChyZW1vdmUoKSB3b3VsZCByYWlzZSBLZXlFcnJvcikKcHJpbnQoNCBpbiB1bmlxdWUsIDggaW4gdW5pcXVlKQpwcmludChzb3J0ZWQodW5pcXVlKSkKZW1wdHkgPSBzZXQoKSAgICAgICAgICAgICAgICAgICMge30gd291bGQgYmUgYW4gZW1wdHkgRElDVAo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="set-operations"><a class="anchor" href="#set-operations" aria-hidden="true" tabindex="-1">#</a>Set operations</h2>
+<p>Sets support the operations from <a href="../../discrete/sets/">Discrete Mathematics</a> directly:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Operator</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Union A ∪ B</td>
+<td><code>a | b</code></td>
+<td><code>a.union(b)</code></td>
+</tr>
+<tr>
+<td>Intersection A ∩ B</td>
+<td><code>a &amp; b</code></td>
+<td><code>a.intersection(b)</code></td>
+</tr>
+<tr>
+<td>Difference A − B</td>
+<td><code>a - b</code></td>
+<td><code>a.difference(b)</code></td>
+</tr>
+<tr>
+<td>Symmetric difference A ⊕ B</td>
+<td><code>a ^ b</code></td>
+<td><code>a.symmetric_difference(b)</code></td>
+</tr>
+<tr>
+<td>Subset A ⊆ B</td>
+<td><code>a &lt;= b</code></td>
+<td><code>a.issubset(b)</code></td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">python_club = {<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-string">&quot;Ravi&quot;</span>, <span class="hljs-string">&quot;Meera&quot;</span>, <span class="hljs-string">&quot;Kiran&quot;</span>}
+dsa_club = {<span class="hljs-string">&quot;Ravi&quot;</span>, <span class="hljs-string">&quot;Kiran&quot;</span>, <span class="hljs-string">&quot;Zoya&quot;</span>}
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;both clubs:   &quot;</span>, <span class="hljs-built_in">sorted</span>(python_club &amp; dsa_club))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;either club:  &quot;</span>, <span class="hljs-built_in">sorted</span>(python_club | dsa_club))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;only python:  &quot;</span>, <span class="hljs-built_in">sorted</span>(python_club - dsa_club))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;exactly one:  &quot;</span>, <span class="hljs-built_in">sorted</span>(python_club ^ dsa_club))
+<span class="hljs-built_in">print</span>({<span class="hljs-string">&quot;Ravi&quot;</span>, <span class="hljs-string">&quot;Kiran&quot;</span>} &lt;= dsa_club)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>both clubs:    [&#39;Kiran&#39;, &#39;Ravi&#39;]
+either club:   [&#39;Asha&#39;, &#39;Kiran&#39;, &#39;Meera&#39;, &#39;Ravi&#39;, &#39;Zoya&#39;]
+only python:   [&#39;Asha&#39;, &#39;Meera&#39;]
+exactly one:   [&#39;Asha&#39;, &#39;Meera&#39;, &#39;Zoya&#39;]
+True</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=cHl0aG9uX2NsdWIgPSB7IkFzaGEiLCAiUmF2aSIsICJNZWVyYSIsICJLaXJhbiJ9CmRzYV9jbHViID0geyJSYXZpIiwgIktpcmFuIiwgIlpveWEifQpwcmludCgiYm90aCBjbHViczogICAiLCBzb3J0ZWQocHl0aG9uX2NsdWIgJiBkc2FfY2x1YikpCnByaW50KCJlaXRoZXIgY2x1YjogICIsIHNvcnRlZChweXRob25fY2x1YiB8IGRzYV9jbHViKSkKcHJpbnQoIm9ubHkgcHl0aG9uOiAgIiwgc29ydGVkKHB5dGhvbl9jbHViIC0gZHNhX2NsdWIpKQpwcmludCgiZXhhY3RseSBvbmU6ICAiLCBzb3J0ZWQocHl0aG9uX2NsdWIgXiBkc2FfY2x1YikpCnByaW50KHsiUmF2aSIsICJLaXJhbiJ9IDw9IGRzYV9jbHViKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-note"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Unordered means no indexing</span></div><div class="callout-body"><p><code>my_set[0]</code> is an error, and the printed order of a set is not guaranteed. Sort it when you need a stable order, as above.</p>
+</div></aside>
+<p>A <code>frozenset</code> is an immutable set, usable as a dictionary key or as an element of another set.</p>
+<section class="quiz" id="quiz" data-quiz="python/tuples-sets" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>How do you write a tuple containing only the number 5?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>(5)</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>(5,)</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>tuple 5</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>[5]</code></span></button></div><div class="q-why" hidden><code>(5)</code> is just the number 5 in brackets; the comma makes it a tuple.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is <code>len({1, 2, 2, 3, 3, 3})</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">6</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">3</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">An error</span></button></div><div class="q-why" hidden>Sets keep only unique elements.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>For <code>a = {1, 2, 3}</code> and <code>b = {2, 3, 4}</code>, what is <code>a - b</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>{1}</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>{4}</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>{1, 4}</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>{2, 3}</code></span></button></div><div class="q-why" hidden>Difference keeps the elements of <code>a</code> that are not in <code>b</code>.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which can be used as a dictionary key?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A list</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A set</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">A tuple of strings</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A dictionary</span></button></div><div class="q-why" hidden>Keys must be hashable (immutable); tuples of immutable items are.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="python/tuples-sets"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../python/lists/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Lists</strong></a><a class="next" href="../../python/dictionaries/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Dictionaries</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#tuples">Tuples</a></li><li><a class="d2" href="#sets">Sets</a></li><li><a class="d2" href="#set-operations">Set operations</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

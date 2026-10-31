@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C Introduction · C | Bytebook</title>
+<meta name="description" content="What C is, why it still runs the world, and your very first program — explained line by line.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="C Introduction · C | Bytebook">
+<meta property="og:description" content="What C is, why it still runs the world, and your very first program — explained line by line.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/intro" data-title="C Introduction" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 1 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Getting Started</p>
+<h1>C Introduction</h1>
+<p class="lede">What C is, why it still runs the world, and your very first program — explained line by line.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p><strong>C</strong> is a general-purpose programming language created by <strong>Dennis Ritchie</strong> at Bell Labs in <strong>1972</strong>. It was built to write the Unix operating system, and today it still runs underneath almost everything: Linux and Windows kernels, Python&#39;s interpreter, databases like MySQL, microcontrollers in washing machines and cars.</p>
+<p>C is <em>small</em>, <em>fast</em> and <em>close to the hardware</em>. You decide where every byte of memory goes. That makes it the perfect first language for a computer science student: once you understand C, every other language makes more sense.</p>
+<aside class="callout callout-info"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span>Why CSE 101 starts with C</span></div><div class="callout-body"><p>C hides almost nothing. You will see how numbers are stored, how memory is laid out and what a function call really costs — ideas that Data Structures (CSE 102), C++ and Operating Systems build on directly.</p>
+</div></aside>
+<h2 id="your-first-c-program"><a class="anchor" href="#your-first-c-program" aria-hidden="true" tabindex="-1">#</a>Your first C program</h2>
+<p>Every C journey starts with the same program. Read it, then press <strong>Try it Yourself</strong> to run and edit it.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, World!\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Hello, World!</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBwcmludGYoIkhlbGxvLCBXb3JsZCFcbiIpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Here is what each line does:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>#include &lt;stdio.h&gt;</code></td>
+<td>Brings in the <strong>st</strong>andar<strong>d</strong> <strong>i</strong>nput/<strong>o</strong>utput library, which contains <code>printf</code>.</td>
+</tr>
+<tr>
+<td><code>int main(void)</code></td>
+<td>Every C program starts running at <code>main</code>. It returns an <code>int</code> to the operating system.</td>
+</tr>
+<tr>
+<td><code>{ ... }</code></td>
+<td>Curly braces group statements into a block — here, the body of <code>main</code>.</td>
+</tr>
+<tr>
+<td><code>printf(&quot;Hello, World!\n&quot;);</code></td>
+<td>Prints text. <code>\n</code> moves to a new line. Every statement ends with <code>;</code>.</td>
+</tr>
+<tr>
+<td><code>return 0;</code></td>
+<td>Ends <code>main</code> and tells the OS the program finished successfully.</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="from-source-code-to-a-running-program"><a class="anchor" href="#from-source-code-to-a-running-program" aria-hidden="true" tabindex="-1">#</a>From source code to a running program</h2>
+<p>Your computer&#39;s processor cannot run C directly — it only understands machine code. A <strong>compiler</strong> such as <code>gcc</code> translates your file in four stages:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 491 434" width="491" height="434" role="img" aria-label="Flowchart: hello.c — the code you write → Preprocessor: expands #include and #define → Compiler: turns C into assembly → Assembler: turns assembly into machine code (hello.o) → Linker: joins hello.o with the C library → hello — a program you can run"><defs><marker id="dg-ah-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="fc term" x="20" y="10" width="450.8" height="44" rx="22"/><text class="t" x="245.4" y="32">hello.c — the code you write</text><line class="edge" x1="245.4" y1="54" x2="245.4" y2="82" marker-end="url(#dg-ah-1)"/><rect class="fc proc" x="20" y="84" width="450.8" height="44" rx="4"/><text class="t" x="245.4" y="106">Preprocessor: expands #include and #define</text><line class="edge" x1="245.4" y1="128" x2="245.4" y2="156" marker-end="url(#dg-ah-1)"/><rect class="fc proc" x="20" y="158" width="450.8" height="44" rx="4"/><text class="t" x="245.4" y="180">Compiler: turns C into assembly</text><line class="edge" x1="245.4" y1="202" x2="245.4" y2="230" marker-end="url(#dg-ah-1)"/><rect class="fc proc" x="20" y="232" width="450.8" height="44" rx="4"/><text class="t" x="245.4" y="254">Assembler: turns assembly into machine code (hello.o)</text><line class="edge" x1="245.4" y1="276" x2="245.4" y2="304" marker-end="url(#dg-ah-1)"/><rect class="fc proc" x="20" y="306" width="450.8" height="44" rx="4"/><text class="t" x="245.4" y="328">Linker: joins hello.o with the C library</text><line class="edge" x1="245.4" y1="350" x2="245.4" y2="378" marker-end="url(#dg-ah-1)"/><rect class="fc term" x="20" y="380" width="450.8" height="44" rx="22"/><text class="t" x="245.4" y="402">hello — a program you can run</text></svg><figcaption>The four stages that <code>gcc hello.c -o hello</code> runs for you.</figcaption></figure>
+<p>On your own machine (Linux, macOS, or Windows with MinGW/WSL) you compile and run like this:</p>
+<figure class="code" data-lang="bash"><div class="code-head"><span class="code-lang">Terminal</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">gcc hello.c -o hello     <span class="hljs-comment"># compile hello.c into a program called hello</span>
+./hello                  <span class="hljs-comment"># run it</span></code></pre></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>No compiler installed?</span></div><div class="callout-body"><p>Use the <strong>Compiler</strong> button in the top bar. It runs real GCC in your browser tab, so you can practise on any laptop or phone.</p>
+</div></aside>
+<h2 id="the-structure-of-a-c-program"><a class="anchor" href="#the-structure-of-a-c-program" aria-hidden="true" tabindex="-1">#</a>The structure of a C program</h2>
+<p>Bigger programs follow the same skeleton. Your exam may ask you to label these parts:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-comment">/* 1. Documentation: what this program does */</span>
+<span class="hljs-comment">// Prints the area of a circle</span>
+
+<span class="hljs-comment">/* 2. Preprocessor directives */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> PI 3.14159</span>
+
+<span class="hljs-comment">/* 3. Global declarations */</span>
+<span class="hljs-type">double</span> <span class="hljs-title function_">area</span><span class="hljs-params">(<span class="hljs-type">double</span> r)</span>;
+
+<span class="hljs-comment">/* 4. The main function */</span>
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">double</span> r = <span class="hljs-number">2.0</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Area = %.2f\n&quot;</span>, area(r));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">/* 5. User-defined functions */</span>
+<span class="hljs-type">double</span> <span class="hljs-title function_">area</span><span class="hljs-params">(<span class="hljs-type">double</span> r)</span> {
+    <span class="hljs-keyword">return</span> PI * r * r;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Area = 12.57</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=LyogMS4gRG9jdW1lbnRhdGlvbjogd2hhdCB0aGlzIHByb2dyYW0gZG9lcyAqLwovLyBQcmludHMgdGhlIGFyZWEgb2YgYSBjaXJjbGUKCi8qIDIuIFByZXByb2Nlc3NvciBkaXJlY3RpdmVzICovCiNpbmNsdWRlIDxzdGRpby5oPgojZGVmaW5lIFBJIDMuMTQxNTkKCi8qIDMuIEdsb2JhbCBkZWNsYXJhdGlvbnMgKi8KZG91YmxlIGFyZWEoZG91YmxlIHIpOwoKLyogNC4gVGhlIG1haW4gZnVuY3Rpb24gKi8KaW50IG1haW4odm9pZCkgewogICAgZG91YmxlIHIgPSAyLjA7CiAgICBwcmludGYoIkFyZWEgPSAlLjJmXG4iLCBhcmVhKHIpKTsKICAgIHJldHVybiAwOwp9CgovKiA1LiBVc2VyLWRlZmluZWQgZnVuY3Rpb25zICovCmRvdWJsZSBhcmVhKGRvdWJsZSByKSB7CiAgICByZXR1cm4gUEkgKiByICogcjsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="where-c-is-used-today"><a class="anchor" href="#where-c-is-used-today" aria-hidden="true" tabindex="-1">#</a>Where C is used today</h2>
+<ul>
+<li><strong>Operating systems</strong> — the Linux kernel is about 30 million lines of C.</li>
+<li><strong>Embedded systems</strong> — microcontrollers in cars, routers, smart TVs and medical devices.</li>
+<li><strong>Language runtimes</strong> — CPython, the Ruby interpreter and parts of Node.js are written in C.</li>
+<li><strong>Databases and networking</strong> — SQLite, MySQL, Redis, curl and most network stacks.</li>
+</ul>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Frequently asked</span></div><div class="callout-body"><p>&quot;Write the features of C&quot; — answer with: middle-level (high-level syntax, low-level memory access), structured/procedural, portable, fast, rich library, supports pointers and dynamic memory, and extensible with user-defined functions.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="c/intro" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Who created the C language?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Bjarne Stroustrup</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Dennis Ritchie</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">James Gosling</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Guido van Rossum</span></button></div><div class="q-why" hidden>Dennis Ritchie designed C at Bell Labs in 1972 to write Unix. Stroustrup made C++, Gosling made Java and van Rossum made Python.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which function does every C program start executing from?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>start()</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>printf()</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>main()</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>stdio()</code></span></button></div><div class="q-why" hidden>Execution always begins at <code>main</code>. The other functions only run if <code>main</code> calls them.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which stage of compilation joins your object file with the C library?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Preprocessor</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Assembler</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Linker</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Compiler</span></button></div><div class="q-why" hidden>The linker combines <code>hello.o</code> with library code (like <code>printf</code>) into one executable.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What does <code>return 0;</code> at the end of <code>main</code> mean?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The program finished successfully</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Print the number 0</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Restart the program</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The program crashed</span></button></div><div class="q-why" hidden>By convention, a return value of 0 tells the operating system that the program ended without errors.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/intro"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Overview</small><strong>Programming in C</strong></a><a class="next" href="../../c/syntax-output/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Syntax, Output &amp; Comments</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#your-first-c-program">Your first C program</a></li><li><a class="d2" href="#from-source-code-to-a-running-program">From source code to a running program</a></li><li><a class="d2" href="#the-structure-of-a-c-program">The structure of a C program</a></li><li><a class="d2" href="#where-c-is-used-today">Where C is used today</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

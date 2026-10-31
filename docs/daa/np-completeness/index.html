@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P, NP, NP-Complete &amp; NP-Hard · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Tractable and intractable problems: decision problems, the classes P and NP, polynomial-time reductions, NP-complete and NP-hard problems, Cook&#39;s theorem, and coping with hardness.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="P, NP, NP-Complete &amp; NP-Hard · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Tractable and intractable problems: decision problems, the classes P and NP, polynomial-time reductions, NP-complete and NP-hard problems, Cook&#39;s theorem, and coping with hardness.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/np-completeness" data-title="P, NP, NP-Complete &amp; NP-Hard" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 20 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Search, Graphs &amp; Complexity</p>
+<h1>P, NP, NP-Complete &amp; NP-Hard</h1>
+<p class="lede">Tractable and intractable problems: decision problems, the classes P and NP, polynomial-time reductions, NP-complete and NP-hard problems, Cook&#39;s theorem, and coping with hardness.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Some problems are solved in polynomial time — sorting, shortest paths, MST. Others, like TSP, 0/1 knapsack and graph colouring, have resisted every attempt for decades. Complexity theory explains this difference.</p>
+<h2 id="decision-problems"><a class="anchor" href="#decision-problems" aria-hidden="true" tabindex="-1">#</a>Decision problems</h2>
+<p>Complexity classes are defined for <strong>decision problems</strong>, whose answer is yes or no. Optimisation problems have decision versions: &quot;Is there a tour of length <strong>≤ k</strong>?&quot; instead of &quot;What is the shortest tour?&quot;. If you can solve one quickly, you can usually solve the other.</p>
+<h2 id="the-class-p"><a class="anchor" href="#the-class-p" aria-hidden="true" tabindex="-1">#</a>The class P</h2>
+<p><strong>P</strong> = decision problems that can be <strong>solved</strong> in polynomial time, O(nᵏ) for some constant k. These are considered <strong>tractable</strong>.</p>
+<p>Examples: sorting, searching, shortest paths, MST, matching, primality testing (AKS, 2002).</p>
+<h2 id="the-class-np"><a class="anchor" href="#the-class-np" aria-hidden="true" tabindex="-1">#</a>The class NP</h2>
+<p><strong>NP</strong> (nondeterministic polynomial) = decision problems whose <strong>yes</strong>-answers can be <strong>verified</strong> in polynomial time, given a suitable certificate (a proposed solution).</p>
+<p>Example — SUBSET-SUM: &quot;Do some of these numbers add up to 15?&quot; Finding a subset may be hard, but <strong>checking</strong> a proposed subset is easy: add it up.</p>
+<p>Every problem in P is also in NP (if you can solve it, you can verify it), so <strong>P ⊆ NP</strong>.</p>
+<h2 id="reductions"><a class="anchor" href="#reductions" aria-hidden="true" tabindex="-1">#</a>Reductions</h2>
+<p>Problem A <strong>reduces</strong> to problem B (A ≤ₚ B) if any instance of A can be transformed in polynomial time into an instance of B with the same answer. Then B is <strong>at least as hard as</strong> A: a fast algorithm for B would give a fast algorithm for A.</p>
+<h2 id="np-complete-and-np-hard"><a class="anchor" href="#np-complete-and-np-hard" aria-hidden="true" tabindex="-1">#</a>NP-complete and NP-hard</h2>
+<ul>
+<li><strong>NP-hard</strong>: every problem in NP reduces to it. It is at least as hard as anything in NP (it need not be in NP itself, and need not be a decision problem).</li>
+<li><strong>NP-complete (NPC)</strong>: NP-hard <strong>and</strong> in NP — the hardest problems inside NP.</li>
+</ul>
+<p><strong>Cook–Levin theorem (1971)</strong>: <strong>SAT</strong> (Boolean satisfiability) is NP-complete. It was the first. To show a new problem X is NP-complete:</p>
+<ol>
+<li>Show X ∈ NP (a certificate can be checked in polynomial time).</li>
+<li>Reduce a <strong>known</strong> NP-complete problem to X.</li>
+</ol>
+<figure class="diagram"><svg class="dg" viewBox="0 0 401 416" width="401" height="416" role="img" aria-label="Tree rooted at SAT"><path class="edge" d="M200.39999999999998,40 V60 H200.39999999999998 V80"/><path class="edge" d="M200.39999999999998,114 V134 H70.8 V154"/><path class="edge" d="M70.8,188 V208 H70.8 V228"/><path class="edge" d="M70.8,262 V282 H70.8 V302"/><path class="edge" d="M70.8,336 V356 H70.8 V376"/><path class="edge" d="M200.39999999999998,114 V134 H200.39999999999998 V154"/><path class="edge" d="M200.39999999999998,114 V134 H330 V154"/><path class="edge" d="M330,188 V208 H330 V228"/><rect class="box" x="48.1" y="376" width="45.4" height="34" rx="8"/><text class="t lbl small" x="70.8" y="393">TSP</text><rect class="box" x="-6.5" y="302" width="154.6" height="34" rx="8"/><text class="t lbl small" x="70.8" y="319">Hamiltonian cycle</text><rect class="box" x="13" y="228" width="115.6" height="34" rx="8"/><text class="t lbl small" x="70.8" y="245">Vertex cover</text><rect class="box" x="36.4" y="154" width="68.8" height="34" rx="8"/><text class="t lbl small" x="70.8" y="171">Clique</text><rect class="box" x="146.5" y="154" width="107.8" height="34" rx="8"/><text class="t lbl small" x="200.4" y="171">3-colouring</text><rect class="box" x="272.2" y="228" width="115.6" height="34" rx="8"/><text class="t lbl small" x="330" y="245">0/1 Knapsack</text><rect class="box" x="280" y="154" width="100" height="34" rx="8"/><text class="t lbl small" x="330" y="171">Subset sum</text><rect class="box" x="169.9" y="80" width="61" height="34" rx="8"/><text class="t lbl small" x="200.4" y="97">3-SAT</text><rect class="box" x="177.7" y="6" width="45.4" height="34" rx="8"/><text class="t lbl small" x="200.4" y="23">SAT</text></svg><figcaption>Classic chain of reductions from SAT. Each problem is NP-complete (the TSP and knapsack decision versions included).</figcaption></figure>
+<h2 id="famous-np-complete-problems"><a class="anchor" href="#famous-np-complete-problems" aria-hidden="true" tabindex="-1">#</a>Famous NP-complete problems</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SAT / 3-SAT</td>
+<td>Can the Boolean formula be made true?</td>
+</tr>
+<tr>
+<td>Clique</td>
+<td>Does the graph contain k mutually adjacent vertices?</td>
+</tr>
+<tr>
+<td>Vertex cover</td>
+<td>Can k vertices touch every edge?</td>
+</tr>
+<tr>
+<td>Independent set</td>
+<td>Are there k pairwise non-adjacent vertices?</td>
+</tr>
+<tr>
+<td>Hamiltonian cycle</td>
+<td>Is there a cycle through every vertex exactly once?</td>
+</tr>
+<tr>
+<td>TSP (decision)</td>
+<td>Is there a tour of length ≤ k?</td>
+</tr>
+<tr>
+<td>Graph k-colouring (k ≥ 3)</td>
+<td>Can the graph be coloured with k colours?</td>
+</tr>
+<tr>
+<td>Subset sum, 0/1 knapsack (decision)</td>
+<td>Is there a subset with the required sum/value?</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="p-vs-np"><a class="anchor" href="#p-vs-np" aria-hidden="true" tabindex="-1">#</a>P vs NP</h2>
+<p>Nobody knows whether <strong>P = NP</strong>. If any single NP-complete problem had a polynomial algorithm, <strong>every</strong> NP problem would — so P would equal NP. Most researchers believe P ≠ NP. It is one of the seven Millennium Prize Problems (US $1 million prize).</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 500 236" width="500" height="236" role="img" aria-label="P sits inside NP; NP-complete is the overlap of NP and NP-hard">
+<ellipse cx="335" cy="118" rx="150" ry="104" style="fill:var(--warn-soft);stroke:var(--warn);stroke-width:1.6"/>
+<ellipse cx="160" cy="118" rx="140" ry="96" style="fill:var(--info-soft);fill-opacity:.75;stroke:var(--info);stroke-width:1.6"/>
+<ellipse cx="100" cy="128" rx="58" ry="46" style="fill:var(--good-soft);stroke:var(--good);stroke-width:1.6"/>
+<text class="t lbl" x="100" y="128">P</text>
+<text class="t lbl" x="160" y="44">NP</text>
+<text class="t lbl" x="410" y="118">NP-hard</text>
+<text class="s" x="246" y="110" style="font-weight:650;fill:var(--ink)">NP-</text>
+<text class="s" x="246" y="127" style="font-weight:650;fill:var(--ink)">complete</text>
+</svg><figcaption>The picture if P ≠ NP: P sits inside NP, and the NP-complete problems are where NP overlaps NP-hard, outside P.</figcaption></figure><h2 id="coping-with-np-hard-problems"><a class="anchor" href="#coping-with-np-hard-problems" aria-hidden="true" tabindex="-1">#</a>Coping with NP-hard problems</h2>
+<ol>
+<li><strong>Exact but exponential</strong>: backtracking, branch and bound, DP (fine for small n).</li>
+<li><strong>Approximation algorithms</strong> with guaranteed ratios: e.g. a 2-approximation for vertex cover; for metric TSP, the MST-based tour is at most 2 × optimal.</li>
+<li><strong>Heuristics</strong>: greedy, local search, simulated annealing, genetic algorithms — good answers quickly, no guarantee.</li>
+<li><strong>Special cases</strong>: 2-SAT and 2-colouring are in P; knapsack with small W uses the O(nW) DP.</li>
+</ol>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Definitions to learn word for word</span></div><div class="callout-body"><p><strong>P</strong>: solvable in polynomial time. <strong>NP</strong>: verifiable in polynomial time. <strong>NP-hard</strong>: every NP problem reduces to it in polynomial time. <strong>NP-complete</strong>: in NP and NP-hard. Then give one example of each.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="daa/np-completeness" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does it mean for a problem to be in NP?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It cannot be solved in polynomial time</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A proposed yes-solution can be verified in polynomial time</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It is not a decision problem</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It needs exponential space</span></button></div><div class="q-why" hidden>NP is about efficient verification, not efficient solving.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which was the first problem proved NP-complete?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">SAT (Cook–Levin theorem)</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">TSP</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Sorting</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Graph colouring</span></button></div><div class="q-why" hidden>Cook (1971) and Levin independently showed SAT is NP-complete.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>To prove X is NP-complete, you reduce...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">X to a problem in P</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">a known NP-complete problem to X, and show X is in NP</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">X to sorting</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">nothing; it is enough to find a slow algorithm</span></button></div><div class="q-why" hidden>The reduction shows X is at least as hard as a known NPC problem.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>If someone found a polynomial algorithm for 3-SAT, what would follow?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Only 3-SAT becomes easy</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">P = NP: every NP problem would be solvable in polynomial time</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Nothing, because 3-SAT is in P already</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Sorting would become faster</span></button></div><div class="q-why" hidden>Every NP problem reduces to 3-SAT, so all of NP would collapse into P.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/np-completeness"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/string-matching/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>String Matching</strong></a><a class="next" href="../../daa/cheatsheet/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Algorithms Cheat Sheet</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#decision-problems">Decision problems</a></li><li><a class="d2" href="#the-class-p">The class P</a></li><li><a class="d2" href="#the-class-np">The class NP</a></li><li><a class="d2" href="#reductions">Reductions</a></li><li><a class="d2" href="#np-complete-and-np-hard">NP-complete and NP-hard</a></li><li><a class="d2" href="#famous-np-complete-problems">Famous NP-complete problems</a></li><li><a class="d2" href="#p-vs-np">P vs NP</a></li><li><a class="d2" href="#coping-with-np-hard-problems">Coping with NP-hard problems</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

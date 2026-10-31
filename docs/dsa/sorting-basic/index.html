@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bubble, Selection &amp; Insertion Sort · Data Structures | Bytebook</title>
+<meta name="description" content="The three O(n²) sorts: how each one works, passes and swaps traced by hand, stability, best cases, and when a simple sort is the right choice.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Bubble, Selection &amp; Insertion Sort · Data Structures | Bytebook">
+<meta property="og:description" content="The three O(n²) sorts: how each one works, passes and swaps traced by hand, stability, best cases, and when a simple sort is the right choice.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/sorting-basic" data-title="Bubble, Selection &amp; Insertion Sort" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 19 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Searching &amp; Sorting</p>
+<h1>Bubble, Selection &amp; Insertion Sort</h1>
+<p class="lede">The three O(n²) sorts: how each one works, passes and swaps traced by hand, stability, best cases, and when a simple sort is the right choice.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>3 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p><strong>Sorting</strong> puts elements in order. Sorted data makes searching (binary search), finding duplicates, merging and reporting much easier. We start with three simple sorts that are easy to trace by hand — exactly what exams ask.</p>
+<p>Watch them run on the same data:</p>
+<div class="widget" data-widget="sort" data-opts="{&quot;algos&quot;:&quot;bubble selection insertion&quot;}"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="bubble-sort"><a class="anchor" href="#bubble-sort" aria-hidden="true" tabindex="-1">#</a>Bubble sort</h2>
+<p>Compare <strong>adjacent</strong> pairs and swap if they are in the wrong order. After pass 1 the <strong>largest</strong> element has &quot;bubbled&quot; to the end; after pass 2, the second largest; and so on. If a pass makes no swaps, the array is already sorted and we can stop early.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> { <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, a[i]); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>); }
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">bubbleSort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> pass = <span class="hljs-number">1</span>; pass &lt; n; pass++) {
+        <span class="hljs-type">int</span> swapped = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n - pass; j++)
+            <span class="hljs-keyword">if</span> (a[j] &gt; a[j + <span class="hljs-number">1</span>]) {
+                <span class="hljs-type">int</span> t = a[j]; a[j] = a[j + <span class="hljs-number">1</span>]; a[j + <span class="hljs-number">1</span>] = t;
+                swapped = <span class="hljs-number">1</span>;
+            }
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;after pass %d: &quot;</span>, pass); show(a, n);
+        <span class="hljs-keyword">if</span> (!swapped) <span class="hljs-keyword">break</span>;                 <span class="hljs-comment">// no swaps: already sorted</span>
+    }
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> a[] = {<span class="hljs-number">5</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">8</span>};
+    bubbleSort(a, <span class="hljs-number">5</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>after pass 1: 1 4 2 5 8 
+after pass 2: 1 2 4 5 8 
+after pass 3: 1 2 4 5 8</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgp2b2lkIHNob3coY29uc3QgaW50IGFbXSwgaW50IG4pIHsgZm9yIChpbnQgaSA9IDA7IGkgPCBuOyBpKyspIHByaW50ZigiJWQgIiwgYVtpXSk7IHByaW50ZigiXG4iKTsgfQoKdm9pZCBidWJibGVTb3J0KGludCBhW10sIGludCBuKSB7CiAgICBmb3IgKGludCBwYXNzID0gMTsgcGFzcyA8IG47IHBhc3MrKykgewogICAgICAgIGludCBzd2FwcGVkID0gMDsKICAgICAgICBmb3IgKGludCBqID0gMDsgaiA8IG4gLSBwYXNzOyBqKyspCiAgICAgICAgICAgIGlmIChhW2pdID4gYVtqICsgMV0pIHsKICAgICAgICAgICAgICAgIGludCB0ID0gYVtqXTsgYVtqXSA9IGFbaiArIDFdOyBhW2ogKyAxXSA9IHQ7CiAgICAgICAgICAgICAgICBzd2FwcGVkID0gMTsKICAgICAgICAgICAgfQogICAgICAgIHByaW50ZigiYWZ0ZXIgcGFzcyAlZDogIiwgcGFzcyk7IHNob3coYSwgbik7CiAgICAgICAgaWYgKCFzd2FwcGVkKSBicmVhazsgICAgICAgICAgICAgICAgIC8vIG5vIHN3YXBzOiBhbHJlYWR5IHNvcnRlZAogICAgfQp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgYVtdID0gezUsIDEsIDQsIDIsIDh9OwogICAgYnViYmxlU29ydChhLCA1KTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="selection-sort"><a class="anchor" href="#selection-sort" aria-hidden="true" tabindex="-1">#</a>Selection sort</h2>
+<p>Find the <strong>minimum</strong> of the unsorted part and swap it to the front of that part. Exactly n − 1 swaps — useful when writing to memory is expensive.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> { <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, a[i]); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>); }
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">selectionSort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; i++) {
+        <span class="hljs-type">int</span> min = i;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)
+            <span class="hljs-keyword">if</span> (a[j] &lt; a[min]) min = j;
+        <span class="hljs-type">int</span> t = a[i]; a[i] = a[min]; a[min] = t;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pass %d (placed %d): &quot;</span>, i + <span class="hljs-number">1</span>, a[i]); show(a, n);
+    }
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> a[] = {<span class="hljs-number">64</span>, <span class="hljs-number">25</span>, <span class="hljs-number">12</span>, <span class="hljs-number">22</span>, <span class="hljs-number">11</span>};
+    selectionSort(a, <span class="hljs-number">5</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>pass 1 (placed 11): 11 25 12 22 64 
+pass 2 (placed 12): 11 12 25 22 64 
+pass 3 (placed 22): 11 12 22 25 64 
+pass 4 (placed 25): 11 12 22 25 64</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgp2b2lkIHNob3coY29uc3QgaW50IGFbXSwgaW50IG4pIHsgZm9yIChpbnQgaSA9IDA7IGkgPCBuOyBpKyspIHByaW50ZigiJWQgIiwgYVtpXSk7IHByaW50ZigiXG4iKTsgfQoKdm9pZCBzZWxlY3Rpb25Tb3J0KGludCBhW10sIGludCBuKSB7CiAgICBmb3IgKGludCBpID0gMDsgaSA8IG4gLSAxOyBpKyspIHsKICAgICAgICBpbnQgbWluID0gaTsKICAgICAgICBmb3IgKGludCBqID0gaSArIDE7IGogPCBuOyBqKyspCiAgICAgICAgICAgIGlmIChhW2pdIDwgYVttaW5dKSBtaW4gPSBqOwogICAgICAgIGludCB0ID0gYVtpXTsgYVtpXSA9IGFbbWluXTsgYVttaW5dID0gdDsKICAgICAgICBwcmludGYoInBhc3MgJWQgKHBsYWNlZCAlZCk6ICIsIGkgKyAxLCBhW2ldKTsgc2hvdyhhLCBuKTsKICAgIH0KfQoKaW50IG1haW4odm9pZCkgewogICAgaW50IGFbXSA9IHs2NCwgMjUsIDEyLCAyMiwgMTF9OwogICAgc2VsZWN0aW9uU29ydChhLCA1KTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="insertion-sort"><a class="anchor" href="#insertion-sort" aria-hidden="true" tabindex="-1">#</a>Insertion sort</h2>
+<p>Build the sorted part one element at a time: take the next element (the <strong>key</strong>) and <strong>shift</strong> larger sorted elements right until the key&#39;s place is found — the way you sort playing cards in your hand.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> { <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, a[i]); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>); }
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">insertionSort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-type">int</span> key = a[i], j = i - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span> &amp;&amp; a[j] &gt; key) {
+            a[j + <span class="hljs-number">1</span>] = a[j];                 <span class="hljs-comment">// shift right</span>
+            j--;
+        }
+        a[j + <span class="hljs-number">1</span>] = key;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;insert %2d: &quot;</span>, key); show(a, n);
+    }
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> a[] = {<span class="hljs-number">12</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>};
+    insertionSort(a, <span class="hljs-number">5</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>insert 11: 11 12 13 5 6 
+insert 13: 11 12 13 5 6 
+insert  5: 5 11 12 13 6 
+insert  6: 5 6 11 12 13</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgp2b2lkIHNob3coY29uc3QgaW50IGFbXSwgaW50IG4pIHsgZm9yIChpbnQgaSA9IDA7IGkgPCBuOyBpKyspIHByaW50ZigiJWQgIiwgYVtpXSk7IHByaW50ZigiXG4iKTsgfQoKdm9pZCBpbnNlcnRpb25Tb3J0KGludCBhW10sIGludCBuKSB7CiAgICBmb3IgKGludCBpID0gMTsgaSA8IG47IGkrKykgewogICAgICAgIGludCBrZXkgPSBhW2ldLCBqID0gaSAtIDE7CiAgICAgICAgd2hpbGUgKGogPj0gMCAmJiBhW2pdID4ga2V5KSB7CiAgICAgICAgICAgIGFbaiArIDFdID0gYVtqXTsgICAgICAgICAgICAgICAgIC8vIHNoaWZ0IHJpZ2h0CiAgICAgICAgICAgIGotLTsKICAgICAgICB9CiAgICAgICAgYVtqICsgMV0gPSBrZXk7CiAgICAgICAgcHJpbnRmKCJpbnNlcnQgJTJkOiAiLCBrZXkpOyBzaG93KGEsIG4pOwogICAgfQp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgYVtdID0gezEyLCAxMSwgMTMsIDUsIDZ9OwogICAgaW5zZXJ0aW9uU29ydChhLCA1KTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>On nearly sorted data, insertion sort barely shifts anything and runs in close to <strong>O(n)</strong> — which is why fast library sorts switch to insertion sort for small pieces.</p>
+<h2 id="comparison"><a class="anchor" href="#comparison" aria-hidden="true" tabindex="-1">#</a>Comparison</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Bubble</th>
+<th>Selection</th>
+<th>Insertion</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best case</td>
+<td>O(n) (with early exit)</td>
+<td>O(n²)</td>
+<td><strong>O(n)</strong></td>
+</tr>
+<tr>
+<td>Average / worst</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td>Swaps / writes</td>
+<td>many</td>
+<td><strong>n − 1 swaps</strong></td>
+<td>many shifts</td>
+</tr>
+<tr>
+<td>Extra space</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Stable?</td>
+<td><strong>yes</strong></td>
+<td>no</td>
+<td><strong>yes</strong></td>
+</tr>
+<tr>
+<td>Adaptive (faster on sorted input)?</td>
+<td>yes</td>
+<td>no</td>
+<td><strong>yes</strong></td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-def"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-6-4-6 4z"/></svg><span>Stable sort</span></div><div class="callout-body"><p>A sorting algorithm is <strong>stable</strong> if equal elements keep their original relative order. It matters when sorting records by one field after another — for example by marks, keeping students with equal marks in roll-number order.</p>
+</div></aside>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Trace questions</span></div><div class="callout-body"><p>&quot;Show the array after each pass of bubble sort on 5, 1, 4, 2, 8&quot; — write one row per pass exactly like the program output above. For selection sort, mark the minimum found in each pass; for insertion sort, mark the key being inserted.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="dsa/sorting-basic" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>After the <strong>first</strong> pass of bubble sort on <code>[4, 3, 2, 1]</code>, what is the array?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>[1, 2, 3, 4]</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[3, 2, 1, 4]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>[3, 4, 2, 1]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>[1, 4, 3, 2]</code></span></button></div><div class="q-why" hidden>One pass moves the largest element (4) to the end: 4 swaps past 3, 2 and 1.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which simple sort makes at most n − 1 swaps?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Bubble sort</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Selection sort</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Insertion sort</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">All of them</span></button></div><div class="q-why" hidden>Selection sort does one swap per pass.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which sort is fastest on an already sorted array?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Selection sort</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Insertion sort</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Both are O(n²)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Neither works on sorted input</span></button></div><div class="q-why" hidden>Insertion sort does one comparison per element when nothing needs shifting: O(n).</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which of these is <strong>not</strong> stable?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Bubble sort</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Insertion sort</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Selection sort</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Merge sort</span></button></div><div class="q-why" hidden>Selection sort&#39;s long-distance swap can jump an element past an equal one.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/sorting-basic"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/searching/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Linear &amp; Binary Search</strong></a><a class="next" href="../../dsa/sorting-advanced/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Merge, Quick &amp; Counting Sort</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#bubble-sort">Bubble sort</a></li><li><a class="d2" href="#selection-sort">Selection sort</a></li><li><a class="d2" href="#insertion-sort">Insertion sort</a></li><li><a class="d2" href="#comparison">Comparison</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

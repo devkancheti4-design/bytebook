@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loops: for, while &amp; range · Python | Bytebook</title>
+<meta name="description" content="Iterate with for over any sequence, count with range(), repeat with while, control loops with break, continue and the loop else clause, and write the classic loop programs.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Loops: for, while &amp; range · Python | Bytebook">
+<meta property="og:description" content="Iterate with for over any sequence, count with range(), repeat with while, control loops with break, continue and the loop else clause, and write the classic loop programs.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="python">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python" class="active" aria-current="true"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="python" aria-label="Python Programming lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../python/"><span class="chip" data-c="python">PYTHON</span><strong>Python Programming</strong></a>
+<div class="side-progress" data-course="python" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Python Basics</h4><ol><li><a href="../../python/intro/" data-lesson="python/intro"><span class="tick" aria-hidden="true"></span><span>Python Introduction</span></a></li><li><a href="../../python/variables/" data-lesson="python/variables"><span class="tick" aria-hidden="true"></span><span>Variables &amp; Data Types</span></a></li><li><a href="../../python/operators-input/" data-lesson="python/operators-input"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Input</span></a></li><li><a href="../../python/strings/" data-lesson="python/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../python/conditions/" data-lesson="python/conditions"><span class="tick" aria-hidden="true"></span><span>If, Elif, Else &amp; match</span></a></li><li><a href="../../python/loops/" data-lesson="python/loops" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Loops: for, while &amp; range</span></a></li></ol></div>
+<div class="side-unit"><h4>Data Structures in Python</h4><ol><li><a href="../../python/lists/" data-lesson="python/lists"><span class="tick" aria-hidden="true"></span><span>Lists</span></a></li><li><a href="../../python/tuples-sets/" data-lesson="python/tuples-sets"><span class="tick" aria-hidden="true"></span><span>Tuples &amp; Sets</span></a></li><li><a href="../../python/dictionaries/" data-lesson="python/dictionaries"><span class="tick" aria-hidden="true"></span><span>Dictionaries</span></a></li><li><a href="../../python/comprehensions/" data-lesson="python/comprehensions"><span class="tick" aria-hidden="true"></span><span>Comprehensions</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions &amp; Modules</h4><ol><li><a href="../../python/functions/" data-lesson="python/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../python/lambda-recursion/" data-lesson="python/lambda-recursion"><span class="tick" aria-hidden="true"></span><span>Lambda, map/filter &amp; Recursion</span></a></li><li><a href="../../python/modules/" data-lesson="python/modules"><span class="tick" aria-hidden="true"></span><span>Modules, Packages &amp; the Standard Library</span></a></li></ol></div>
+<div class="side-unit"><h4>Real Programs</h4><ol><li><a href="../../python/files/" data-lesson="python/files"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../python/exceptions/" data-lesson="python/exceptions"><span class="tick" aria-hidden="true"></span><span>Exceptions</span></a></li><li><a href="../../python/oop/" data-lesson="python/oop"><span class="tick" aria-hidden="true"></span><span>Object-Oriented Python</span></a></li><li><a href="../../python/iterators-generators/" data-lesson="python/iterators-generators"><span class="tick" aria-hidden="true"></span><span>Iterators &amp; Generators</span></a></li><li><a href="../../python/cheatsheet/" data-lesson="python/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Python Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../python/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="python/loops" data-title="Loops: for, while &amp; range" data-course-title="Python Programming">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../python/">Python</a><span>/</span><span>Lesson 6 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Control Flow</p>
+<h1>Loops: for, while &amp; range</h1>
+<p class="lede">Iterate with for over any sequence, count with range(), repeat with while, control loops with break, continue and the loop else clause, and write the classic loop programs.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>7 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="for-loops"><a class="anchor" href="#for-loops" aria-hidden="true" tabindex="-1">#</a>for loops</h2>
+<p>Python&#39;s <code>for</code> loops over the items of <strong>any iterable</strong> — a list, string, range, dictionary, file …</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">for</span> subject <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;DSA&quot;</span>, <span class="hljs-string">&quot;Python&quot;</span>]:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Studying&quot;</span>, subject)
+
+<span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;abc&quot;</span>:
+    <span class="hljs-built_in">print</span>(ch.upper(), end=<span class="hljs-string">&quot; &quot;</span>)
+<span class="hljs-built_in">print</span>()</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Studying C
+Studying DSA
+Studying Python
+A B C</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=Zm9yIHN1YmplY3QgaW4gWyJDIiwgIkRTQSIsICJQeXRob24iXToKICAgIHByaW50KCJTdHVkeWluZyIsIHN1YmplY3QpCgpmb3IgY2ggaW4gImFiYyI6CiAgICBwcmludChjaC51cHBlcigpLCBlbmQ9IiAiKQpwcmludCgpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="range"><a class="anchor" href="#range" aria-hidden="true" tabindex="-1">#</a>range()</h2>
+<p><code>range(start, stop, step)</code> produces numbers from <code>start</code> <strong>up to but not including</strong> <code>stop</code>:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>)))           <span class="hljs-comment"># 0..4</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-number">10</span>, <span class="hljs-number">3</span>)))    <span class="hljs-comment"># 2, 5, 8</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">2</span>)))   <span class="hljs-comment"># counting down</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;7 x <span class="hljs-subst">{i}</span> = <span class="hljs-subst">{<span class="hljs-number">7</span> * i}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[0, 1, 2, 3, 4]
+[2, 5, 8]
+[10, 8, 6, 4, 2]
+7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+7 x 4 = 28
+7 x 5 = 35</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=cHJpbnQobGlzdChyYW5nZSg1KSkpICAgICAgICAgICAjIDAuLjQKcHJpbnQobGlzdChyYW5nZSgyLCAxMCwgMykpKSAgICAjIDIsIDUsIDgKcHJpbnQobGlzdChyYW5nZSgxMCwgMCwgLTIpKSkgICAjIGNvdW50aW5nIGRvd24KZm9yIGkgaW4gcmFuZ2UoMSwgNik6CiAgICBwcmludChmIjcgeCB7aX0gPSB7NyAqIGl9IikK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="enumerate-and-zip"><a class="anchor" href="#enumerate-and-zip" aria-hidden="true" tabindex="-1">#</a>enumerate and zip</h2>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">names = [<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-string">&quot;Ravi&quot;</span>, <span class="hljs-string">&quot;Meera&quot;</span>]
+marks = [<span class="hljs-number">91</span>, <span class="hljs-number">78</span>, <span class="hljs-number">85</span>]
+<span class="hljs-keyword">for</span> i, name <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(names, start=<span class="hljs-number">1</span>):
+    <span class="hljs-built_in">print</span>(i, name)
+<span class="hljs-keyword">for</span> name, m <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(names, marks):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{name:<span class="hljs-number">6</span>}</span> <span class="hljs-subst">{m}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1 Asha
+2 Ravi
+3 Meera
+Asha   91
+Ravi   78
+Meera  85</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bmFtZXMgPSBbIkFzaGEiLCAiUmF2aSIsICJNZWVyYSJdCm1hcmtzID0gWzkxLCA3OCwgODVdCmZvciBpLCBuYW1lIGluIGVudW1lcmF0ZShuYW1lcywgc3RhcnQ9MSk6CiAgICBwcmludChpLCBuYW1lKQpmb3IgbmFtZSwgbSBpbiB6aXAobmFtZXMsIG1hcmtzKToKICAgIHByaW50KGYie25hbWU6Nn0ge219IikK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="while-loops"><a class="anchor" href="#while-loops" aria-hidden="true" tabindex="-1">#</a>while loops</h2>
+<p>Use <code>while</code> when you do not know in advance how many times to repeat:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">total = <span class="hljs-number">0</span>
+count = <span class="hljs-number">0</span>
+n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;Number (0 to stop): &quot;</span>))
+<span class="hljs-keyword">while</span> n != <span class="hljs-number">0</span>:
+    total += n
+    count += <span class="hljs-number">1</span>
+    n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;Number (0 to stop): &quot;</span>))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{count}</span> numbers, sum <span class="hljs-subst">{total}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Number (0 to stop): <span class="in">5</span>
+Number (0 to stop): <span class="in">12</span>
+Number (0 to stop): <span class="in">-3</span>
+Number (0 to stop): <span class="in">0</span>
+3 numbers, sum 14</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=python&amp;code=dG90YWwgPSAwCmNvdW50ID0gMApuID0gaW50KGlucHV0KCJOdW1iZXIgKDAgdG8gc3RvcCk6ICIpKQp3aGlsZSBuICE9IDA6CiAgICB0b3RhbCArPSBuCiAgICBjb3VudCArPSAxCiAgICBuID0gaW50KGlucHV0KCJOdW1iZXIgKDAgdG8gc3RvcCk6ICIpKQpwcmludChmIntjb3VudH0gbnVtYmVycywgc3VtIHt0b3RhbH0iKQo&amp;stdin=NQoxMgotMwowCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="break-continue-and-loop-else"><a class="anchor" href="#break-continue-and-loop-else" aria-hidden="true" tabindex="-1">#</a>break, continue and loop-else</h2>
+<ul>
+<li><code>break</code> leaves the loop immediately.</li>
+<li><code>continue</code> skips to the next iteration.</li>
+<li>A loop&#39;s <strong><code>else</code></strong> block runs only if the loop finished <strong>without</strong> <code>break</code> — perfect for searches.</li>
+</ul>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_prime</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">int</span>(n ** <span class="hljs-number">0.5</span>) + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">if</span> n % d == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">break</span>                  <span class="hljs-comment"># found a divisor</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>                <span class="hljs-comment"># no break: no divisor found</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+<span class="hljs-built_in">print</span>([n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">40</span>) <span class="hljs-keyword">if</span> is_prime(n)])
+
+<span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):
+    <span class="hljs-keyword">if</span> n % <span class="hljs-number">3</span> == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">continue</span>
+    <span class="hljs-built_in">print</span>(n, end=<span class="hljs-string">&quot; &quot;</span>)
+<span class="hljs-built_in">print</span>()</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+1 2 4 5 7 8 10</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGlzX3ByaW1lKG4pOgogICAgaWYgbiA8IDI6CiAgICAgICAgcmV0dXJuIEZhbHNlCiAgICBmb3IgZCBpbiByYW5nZSgyLCBpbnQobiAqKiAwLjUpICsgMSk6CiAgICAgICAgaWYgbiAlIGQgPT0gMDoKICAgICAgICAgICAgYnJlYWsgICAgICAgICAgICAgICAgICAjIGZvdW5kIGEgZGl2aXNvcgogICAgZWxzZToKICAgICAgICByZXR1cm4gVHJ1ZSAgICAgICAgICAgICAgICAjIG5vIGJyZWFrOiBubyBkaXZpc29yIGZvdW5kCiAgICByZXR1cm4gRmFsc2UKCnByaW50KFtuIGZvciBuIGluIHJhbmdlKDEsIDQwKSBpZiBpc19wcmltZShuKV0pCgpmb3IgbiBpbiByYW5nZSgxLCAxMSk6CiAgICBpZiBuICUgMyA9PSAwOgogICAgICAgIGNvbnRpbnVlCiAgICBwcmludChuLCBlbmQ9IiAiKQpwcmludCgpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="classic-loop-programs"><a class="anchor" href="#classic-loop-programs" aria-hidden="true" tabindex="-1">#</a>Classic loop programs</h2>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-comment"># Fibonacci</span>
+a, b = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+fib = []
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">12</span>):
+    fib.append(a)
+    a, b = b, a + b
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Fibonacci:&quot;</span>, fib)
+
+<span class="hljs-comment"># Sum of digits and reverse</span>
+n = <span class="hljs-number">40213</span>
+digits = <span class="hljs-number">0</span>
+rev = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+    digits += n % <span class="hljs-number">10</span>
+    rev = rev * <span class="hljs-number">10</span> + n % <span class="hljs-number">10</span>
+    n //= <span class="hljs-number">10</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;digit sum:&quot;</span>, digits, <span class="hljs-string">&quot;reversed:&quot;</span>, rev)
+
+<span class="hljs-comment"># Armstrong numbers</span>
+arm = [n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1000</span>) <span class="hljs-keyword">if</span> n == <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">int</span>(d) ** <span class="hljs-built_in">len</span>(<span class="hljs-built_in">str</span>(n)) <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(n))]
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Armstrong:&quot;</span>, arm)
+
+<span class="hljs-comment"># GCD with Euclid&#x27;s algorithm</span>
+x, y = <span class="hljs-number">84</span>, <span class="hljs-number">36</span>
+<span class="hljs-keyword">while</span> y:
+    x, y = y, x % y
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;gcd(84, 36) =&quot;</span>, x)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Fibonacci: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+digit sum: 10 reversed: 31204
+Armstrong: [1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407]
+gcd(84, 36) = 12</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=IyBGaWJvbmFjY2kKYSwgYiA9IDAsIDEKZmliID0gW10KZm9yIF8gaW4gcmFuZ2UoMTIpOgogICAgZmliLmFwcGVuZChhKQogICAgYSwgYiA9IGIsIGEgKyBiCnByaW50KCJGaWJvbmFjY2k6IiwgZmliKQoKIyBTdW0gb2YgZGlnaXRzIGFuZCByZXZlcnNlCm4gPSA0MDIxMwpkaWdpdHMgPSAwCnJldiA9IDAKd2hpbGUgbiA-IDA6CiAgICBkaWdpdHMgKz0gbiAlIDEwCiAgICByZXYgPSByZXYgKiAxMCArIG4gJSAxMAogICAgbiAvLz0gMTAKcHJpbnQoImRpZ2l0IHN1bToiLCBkaWdpdHMsICJyZXZlcnNlZDoiLCByZXYpCgojIEFybXN0cm9uZyBudW1iZXJzCmFybSA9IFtuIGZvciBuIGluIHJhbmdlKDEsIDEwMDApIGlmIG4gPT0gc3VtKGludChkKSAqKiBsZW4oc3RyKG4pKSBmb3IgZCBpbiBzdHIobikpXQpwcmludCgiQXJtc3Ryb25nOiIsIGFybSkKCiMgR0NEIHdpdGggRXVjbGlkJ3MgYWxnb3JpdGhtCngsIHkgPSA4NCwgMzYKd2hpbGUgeToKICAgIHgsIHkgPSB5LCB4ICUgeQpwcmludCgiZ2NkKDg0LCAzNikgPSIsIHgpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="pattern-printing"><a class="anchor" href="#pattern-printing" aria-hidden="true" tabindex="-1">#</a>Pattern printing</h2>
+<p>String multiplication makes patterns much shorter than in C:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">n = <span class="hljs-number">5</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;* &quot;</span> * i)
+<span class="hljs-built_in">print</span>()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot; &quot;</span> * (n - i) + <span class="hljs-string">&quot;*&quot;</span> * (<span class="hljs-number">2</span> * i - <span class="hljs-number">1</span>))
+<span class="hljs-built_in">print</span>()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot; &quot;</span>.join(<span class="hljs-built_in">str</span>(j) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, i + <span class="hljs-number">1</span>)))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>* 
+* * 
+* * * 
+* * * * 
+* * * * * 
+
+    *
+   ***
+  *****
+ *******
+*********
+
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=biA9IDUKZm9yIGkgaW4gcmFuZ2UoMSwgbiArIDEpOgogICAgcHJpbnQoIiogIiAqIGkpCnByaW50KCkKZm9yIGkgaW4gcmFuZ2UoMSwgbiArIDEpOgogICAgcHJpbnQoIiAiICogKG4gLSBpKSArICIqIiAqICgyICogaSAtIDEpKQpwcmludCgpCmZvciBpIGluIHJhbmdlKDEsIG4gKyAxKToKICAgIHByaW50KCIgIi5qb2luKHN0cihqKSBmb3IgaiBpbiByYW5nZSgxLCBpICsgMSkpKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Python style</span></div><div class="callout-body"><p>Loop directly over items (<code>for name in names</code>) rather than indexes (<code>for i in range(len(names))</code>). Use <code>enumerate</code> when you also need the index.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="python/loops" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does <code>list(range(3, 12, 4))</code> produce?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>[3, 7, 11, 15]</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[3, 7, 11]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>[3, 4, 5, …, 11]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>[4, 8]</code></span></button></div><div class="q-why" hidden>Start at 3, step 4, stop before 12.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>When does a <code>for</code> loop&#39;s <code>else</code> block run?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">When the loop body raises an error</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Every time the loop runs</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">When the loop finishes without hitting <code>break</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Only when the loop never runs</span></button></div><div class="q-why" hidden><code>else</code> on a loop means &quot;completed normally&quot;.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>How many times does this print?</p>
+<figure class="code" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">i = <span class="hljs-number">10</span>
+<span class="hljs-keyword">while</span> i &gt; <span class="hljs-number">0</span>:
+    <span class="hljs-built_in">print</span>(i)
+    i -= <span class="hljs-number">3</span></code></pre></figure>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">3</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">10</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Infinite</span></button></div><div class="q-why" hidden><code>i</code> takes the values 10, 7, 4 and 1.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What does <code>print(&quot;ab&quot; * 3)</code> output?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>ab3</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>ababab</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>aaabbb</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">An error</span></button></div><div class="q-why" hidden>Multiplying a string repeats it.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="python/loops"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../python/conditions/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>If, Elif, Else &amp; match</strong></a><a class="next" href="../../python/lists/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Lists</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#for-loops">for loops</a></li><li><a class="d2" href="#range">range()</a></li><li><a class="d2" href="#enumerate-and-zip">enumerate and zip</a></li><li><a class="d2" href="#while-loops">while loops</a></li><li><a class="d2" href="#break-continue-and-loop-else">break, continue and loop-else</a></li><li><a class="d2" href="#classic-loop-programs">Classic loop programs</a></li><li><a class="d2" href="#pattern-printing">Pattern printing</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

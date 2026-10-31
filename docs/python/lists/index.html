@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lists · Python | Bytebook</title>
+<meta name="description" content="Python&#39;s workhorse collection: creating, indexing and slicing lists, adding and removing items, sorting, copying, 2D lists and the list methods you will use daily.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Lists · Python | Bytebook">
+<meta property="og:description" content="Python&#39;s workhorse collection: creating, indexing and slicing lists, adding and removing items, sorting, copying, 2D lists and the list methods you will use daily.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="python">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python" class="active" aria-current="true"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="python" aria-label="Python Programming lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../python/"><span class="chip" data-c="python">PYTHON</span><strong>Python Programming</strong></a>
+<div class="side-progress" data-course="python" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Python Basics</h4><ol><li><a href="../../python/intro/" data-lesson="python/intro"><span class="tick" aria-hidden="true"></span><span>Python Introduction</span></a></li><li><a href="../../python/variables/" data-lesson="python/variables"><span class="tick" aria-hidden="true"></span><span>Variables &amp; Data Types</span></a></li><li><a href="../../python/operators-input/" data-lesson="python/operators-input"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Input</span></a></li><li><a href="../../python/strings/" data-lesson="python/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../python/conditions/" data-lesson="python/conditions"><span class="tick" aria-hidden="true"></span><span>If, Elif, Else &amp; match</span></a></li><li><a href="../../python/loops/" data-lesson="python/loops"><span class="tick" aria-hidden="true"></span><span>Loops: for, while &amp; range</span></a></li></ol></div>
+<div class="side-unit"><h4>Data Structures in Python</h4><ol><li><a href="../../python/lists/" data-lesson="python/lists" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Lists</span></a></li><li><a href="../../python/tuples-sets/" data-lesson="python/tuples-sets"><span class="tick" aria-hidden="true"></span><span>Tuples &amp; Sets</span></a></li><li><a href="../../python/dictionaries/" data-lesson="python/dictionaries"><span class="tick" aria-hidden="true"></span><span>Dictionaries</span></a></li><li><a href="../../python/comprehensions/" data-lesson="python/comprehensions"><span class="tick" aria-hidden="true"></span><span>Comprehensions</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions &amp; Modules</h4><ol><li><a href="../../python/functions/" data-lesson="python/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../python/lambda-recursion/" data-lesson="python/lambda-recursion"><span class="tick" aria-hidden="true"></span><span>Lambda, map/filter &amp; Recursion</span></a></li><li><a href="../../python/modules/" data-lesson="python/modules"><span class="tick" aria-hidden="true"></span><span>Modules, Packages &amp; the Standard Library</span></a></li></ol></div>
+<div class="side-unit"><h4>Real Programs</h4><ol><li><a href="../../python/files/" data-lesson="python/files"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../python/exceptions/" data-lesson="python/exceptions"><span class="tick" aria-hidden="true"></span><span>Exceptions</span></a></li><li><a href="../../python/oop/" data-lesson="python/oop"><span class="tick" aria-hidden="true"></span><span>Object-Oriented Python</span></a></li><li><a href="../../python/iterators-generators/" data-lesson="python/iterators-generators"><span class="tick" aria-hidden="true"></span><span>Iterators &amp; Generators</span></a></li><li><a href="../../python/cheatsheet/" data-lesson="python/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Python Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../python/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="python/lists" data-title="Lists" data-course-title="Python Programming">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../python/">Python</a><span>/</span><span>Lesson 7 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Data Structures in Python</p>
+<h1>Lists</h1>
+<p class="lede">Python&#39;s workhorse collection: creating, indexing and slicing lists, adding and removing items, sorting, copying, 2D lists and the list methods you will use daily.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>6 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>list</strong> is an ordered, <strong>mutable</strong> collection that can hold items of any type. It is a dynamic array underneath — like C++&#39;s <code>vector</code>.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">marks = [<span class="hljs-number">78</span>, <span class="hljs-number">92</span>, <span class="hljs-number">65</span>, <span class="hljs-number">88</span>]
+mixed = [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;two&quot;</span>, <span class="hljs-number">3.0</span>, <span class="hljs-literal">True</span>, [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]
+empty = []
+<span class="hljs-built_in">print</span>(marks[<span class="hljs-number">0</span>], marks[-<span class="hljs-number">1</span>], marks[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>], <span class="hljs-built_in">len</span>(marks))
+marks[<span class="hljs-number">2</span>] = <span class="hljs-number">70</span>                   <span class="hljs-comment"># lists are mutable</span>
+<span class="hljs-built_in">print</span>(marks)
+<span class="hljs-built_in">print</span>(mixed[<span class="hljs-number">4</span>][<span class="hljs-number">1</span>])              <span class="hljs-comment"># a list inside a list</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>78 88 [92, 65] 4
+[78, 92, 70, 88]
+6</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bWFya3MgPSBbNzgsIDkyLCA2NSwgODhdCm1peGVkID0gWzEsICJ0d28iLCAzLjAsIFRydWUsIFs1LCA2XV0KZW1wdHkgPSBbXQpwcmludChtYXJrc1swXSwgbWFya3NbLTFdLCBtYXJrc1sxOjNdLCBsZW4obWFya3MpKQptYXJrc1syXSA9IDcwICAgICAgICAgICAgICAgICAgICMgbGlzdHMgYXJlIG11dGFibGUKcHJpbnQobWFya3MpCnByaW50KG1peGVkWzRdWzFdKSAgICAgICAgICAgICAgIyBhIGxpc3QgaW5zaWRlIGEgbGlzdAo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="adding-and-removing"><a class="anchor" href="#adding-and-removing" aria-hidden="true" tabindex="-1">#</a>Adding and removing</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>append(x)</code></td>
+<td>add <code>x</code> at the end</td>
+</tr>
+<tr>
+<td><code>insert(i, x)</code></td>
+<td>insert <code>x</code> before index <code>i</code></td>
+</tr>
+<tr>
+<td><code>extend(iterable)</code></td>
+<td>add every item of another collection</td>
+</tr>
+<tr>
+<td><code>remove(x)</code></td>
+<td>remove the first occurrence of <code>x</code> (error if absent)</td>
+</tr>
+<tr>
+<td><code>pop()</code> / <code>pop(i)</code></td>
+<td>remove and return the last item / item at <code>i</code></td>
+</tr>
+<tr>
+<td><code>clear()</code></td>
+<td>remove everything</td>
+</tr>
+<tr>
+<td><code>del lst[i]</code>, <code>del lst[a:b]</code></td>
+<td>delete by index or slice</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">cart = [<span class="hljs-string">&quot;pen&quot;</span>, <span class="hljs-string">&quot;notebook&quot;</span>]
+cart.append(<span class="hljs-string">&quot;eraser&quot;</span>)
+cart.insert(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;pencil&quot;</span>)
+cart.extend([<span class="hljs-string">&quot;ruler&quot;</span>, <span class="hljs-string">&quot;glue&quot;</span>])
+<span class="hljs-built_in">print</span>(cart)
+cart.remove(<span class="hljs-string">&quot;glue&quot;</span>)
+last = cart.pop()
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;popped&quot;</span>, last, <span class="hljs-string">&quot;-&gt;&quot;</span>, cart)
+<span class="hljs-keyword">del</span> cart[<span class="hljs-number">0</span>]
+<span class="hljs-built_in">print</span>(cart, <span class="hljs-string">&quot;pencil&quot;</span> <span class="hljs-keyword">in</span> cart, cart.index(<span class="hljs-string">&quot;eraser&quot;</span>))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[&#39;pen&#39;, &#39;pencil&#39;, &#39;notebook&#39;, &#39;eraser&#39;, &#39;ruler&#39;, &#39;glue&#39;]
+popped ruler -&gt; [&#39;pen&#39;, &#39;pencil&#39;, &#39;notebook&#39;, &#39;eraser&#39;]
+[&#39;pencil&#39;, &#39;notebook&#39;, &#39;eraser&#39;] True 2</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=Y2FydCA9IFsicGVuIiwgIm5vdGVib29rIl0KY2FydC5hcHBlbmQoImVyYXNlciIpCmNhcnQuaW5zZXJ0KDEsICJwZW5jaWwiKQpjYXJ0LmV4dGVuZChbInJ1bGVyIiwgImdsdWUiXSkKcHJpbnQoY2FydCkKY2FydC5yZW1vdmUoImdsdWUiKQpsYXN0ID0gY2FydC5wb3AoKQpwcmludCgicG9wcGVkIiwgbGFzdCwgIi0-IiwgY2FydCkKZGVsIGNhcnRbMF0KcHJpbnQoY2FydCwgInBlbmNpbCIgaW4gY2FydCwgY2FydC5pbmRleCgiZXJhc2VyIikpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="sorting-and-searching"><a class="anchor" href="#sorting-and-searching" aria-hidden="true" tabindex="-1">#</a>Sorting and searching</h2>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">nums = [<span class="hljs-number">42</span>, <span class="hljs-number">7</span>, <span class="hljs-number">19</span>, <span class="hljs-number">7</span>, <span class="hljs-number">88</span>, <span class="hljs-number">3</span>]
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(nums))                  <span class="hljs-comment"># new sorted list; nums unchanged</span>
+nums.sort(reverse=<span class="hljs-literal">True</span>)              <span class="hljs-comment"># sorts in place</span>
+<span class="hljs-built_in">print</span>(nums)
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">min</span>(nums), <span class="hljs-built_in">max</span>(nums), <span class="hljs-built_in">sum</span>(nums), nums.count(<span class="hljs-number">7</span>))
+
+students = [(<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-number">88</span>), (<span class="hljs-string">&quot;Ravi&quot;</span>, <span class="hljs-number">95</span>), (<span class="hljs-string">&quot;Meera&quot;</span>, <span class="hljs-number">88</span>)]
+students.sort(key=<span class="hljs-keyword">lambda</span> s: (-s[<span class="hljs-number">1</span>], s[<span class="hljs-number">0</span>]))     <span class="hljs-comment"># marks descending, then name</span>
+<span class="hljs-built_in">print</span>(students)
+
+words = [<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-string">&quot;Cherry&quot;</span>, <span class="hljs-string">&quot;fig&quot;</span>]
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(words))                  <span class="hljs-comment"># uppercase sorts before lowercase</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(words, key=<span class="hljs-built_in">str</span>.lower))   <span class="hljs-comment"># case-insensitive</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(words, key=<span class="hljs-built_in">len</span>))         <span class="hljs-comment"># by length (ties keep their order)</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[3, 7, 7, 19, 42, 88]
+[88, 42, 19, 7, 7, 3]
+3 88 166 2
+[(&#39;Ravi&#39;, 95), (&#39;Asha&#39;, 88), (&#39;Meera&#39;, 88)]
+[&#39;Cherry&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;fig&#39;]
+[&#39;apple&#39;, &#39;banana&#39;, &#39;Cherry&#39;, &#39;fig&#39;]
+[&#39;fig&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;Cherry&#39;]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=bnVtcyA9IFs0MiwgNywgMTksIDcsIDg4LCAzXQpwcmludChzb3J0ZWQobnVtcykpICAgICAgICAgICAgICAgICAgIyBuZXcgc29ydGVkIGxpc3Q7IG51bXMgdW5jaGFuZ2VkCm51bXMuc29ydChyZXZlcnNlPVRydWUpICAgICAgICAgICAgICAjIHNvcnRzIGluIHBsYWNlCnByaW50KG51bXMpCnByaW50KG1pbihudW1zKSwgbWF4KG51bXMpLCBzdW0obnVtcyksIG51bXMuY291bnQoNykpCgpzdHVkZW50cyA9IFsoIkFzaGEiLCA4OCksICgiUmF2aSIsIDk1KSwgKCJNZWVyYSIsIDg4KV0Kc3R1ZGVudHMuc29ydChrZXk9bGFtYmRhIHM6ICgtc1sxXSwgc1swXSkpICAgICAjIG1hcmtzIGRlc2NlbmRpbmcsIHRoZW4gbmFtZQpwcmludChzdHVkZW50cykKCndvcmRzID0gWyJiYW5hbmEiLCAiYXBwbGUiLCAiQ2hlcnJ5IiwgImZpZyJdCnByaW50KHNvcnRlZCh3b3JkcykpICAgICAgICAgICAgICAgICAgIyB1cHBlcmNhc2Ugc29ydHMgYmVmb3JlIGxvd2VyY2FzZQpwcmludChzb3J0ZWQod29yZHMsIGtleT1zdHIubG93ZXIpKSAgICMgY2FzZS1pbnNlbnNpdGl2ZQpwcmludChzb3J0ZWQod29yZHMsIGtleT1sZW4pKSAgICAgICAgICMgYnkgbGVuZ3RoICh0aWVzIGtlZXAgdGhlaXIgb3JkZXIpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="lists-are-references-copying-correctly"><a class="anchor" href="#lists-are-references-copying-correctly" aria-hidden="true" tabindex="-1">#</a>Lists are references: copying correctly</h2>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]]
+b = a                 <span class="hljs-comment"># same list</span>
+c = a[:]              <span class="hljs-comment"># shallow copy (also list(a) or a.copy())</span>
+<span class="hljs-keyword">import</span> copy
+d = copy.deepcopy(a)  <span class="hljs-comment"># copies nested lists too</span>
+
+a[<span class="hljs-number">0</span>] = <span class="hljs-number">100</span>
+a[<span class="hljs-number">2</span>].append(<span class="hljs-number">5</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;a&quot;</span>, a)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;b&quot;</span>, b)         <span class="hljs-comment"># sees everything</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;c&quot;</span>, c)         <span class="hljs-comment"># own outer list, but shares the inner list</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;d&quot;</span>, d)         <span class="hljs-comment"># fully independent</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>a [100, 2, [3, 4, 5]]
+b [100, 2, [3, 4, 5]]
+c [1, 2, [3, 4, 5]]
+d [1, 2, [3, 4]]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=YSA9IFsxLCAyLCBbMywgNF1dCmIgPSBhICAgICAgICAgICAgICAgICAjIHNhbWUgbGlzdApjID0gYVs6XSAgICAgICAgICAgICAgIyBzaGFsbG93IGNvcHkgKGFsc28gbGlzdChhKSBvciBhLmNvcHkoKSkKaW1wb3J0IGNvcHkKZCA9IGNvcHkuZGVlcGNvcHkoYSkgICMgY29waWVzIG5lc3RlZCBsaXN0cyB0b28KCmFbMF0gPSAxMDAKYVsyXS5hcHBlbmQoNSkKcHJpbnQoImEiLCBhKQpwcmludCgiYiIsIGIpICAgICAgICAgIyBzZWVzIGV2ZXJ5dGhpbmcKcHJpbnQoImMiLCBjKSAgICAgICAgICMgb3duIG91dGVyIGxpc3QsIGJ1dCBzaGFyZXMgdGhlIGlubmVyIGxpc3QKcHJpbnQoImQiLCBkKSAgICAgICAgICMgZnVsbHkgaW5kZXBlbmRlbnQK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="2d-lists"><a class="anchor" href="#2d-lists" aria-hidden="true" tabindex="-1">#</a>2D lists</h2>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">rows, cols = <span class="hljs-number">3</span>, <span class="hljs-number">4</span>
+grid = [[<span class="hljs-number">0</span>] * cols <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(rows)]      <span class="hljs-comment"># correct way</span>
+grid[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] = <span class="hljs-number">9</span>
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> grid:
+    <span class="hljs-built_in">print</span>(row)
+
+wrong = [[<span class="hljs-number">0</span>] * cols] * rows                   <span class="hljs-comment"># three references to ONE row!</span>
+wrong[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] = <span class="hljs-number">9</span>
+<span class="hljs-built_in">print</span>(wrong)
+
+matrix = [[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]
+transpose = [<span class="hljs-built_in">list</span>(col) <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(*matrix)]
+<span class="hljs-built_in">print</span>(transpose)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[0, 0, 0, 0]
+[0, 0, 9, 0]
+[0, 0, 0, 0]
+[[0, 0, 9, 0], [0, 0, 9, 0], [0, 0, 9, 0]]
+[[1, 4], [2, 5], [3, 6]]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=cm93cywgY29scyA9IDMsIDQKZ3JpZCA9IFtbMF0gKiBjb2xzIGZvciBfIGluIHJhbmdlKHJvd3MpXSAgICAgICMgY29ycmVjdCB3YXkKZ3JpZFsxXVsyXSA9IDkKZm9yIHJvdyBpbiBncmlkOgogICAgcHJpbnQocm93KQoKd3JvbmcgPSBbWzBdICogY29sc10gKiByb3dzICAgICAgICAgICAgICAgICAgICMgdGhyZWUgcmVmZXJlbmNlcyB0byBPTkUgcm93IQp3cm9uZ1sxXVsyXSA9IDkKcHJpbnQod3JvbmcpCgptYXRyaXggPSBbWzEsIDIsIDNdLCBbNCwgNSwgNl1dCnRyYW5zcG9zZSA9IFtsaXN0KGNvbCkgZm9yIGNvbCBpbiB6aXAoKm1hdHJpeCldCnByaW50KHRyYW5zcG9zZSkK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>[[0] * n] * m</span></div><div class="callout-body"><p>Multiplying a list of lists copies the <strong>reference</strong>, so every row is the same object. Build 2D lists with a comprehension: <code>[[0] * n for _ in range(m)]</code>.</p>
+</div></aside>
+<h2 id="using-a-list-as-a-stack-or-queue"><a class="anchor" href="#using-a-list-as-a-stack-or-queue" aria-hidden="true" tabindex="-1">#</a>Using a list as a stack or queue</h2>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">stack = []
+stack.append(<span class="hljs-number">1</span>); stack.append(<span class="hljs-number">2</span>); stack.append(<span class="hljs-number">3</span>)
+<span class="hljs-built_in">print</span>(stack.pop(), stack.pop())           <span class="hljs-comment"># LIFO: 3 2</span>
+
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+queue = deque([<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>])
+queue.append(<span class="hljs-string">&quot;c&quot;</span>)
+<span class="hljs-built_in">print</span>(queue.popleft(), queue.popleft())   <span class="hljs-comment"># FIFO: a b — O(1) at both ends</span></code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>3 2
+a b</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=c3RhY2sgPSBbXQpzdGFjay5hcHBlbmQoMSk7IHN0YWNrLmFwcGVuZCgyKTsgc3RhY2suYXBwZW5kKDMpCnByaW50KHN0YWNrLnBvcCgpLCBzdGFjay5wb3AoKSkgICAgICAgICAgICMgTElGTzogMyAyCgpmcm9tIGNvbGxlY3Rpb25zIGltcG9ydCBkZXF1ZQpxdWV1ZSA9IGRlcXVlKFsiYSIsICJiIl0pCnF1ZXVlLmFwcGVuZCgiYyIpCnByaW50KHF1ZXVlLnBvcGxlZnQoKSwgcXVldWUucG9wbGVmdCgpKSAgICMgRklGTzogYSBiIOKAlCBPKDEpIGF0IGJvdGggZW5kcwo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p><code>list.pop(0)</code> also works as a queue, but it is O(n) because every element shifts. Use <code>collections.deque</code> for queues.</p>
+<h2 id="list-operation-costs"><a class="anchor" href="#list-operation-costs" aria-hidden="true" tabindex="-1">#</a>List operation costs</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>lst[i]</code>, <code>lst[i] = x</code>, <code>len(lst)</code></td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>append</code>, <code>pop()</code></td>
+<td>O(1) amortised</td>
+</tr>
+<tr>
+<td><code>insert(0, x)</code>, <code>pop(0)</code>, <code>remove(x)</code></td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>x in lst</code>, <code>index</code>, <code>count</code></td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>sort()</code> (Timsort)</td>
+<td>O(n log n)</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="python/lists" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is <code>[10, 20, 30, 40][1:3]</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>[10, 20]</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[20, 30]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>[20, 30, 40]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>[30, 40]</code></span></button></div><div class="q-why" hidden>Slices include the start index and stop before the end index.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What is the difference between <code>lst.sort()</code> and <code>sorted(lst)</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>sort()</code> changes the list in place and returns <code>None</code>; <code>sorted()</code> returns a new list</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">They are identical</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>sorted()</code> only works on numbers</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>sort()</code> returns a new list</span></button></div><div class="q-why" hidden>A classic bug: <code>lst = lst.sort()</code> sets <code>lst</code> to <code>None</code>.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>After <code>a = [1, 2]; b = a; b += [3]</code>, what is <code>a</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>[1, 2]</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[1, 2, 3]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>[3]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">An error</span></button></div><div class="q-why" hidden><code>+=</code> on a list extends it in place, and <code>a</code> and <code>b</code> are the same list.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Which is the best way to implement a queue with fast removal from the front?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>list.pop(0)</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>collections.deque.popleft()</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>list.remove(lst[0])</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>del lst[-1]</code></span></button></div><div class="q-why" hidden><code>deque</code> removes from either end in O(1).</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="python/lists"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../python/loops/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Loops: for, while &amp; range</strong></a><a class="next" href="../../python/tuples-sets/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Tuples &amp; Sets</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#adding-and-removing">Adding and removing</a></li><li><a class="d2" href="#sorting-and-searching">Sorting and searching</a></li><li><a class="d2" href="#lists-are-references-copying-correctly">Lists are references: copying correctly</a></li><li><a class="d2" href="#2d-lists">2D lists</a></li><li><a class="d2" href="#using-a-list-as-a-stack-or-queue">Using a list as a stack or queue</a></li><li><a class="d2" href="#list-operation-costs">List operation costs</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

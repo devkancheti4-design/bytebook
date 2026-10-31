@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stack Applications · Data Structures | Bytebook</title>
+<meta name="description" content="Balanced brackets, infix to postfix conversion and postfix evaluation — the three stack algorithms every CSE 102 exam asks you to trace.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Stack Applications · Data Structures | Bytebook">
+<meta property="og:description" content="Balanced brackets, infix to postfix conversion and postfix evaluation — the three stack algorithms every CSE 102 exam asks you to trace.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="dsa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa" class="active" aria-current="true"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="dsa" aria-label="Data Structures lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../dsa/"><span class="chip" data-c="dsa">CSE 102</span><strong>Data Structures</strong></a>
+<div class="side-progress" data-course="dsa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Foundations</h4><ol><li><a href="../../dsa/intro/" data-lesson="dsa/intro"><span class="tick" aria-hidden="true"></span><span>Introduction to Data Structures</span></a></li><li><a href="../../dsa/complexity/" data-lesson="dsa/complexity"><span class="tick" aria-hidden="true"></span><span>Time &amp; Space Complexity</span></a></li><li><a href="../../dsa/arrays-ds/" data-lesson="dsa/arrays-ds"><span class="tick" aria-hidden="true"></span><span>Arrays as a Data Structure</span></a></li></ol></div>
+<div class="side-unit"><h4>Linked Lists</h4><ol><li><a href="../../dsa/singly-linked-list/" data-lesson="dsa/singly-linked-list"><span class="tick" aria-hidden="true"></span><span>Singly Linked List</span></a></li><li><a href="../../dsa/linked-list-problems/" data-lesson="dsa/linked-list-problems"><span class="tick" aria-hidden="true"></span><span>Linked List Problems</span></a></li><li><a href="../../dsa/doubly-circular/" data-lesson="dsa/doubly-circular"><span class="tick" aria-hidden="true"></span><span>Doubly &amp; Circular Linked Lists</span></a></li></ol></div>
+<div class="side-unit"><h4>Stacks &amp; Queues</h4><ol><li><a href="../../dsa/stack/" data-lesson="dsa/stack"><span class="tick" aria-hidden="true"></span><span>Stack</span></a></li><li><a href="../../dsa/stack-applications/" data-lesson="dsa/stack-applications" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Stack Applications</span></a></li><li><a href="../../dsa/queue/" data-lesson="dsa/queue"><span class="tick" aria-hidden="true"></span><span>Queue &amp; Circular Queue</span></a></li><li><a href="../../dsa/deque-priority/" data-lesson="dsa/deque-priority"><span class="tick" aria-hidden="true"></span><span>Deque &amp; Priority Queue</span></a></li></ol></div>
+<div class="side-unit"><h4>Trees</h4><ol><li><a href="../../dsa/trees/" data-lesson="dsa/trees"><span class="tick" aria-hidden="true"></span><span>Trees &amp; Binary Trees</span></a></li><li><a href="../../dsa/bst/" data-lesson="dsa/bst"><span class="tick" aria-hidden="true"></span><span>Binary Search Tree</span></a></li><li><a href="../../dsa/avl/" data-lesson="dsa/avl"><span class="tick" aria-hidden="true"></span><span>AVL Trees</span></a></li><li><a href="../../dsa/heaps/" data-lesson="dsa/heaps"><span class="tick" aria-hidden="true"></span><span>Heaps &amp; Heap Sort</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs &amp; Hashing</h4><ol><li><a href="../../dsa/graphs/" data-lesson="dsa/graphs"><span class="tick" aria-hidden="true"></span><span>Graphs: Terminology &amp; Representation</span></a></li><li><a href="../../dsa/bfs-dfs/" data-lesson="dsa/bfs-dfs"><span class="tick" aria-hidden="true"></span><span>Graph Traversal: BFS &amp; DFS</span></a></li><li><a href="../../dsa/hashing/" data-lesson="dsa/hashing"><span class="tick" aria-hidden="true"></span><span>Hashing</span></a></li></ol></div>
+<div class="side-unit"><h4>Searching &amp; Sorting</h4><ol><li><a href="../../dsa/searching/" data-lesson="dsa/searching"><span class="tick" aria-hidden="true"></span><span>Linear &amp; Binary Search</span></a></li><li><a href="../../dsa/sorting-basic/" data-lesson="dsa/sorting-basic"><span class="tick" aria-hidden="true"></span><span>Bubble, Selection &amp; Insertion Sort</span></a></li><li><a href="../../dsa/sorting-advanced/" data-lesson="dsa/sorting-advanced"><span class="tick" aria-hidden="true"></span><span>Merge, Quick &amp; Counting Sort</span></a></li><li><a href="../../dsa/cheatsheet/" data-lesson="dsa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Data Structures Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../dsa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="dsa/stack-applications" data-title="Stack Applications" data-course-title="Data Structures">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../dsa/">Data Structures</a><span>/</span><span>Lesson 8 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Stacks &amp; Queues</p>
+<h1>Stack Applications</h1>
+<p class="lede">Balanced brackets, infix to postfix conversion and postfix evaluation — the three stack algorithms every CSE 102 exam asks you to trace.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>6 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>3 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="1-balanced-brackets"><a class="anchor" href="#1-balanced-brackets" aria-hidden="true" tabindex="-1">#</a>1. Balanced brackets</h2>
+<p>Every opening bracket must be closed by the matching bracket <strong>in the right order</strong>. Push each opener; on each closer, pop and check it matches.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">isBalanced</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s)</span> {
+    <span class="hljs-type">char</span> st[<span class="hljs-number">100</span>];
+    <span class="hljs-type">int</span> top = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; s[i]; i++) {
+        <span class="hljs-type">char</span> c = s[i];
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;(&#x27;</span> || c == <span class="hljs-string">&#x27;[&#x27;</span> || c == <span class="hljs-string">&#x27;{&#x27;</span>) st[++top] = c;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;)&#x27;</span> || c == <span class="hljs-string">&#x27;]&#x27;</span> || c == <span class="hljs-string">&#x27;}&#x27;</span>) {
+            <span class="hljs-keyword">if</span> (top == <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;                       <span class="hljs-comment">// closer with nothing open</span>
+            <span class="hljs-type">char</span> o = st[top--];
+            <span class="hljs-keyword">if</span> ((c == <span class="hljs-string">&#x27;)&#x27;</span> &amp;&amp; o != <span class="hljs-string">&#x27;(&#x27;</span>) || (c == <span class="hljs-string">&#x27;]&#x27;</span> &amp;&amp; o != <span class="hljs-string">&#x27;[&#x27;</span>) || (c == <span class="hljs-string">&#x27;}&#x27;</span> &amp;&amp; o != <span class="hljs-string">&#x27;{&#x27;</span>)) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> top == <span class="hljs-number">-1</span>;                                      <span class="hljs-comment">// anything left open?</span>
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *tests[] = {<span class="hljs-string">&quot;{[a+b]*(c-d)}&quot;</span>, <span class="hljs-string">&quot;([)]&quot;</span>, <span class="hljs-string">&quot;((x)&quot;</span>, <span class="hljs-string">&quot;a[i] = (b + c) * {d}&quot;</span>};
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%-22s %s\n&quot;</span>, tests[i], isBalanced(tests[i]) ? <span class="hljs-string">&quot;balanced&quot;</span> : <span class="hljs-string">&quot;NOT balanced&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>{[a+b]*(c-d)}          balanced
+([)]                   NOT balanced
+((x)                   NOT balanced
+a[i] = (b + c) * {d}   balanced</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgaXNCYWxhbmNlZChjb25zdCBjaGFyICpzKSB7CiAgICBjaGFyIHN0WzEwMF07CiAgICBpbnQgdG9wID0gLTE7CiAgICBmb3IgKGludCBpID0gMDsgc1tpXTsgaSsrKSB7CiAgICAgICAgY2hhciBjID0gc1tpXTsKICAgICAgICBpZiAoYyA9PSAnKCcgfHwgYyA9PSAnWycgfHwgYyA9PSAneycpIHN0WysrdG9wXSA9IGM7CiAgICAgICAgZWxzZSBpZiAoYyA9PSAnKScgfHwgYyA9PSAnXScgfHwgYyA9PSAnfScpIHsKICAgICAgICAgICAgaWYgKHRvcCA9PSAtMSkgcmV0dXJuIDA7ICAgICAgICAgICAgICAgICAgICAgICAvLyBjbG9zZXIgd2l0aCBub3RoaW5nIG9wZW4KICAgICAgICAgICAgY2hhciBvID0gc3RbdG9wLS1dOwogICAgICAgICAgICBpZiAoKGMgPT0gJyknICYmIG8gIT0gJygnKSB8fCAoYyA9PSAnXScgJiYgbyAhPSAnWycpIHx8IChjID09ICd9JyAmJiBvICE9ICd7JykpIHJldHVybiAwOwogICAgICAgIH0KICAgIH0KICAgIHJldHVybiB0b3AgPT0gLTE7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBhbnl0aGluZyBsZWZ0IG9wZW4_Cn0KCmludCBtYWluKHZvaWQpIHsKICAgIGNvbnN0IGNoYXIgKnRlc3RzW10gPSB7IntbYStiXSooYy1kKX0iLCAiKFspXSIsICIoKHgpIiwgImFbaV0gPSAoYiArIGMpICoge2R9In07CiAgICBmb3IgKGludCBpID0gMDsgaSA8IDQ7IGkrKykKICAgICAgICBwcmludGYoIiUtMjJzICVzXG4iLCB0ZXN0c1tpXSwgaXNCYWxhbmNlZCh0ZXN0c1tpXSkgPyAiYmFsYW5jZWQiIDogIk5PVCBiYWxhbmNlZCIpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="infix-prefix-and-postfix"><a class="anchor" href="#infix-prefix-and-postfix" aria-hidden="true" tabindex="-1">#</a>Infix, prefix and postfix</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Notation</th>
+<th>Operator position</th>
+<th><code>A + B * C</code></th>
+<th>Needs brackets?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Infix</td>
+<td>between operands</td>
+<td><code>A + B * C</code></td>
+<td>yes, plus precedence rules</td>
+</tr>
+<tr>
+<td>Prefix (Polish)</td>
+<td>before operands</td>
+<td><code>+ A * B C</code></td>
+<td>no</td>
+</tr>
+<tr>
+<td>Postfix (Reverse Polish)</td>
+<td>after operands</td>
+<td><code>A B C * +</code></td>
+<td>no</td>
+</tr>
+</tbody></table>
+</div>
+<p>Computers prefer <strong>postfix</strong>: it can be evaluated left to right with one stack and no precedence rules.</p>
+<h2 id="2-infix-to-postfix-shunting-yard"><a class="anchor" href="#2-infix-to-postfix-shunting-yard" aria-hidden="true" tabindex="-1">#</a>2. Infix to postfix (shunting-yard)</h2>
+<p>Scan the infix expression left to right:</p>
+<ol>
+<li><strong>Operand</strong> → write it to the output.</li>
+<li><strong><code>(</code></strong> → push it.</li>
+<li><strong><code>)</code></strong> → pop to the output until the matching <code>(</code>; discard both brackets.</li>
+<li><strong>Operator</strong> → while the stack top is an operator of <strong>higher precedence</strong>, or <strong>equal precedence and left-associative</strong>, pop it to the output. Then push the new operator.</li>
+<li>At the end, pop everything left to the output.</li>
+</ol>
+<p>Precedence: <code>^</code> (highest, right-associative) &gt; <code>* /</code> &gt; <code>+ -</code>.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ctype.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">prec</span><span class="hljs-params">(<span class="hljs-type">char</span> op)</span> {
+    <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;^&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;*&#x27;</span> || op == <span class="hljs-string">&#x27;/&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;+&#x27;</span> || op == <span class="hljs-string">&#x27;-&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">toPostfix</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *in, <span class="hljs-type">char</span> *out)</span> {
+    <span class="hljs-type">char</span> st[<span class="hljs-number">100</span>];
+    <span class="hljs-type">int</span> top = <span class="hljs-number">-1</span>, k = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; in[i]; i++) {
+        <span class="hljs-type">char</span> c = in[i];
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isalnum</span>((<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)c)) out[k++] = c;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;(&#x27;</span>) st[++top] = c;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;)&#x27;</span>) {
+            <span class="hljs-keyword">while</span> (top &gt;= <span class="hljs-number">0</span> &amp;&amp; st[top] != <span class="hljs-string">&#x27;(&#x27;</span>) out[k++] = st[top--];
+            top--;                                            <span class="hljs-comment">// discard &#x27;(&#x27;</span>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (prec(c)) {
+            <span class="hljs-keyword">while</span> (top &gt;= <span class="hljs-number">0</span> &amp;&amp; st[top] != <span class="hljs-string">&#x27;(&#x27;</span> &amp;&amp;
+                   (prec(st[top]) &gt; prec(c) || (prec(st[top]) == prec(c) &amp;&amp; c != <span class="hljs-string">&#x27;^&#x27;</span>)))
+                out[k++] = st[top--];
+            st[++top] = c;
+        }
+    }
+    <span class="hljs-keyword">while</span> (top &gt;= <span class="hljs-number">0</span>) out[k++] = st[top--];
+    out[k] = <span class="hljs-string">&#x27;\0&#x27;</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *exprs[] = {<span class="hljs-string">&quot;A+B*C&quot;</span>, <span class="hljs-string">&quot;(A+B)*C&quot;</span>, <span class="hljs-string">&quot;A+B*C-D/E&quot;</span>, <span class="hljs-string">&quot;A*(B+C)/D&quot;</span>, <span class="hljs-string">&quot;A^B^C&quot;</span>, <span class="hljs-string">&quot;(A-B/C)*(A/K-L)&quot;</span>};
+    <span class="hljs-type">char</span> post[<span class="hljs-number">100</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++) {
+        toPostfix(exprs[i], post);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%-18s -&gt;  %s\n&quot;</span>, exprs[i], post);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>A+B*C              -&gt;  ABC*+
+(A+B)*C            -&gt;  AB+C*
+A+B*C-D/E          -&gt;  ABC*+DE/-
+A*(B+C)/D          -&gt;  ABC+*D/
+A^B^C              -&gt;  ABC^^
+(A-B/C)*(A/K-L)    -&gt;  ABC/-AK/L-*</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxjdHlwZS5oPgoKaW50IHByZWMoY2hhciBvcCkgewogICAgaWYgKG9wID09ICdeJykgcmV0dXJuIDM7CiAgICBpZiAob3AgPT0gJyonIHx8IG9wID09ICcvJykgcmV0dXJuIDI7CiAgICBpZiAob3AgPT0gJysnIHx8IG9wID09ICctJykgcmV0dXJuIDE7CiAgICByZXR1cm4gMDsKfQoKdm9pZCB0b1Bvc3RmaXgoY29uc3QgY2hhciAqaW4sIGNoYXIgKm91dCkgewogICAgY2hhciBzdFsxMDBdOwogICAgaW50IHRvcCA9IC0xLCBrID0gMDsKICAgIGZvciAoaW50IGkgPSAwOyBpbltpXTsgaSsrKSB7CiAgICAgICAgY2hhciBjID0gaW5baV07CiAgICAgICAgaWYgKGlzYWxudW0oKHVuc2lnbmVkIGNoYXIpYykpIG91dFtrKytdID0gYzsKICAgICAgICBlbHNlIGlmIChjID09ICcoJykgc3RbKyt0b3BdID0gYzsKICAgICAgICBlbHNlIGlmIChjID09ICcpJykgewogICAgICAgICAgICB3aGlsZSAodG9wID49IDAgJiYgc3RbdG9wXSAhPSAnKCcpIG91dFtrKytdID0gc3RbdG9wLS1dOwogICAgICAgICAgICB0b3AtLTsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIGRpc2NhcmQgJygnCiAgICAgICAgfSBlbHNlIGlmIChwcmVjKGMpKSB7CiAgICAgICAgICAgIHdoaWxlICh0b3AgPj0gMCAmJiBzdFt0b3BdICE9ICcoJyAmJgogICAgICAgICAgICAgICAgICAgKHByZWMoc3RbdG9wXSkgPiBwcmVjKGMpIHx8IChwcmVjKHN0W3RvcF0pID09IHByZWMoYykgJiYgYyAhPSAnXicpKSkKICAgICAgICAgICAgICAgIG91dFtrKytdID0gc3RbdG9wLS1dOwogICAgICAgICAgICBzdFsrK3RvcF0gPSBjOwogICAgICAgIH0KICAgIH0KICAgIHdoaWxlICh0b3AgPj0gMCkgb3V0W2srK10gPSBzdFt0b3AtLV07CiAgICBvdXRba10gPSAnXDAnOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBjb25zdCBjaGFyICpleHByc1tdID0geyJBK0IqQyIsICIoQStCKSpDIiwgIkErQipDLUQvRSIsICJBKihCK0MpL0QiLCAiQV5CXkMiLCAiKEEtQi9DKSooQS9LLUwpIn07CiAgICBjaGFyIHBvc3RbMTAwXTsKICAgIGZvciAoaW50IGkgPSAwOyBpIDwgNjsgaSsrKSB7CiAgICAgICAgdG9Qb3N0Zml4KGV4cHJzW2ldLCBwb3N0KTsKICAgICAgICBwcmludGYoIiUtMThzIC0-ICAlc1xuIiwgZXhwcnNbaV0sIHBvc3QpOwogICAgfQogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h3 id="tracing-a-b-c-d-e"><a class="anchor" href="#tracing-a-b-c-d-e" aria-hidden="true" tabindex="-1">#</a>Tracing <code>A+B*C-D/E</code></h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Action</th>
+<th>Stack</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>output</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr>
+<td>+</td>
+<td>push</td>
+<td>+</td>
+<td>A</td>
+</tr>
+<tr>
+<td>B</td>
+<td>output</td>
+<td>+</td>
+<td>AB</td>
+</tr>
+<tr>
+<td>*</td>
+<td>higher than +, push</td>
+<td>+ *</td>
+<td>AB</td>
+</tr>
+<tr>
+<td>C</td>
+<td>output</td>
+<td>+ *</td>
+<td>ABC</td>
+</tr>
+<tr>
+<td>-</td>
+<td>pop <code>*</code> and <code>+</code> (≥ precedence), push <code>-</code></td>
+<td>-</td>
+<td>ABC*+</td>
+</tr>
+<tr>
+<td>D</td>
+<td>output</td>
+<td>-</td>
+<td>ABC*+D</td>
+</tr>
+<tr>
+<td>/</td>
+<td>higher than -, push</td>
+<td>- /</td>
+<td>ABC*+D</td>
+</tr>
+<tr>
+<td>E</td>
+<td>output</td>
+<td>- /</td>
+<td>ABC*+DE</td>
+</tr>
+<tr>
+<td>end</td>
+<td>pop all</td>
+<td></td>
+<td>ABC*+DE/-</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>How to score full marks</span></div><div class="callout-body"><p>Draw exactly this three-column table (symbol, stack, postfix) for every step. Examiners award most of the marks for the trace, not just the final answer.</p>
+</div></aside>
+<h2 id="3-evaluating-postfix"><a class="anchor" href="#3-evaluating-postfix" aria-hidden="true" tabindex="-1">#</a>3. Evaluating postfix</h2>
+<p>Scan left to right. Push numbers. On an operator, <strong>pop two</strong> values — the first pop is the <strong>right</strong> operand — apply the operator and push the result.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ctype.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">evalPostfix</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s)</span> {
+    <span class="hljs-type">int</span> st[<span class="hljs-number">100</span>], top = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; s[i]; i++) {
+        <span class="hljs-type">char</span> c = s[i];
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27; &#x27;</span>) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isdigit</span>((<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)c)) {
+            <span class="hljs-type">int</span> num = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (<span class="hljs-built_in">isdigit</span>((<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)s[i])) num = num * <span class="hljs-number">10</span> + (s[i++] - <span class="hljs-string">&#x27;0&#x27;</span>);
+            i--;
+            st[++top] = num;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-type">int</span> b = st[top--], a = st[top--];       <span class="hljs-comment">// b is popped first: the right operand</span>
+            <span class="hljs-keyword">switch</span> (c) {
+                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;+&#x27;</span>: st[++top] = a + b; <span class="hljs-keyword">break</span>;
+                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;-&#x27;</span>: st[++top] = a - b; <span class="hljs-keyword">break</span>;
+                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;*&#x27;</span>: st[++top] = a * b; <span class="hljs-keyword">break</span>;
+                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;/&#x27;</span>: st[++top] = a / b; <span class="hljs-keyword">break</span>;
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> st[top];
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;2 3 1 * + 9 -  = %d\n&quot;</span>, evalPostfix(<span class="hljs-string">&quot;2 3 1 * + 9 -&quot;</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;6 2 / 3 -      = %d\n&quot;</span>, evalPostfix(<span class="hljs-string">&quot;6 2 / 3 -&quot;</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;10 2 8 * + 3 - = %d\n&quot;</span>, evalPostfix(<span class="hljs-string">&quot;10 2 8 * + 3 -&quot;</span>));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>2 3 1 * + 9 -  = -4
+6 2 / 3 -      = 0
+10 2 8 * + 3 - = 23</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CiNpbmNsdWRlIDxjdHlwZS5oPgoKaW50IGV2YWxQb3N0Zml4KGNvbnN0IGNoYXIgKnMpIHsKICAgIGludCBzdFsxMDBdLCB0b3AgPSAtMTsKICAgIGZvciAoaW50IGkgPSAwOyBzW2ldOyBpKyspIHsKICAgICAgICBjaGFyIGMgPSBzW2ldOwogICAgICAgIGlmIChjID09ICcgJykgY29udGludWU7CiAgICAgICAgaWYgKGlzZGlnaXQoKHVuc2lnbmVkIGNoYXIpYykpIHsKICAgICAgICAgICAgaW50IG51bSA9IDA7CiAgICAgICAgICAgIHdoaWxlIChpc2RpZ2l0KCh1bnNpZ25lZCBjaGFyKXNbaV0pKSBudW0gPSBudW0gKiAxMCArIChzW2krK10gLSAnMCcpOwogICAgICAgICAgICBpLS07CiAgICAgICAgICAgIHN0WysrdG9wXSA9IG51bTsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgICBpbnQgYiA9IHN0W3RvcC0tXSwgYSA9IHN0W3RvcC0tXTsgICAgICAgLy8gYiBpcyBwb3BwZWQgZmlyc3Q6IHRoZSByaWdodCBvcGVyYW5kCiAgICAgICAgICAgIHN3aXRjaCAoYykgewogICAgICAgICAgICAgICAgY2FzZSAnKyc6IHN0WysrdG9wXSA9IGEgKyBiOyBicmVhazsKICAgICAgICAgICAgICAgIGNhc2UgJy0nOiBzdFsrK3RvcF0gPSBhIC0gYjsgYnJlYWs7CiAgICAgICAgICAgICAgICBjYXNlICcqJzogc3RbKyt0b3BdID0gYSAqIGI7IGJyZWFrOwogICAgICAgICAgICAgICAgY2FzZSAnLyc6IHN0WysrdG9wXSA9IGEgLyBiOyBicmVhazsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KICAgIHJldHVybiBzdFt0b3BdOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBwcmludGYoIjIgMyAxICogKyA5IC0gID0gJWRcbiIsIGV2YWxQb3N0Zml4KCIyIDMgMSAqICsgOSAtIikpOwogICAgcHJpbnRmKCI2IDIgLyAzIC0gICAgICA9ICVkXG4iLCBldmFsUG9zdGZpeCgiNiAyIC8gMyAtIikpOwogICAgcHJpbnRmKCIxMCAyIDggKiArIDMgLSA9ICVkXG4iLCBldmFsUG9zdGZpeCgiMTAgMiA4ICogKyAzIC0iKSk7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Trace of <code>2 3 1 * + 9 -</code>: push 2, 3, 1 → <code>*</code> pops 1 and 3, pushes 3 → <code>+</code> pops 3 and 2, pushes 5 → push 9 → <code>-</code> pops 9 and 5, pushes 5 − 9 = <strong>−4</strong>.</p>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>Operand order</span></div><div class="callout-body"><p>For <code>-</code> and <code>/</code>, order matters. With postfix <code>6 2 /</code>, the first value popped (2) is the <strong>right</strong> operand: 6 / 2 = 3, not 2 / 6.</p>
+</div></aside>
+<h2 id="prefix-evaluation"><a class="anchor" href="#prefix-evaluation" aria-hidden="true" tabindex="-1">#</a>Prefix evaluation</h2>
+<p>Prefix works the same way but scanning <strong>right to left</strong>, and the first value popped is the <strong>left</strong> operand. Example: <code>- + 2 * 3 1 9</code> evaluates to (2 + 3 × 1) − 9 = −4.</p>
+<section class="quiz" id="quiz" data-quiz="dsa/stack-applications" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is the postfix form of <code>(A + B) * (C - D)</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>A B C D + - *</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>A B + C D - *</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>* + A B - C D</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>A + B C - D *</code></span></button></div><div class="q-why" hidden>Each bracketed part becomes its own postfix group, followed by <code>*</code>.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Evaluate the postfix expression <code>5 1 2 + 4 * + 3 -</code>.</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">12</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">14</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">18</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">10</span></button></div><div class="q-why" hidden>1 + 2 = 3; 3 × 4 = 12; 5 + 12 = 17; 17 − 3 = 14.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which string is <strong>not</strong> balanced?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>{[()]}</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>()[]{}</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>([)]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>((()))</code></span></button></div><div class="q-why" hidden>In <code>([)]</code>, <code>)</code> arrives when <code>[</code> is on top of the stack.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Why is postfix easier for a computer to evaluate than infix?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It needs no brackets or precedence rules — one left-to-right pass with a stack</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">It uses fewer operators</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It is shorter</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Computers can only read postfix</span></button></div><div class="q-why" hidden>Postfix encodes the order of operations in the order of the symbols.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="dsa/stack-applications"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../dsa/stack/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Stack</strong></a><a class="next" href="../../dsa/queue/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Queue &amp; Circular Queue</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#1-balanced-brackets">1. Balanced brackets</a></li><li><a class="d2" href="#infix-prefix-and-postfix">Infix, prefix and postfix</a></li><li><a class="d2" href="#2-infix-to-postfix-shunting-yard">2. Infix to postfix (shunting-yard)</a></li><li><a class="d3" href="#tracing-a-b-c-d-e">Tracing A+B*C-D/E</a></li><li><a class="d2" href="#3-evaluating-postfix">3. Evaluating postfix</a></li><li><a class="d2" href="#prefix-evaluation">Prefix evaluation</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

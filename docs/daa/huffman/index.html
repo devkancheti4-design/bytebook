@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Huffman Coding · Algorithms (DAA) | Bytebook</title>
+<meta name="description" content="Optimal prefix-free codes for data compression: why prefix codes, building the Huffman tree with a min-priority queue, reading off codes, and computing the compressed size.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Huffman Coding · Algorithms (DAA) | Bytebook">
+<meta property="og:description" content="Optimal prefix-free codes for data compression: why prefix codes, building the Huffman tree with a min-priority queue, reading off codes, and computing the compressed size.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="daa">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa" class="active" aria-current="true"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="daa" aria-label="Design and Analysis of Algorithms lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../daa/"><span class="chip" data-c="daa">DAA</span><strong>Design and Analysis of Algorithms</strong></a>
+<div class="side-progress" data-course="daa" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Analysis of Algorithms</h4><ol><li><a href="../../daa/intro/" data-lesson="daa/intro"><span class="tick" aria-hidden="true"></span><span>What Is an Algorithm?</span></a></li><li><a href="../../daa/asymptotic/" data-lesson="daa/asymptotic"><span class="tick" aria-hidden="true"></span><span>Asymptotic Notations</span></a></li><li><a href="../../daa/analyzing-code/" data-lesson="daa/analyzing-code"><span class="tick" aria-hidden="true"></span><span>Analysing Loops &amp; Recursive Code</span></a></li><li><a href="../../daa/recurrences/" data-lesson="daa/recurrences"><span class="tick" aria-hidden="true"></span><span>Solving Recurrences &amp; the Master Theorem</span></a></li></ol></div>
+<div class="side-unit"><h4>Divide and Conquer</h4><ol><li><a href="../../daa/divide-conquer/" data-lesson="daa/divide-conquer"><span class="tick" aria-hidden="true"></span><span>Divide and Conquer</span></a></li><li><a href="../../daa/dc-more/" data-lesson="daa/dc-more"><span class="tick" aria-hidden="true"></span><span>More Divide and Conquer</span></a></li></ol></div>
+<div class="side-unit"><h4>Greedy Algorithms</h4><ol><li><a href="../../daa/greedy/" data-lesson="daa/greedy"><span class="tick" aria-hidden="true"></span><span>The Greedy Method</span></a></li><li><a href="../../daa/huffman/" data-lesson="daa/huffman" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Huffman Coding</span></a></li><li><a href="../../daa/mst/" data-lesson="daa/mst"><span class="tick" aria-hidden="true"></span><span>Minimum Spanning Trees</span></a></li><li><a href="../../daa/shortest-paths/" data-lesson="daa/shortest-paths"><span class="tick" aria-hidden="true"></span><span>Shortest Paths: Dijkstra &amp; Bellman–Ford</span></a></li></ol></div>
+<div class="side-unit"><h4>Dynamic Programming</h4><ol><li><a href="../../daa/dp-intro/" data-lesson="daa/dp-intro"><span class="tick" aria-hidden="true"></span><span>Dynamic Programming</span></a></li><li><a href="../../daa/knapsack/" data-lesson="daa/knapsack"><span class="tick" aria-hidden="true"></span><span>0/1 Knapsack</span></a></li><li><a href="../../daa/lcs/" data-lesson="daa/lcs"><span class="tick" aria-hidden="true"></span><span>Longest Common Subsequence</span></a></li><li><a href="../../daa/matrix-chain/" data-lesson="daa/matrix-chain"><span class="tick" aria-hidden="true"></span><span>Matrix Chain Multiplication</span></a></li><li><a href="../../daa/floyd-warshall/" data-lesson="daa/floyd-warshall"><span class="tick" aria-hidden="true"></span><span>All-Pairs Shortest Paths: Floyd–Warshall</span></a></li></ol></div>
+<div class="side-unit"><h4>Search, Graphs &amp; Complexity</h4><ol><li><a href="../../daa/backtracking/" data-lesson="daa/backtracking"><span class="tick" aria-hidden="true"></span><span>Backtracking</span></a></li><li><a href="../../daa/branch-bound/" data-lesson="daa/branch-bound"><span class="tick" aria-hidden="true"></span><span>Branch and Bound</span></a></li><li><a href="../../daa/graph-algorithms/" data-lesson="daa/graph-algorithms"><span class="tick" aria-hidden="true"></span><span>Topological Sort &amp; Connectivity</span></a></li><li><a href="../../daa/string-matching/" data-lesson="daa/string-matching"><span class="tick" aria-hidden="true"></span><span>String Matching</span></a></li><li><a href="../../daa/np-completeness/" data-lesson="daa/np-completeness"><span class="tick" aria-hidden="true"></span><span>P, NP, NP-Complete &amp; NP-Hard</span></a></li><li><a href="../../daa/cheatsheet/" data-lesson="daa/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Algorithms Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../daa/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="daa/huffman" data-title="Huffman Coding" data-course-title="Design and Analysis of Algorithms">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../daa/">Algorithms (DAA)</a><span>/</span><span>Lesson 8 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Greedy Algorithms</p>
+<h1>Huffman Coding</h1>
+<p class="lede">Optimal prefix-free codes for data compression: why prefix codes, building the Huffman tree with a min-priority queue, reading off codes, and computing the compressed size.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Text is stored with fixed-length codes: ASCII uses 8 bits for every character. But in English text, <code>e</code> is far more common than <code>z</code>. <strong>Huffman coding</strong> (David Huffman, 1952) gives <strong>frequent characters short codes and rare characters long codes</strong>, producing an optimal compression for a given set of frequencies. It is used inside ZIP, gzip, PNG and JPEG.</p>
+<h2 id="prefix-free-codes"><a class="anchor" href="#prefix-free-codes" aria-hidden="true" tabindex="-1">#</a>Prefix-free codes</h2>
+<p>To decode a bit stream without separators, no code may be a <strong>prefix</strong> of another. If <code>a = 0</code> and <code>b = 01</code>, then <code>01</code> could be &quot;ab…&quot; or &quot;b&quot;. Huffman codes are always prefix-free because every character sits at a <strong>leaf</strong> of a binary tree.</p>
+<h2 id="the-algorithm"><a class="anchor" href="#the-algorithm" aria-hidden="true" tabindex="-1">#</a>The algorithm</h2>
+<ol>
+<li>Create a leaf node for each character with its frequency, and put them all in a <strong>min-priority queue</strong>.</li>
+<li>Repeat until one node remains:<ul>
+<li>Remove the <strong>two lowest-frequency</strong> nodes.</li>
+<li>Create a new internal node with these two as children and frequency = their sum.</li>
+<li>Insert it back into the queue.</li>
+</ul>
+</li>
+<li>The remaining node is the root. Label left edges <strong>0</strong> and right edges <strong>1</strong>; each character&#39;s code is the path from the root.</li>
+</ol>
+<p>The greedy choice is &quot;merge the two rarest symbols first&quot;, which pushes them deepest into the tree.</p>
+<h2 id="example"><a class="anchor" href="#example" aria-hidden="true" tabindex="-1">#</a>Example</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Character</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>f</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Frequency</td>
+<td>45</td>
+<td>13</td>
+<td>12</td>
+<td>16</td>
+<td>9</td>
+<td>5</td>
+</tr>
+</tbody></table>
+</div>
+<p>Merges: f(5)+e(9)=14 → c(12)+b(13)=25 → 14+d(16)=30 → 25+30=55 → a(45)+55=100.</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 456 342" width="456" height="342" role="img" aria-label="Tree rooted at 100"><path class="edge" d="M149.375,40 V60 H43 V80"/><path class="edge" d="M149.375,40 V60 H255.75 V80"/><path class="edge" d="M255.75,114 V134 H154 V154"/><path class="edge" d="M154,188 V208 H117 V228"/><path class="edge" d="M154,188 V208 H191 V228"/><path class="edge" d="M255.75,114 V134 H357.5 V154"/><path class="edge" d="M357.5,188 V208 H302 V228"/><path class="edge" d="M302,262 V282 H265 V302"/><path class="edge" d="M302,262 V282 H339 V302"/><path class="edge" d="M357.5,188 V208 H413 V228"/><rect class="box" x="16.4" y="80" width="53.2" height="34" rx="8"/><text class="t lbl small" x="43" y="97">a:45</text><rect class="box" x="90.4" y="228" width="53.2" height="34" rx="8"/><text class="t lbl small" x="117" y="245">c:12</text><rect class="box" x="164.4" y="228" width="53.2" height="34" rx="8"/><text class="t lbl small" x="191" y="245">b:13</text><rect class="box" x="135.2" y="154" width="37.6" height="34" rx="8"/><text class="t lbl small" x="154" y="171">25</text><rect class="box" x="242.3" y="302" width="45.4" height="34" rx="8"/><text class="t lbl small" x="265" y="319">f:5</text><rect class="box" x="316.3" y="302" width="45.4" height="34" rx="8"/><text class="t lbl small" x="339" y="319">e:9</text><rect class="box" x="283.2" y="228" width="37.6" height="34" rx="8"/><text class="t lbl small" x="302" y="245">14</text><rect class="box" x="386.4" y="228" width="53.2" height="34" rx="8"/><text class="t lbl small" x="413" y="245">d:16</text><rect class="box" x="338.7" y="154" width="37.6" height="34" rx="8"/><text class="t lbl small" x="357.5" y="171">30</text><rect class="box" x="236.9" y="80" width="37.6" height="34" rx="8"/><text class="t lbl small" x="255.8" y="97">55</text><rect class="box" x="126.7" y="6" width="45.4" height="34" rx="8"/><text class="t lbl small" x="149.4" y="23">100</text></svg><figcaption>The Huffman tree. Left edges are 0, right edges are 1, so a = 0, c = 100, b = 101, f = 1100, e = 1101, d = 111.</figcaption></figure>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> {
+    <span class="hljs-type">char</span> ch;
+    <span class="hljs-type">int</span> freq;
+    Node *left, *right;
+    <span class="hljs-built_in">Node</span>(<span class="hljs-type">char</span> c, <span class="hljs-type">int</span> f, Node *l = <span class="hljs-literal">nullptr</span>, Node *r = <span class="hljs-literal">nullptr</span>) : <span class="hljs-built_in">ch</span>(c), <span class="hljs-built_in">freq</span>(f), <span class="hljs-built_in">left</span>(l), <span class="hljs-built_in">right</span>(r) {}
+};
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">ByFreq</span> {
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(Node *a, Node *b)</span> <span class="hljs-type">const</span> </span>{
+        <span class="hljs-keyword">return</span> a-&gt;freq != b-&gt;freq ? a-&gt;freq &gt; b-&gt;freq : a-&gt;ch &gt; b-&gt;ch;   <span class="hljs-comment">// min-heap, ties broken by char</span>
+    }
+};
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">collect</span><span class="hljs-params">(Node *n, <span class="hljs-type">const</span> string &amp;code, map&lt;<span class="hljs-type">char</span>, string&gt; &amp;codes)</span> </span>{
+    <span class="hljs-keyword">if</span> (!n-&gt;left) { codes[n-&gt;ch] = code.<span class="hljs-built_in">empty</span>() ? <span class="hljs-string">&quot;0&quot;</span> : code; <span class="hljs-keyword">return</span>; }
+    <span class="hljs-built_in">collect</span>(n-&gt;left, code + <span class="hljs-string">&quot;0&quot;</span>, codes);
+    <span class="hljs-built_in">collect</span>(n-&gt;right, code + <span class="hljs-string">&quot;1&quot;</span>, codes);
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    vector&lt;pair&lt;<span class="hljs-type">char</span>, <span class="hljs-type">int</span>&gt;&gt; freq = {{<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">45</span>}, {<span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-number">13</span>}, {<span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-number">12</span>}, {<span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-number">16</span>}, {<span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-number">9</span>}, {<span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-number">5</span>}};
+    priority_queue&lt;Node *, vector&lt;Node *&gt;, ByFreq&gt; pq;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [c, f] : freq) pq.<span class="hljs-built_in">push</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>(c, f));
+    <span class="hljs-type">char</span> nextId = <span class="hljs-string">&#x27;1&#x27;</span>;                       <span class="hljs-comment">// labels for internal nodes, used only for tie-breaking</span>
+    <span class="hljs-keyword">while</span> (pq.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">1</span>) {
+        Node *x = pq.<span class="hljs-built_in">top</span>(); pq.<span class="hljs-built_in">pop</span>();
+        Node *y = pq.<span class="hljs-built_in">top</span>(); pq.<span class="hljs-built_in">pop</span>();
+        pq.<span class="hljs-built_in">push</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>(nextId++, x-&gt;freq + y-&gt;freq, x, y));
+    }
+    map&lt;<span class="hljs-type">char</span>, string&gt; codes;
+    <span class="hljs-built_in">collect</span>(pq.<span class="hljs-built_in">top</span>(), <span class="hljs-string">&quot;&quot;</span>, codes);
+    <span class="hljs-type">int</span> bits = <span class="hljs-number">0</span>, total = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [c, f] : freq) {
+        cout &lt;&lt; c &lt;&lt; <span class="hljs-string">&quot; (freq &quot;</span> &lt;&lt; f &lt;&lt; <span class="hljs-string">&quot;): &quot;</span> &lt;&lt; codes[c] &lt;&lt; endl;
+        bits += f * codes[c].<span class="hljs-built_in">size</span>();
+        total += f;
+    }
+    cout &lt;&lt; <span class="hljs-string">&quot;Huffman bits: &quot;</span> &lt;&lt; bits &lt;&lt; <span class="hljs-string">&quot;, fixed 3-bit code: &quot;</span> &lt;&lt; total * <span class="hljs-number">3</span>
+         &lt;&lt; <span class="hljs-string">&quot;, saving &quot;</span> &lt;&lt; <span class="hljs-number">100</span> - bits * <span class="hljs-number">100</span> / (total * <span class="hljs-number">3</span>) &lt;&lt; <span class="hljs-string">&quot;%&quot;</span> &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>a (freq 45): 0
+b (freq 13): 101
+c (freq 12): 100
+d (freq 16): 111
+e (freq 9): 1101
+f (freq 5): 1100
+Huffman bits: 224, fixed 3-bit code: 300, saving 26%</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8cXVldWU-CiNpbmNsdWRlIDx2ZWN0b3I-CiNpbmNsdWRlIDxtYXA-CiNpbmNsdWRlIDxzdHJpbmc-CnVzaW5nIG5hbWVzcGFjZSBzdGQ7CgpzdHJ1Y3QgTm9kZSB7CiAgICBjaGFyIGNoOwogICAgaW50IGZyZXE7CiAgICBOb2RlICpsZWZ0LCAqcmlnaHQ7CiAgICBOb2RlKGNoYXIgYywgaW50IGYsIE5vZGUgKmwgPSBudWxscHRyLCBOb2RlICpyID0gbnVsbHB0cikgOiBjaChjKSwgZnJlcShmKSwgbGVmdChsKSwgcmlnaHQocikge30KfTsKCnN0cnVjdCBCeUZyZXEgewogICAgYm9vbCBvcGVyYXRvcigpKE5vZGUgKmEsIE5vZGUgKmIpIGNvbnN0IHsKICAgICAgICByZXR1cm4gYS0-ZnJlcSAhPSBiLT5mcmVxID8gYS0-ZnJlcSA-IGItPmZyZXEgOiBhLT5jaCA-IGItPmNoOyAgIC8vIG1pbi1oZWFwLCB0aWVzIGJyb2tlbiBieSBjaGFyCiAgICB9Cn07Cgp2b2lkIGNvbGxlY3QoTm9kZSAqbiwgY29uc3Qgc3RyaW5nICZjb2RlLCBtYXA8Y2hhciwgc3RyaW5nPiAmY29kZXMpIHsKICAgIGlmICghbi0-bGVmdCkgeyBjb2Rlc1tuLT5jaF0gPSBjb2RlLmVtcHR5KCkgPyAiMCIgOiBjb2RlOyByZXR1cm47IH0KICAgIGNvbGxlY3Qobi0-bGVmdCwgY29kZSArICIwIiwgY29kZXMpOwogICAgY29sbGVjdChuLT5yaWdodCwgY29kZSArICIxIiwgY29kZXMpOwp9CgppbnQgbWFpbigpIHsKICAgIHZlY3RvcjxwYWlyPGNoYXIsIGludD4-IGZyZXEgPSB7eydhJywgNDV9LCB7J2InLCAxM30sIHsnYycsIDEyfSwgeydkJywgMTZ9LCB7J2UnLCA5fSwgeydmJywgNX19OwogICAgcHJpb3JpdHlfcXVldWU8Tm9kZSAqLCB2ZWN0b3I8Tm9kZSAqPiwgQnlGcmVxPiBwcTsKICAgIGZvciAoYXV0byBbYywgZl0gOiBmcmVxKSBwcS5wdXNoKG5ldyBOb2RlKGMsIGYpKTsKICAgIGNoYXIgbmV4dElkID0gJzEnOyAgICAgICAgICAgICAgICAgICAgICAgLy8gbGFiZWxzIGZvciBpbnRlcm5hbCBub2RlcywgdXNlZCBvbmx5IGZvciB0aWUtYnJlYWtpbmcKICAgIHdoaWxlIChwcS5zaXplKCkgPiAxKSB7CiAgICAgICAgTm9kZSAqeCA9IHBxLnRvcCgpOyBwcS5wb3AoKTsKICAgICAgICBOb2RlICp5ID0gcHEudG9wKCk7IHBxLnBvcCgpOwogICAgICAgIHBxLnB1c2gobmV3IE5vZGUobmV4dElkKyssIHgtPmZyZXEgKyB5LT5mcmVxLCB4LCB5KSk7CiAgICB9CiAgICBtYXA8Y2hhciwgc3RyaW5nPiBjb2RlczsKICAgIGNvbGxlY3QocHEudG9wKCksICIiLCBjb2Rlcyk7CiAgICBpbnQgYml0cyA9IDAsIHRvdGFsID0gMDsKICAgIGZvciAoYXV0byBbYywgZl0gOiBmcmVxKSB7CiAgICAgICAgY291dCA8PCBjIDw8ICIgKGZyZXEgIiA8PCBmIDw8ICIpOiAiIDw8IGNvZGVzW2NdIDw8IGVuZGw7CiAgICAgICAgYml0cyArPSBmICogY29kZXNbY10uc2l6ZSgpOwogICAgICAgIHRvdGFsICs9IGY7CiAgICB9CiAgICBjb3V0IDw8ICJIdWZmbWFuIGJpdHM6ICIgPDwgYml0cyA8PCAiLCBmaXhlZCAzLWJpdCBjb2RlOiAiIDw8IHRvdGFsICogMwogICAgICAgICA8PCAiLCBzYXZpbmcgIiA8PCAxMDAgLSBiaXRzICogMTAwIC8gKHRvdGFsICogMykgPDwgIiUiIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The program&#39;s codes may differ from the diagram in which child goes left (ties can be broken either way), but the <strong>code lengths and total bits are always the same</strong>: 224 bits versus 300 for a fixed 3-bit code.</p>
+<h2 id="analysis"><a class="anchor" href="#analysis" aria-hidden="true" tabindex="-1">#</a>Analysis</h2>
+<ul>
+<li>n − 1 merges, each doing O(log n) priority-queue operations → <strong>O(n log n)</strong>.</li>
+<li>Huffman&#39;s code is <strong>optimal</strong> among prefix codes: no other prefix code gives a smaller total Σ freq × code length.</li>
+</ul>
+<h2 id="decoding"><a class="anchor" href="#decoding" aria-hidden="true" tabindex="-1">#</a>Decoding</h2>
+<p>Start at the root; read bits, going left on 0 and right on 1; when you reach a leaf, output its character and return to the root. With the codes in the diagram, <code>0101100</code> splits in only one way, 0 | 101 | 100, and decodes to <strong>abc</strong>.</p>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Typical question</span></div><div class="callout-body"><p>&quot;Construct the Huffman tree and codes for the given frequencies, and find the average code length.&quot; Average length = Σ(freq × length) / Σ freq. For the example: 224 / 100 = <strong>2.24 bits per character</strong>.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="daa/huffman" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which two nodes does Huffman&#39;s algorithm merge at each step?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The two most frequent</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The two least frequent</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The first two in alphabetical order</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">One frequent and one rare</span></button></div><div class="q-why" hidden>Merging the rarest symbols first pushes them deepest, giving them the longest codes.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Why can Huffman codes be decoded without separators?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">They are prefix-free: every character is at a leaf</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Each code has the same length</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">They use a special end marker</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">They are stored in ASCII</span></button></div><div class="q-why" hidden>No code is the beginning of another code.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What data structure makes Huffman&#39;s algorithm O(n log n)?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Stack</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Hash table</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Min-priority queue (heap)</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Sorted array</span></button></div><div class="q-why" hidden>Each extract-min and insert costs O(log n).</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>With frequencies a:45, b:13, c:12, d:16, e:9, f:5, how many bits does the Huffman encoding need?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">300</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">224</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">100</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">250</span></button></div><div class="q-why" hidden>45·1 + 13·3 + 12·3 + 16·3 + 9·4 + 5·4 = 224.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="daa/huffman"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../daa/greedy/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>The Greedy Method</strong></a><a class="next" href="../../daa/mst/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Minimum Spanning Trees</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#prefix-free-codes">Prefix-free codes</a></li><li><a class="d2" href="#the-algorithm">The algorithm</a></li><li><a class="d2" href="#example">Example</a></li><li><a class="d2" href="#analysis">Analysis</a></li><li><a class="d2" href="#decoding">Decoding</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

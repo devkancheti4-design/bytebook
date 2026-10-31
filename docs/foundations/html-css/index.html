@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML &amp; CSS Essentials · Foundations | Bytebook</title>
+<meta name="description" content="Build and style a web page: HTML document structure, common elements, links, images, lists, tables and forms, then CSS selectors, the box model, colours, fonts and Flexbox — with a live editor.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="HTML &amp; CSS Essentials · Foundations | Bytebook">
+<meta property="og:description" content="Build and style a web page: HTML document structure, common elements, links, images, lists, tables and forms, then CSS selectors, the box model, colours, fonts and Flexbox — with a live editor.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+<link rel="stylesheet" href="../../assets/widgets.css?v=65b57c9882">
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="foundations">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations" class="active" aria-current="true"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="foundations" aria-label="First-Year Foundations lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../foundations/"><span class="chip" data-c="foundations">YEAR 1</span><strong>First-Year Foundations</strong></a>
+<div class="side-progress" data-course="foundations" data-total="11"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 11 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Computer Basics</h4><ol><li><a href="../../foundations/how-computers-work/" data-lesson="foundations/how-computers-work"><span class="tick" aria-hidden="true"></span><span>How Computers Work</span></a></li><li><a href="../../foundations/number-systems/" data-lesson="foundations/number-systems"><span class="tick" aria-hidden="true"></span><span>Number Systems</span></a></li><li><a href="../../foundations/data-representation/" data-lesson="foundations/data-representation"><span class="tick" aria-hidden="true"></span><span>Data Representation</span></a></li><li><a href="../../foundations/logic-gates/" data-lesson="foundations/logic-gates"><span class="tick" aria-hidden="true"></span><span>Logic Gates &amp; Circuits</span></a></li></ol></div>
+<div class="side-unit"><h4>Problem Solving</h4><ol><li><a href="../../foundations/algorithms-flowcharts/" data-lesson="foundations/algorithms-flowcharts"><span class="tick" aria-hidden="true"></span><span>Algorithms, Flowcharts &amp; Pseudocode</span></a></li><li><a href="../../foundations/from-code-to-program/" data-lesson="foundations/from-code-to-program"><span class="tick" aria-hidden="true"></span><span>From Code to Running Program</span></a></li></ol></div>
+<div class="side-unit"><h4>Developer Tools</h4><ol><li><a href="../../foundations/linux-command-line/" data-lesson="foundations/linux-command-line"><span class="tick" aria-hidden="true"></span><span>The Linux Command Line</span></a></li><li><a href="../../foundations/git-github/" data-lesson="foundations/git-github"><span class="tick" aria-hidden="true"></span><span>Git &amp; GitHub</span></a></li></ol></div>
+<div class="side-unit"><h4>The Web</h4><ol><li><a href="../../foundations/how-the-web-works/" data-lesson="foundations/how-the-web-works"><span class="tick" aria-hidden="true"></span><span>How the Internet &amp; Web Work</span></a></li><li><a href="../../foundations/html-css/" data-lesson="foundations/html-css" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>HTML &amp; CSS Essentials</span></a></li><li><a href="../../foundations/javascript/" data-lesson="foundations/javascript"><span class="tick" aria-hidden="true"></span><span>JavaScript Essentials</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../foundations/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="foundations/html-css" data-title="HTML &amp; CSS Essentials" data-course-title="First-Year Foundations">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../foundations/">Foundations</a><span>/</span><span>Lesson 10 of 11</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">The Web</p>
+<h1>HTML &amp; CSS Essentials</h1>
+<p class="lede">Build and style a web page: HTML document structure, common elements, links, images, lists, tables and forms, then CSS selectors, the box model, colours, fonts and Flexbox — with a live editor.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Interactive</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Every web page is built from three languages:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Role</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>HTML</strong></td>
+<td>structure and content</td>
+<td>the skeleton</td>
+</tr>
+<tr>
+<td><strong>CSS</strong></td>
+<td>presentation and layout</td>
+<td>the clothes</td>
+</tr>
+<tr>
+<td><strong>JavaScript</strong></td>
+<td>behaviour and interaction</td>
+<td>the muscles</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="html-structure"><a class="anchor" href="#html-structure" aria-hidden="true" tabindex="-1">#</a>HTML: structure</h2>
+<p>HTML marks up content with <strong>elements</strong>, written as tags: <code>&lt;p&gt;A paragraph&lt;/p&gt;</code>. Tags can have <strong>attributes</strong>: <code>&lt;a href=&quot;https://example.com&quot;&gt;a link&lt;/a&gt;</code>.</p>
+<figure class="code" data-lang="html"><div class="code-head"><span class="code-lang">HTML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">&lt;!doctype <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>My first page<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, I&#x27;m Asha<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>I study <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>computer science<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span> at Kalvium.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://github.com&quot;</span>&gt;</span>My GitHub<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre></figure>
+<ul>
+<li><code>&lt;head&gt;</code> holds information <strong>about</strong> the page (title, character set, CSS links).</li>
+<li><code>&lt;body&gt;</code> holds what is <strong>shown</strong>.</li>
+</ul>
+<h2 id="common-elements"><a class="anchor" href="#common-elements" aria-hidden="true" tabindex="-1">#</a>Common elements</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;h1&gt;</code> … <code>&lt;h6&gt;</code></td>
+<td>headings, from most to least important</td>
+</tr>
+<tr>
+<td><code>&lt;p&gt;</code></td>
+<td>paragraph</td>
+</tr>
+<tr>
+<td><code>&lt;a href=&quot;…&quot;&gt;</code></td>
+<td>link</td>
+</tr>
+<tr>
+<td><code>&lt;img src=&quot;…&quot; alt=&quot;…&quot;&gt;</code></td>
+<td>image (the <code>alt</code> text is read by screen readers)</td>
+</tr>
+<tr>
+<td><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code></td>
+<td>bulleted list, numbered list, list item</td>
+</tr>
+<tr>
+<td><code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></td>
+<td>table, row, header cell, data cell</td>
+</tr>
+<tr>
+<td><code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;label&gt;</code></td>
+<td>forms</td>
+</tr>
+<tr>
+<td><code>&lt;div&gt;</code>, <code>&lt;span&gt;</code></td>
+<td>generic block and inline containers</td>
+</tr>
+<tr>
+<td><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code></td>
+<td><strong>semantic</strong> layout regions</td>
+</tr>
+</tbody></table>
+</div>
+<p>Semantic elements tell browsers, search engines and screen readers what each part <strong>means</strong> — prefer them to plain <code>&lt;div&gt;</code>s.</p>
+<h2 id="css-style"><a class="anchor" href="#css-style" aria-hidden="true" tabindex="-1">#</a>CSS: style</h2>
+<p>CSS rules have a <strong>selector</strong> and <strong>declarations</strong>:</p>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-selector-tag">h1</span> {
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#2e8b47</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">2rem</span>;
+}
+<span class="hljs-selector-class">.card</span> {                 <span class="hljs-comment">/* class selector: &lt;div class=&quot;card&quot;&gt; */</span>
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">12px</span>;
+}
+<span class="hljs-selector-id">#signup</span> { }             <span class="hljs-comment">/* id selector: &lt;form id=&quot;signup&quot;&gt; */</span>
+<span class="hljs-selector-tag">nav</span> <span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:hover</span> { }         <span class="hljs-comment">/* descendant + state */</span></code></pre></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>p</code></td>
+<td>every <code>&lt;p&gt;</code></td>
+</tr>
+<tr>
+<td><code>.card</code></td>
+<td>elements with <code>class=&quot;card&quot;</code></td>
+</tr>
+<tr>
+<td><code>#main</code></td>
+<td>the element with <code>id=&quot;main&quot;</code></td>
+</tr>
+<tr>
+<td><code>nav a</code></td>
+<td><code>&lt;a&gt;</code> elements inside <code>&lt;nav&gt;</code></td>
+</tr>
+<tr>
+<td><code>a:hover</code></td>
+<td>links under the mouse pointer</td>
+</tr>
+</tbody></table>
+</div>
+<p>When rules conflict, the more <strong>specific</strong> selector wins (id &gt; class &gt; element), and later rules beat earlier ones of equal specificity — the <strong>cascade</strong>.</p>
+<h2 id="the-box-model"><a class="anchor" href="#the-box-model" aria-hidden="true" tabindex="-1">#</a>The box model</h2>
+<p>Every element is a box: <strong>content</strong>, surrounded by <strong>padding</strong>, then a <strong>border</strong>, then <strong>margin</strong> (space outside).</p>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-selector-class">.box</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span>;          <span class="hljs-comment">/* inside the border */</span>
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid <span class="hljs-number">#333</span>;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">24px</span> auto;      <span class="hljs-comment">/* outside; auto centres horizontally */</span>
+  <span class="hljs-attribute">box-sizing</span>: border-box; <span class="hljs-comment">/* width now includes padding and border */</span>
+}</code></pre></figure>
+<h2 id="flexbox-layout"><a class="anchor" href="#flexbox-layout" aria-hidden="true" tabindex="-1">#</a>Flexbox layout</h2>
+<p>Flexbox arranges children in a row or column with easy alignment and spacing:</p>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-selector-class">.row</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">gap</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">justify-content</span>: space-between;   <span class="hljs-comment">/* along the main axis */</span>
+  <span class="hljs-attribute">align-items</span>: center;              <span class="hljs-comment">/* across it */</span>
+  <span class="hljs-attribute">flex-wrap</span>: wrap;
+}</code></pre></figure>
+<h2 id="try-it-a-live-editor"><a class="anchor" href="#try-it-a-live-editor" aria-hidden="true" tabindex="-1">#</a>Try it: a live editor</h2>
+<p>Edit the HTML and CSS — the preview updates as you type:</p>
+<div class="widget" data-widget="web-playground" data-opts="{}" data-body="&lt;style&gt;
+  body { font-family: system-ui, sans-serif; margin: 24px; background: #f6f7fb; }
+  .card { background: white; border-radius: 14px; padding: 20px; max-width: 360px;
+          box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  h1 { margin: 0 0 6px; font-size: 22px; color: #2e8b47; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tags span { background: #e7f5ec; color: #1f6d36; padding: 4px 10px; border-radius: 99px; font-size: 13px; }
+&lt;/style&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;h1&gt;Asha Rao&lt;/h1&gt;
+  &lt;p&gt;First-year CS student. I like C, DSA and building things for the web.&lt;/p&gt;
+  &lt;div class=&quot;tags&quot;&gt;&lt;span&gt;C&lt;/span&gt;&lt;span&gt;Python&lt;/span&gt;&lt;span&gt;HTML&lt;/span&gt;&lt;span&gt;Git&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;"><noscript>This interactive demo needs JavaScript.</noscript></div>
+<h2 id="responsive-design"><a class="anchor" href="#responsive-design" aria-hidden="true" tabindex="-1">#</a>Responsive design</h2>
+<p>Phones, tablets and laptops need different layouts. Two essentials:</p>
+<figure class="code" data-lang="html"><div class="code-head"><span class="code-lang">HTML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></code></pre></figure>
+<figure class="code" data-lang="css"><div class="code-head"><span class="code-lang">CSS</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">600px</span>) {
+  <span class="hljs-selector-class">.row</span> { <span class="hljs-attribute">flex-direction</span>: column; }   <span class="hljs-comment">/* stack on small screens */</span>
+}</code></pre></figure>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Keep learning HTML</span></div><div class="callout-body"><p>For a deeper, hands-on HTML course with an exercise for every element, try <a href="https://devkancheti4-design.github.io/tagbench/" target="_blank" rel="noopener">Tagbench</a>.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="foundations/html-css" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which element creates a link?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>&lt;link&gt;</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>&lt;a&gt;</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>&lt;href&gt;</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>&lt;url&gt;</code></span></button></div><div class="q-why" hidden><code>&lt;a href=&quot;…&quot;&gt;</code> is the anchor element; <code>&lt;link&gt;</code> connects stylesheets in the head.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>Which CSS selector matches <code>&lt;div class=&quot;card&quot;&gt;</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>#card</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>.card</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>card</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>div#card</code></span></button></div><div class="q-why" hidden>A dot selects by class; a hash selects by id.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>In the box model, which property adds space <strong>inside</strong> the border?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">padding</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">margin</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">outline</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">gap</span></button></div><div class="q-why" hidden>Padding sits between the content and the border; margin is outside the border.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Why should <code>&lt;img&gt;</code> have an <code>alt</code> attribute?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It makes the image load faster</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">It describes the image for screen readers and when the image fails to load</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It sets the image size</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It is required for CSS to work</span></button></div><div class="q-why" hidden>Alt text makes images accessible.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="foundations/html-css"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../foundations/how-the-web-works/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>How the Internet &amp; Web Work</strong></a><a class="next" href="../../foundations/javascript/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>JavaScript Essentials</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#html-structure">HTML: structure</a></li><li><a class="d2" href="#common-elements">Common elements</a></li><li><a class="d2" href="#css-style">CSS: style</a></li><li><a class="d2" href="#the-box-model">The box model</a></li><li><a class="d2" href="#flexbox-layout">Flexbox layout</a></li><li><a class="d2" href="#try-it-a-live-editor">Try it: a live editor</a></li><li><a class="d2" href="#responsive-design">Responsive design</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+<script src="../../assets/widgets.js?v=fb51276e9d" defer></script>
+</body>
+</html>

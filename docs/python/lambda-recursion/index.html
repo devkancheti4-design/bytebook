@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lambda, map/filter &amp; Recursion · Python | Bytebook</title>
+<meta name="description" content="Small anonymous functions with lambda, functional tools map, filter, sorted and reduce, and recursive functions with base cases, memoisation and recursion limits.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Lambda, map/filter &amp; Recursion · Python | Bytebook">
+<meta property="og:description" content="Small anonymous functions with lambda, functional tools map, filter, sorted and reduce, and recursive functions with base cases, memoisation and recursion limits.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="python">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python" class="active" aria-current="true"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="python" aria-label="Python Programming lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../python/"><span class="chip" data-c="python">PYTHON</span><strong>Python Programming</strong></a>
+<div class="side-progress" data-course="python" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Python Basics</h4><ol><li><a href="../../python/intro/" data-lesson="python/intro"><span class="tick" aria-hidden="true"></span><span>Python Introduction</span></a></li><li><a href="../../python/variables/" data-lesson="python/variables"><span class="tick" aria-hidden="true"></span><span>Variables &amp; Data Types</span></a></li><li><a href="../../python/operators-input/" data-lesson="python/operators-input"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Input</span></a></li><li><a href="../../python/strings/" data-lesson="python/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../python/conditions/" data-lesson="python/conditions"><span class="tick" aria-hidden="true"></span><span>If, Elif, Else &amp; match</span></a></li><li><a href="../../python/loops/" data-lesson="python/loops"><span class="tick" aria-hidden="true"></span><span>Loops: for, while &amp; range</span></a></li></ol></div>
+<div class="side-unit"><h4>Data Structures in Python</h4><ol><li><a href="../../python/lists/" data-lesson="python/lists"><span class="tick" aria-hidden="true"></span><span>Lists</span></a></li><li><a href="../../python/tuples-sets/" data-lesson="python/tuples-sets"><span class="tick" aria-hidden="true"></span><span>Tuples &amp; Sets</span></a></li><li><a href="../../python/dictionaries/" data-lesson="python/dictionaries"><span class="tick" aria-hidden="true"></span><span>Dictionaries</span></a></li><li><a href="../../python/comprehensions/" data-lesson="python/comprehensions"><span class="tick" aria-hidden="true"></span><span>Comprehensions</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions &amp; Modules</h4><ol><li><a href="../../python/functions/" data-lesson="python/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../python/lambda-recursion/" data-lesson="python/lambda-recursion" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Lambda, map/filter &amp; Recursion</span></a></li><li><a href="../../python/modules/" data-lesson="python/modules"><span class="tick" aria-hidden="true"></span><span>Modules, Packages &amp; the Standard Library</span></a></li></ol></div>
+<div class="side-unit"><h4>Real Programs</h4><ol><li><a href="../../python/files/" data-lesson="python/files"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../python/exceptions/" data-lesson="python/exceptions"><span class="tick" aria-hidden="true"></span><span>Exceptions</span></a></li><li><a href="../../python/oop/" data-lesson="python/oop"><span class="tick" aria-hidden="true"></span><span>Object-Oriented Python</span></a></li><li><a href="../../python/iterators-generators/" data-lesson="python/iterators-generators"><span class="tick" aria-hidden="true"></span><span>Iterators &amp; Generators</span></a></li><li><a href="../../python/cheatsheet/" data-lesson="python/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Python Cheat Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../python/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="python/lambda-recursion" data-title="Lambda, map/filter &amp; Recursion" data-course-title="Python Programming">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../python/">Python</a><span>/</span><span>Lesson 12 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Functions &amp; Modules</p>
+<h1>Lambda, map/filter &amp; Recursion</h1>
+<p class="lede">Small anonymous functions with lambda, functional tools map, filter, sorted and reduce, and recursive functions with base cases, memoisation and recursion limits.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>5 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="lambda"><a class="anchor" href="#lambda" aria-hidden="true" tabindex="-1">#</a>lambda</h2>
+<p>A <strong>lambda</strong> is a one-expression anonymous function: <code>lambda parameters: expression</code>.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">square = <span class="hljs-keyword">lambda</span> x: x * x
+add = <span class="hljs-keyword">lambda</span> a, b: a + b
+<span class="hljs-built_in">print</span>(square(<span class="hljs-number">9</span>), add(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>))
+
+students = [(<span class="hljs-string">&quot;Asha&quot;</span>, <span class="hljs-number">88</span>), (<span class="hljs-string">&quot;Ravi&quot;</span>, <span class="hljs-number">95</span>), (<span class="hljs-string">&quot;Meera&quot;</span>, <span class="hljs-number">79</span>)]
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(students, key=<span class="hljs-keyword">lambda</span> s: s[<span class="hljs-number">1</span>], reverse=<span class="hljs-literal">True</span>))
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">max</span>(students, key=<span class="hljs-keyword">lambda</span> s: s[<span class="hljs-number">1</span>])[<span class="hljs-number">0</span>])</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>81 7
+[(&#39;Ravi&#39;, 95), (&#39;Asha&#39;, 88), (&#39;Meera&#39;, 79)]
+Ravi</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=c3F1YXJlID0gbGFtYmRhIHg6IHggKiB4CmFkZCA9IGxhbWJkYSBhLCBiOiBhICsgYgpwcmludChzcXVhcmUoOSksIGFkZCgzLCA0KSkKCnN0dWRlbnRzID0gWygiQXNoYSIsIDg4KSwgKCJSYXZpIiwgOTUpLCAoIk1lZXJhIiwgNzkpXQpwcmludChzb3J0ZWQoc3R1ZGVudHMsIGtleT1sYW1iZGEgczogc1sxXSwgcmV2ZXJzZT1UcnVlKSkKcHJpbnQobWF4KHN0dWRlbnRzLCBrZXk9bGFtYmRhIHM6IHNbMV0pWzBdKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Use lambdas for short throwaway functions, usually as a <code>key=</code> argument. If it needs a name or more than one line, write a <code>def</code>.</p>
+<h2 id="map-filter-and-reduce"><a class="anchor" href="#map-filter-and-reduce" aria-hidden="true" tabindex="-1">#</a>map, filter and reduce</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Does</th>
+<th>Comprehension equivalent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>map(f, xs)</code></td>
+<td>applies <code>f</code> to every item</td>
+<td><code>[f(x) for x in xs]</code></td>
+</tr>
+<tr>
+<td><code>filter(pred, xs)</code></td>
+<td>keeps items where <code>pred</code> is true</td>
+<td><code>[x for x in xs if pred(x)]</code></td>
+</tr>
+<tr>
+<td><code>functools.reduce(f, xs)</code></td>
+<td>folds items into one value</td>
+<td>a loop with an accumulator</td>
+</tr>
+</tbody></table>
+</div>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce
+
+nums = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x: x ** <span class="hljs-number">2</span>, nums)))
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x: x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>, nums)))
+<span class="hljs-built_in">print</span>(reduce(<span class="hljs-keyword">lambda</span> acc, x: acc * x, nums))          <span class="hljs-comment"># 6! = 720</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-string">&quot;10 20 30&quot;</span>.split())))            <span class="hljs-comment"># the classic input idiom</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>.upper, [<span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;dsa&quot;</span>, <span class="hljs-string">&quot;python&quot;</span>])))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>[1, 4, 9, 16, 25, 36]
+[2, 4, 6]
+720
+[10, 20, 30]
+[&#39;C&#39;, &#39;DSA&#39;, &#39;PYTHON&#39;]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHJlZHVjZQoKbnVtcyA9IFsxLCAyLCAzLCA0LCA1LCA2XQpwcmludChsaXN0KG1hcChsYW1iZGEgeDogeCAqKiAyLCBudW1zKSkpCnByaW50KGxpc3QoZmlsdGVyKGxhbWJkYSB4OiB4ICUgMiA9PSAwLCBudW1zKSkpCnByaW50KHJlZHVjZShsYW1iZGEgYWNjLCB4OiBhY2MgKiB4LCBudW1zKSkgICAgICAgICAgIyA2ISA9IDcyMApwcmludChsaXN0KG1hcChpbnQsICIxMCAyMCAzMCIuc3BsaXQoKSkpKSAgICAgICAgICAgICMgdGhlIGNsYXNzaWMgaW5wdXQgaWRpb20KcHJpbnQobGlzdChtYXAoc3RyLnVwcGVyLCBbImMiLCAiZHNhIiwgInB5dGhvbiJdKSkpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p><code>map</code> and <code>filter</code> return lazy iterators; wrap them in <code>list()</code> to see all values.</p>
+<h2 id="recursion"><a class="anchor" href="#recursion" aria-hidden="true" tabindex="-1">#</a>Recursion</h2>
+<p>Recursion in Python works exactly as in C: a <strong>base case</strong> and a <strong>recursive case</strong>.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">factorial</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> n * factorial(n - <span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">power</span>(<span class="hljs-params">base, exp</span>):
+    <span class="hljs-keyword">if</span> exp == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    half = power(base, exp // <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">return</span> half * half * (base <span class="hljs-keyword">if</span> exp % <span class="hljs-number">2</span> <span class="hljs-keyword">else</span> <span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">flatten</span>(<span class="hljs-params">nested</span>):
+    result = []
+    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> nested:
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(item, <span class="hljs-built_in">list</span>):
+            result.extend(flatten(item))     <span class="hljs-comment"># recurse into sub-lists</span>
+        <span class="hljs-keyword">else</span>:
+            result.append(item)
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">permutations</span>(<span class="hljs-params">s</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(s) &lt;= <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> [s]
+    <span class="hljs-keyword">return</span> [s[i] + p <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(s)) <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> permutations(s[:i] + s[i + <span class="hljs-number">1</span>:])]
+
+<span class="hljs-built_in">print</span>(factorial(<span class="hljs-number">20</span>))
+<span class="hljs-built_in">print</span>(power(<span class="hljs-number">2</span>, <span class="hljs-number">64</span>))
+<span class="hljs-built_in">print</span>(flatten([<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], <span class="hljs-number">5</span>], [[<span class="hljs-number">6</span>]], <span class="hljs-number">7</span>]))
+<span class="hljs-built_in">print</span>(permutations(<span class="hljs-string">&quot;abc&quot;</span>))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>2432902008176640000
+18446744073709551616
+[1, 2, 3, 4, 5, 6, 7]
+[&#39;abc&#39;, &#39;acb&#39;, &#39;bac&#39;, &#39;bca&#39;, &#39;cab&#39;, &#39;cba&#39;]</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGZhY3RvcmlhbChuKToKICAgIHJldHVybiAxIGlmIG4gPD0gMSBlbHNlIG4gKiBmYWN0b3JpYWwobiAtIDEpCgpkZWYgcG93ZXIoYmFzZSwgZXhwKToKICAgIGlmIGV4cCA9PSAwOgogICAgICAgIHJldHVybiAxCiAgICBoYWxmID0gcG93ZXIoYmFzZSwgZXhwIC8vIDIpCiAgICByZXR1cm4gaGFsZiAqIGhhbGYgKiAoYmFzZSBpZiBleHAgJSAyIGVsc2UgMSkKCmRlZiBmbGF0dGVuKG5lc3RlZCk6CiAgICByZXN1bHQgPSBbXQogICAgZm9yIGl0ZW0gaW4gbmVzdGVkOgogICAgICAgIGlmIGlzaW5zdGFuY2UoaXRlbSwgbGlzdCk6CiAgICAgICAgICAgIHJlc3VsdC5leHRlbmQoZmxhdHRlbihpdGVtKSkgICAgICMgcmVjdXJzZSBpbnRvIHN1Yi1saXN0cwogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHJlc3VsdC5hcHBlbmQoaXRlbSkKICAgIHJldHVybiByZXN1bHQKCmRlZiBwZXJtdXRhdGlvbnMocyk6CiAgICBpZiBsZW4ocykgPD0gMToKICAgICAgICByZXR1cm4gW3NdCiAgICByZXR1cm4gW3NbaV0gKyBwIGZvciBpIGluIHJhbmdlKGxlbihzKSkgZm9yIHAgaW4gcGVybXV0YXRpb25zKHNbOmldICsgc1tpICsgMTpdKV0KCnByaW50KGZhY3RvcmlhbCgyMCkpCnByaW50KHBvd2VyKDIsIDY0KSkKcHJpbnQoZmxhdHRlbihbMSwgWzIsIFszLCA0XSwgNV0sIFtbNl1dLCA3XSkpCnByaW50KHBlcm11dGF0aW9ucygiYWJjIikpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="memoisation-with-lru-cache"><a class="anchor" href="#memoisation-with-lru-cache" aria-hidden="true" tabindex="-1">#</a>Memoisation with lru_cache</h2>
+<p>Naive recursive Fibonacci recomputes the same values exponentially many times. <code>functools.lru_cache</code> remembers results, turning it into O(n):</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> lru_cache
+
+<span class="hljs-meta">@lru_cache(<span class="hljs-params">maxsize=<span class="hljs-literal">None</span></span>)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">fib_fast</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">return</span> n <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">2</span> <span class="hljs-keyword">else</span> fib_fast(n - <span class="hljs-number">1</span>) + fib_fast(n - <span class="hljs-number">2</span>)
+
+calls = <span class="hljs-number">0</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">fib_counted</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">global</span> calls
+    calls += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> n <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">2</span> <span class="hljs-keyword">else</span> fib_counted(n - <span class="hljs-number">1</span>) + fib_counted(n - <span class="hljs-number">2</span>)
+
+fib_counted(<span class="hljs-number">20</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;calls for naive fib(20):&quot;</span>, calls)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;fib(90) with lru_cache:&quot;</span>, fib_fast(<span class="hljs-number">90</span>))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>calls for naive fib(20): 21891
+fib(90) with lru_cache: 2880067194370816120</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IGxydV9jYWNoZQoKQGxydV9jYWNoZShtYXhzaXplPU5vbmUpCmRlZiBmaWJfZmFzdChuKToKICAgIHJldHVybiBuIGlmIG4gPCAyIGVsc2UgZmliX2Zhc3QobiAtIDEpICsgZmliX2Zhc3QobiAtIDIpCgpjYWxscyA9IDAKZGVmIGZpYl9jb3VudGVkKG4pOgogICAgZ2xvYmFsIGNhbGxzCiAgICBjYWxscyArPSAxCiAgICByZXR1cm4gbiBpZiBuIDwgMiBlbHNlIGZpYl9jb3VudGVkKG4gLSAxKSArIGZpYl9jb3VudGVkKG4gLSAyKQoKZmliX2NvdW50ZWQoMjApCnByaW50KCJjYWxscyBmb3IgbmFpdmUgZmliKDIwKToiLCBjYWxscykKcHJpbnQoImZpYig5MCkgd2l0aCBscnVfY2FjaGU6IiwgZmliX2Zhc3QoOTApKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>This is <strong>dynamic programming</strong> in one decorator line; the idea is explained fully in <a href="../../daa/dp-intro/">Dynamic Programming</a>.</p>
+<h2 id="recursion-limit"><a class="anchor" href="#recursion-limit" aria-hidden="true" tabindex="-1">#</a>Recursion limit</h2>
+<p>Python limits recursion depth (about 1000 by default) to protect the stack:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">import</span> sys
+<span class="hljs-built_in">print</span>(sys.getrecursionlimit())
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">countdown</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> countdown(n - <span class="hljs-number">1</span>)
+
+<span class="hljs-built_in">print</span>(countdown(<span class="hljs-number">500</span>))
+<span class="hljs-built_in">print</span>(countdown(<span class="hljs-number">5000</span>))</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>1000
+0
+<span class="stderr">Traceback (most recent call last):
+  File &quot;main.py&quot;, line 8, in &lt;module&gt;
+    print(countdown(5000))
+          ~~~~~~~~~^^^^^^
+  File &quot;main.py&quot;, line 5, in countdown
+    return 0 if n == 0 else countdown(n - 1)
+                            ~~~~~~~~~^^^^^^^
+  File &quot;main.py&quot;, line 5, in countdown
+    return 0 if n == 0 else countdown(n - 1)
+                            ~~~~~~~~~^^^^^^^
+  File &quot;main.py&quot;, line 5, in countdown
+    return 0 if n == 0 else countdown(n - 1)
+                            ~~~~~~~~~^^^^^^^
+  [Previous line repeated 996 more times]
+RecursionError: maximum recursion depth exceeded</span></pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=aW1wb3J0IHN5cwpwcmludChzeXMuZ2V0cmVjdXJzaW9ubGltaXQoKSkKCmRlZiBjb3VudGRvd24obik6CiAgICByZXR1cm4gMCBpZiBuID09IDAgZWxzZSBjb3VudGRvd24obiAtIDEpCgpwcmludChjb3VudGRvd24oNTAwKSkKcHJpbnQoY291bnRkb3duKDUwMDApKQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>For deep recursion, rewrite the function with a loop (or, carefully, raise the limit with <code>sys.setrecursionlimit</code>).</p>
+<section class="quiz" id="quiz" data-quiz="python/lambda-recursion" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does <code>list(map(lambda x: x + 1, [1, 2, 3]))</code> return?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>[2, 3, 4]</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[1, 2, 3, 1]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>6</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A map object</span></button></div><div class="q-why" hidden>The lambda is applied to each element; <code>list()</code> collects the results.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does <code>list(filter(lambda w: len(w) &gt; 3, [&quot;hi&quot;, &quot;hello&quot;, &quot;hey&quot;, &quot;howdy&quot;]))</code> return?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>[&quot;hi&quot;, &quot;hey&quot;]</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>[&quot;hello&quot;, &quot;howdy&quot;]</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>[False, True, False, True]</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>2</code></span></button></div><div class="q-why" hidden><code>filter</code> keeps the items for which the function returns True.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What does <code>@lru_cache</code> do to a recursive function?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Removes the recursion</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Caches results so repeated calls with the same arguments are not recomputed</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Increases the recursion limit</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Makes it run in parallel</span></button></div><div class="q-why" hidden>Memoisation turns exponential Fibonacci into linear time.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>What happens when recursion goes deeper than Python&#39;s limit?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Python silently stops</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A <code>RecursionError</code> is raised</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The program uses the heap instead</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The function returns <code>None</code></span></button></div><div class="q-why" hidden>The limit (about 1000) prevents a real stack overflow crash.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="python/lambda-recursion"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../python/functions/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Functions</strong></a><a class="next" href="../../python/modules/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Modules, Packages &amp; the Standard Library</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#lambda">lambda</a></li><li><a class="d2" href="#map-filter-and-reduce">map, filter and reduce</a></li><li><a class="d2" href="#recursion">Recursion</a></li><li><a class="d2" href="#memoisation-with-lru-cache">Memoisation with lru_cache</a></li><li><a class="d2" href="#recursion-limit">Recursion limit</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

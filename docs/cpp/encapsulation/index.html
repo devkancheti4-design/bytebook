@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encapsulation, this &amp; static Members · C++ OOP | Bytebook</title>
+<meta name="description" content="Getters and setters with validation, the this pointer, const member functions, and static data and functions shared by every object.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Encapsulation, this &amp; static Members · C++ OOP | Bytebook">
+<meta property="og:description" content="Getters and setters with validation, the this pointer, const member functions, and static data and functions shared by every object.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="cpp">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp" class="active" aria-current="true"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="cpp" aria-label="Object-Oriented Programming with C++ lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../cpp/"><span class="chip" data-c="cpp">OOPS</span><strong>Object-Oriented Programming with C++</strong></a>
+<div class="side-progress" data-course="cpp" data-total="19"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 19 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>From C to C++</h4><ol><li><a href="../../cpp/intro/" data-lesson="cpp/intro"><span class="tick" aria-hidden="true"></span><span>C++ Introduction</span></a></li><li><a href="../../cpp/io-references/" data-lesson="cpp/io-references"><span class="tick" aria-hidden="true"></span><span>Input/Output, Strings &amp; References</span></a></li><li><a href="../../cpp/functions/" data-lesson="cpp/functions"><span class="tick" aria-hidden="true"></span><span>Functions: Overloading, Defaults &amp; Inline</span></a></li></ol></div>
+<div class="side-unit"><h4>Classes &amp; Objects</h4><ol><li><a href="../../cpp/oop-concepts/" data-lesson="cpp/oop-concepts"><span class="tick" aria-hidden="true"></span><span>OOP Concepts</span></a></li><li><a href="../../cpp/classes-objects/" data-lesson="cpp/classes-objects"><span class="tick" aria-hidden="true"></span><span>Classes &amp; Objects</span></a></li><li><a href="../../cpp/constructors/" data-lesson="cpp/constructors"><span class="tick" aria-hidden="true"></span><span>Constructors &amp; Destructors</span></a></li><li><a href="../../cpp/encapsulation/" data-lesson="cpp/encapsulation" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Encapsulation, this &amp; static Members</span></a></li><li><a href="../../cpp/friend/" data-lesson="cpp/friend"><span class="tick" aria-hidden="true"></span><span>Friend Functions &amp; Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Inheritance &amp; Polymorphism</h4><ol><li><a href="../../cpp/inheritance/" data-lesson="cpp/inheritance"><span class="tick" aria-hidden="true"></span><span>Inheritance</span></a></li><li><a href="../../cpp/operator-overloading/" data-lesson="cpp/operator-overloading"><span class="tick" aria-hidden="true"></span><span>Operator Overloading</span></a></li><li><a href="../../cpp/virtual-functions/" data-lesson="cpp/virtual-functions"><span class="tick" aria-hidden="true"></span><span>Virtual Functions &amp; Runtime Polymorphism</span></a></li><li><a href="../../cpp/abstract-classes/" data-lesson="cpp/abstract-classes"><span class="tick" aria-hidden="true"></span><span>Abstract Classes &amp; Interfaces</span></a></li></ol></div>
+<div class="side-unit"><h4>Beyond the Basics</h4><ol><li><a href="../../cpp/templates/" data-lesson="cpp/templates"><span class="tick" aria-hidden="true"></span><span>Templates</span></a></li><li><a href="../../cpp/exceptions/" data-lesson="cpp/exceptions"><span class="tick" aria-hidden="true"></span><span>Exception Handling</span></a></li><li><a href="../../cpp/memory/" data-lesson="cpp/memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory &amp; Smart Pointers</span></a></li><li><a href="../../cpp/stl-containers/" data-lesson="cpp/stl-containers"><span class="tick" aria-hidden="true"></span><span>STL Containers</span></a></li><li><a href="../../cpp/stl-algorithms/" data-lesson="cpp/stl-algorithms"><span class="tick" aria-hidden="true"></span><span>Iterators, Algorithms &amp; Lambdas</span></a></li><li><a href="../../cpp/file-io/" data-lesson="cpp/file-io"><span class="tick" aria-hidden="true"></span><span>File I/O with fstream</span></a></li><li><a href="../../cpp/cheatsheet/" data-lesson="cpp/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C++ OOP Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../cpp/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="cpp/encapsulation" data-title="Encapsulation, this &amp; static Members" data-course-title="Object-Oriented Programming with C++">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../cpp/">C++ OOP</a><span>/</span><span>Lesson 7 of 19</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Classes &amp; Objects</p>
+<h1>Encapsulation, this &amp; static Members</h1>
+<p class="lede">Getters and setters with validation, the this pointer, const member functions, and static data and functions shared by every object.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>3 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<h2 id="getters-and-setters"><a class="anchor" href="#getters-and-setters" aria-hidden="true" tabindex="-1">#</a>Getters and setters</h2>
+<p>Encapsulation means keeping data <code>private</code> and exposing <strong>controlled</strong> access. A <strong>setter</strong> can validate input; a <strong>getter</strong> can return a value without exposing the variable itself.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> {
+    string name;
+    <span class="hljs-type">double</span> salary = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(<span class="hljs-type">const</span> string &amp;n)</span> </span>{ <span class="hljs-keyword">if</span> (!n.<span class="hljs-built_in">empty</span>()) name = n; }
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setSalary</span><span class="hljs-params">(<span class="hljs-type">double</span> s)</span> </span>{
+        <span class="hljs-keyword">if</span> (s &lt; <span class="hljs-number">0</span>) { cout &lt;&lt; <span class="hljs-string">&quot;Rejected negative salary &quot;</span> &lt;&lt; s &lt;&lt; endl; <span class="hljs-keyword">return</span>; }
+        salary = s;
+    }
+    <span class="hljs-function">string <span class="hljs-title">getName</span><span class="hljs-params">()</span> <span class="hljs-type">const</span>  </span>{ <span class="hljs-keyword">return</span> name; }
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">getSalary</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> salary; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Employee e;
+    e.<span class="hljs-built_in">setName</span>(<span class="hljs-string">&quot;Divya&quot;</span>);
+    e.<span class="hljs-built_in">setSalary</span>(<span class="hljs-number">65000</span>);
+    e.<span class="hljs-built_in">setSalary</span>(<span class="hljs-number">-500</span>);                         <span class="hljs-comment">// the class protects its own data</span>
+    cout &lt;&lt; e.<span class="hljs-built_in">getName</span>() &lt;&lt; <span class="hljs-string">&quot; earns &quot;</span> &lt;&lt; e.<span class="hljs-built_in">getSalary</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Rejected negative salary -500
+Divya earns 65000</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgRW1wbG95ZWUgewogICAgc3RyaW5nIG5hbWU7CiAgICBkb3VibGUgc2FsYXJ5ID0gMDsKcHVibGljOgogICAgdm9pZCBzZXROYW1lKGNvbnN0IHN0cmluZyAmbikgeyBpZiAoIW4uZW1wdHkoKSkgbmFtZSA9IG47IH0KICAgIHZvaWQgc2V0U2FsYXJ5KGRvdWJsZSBzKSB7CiAgICAgICAgaWYgKHMgPCAwKSB7IGNvdXQgPDwgIlJlamVjdGVkIG5lZ2F0aXZlIHNhbGFyeSAiIDw8IHMgPDwgZW5kbDsgcmV0dXJuOyB9CiAgICAgICAgc2FsYXJ5ID0gczsKICAgIH0KICAgIHN0cmluZyBnZXROYW1lKCkgY29uc3QgIHsgcmV0dXJuIG5hbWU7IH0KICAgIGRvdWJsZSBnZXRTYWxhcnkoKSBjb25zdCB7IHJldHVybiBzYWxhcnk7IH0KfTsKCmludCBtYWluKCkgewogICAgRW1wbG95ZWUgZTsKICAgIGUuc2V0TmFtZSgiRGl2eWEiKTsKICAgIGUuc2V0U2FsYXJ5KDY1MDAwKTsKICAgIGUuc2V0U2FsYXJ5KC01MDApOyAgICAgICAgICAgICAgICAgICAgICAgICAvLyB0aGUgY2xhc3MgcHJvdGVjdHMgaXRzIG93biBkYXRhCiAgICBjb3V0IDw8IGUuZ2V0TmFtZSgpIDw8ICIgZWFybnMgIiA8PCBlLmdldFNhbGFyeSgpIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="the-this-pointer"><a class="anchor" href="#the-this-pointer" aria-hidden="true" tabindex="-1">#</a>The this pointer</h2>
+<p>Inside a member function, <strong><code>this</code></strong> is a pointer to the object the function was called on. You use it to tell members apart from parameters with the same name, and to return the object itself (which allows <strong>method chaining</strong>):</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Pizza</span> {
+    string size = <span class="hljs-string">&quot;medium&quot;</span>;
+    <span class="hljs-type">int</span> toppings = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">Pizza &amp;<span class="hljs-title">setSize</span><span class="hljs-params">(<span class="hljs-type">const</span> string &amp;size)</span> </span>{ <span class="hljs-keyword">this</span>-&gt;size = size; <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>; }   <span class="hljs-comment">// this-&gt;size is the member</span>
+    <span class="hljs-function">Pizza &amp;<span class="hljs-title">addTopping</span><span class="hljs-params">()</span>                </span>{ toppings++; <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>; }
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; size &lt;&lt; <span class="hljs-string">&quot; pizza with &quot;</span> &lt;&lt; toppings &lt;&lt; <span class="hljs-string">&quot; toppings&quot;</span> &lt;&lt; endl; }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Pizza p;
+    p.<span class="hljs-built_in">setSize</span>(<span class="hljs-string">&quot;large&quot;</span>).<span class="hljs-built_in">addTopping</span>().<span class="hljs-built_in">addTopping</span>().<span class="hljs-built_in">addTopping</span>();   <span class="hljs-comment">// chaining</span>
+    p.<span class="hljs-built_in">print</span>();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>large pizza with 3 toppings</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgUGl6emEgewogICAgc3RyaW5nIHNpemUgPSAibWVkaXVtIjsKICAgIGludCB0b3BwaW5ncyA9IDA7CnB1YmxpYzoKICAgIFBpenphICZzZXRTaXplKGNvbnN0IHN0cmluZyAmc2l6ZSkgeyB0aGlzLT5zaXplID0gc2l6ZTsgcmV0dXJuICp0aGlzOyB9ICAgLy8gdGhpcy0-c2l6ZSBpcyB0aGUgbWVtYmVyCiAgICBQaXp6YSAmYWRkVG9wcGluZygpICAgICAgICAgICAgICAgIHsgdG9wcGluZ3MrKzsgcmV0dXJuICp0aGlzOyB9CiAgICB2b2lkIHByaW50KCkgY29uc3QgeyBjb3V0IDw8IHNpemUgPDwgIiBwaXp6YSB3aXRoICIgPDwgdG9wcGluZ3MgPDwgIiB0b3BwaW5ncyIgPDwgZW5kbDsgfQp9OwoKaW50IG1haW4oKSB7CiAgICBQaXp6YSBwOwogICAgcC5zZXRTaXplKCJsYXJnZSIpLmFkZFRvcHBpbmcoKS5hZGRUb3BwaW5nKCkuYWRkVG9wcGluZygpOyAgIC8vIGNoYWluaW5nCiAgICBwLnByaW50KCk7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="const-member-functions"><a class="anchor" href="#const-member-functions" aria-hidden="true" tabindex="-1">#</a>const member functions</h2>
+<p>A member function marked <strong><code>const</code></strong> promises not to modify the object. Only const functions can be called on <code>const</code> objects and through <code>const</code> references — so mark every getter <code>const</code>.</p>
+<figure class="code" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Account</span> {
+    <span class="hljs-type">double</span> balance;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">getBalance</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> balance; }   <span class="hljs-comment">// OK: only reads</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reset</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ balance = <span class="hljs-number">0</span>; }             <span class="hljs-comment">// error: modifies a member in a const function</span>
+};</code></pre></figure>
+<h2 id="static-data-members"><a class="anchor" href="#static-data-members" aria-hidden="true" tabindex="-1">#</a>static data members</h2>
+<p>A <strong>static data member</strong> belongs to the <strong>class</strong>, not to any object: there is exactly <strong>one copy shared by all objects</strong>. It must be defined once outside the class (or declared <code>inline static</code> in C++17).</p>
+<h2 id="static-member-functions"><a class="anchor" href="#static-member-functions" aria-hidden="true" tabindex="-1">#</a>static member functions</h2>
+<p>A <strong>static member function</strong> can be called without any object, as <code>ClassName::function()</code>. It has no <code>this</code> pointer, so it can only use static members.</p>
+<figure class="code has-out" data-lang="cpp"><div class="code-head"><span class="code-lang">C++</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> {
+    string name;
+    <span class="hljs-type">int</span> id;
+    <span class="hljs-type">static</span> <span class="hljs-type">int</span> count;                 <span class="hljs-comment">// one shared counter</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Student</span>(<span class="hljs-type">const</span> string &amp;n) : <span class="hljs-built_in">name</span>(n), <span class="hljs-built_in">id</span>(++count) {}
+    ~<span class="hljs-built_in">Student</span>() { count--; }
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ cout &lt;&lt; <span class="hljs-string">&quot;#&quot;</span> &lt;&lt; id &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; name &lt;&lt; endl; }
+    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title">total</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> count; }   <span class="hljs-comment">// no object needed</span>
+};
+
+<span class="hljs-type">int</span> Student::count = <span class="hljs-number">0</span>;               <span class="hljs-comment">// definition of the static member</span>
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    cout &lt;&lt; <span class="hljs-string">&quot;students: &quot;</span> &lt;&lt; Student::<span class="hljs-built_in">total</span>() &lt;&lt; endl;
+    <span class="hljs-function">Student <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-string">&quot;Asha&quot;</span>)</span>, <span class="hljs-title">b</span><span class="hljs-params">(<span class="hljs-string">&quot;Ravi&quot;</span>)</span></span>;
+    {
+        <span class="hljs-function">Student <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-string">&quot;Meera&quot;</span>)</span></span>;
+        c.<span class="hljs-built_in">show</span>();
+        cout &lt;&lt; <span class="hljs-string">&quot;students: &quot;</span> &lt;&lt; Student::<span class="hljs-built_in">total</span>() &lt;&lt; endl;
+    }
+    a.<span class="hljs-built_in">show</span>(); b.<span class="hljs-built_in">show</span>();
+    cout &lt;&lt; <span class="hljs-string">&quot;students: &quot;</span> &lt;&lt; Student::<span class="hljs-built_in">total</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>students: 0
+#3 Meera
+students: 3
+#1 Asha
+#2 Ravi
+students: 2</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=cpp&amp;code=I2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8c3RyaW5nPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKY2xhc3MgU3R1ZGVudCB7CiAgICBzdHJpbmcgbmFtZTsKICAgIGludCBpZDsKICAgIHN0YXRpYyBpbnQgY291bnQ7ICAgICAgICAgICAgICAgICAvLyBvbmUgc2hhcmVkIGNvdW50ZXIKcHVibGljOgogICAgU3R1ZGVudChjb25zdCBzdHJpbmcgJm4pIDogbmFtZShuKSwgaWQoKytjb3VudCkge30KICAgIH5TdHVkZW50KCkgeyBjb3VudC0tOyB9CiAgICB2b2lkIHNob3coKSBjb25zdCB7IGNvdXQgPDwgIiMiIDw8IGlkIDw8ICIgIiA8PCBuYW1lIDw8IGVuZGw7IH0KICAgIHN0YXRpYyBpbnQgdG90YWwoKSB7IHJldHVybiBjb3VudDsgfSAgIC8vIG5vIG9iamVjdCBuZWVkZWQKfTsKCmludCBTdHVkZW50Ojpjb3VudCA9IDA7ICAgICAgICAgICAgICAgLy8gZGVmaW5pdGlvbiBvZiB0aGUgc3RhdGljIG1lbWJlcgoKaW50IG1haW4oKSB7CiAgICBjb3V0IDw8ICJzdHVkZW50czogIiA8PCBTdHVkZW50Ojp0b3RhbCgpIDw8IGVuZGw7CiAgICBTdHVkZW50IGEoIkFzaGEiKSwgYigiUmF2aSIpOwogICAgewogICAgICAgIFN0dWRlbnQgYygiTWVlcmEiKTsKICAgICAgICBjLnNob3coKTsKICAgICAgICBjb3V0IDw8ICJzdHVkZW50czogIiA8PCBTdHVkZW50Ojp0b3RhbCgpIDw8IGVuZGw7CiAgICB9CiAgICBhLnNob3coKTsgYi5zaG93KCk7CiAgICBjb3V0IDw8ICJzdHVkZW50czogIiA8PCBTdHVkZW50Ojp0b3RhbCgpIDw8IGVuZGw7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Regular member</th>
+<th>static member</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Copies</td>
+<td>one per object</td>
+<td>one per class</td>
+</tr>
+<tr>
+<td>Accessed via</td>
+<td>an object: <code>s.name</code></td>
+<td>the class: <code>Student::count</code></td>
+</tr>
+<tr>
+<td>Function has <code>this</code>?</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Can use non-static members?</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="cpp/encapsulation" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is <code>this</code> inside a member function?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A pointer to the object the function was called on</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">A copy of the object</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">The class itself</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A reference to the first object ever created</span></button></div><div class="q-why" hidden><code>this</code> points at the current object, so <code>this-&gt;x</code> is that object&#39;s <code>x</code>.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>How many copies of a static data member exist if you create 50 objects?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">50</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">1</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">0</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">51</span></button></div><div class="q-why" hidden>Static members belong to the class and are shared.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which member functions can be called on a <code>const</code> object?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Any member function</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Only those marked <code>const</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Only static functions</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">None</span></button></div><div class="q-why" hidden>Non-const functions might modify the object, so they are not allowed on const objects.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Why can a static member function not access non-static members?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">They are private</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">It has no <code>this</code> pointer, so there is no particular object to read from</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Static functions cannot return values</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It would be too slow</span></button></div><div class="q-why" hidden>A static function is called on the class, not on an object.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="cpp/encapsulation"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../cpp/constructors/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Constructors &amp; Destructors</strong></a><a class="next" href="../../cpp/friend/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Friend Functions &amp; Classes</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#getters-and-setters">Getters and setters</a></li><li><a class="d2" href="#the-this-pointer">The this pointer</a></li><li><a class="d2" href="#const-member-functions">const member functions</a></li><li><a class="d2" href="#static-data-members">static data members</a></li><li><a class="d2" href="#static-member-functions">static member functions</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

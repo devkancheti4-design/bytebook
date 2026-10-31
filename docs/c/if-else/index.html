@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>If, Else &amp; Switch · C | Bytebook</title>
+<meta name="description" content="Make decisions with `if`, `else if`, nested conditions and `switch` — with the classic grade, leap-year and calculator programs.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="If, Else &amp; Switch · C | Bytebook">
+<meta property="og:description" content="Make decisions with `if`, `else if`, nested conditions and `switch` — with the classic grade, leap-year and calculator programs.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/if-else" data-title="If, Else &amp; Switch" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 6 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Control Flow</p>
+<h1>If, Else &amp; Switch</h1>
+<p class="lede">Make decisions with <code>if</code>, <code>else if</code>, nested conditions and <code>switch</code> — with the classic grade, leap-year and calculator programs.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>6 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>Programs become useful when they can <strong>decide</strong>. C runs a block of code only when a condition is <strong>true</strong> (any non-zero value) and skips it when the condition is <strong>false</strong> (zero).</p>
+<h2 id="if"><a class="anchor" href="#if" aria-hidden="true" tabindex="-1">#</a>if</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> age;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Age: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;age);
+    <span class="hljs-keyword">if</span> (age &gt;= <span class="hljs-number">18</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;You can vote.\n&quot;</span>);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Thanks for checking!\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Age: <span class="in">17</span>
+Thanks for checking!</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgYWdlOwogICAgcHJpbnRmKCJBZ2U6ICIpOwogICAgc2NhbmYoIiVkIiwgJmFnZSk7CiAgICBpZiAoYWdlID49IDE4KSB7CiAgICAgICAgcHJpbnRmKCJZb3UgY2FuIHZvdGUuXG4iKTsKICAgIH0KICAgIHByaW50ZigiVGhhbmtzIGZvciBjaGVja2luZyFcbiIpOwogICAgcmV0dXJuIDA7Cn0K&amp;stdin=MTcK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The braces can be dropped when the block has exactly one statement, but keeping them avoids bugs when you later add a second line.</p>
+<h2 id="if-else"><a class="anchor" href="#if-else" aria-hidden="true" tabindex="-1">#</a>if...else</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> n;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter a number: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+    <span class="hljs-keyword">if</span> (n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d is even\n&quot;</span>, n);
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d is odd\n&quot;</span>, n);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter a number: <span class="in">-7</span>
+-7 is odd</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbjsKICAgIHByaW50ZigiRW50ZXIgYSBudW1iZXI6ICIpOwogICAgc2NhbmYoIiVkIiwgJm4pOwogICAgaWYgKG4gJSAyID09IDApCiAgICAgICAgcHJpbnRmKCIlZCBpcyBldmVuXG4iLCBuKTsKICAgIGVsc2UKICAgICAgICBwcmludGYoIiVkIGlzIG9kZFxuIiwgbik7CiAgICByZXR1cm4gMDsKfQo&amp;stdin=LTcK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="else-if-ladders"><a class="anchor" href="#else-if-ladders" aria-hidden="true" tabindex="-1">#</a>else if ladders</h2>
+<p>Check conditions top to bottom; the first true one wins and the rest are skipped.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> marks;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Marks out of 100: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;marks);
+
+    <span class="hljs-keyword">if</span> (marks &lt; <span class="hljs-number">0</span> || marks &gt; <span class="hljs-number">100</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Invalid marks\n&quot;</span>);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (marks &gt;= <span class="hljs-number">90</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade O (Outstanding)\n&quot;</span>);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (marks &gt;= <span class="hljs-number">80</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade A+\n&quot;</span>);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (marks &gt;= <span class="hljs-number">70</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade A\n&quot;</span>);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (marks &gt;= <span class="hljs-number">60</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade B+\n&quot;</span>);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (marks &gt;= <span class="hljs-number">40</span>)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade P (Pass)\n&quot;</span>);
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Grade F (Fail)\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Marks out of 100: <span class="in">83</span>
+Grade A+</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgbWFya3M7CiAgICBwcmludGYoIk1hcmtzIG91dCBvZiAxMDA6ICIpOwogICAgc2NhbmYoIiVkIiwgJm1hcmtzKTsKCiAgICBpZiAobWFya3MgPCAwIHx8IG1hcmtzID4gMTAwKQogICAgICAgIHByaW50ZigiSW52YWxpZCBtYXJrc1xuIik7CiAgICBlbHNlIGlmIChtYXJrcyA-PSA5MCkKICAgICAgICBwcmludGYoIkdyYWRlIE8gKE91dHN0YW5kaW5nKVxuIik7CiAgICBlbHNlIGlmIChtYXJrcyA-PSA4MCkKICAgICAgICBwcmludGYoIkdyYWRlIEErXG4iKTsKICAgIGVsc2UgaWYgKG1hcmtzID49IDcwKQogICAgICAgIHByaW50ZigiR3JhZGUgQVxuIik7CiAgICBlbHNlIGlmIChtYXJrcyA-PSA2MCkKICAgICAgICBwcmludGYoIkdyYWRlIEIrXG4iKTsKICAgIGVsc2UgaWYgKG1hcmtzID49IDQwKQogICAgICAgIHByaW50ZigiR3JhZGUgUCAoUGFzcylcbiIpOwogICAgZWxzZQogICAgICAgIHByaW50ZigiR3JhZGUgRiAoRmFpbClcbiIpOwogICAgcmV0dXJuIDA7Cn0K&amp;stdin=ODMK" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="nested-if-the-leap-year-program"><a class="anchor" href="#nested-if-the-leap-year-program" aria-hidden="true" tabindex="-1">#</a>Nested if: the leap-year program</h2>
+<p>A year is a leap year if it is divisible by 4, <strong>except</strong> century years, which must be divisible by 400. This is one of the most-asked programs in CSE 101 exams.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">int</span> year;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Year: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;year);
+    <span class="hljs-keyword">if</span> (year % <span class="hljs-number">4</span> == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span> (year % <span class="hljs-number">100</span> == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">if</span> (year % <span class="hljs-number">400</span> == <span class="hljs-number">0</span>)
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d is a leap year\n&quot;</span>, year);
+            <span class="hljs-keyword">else</span>
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d is not a leap year\n&quot;</span>, year);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d is a leap year\n&quot;</span>, year);
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d is not a leap year\n&quot;</span>, year);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Year: <span class="in">1900</span>
+1900 is not a leap year</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBpbnQgeWVhcjsKICAgIHByaW50ZigiWWVhcjogIik7CiAgICBzY2FuZigiJWQiLCAmeWVhcik7CiAgICBpZiAoeWVhciAlIDQgPT0gMCkgewogICAgICAgIGlmICh5ZWFyICUgMTAwID09IDApIHsKICAgICAgICAgICAgaWYgKHllYXIgJSA0MDAgPT0gMCkKICAgICAgICAgICAgICAgIHByaW50ZigiJWQgaXMgYSBsZWFwIHllYXJcbiIsIHllYXIpOwogICAgICAgICAgICBlbHNlCiAgICAgICAgICAgICAgICBwcmludGYoIiVkIGlzIG5vdCBhIGxlYXAgeWVhclxuIiwgeWVhcik7CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgcHJpbnRmKCIlZCBpcyBhIGxlYXAgeWVhclxuIiwgeWVhcik7CiAgICAgICAgfQogICAgfSBlbHNlIHsKICAgICAgICBwcmludGYoIiVkIGlzIG5vdCBhIGxlYXAgeWVhclxuIiwgeWVhcik7CiAgICB9CiAgICByZXR1cm4gMDsKfQo&amp;stdin=MTkwMAo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>The same logic fits in one condition: <code>(year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0</code>.</p>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>= is not ==</span></div><div class="callout-body"><p><code>if (x = 5)</code> <strong>assigns</strong> 5 to <code>x</code> and is always true. To compare, write <code>if (x == 5)</code>. Many programmers write <code>if (5 == x)</code> so that a missing <code>=</code> becomes a compile error.</p>
+</div></aside>
+<h2 id="switch"><a class="anchor" href="#switch" aria-hidden="true" tabindex="-1">#</a>switch</h2>
+<p>When you compare <strong>one integer or character</strong> against many fixed values, <code>switch</code> is cleaner than a long <code>else if</code> ladder:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">double</span> a, b;
+    <span class="hljs-type">char</span> op;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter two numbers: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lf %lf&quot;</span>, &amp;a, &amp;b);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Operator (+ - * /): &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot; %c&quot;</span>, &amp;op);
+
+    <span class="hljs-keyword">switch</span> (op) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;+&#x27;</span>: <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2f\n&quot;</span>, a + b); <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;-&#x27;</span>: <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2f\n&quot;</span>, a - b); <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2f\n&quot;</span>, a * b); <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;/&#x27;</span>:
+            <span class="hljs-keyword">if</span> (b != <span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.2f\n&quot;</span>, a / b);
+            <span class="hljs-keyword">else</span>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Cannot divide by zero\n&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">default</span>:  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Unknown operator %c\n&quot;</span>, op);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Enter two numbers: <span class="in">12 4</span>
+Operator (+ - * /): <span class="in">/</span>
+3.00</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBkb3VibGUgYSwgYjsKICAgIGNoYXIgb3A7CiAgICBwcmludGYoIkVudGVyIHR3byBudW1iZXJzOiAiKTsKICAgIHNjYW5mKCIlbGYgJWxmIiwgJmEsICZiKTsKICAgIHByaW50ZigiT3BlcmF0b3IgKCsgLSAqIC8pOiAiKTsKICAgIHNjYW5mKCIgJWMiLCAmb3ApOwoKICAgIHN3aXRjaCAob3ApIHsKICAgICAgICBjYXNlICcrJzogcHJpbnRmKCIlLjJmXG4iLCBhICsgYik7IGJyZWFrOwogICAgICAgIGNhc2UgJy0nOiBwcmludGYoIiUuMmZcbiIsIGEgLSBiKTsgYnJlYWs7CiAgICAgICAgY2FzZSAnKic6IHByaW50ZigiJS4yZlxuIiwgYSAqIGIpOyBicmVhazsKICAgICAgICBjYXNlICcvJzoKICAgICAgICAgICAgaWYgKGIgIT0gMCkgcHJpbnRmKCIlLjJmXG4iLCBhIC8gYik7CiAgICAgICAgICAgIGVsc2UgICAgICAgIHByaW50ZigiQ2Fubm90IGRpdmlkZSBieSB6ZXJvXG4iKTsKICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgZGVmYXVsdDogIHByaW50ZigiVW5rbm93biBvcGVyYXRvciAlY1xuIiwgb3ApOwogICAgfQogICAgcmV0dXJuIDA7Cn0K&amp;stdin=MTIgNAovCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>Rules to remember:</p>
+<ul>
+<li>The <code>switch</code> expression must be an integer type (<code>int</code>, <code>char</code>, <code>enum</code>) — not <code>float</code> or a string.</li>
+<li>Each <code>case</code> label must be a constant, and labels must be unique.</li>
+<li><code>break</code> exits the switch. <strong>Without it, execution falls through</strong> into the next case.</li>
+<li><code>default</code> runs when no case matches. It is optional and can appear anywhere.</li>
+</ul>
+<p>Fall-through is occasionally useful — for grouping cases:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">char</span> ch;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Letter: &quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot; %c&quot;</span>, &amp;ch);
+    <span class="hljs-keyword">switch</span> (ch) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;e&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;i&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;o&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;u&#x27;</span>:
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;A&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;E&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;O&#x27;</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;U&#x27;</span>:
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c is a vowel\n&quot;</span>, ch);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c is a consonant\n&quot;</span>, ch);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Letter: <span class="in">e</span>
+e is a vowel</pre></div><div class="code-foot"><span class="foot-note">Sample input is included</span><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbWFpbih2b2lkKSB7CiAgICBjaGFyIGNoOwogICAgcHJpbnRmKCJMZXR0ZXI6ICIpOwogICAgc2NhbmYoIiAlYyIsICZjaCk7CiAgICBzd2l0Y2ggKGNoKSB7CiAgICAgICAgY2FzZSAnYSc6IGNhc2UgJ2UnOiBjYXNlICdpJzogY2FzZSAnbyc6IGNhc2UgJ3UnOgogICAgICAgIGNhc2UgJ0EnOiBjYXNlICdFJzogY2FzZSAnSSc6IGNhc2UgJ08nOiBjYXNlICdVJzoKICAgICAgICAgICAgcHJpbnRmKCIlYyBpcyBhIHZvd2VsXG4iLCBjaCk7CiAgICAgICAgICAgIGJyZWFrOwogICAgICAgIGRlZmF1bHQ6CiAgICAgICAgICAgIHByaW50ZigiJWMgaXMgYSBjb25zb25hbnRcbiIsIGNoKTsKICAgIH0KICAgIHJldHVybiAwOwp9Cg&amp;stdin=ZQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>if-else vs switch</span></div><div class="callout-body"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th><code>if-else</code></th>
+<th><code>switch</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tests any condition, including ranges (<code>x &gt; 10</code>)</td>
+<td>Tests equality with constant values only</td>
+</tr>
+<tr>
+<td>Works with <code>float</code>, <code>double</code> and pointers</td>
+<td>Only integer types and <code>char</code></td>
+</tr>
+<tr>
+<td>Evaluated top to bottom</td>
+<td>Often compiled into a fast jump table</td>
+</tr>
+</tbody></table>
+</div>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="c/if-else" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What does this print?</p>
+<figure class="code" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-type">int</span> x = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">if</span> (x = <span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;A&quot;</span>);
+<span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;B&quot;</span>);</code></pre></figure>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>A</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>B</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Nothing</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Compile error</span></button></div><div class="q-why" hidden><code>x = 0</code> assigns 0, and the value of the assignment (0) is false, so the <code>else</code> runs. This is the classic <code>=</code> versus <code>==</code> bug.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What happens if you leave out <code>break</code> at the end of a <code>case</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Compile error</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The switch exits anyway</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Execution falls through into the next case</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The <code>default</code> case runs</span></button></div><div class="q-why" hidden>Without <code>break</code>, C keeps executing the following case&#39;s statements.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>Which of these <strong>cannot</strong> be used as a <code>switch</code> expression?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>int n</code></span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>char c</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label"><code>float f</code></span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>n % 3</code></span></button></div><div class="q-why" hidden><code>switch</code> only works with integer types. Floating-point values are not allowed.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>Is 2000 a leap year?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Yes, because it is divisible by 400</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">No, because century years are never leap years</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">No, because it is not divisible by 3</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Yes, but only because it is divisible by 4</span></button></div><div class="q-why" hidden>Century years are leap years only when divisible by 400. 2000 qualifies; 1900 does not.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/if-else"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/operators/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Operators &amp; Expressions</strong></a><a class="next" href="../../c/loops/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Loops: while, do-while and for</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#if">if</a></li><li><a class="d2" href="#if-else">if...else</a></li><li><a class="d2" href="#else-if-ladders">else if ladders</a></li><li><a class="d2" href="#nested-if-the-leap-year-program">Nested if: the leap-year program</a></li><li><a class="d2" href="#switch">switch</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

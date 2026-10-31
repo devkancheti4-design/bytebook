@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recursion · C | Bytebook</title>
+<meta name="description" content="Functions that call themselves: base cases, the call stack, and the factorial, Fibonacci, power, digit-sum and Tower of Hanoi programs.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Recursion · C | Bytebook">
+<meta property="og:description" content="Functions that call themselves: base cases, the call stack, and the factorial, Fibonacci, power, digit-sum and Tower of Hanoi programs.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c" class="active" aria-current="true"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="c" aria-label="Programming in C lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../c/"><span class="chip" data-c="c">CSE 101</span><strong>Programming in C</strong></a>
+<div class="side-progress" data-course="c" data-total="21"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 21 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Getting Started</h4><ol><li><a href="../../c/intro/" data-lesson="c/intro"><span class="tick" aria-hidden="true"></span><span>C Introduction</span></a></li><li><a href="../../c/syntax-output/" data-lesson="c/syntax-output"><span class="tick" aria-hidden="true"></span><span>Syntax, Output &amp; Comments</span></a></li><li><a href="../../c/variables/" data-lesson="c/variables"><span class="tick" aria-hidden="true"></span><span>Variables, Data Types &amp; Constants</span></a></li><li><a href="../../c/input/" data-lesson="c/input"><span class="tick" aria-hidden="true"></span><span>User Input with scanf</span></a></li><li><a href="../../c/operators/" data-lesson="c/operators"><span class="tick" aria-hidden="true"></span><span>Operators &amp; Expressions</span></a></li></ol></div>
+<div class="side-unit"><h4>Control Flow</h4><ol><li><a href="../../c/if-else/" data-lesson="c/if-else"><span class="tick" aria-hidden="true"></span><span>If, Else &amp; Switch</span></a></li><li><a href="../../c/loops/" data-lesson="c/loops"><span class="tick" aria-hidden="true"></span><span>Loops: while, do-while and for</span></a></li><li><a href="../../c/jumps-patterns/" data-lesson="c/jumps-patterns"><span class="tick" aria-hidden="true"></span><span>Break, Continue &amp; Pattern Programs</span></a></li></ol></div>
+<div class="side-unit"><h4>Functions</h4><ol><li><a href="../../c/functions/" data-lesson="c/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li><li><a href="../../c/recursion/" data-lesson="c/recursion" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Recursion</span></a></li><li><a href="../../c/scope-storage/" data-lesson="c/scope-storage"><span class="tick" aria-hidden="true"></span><span>Scope &amp; Storage Classes</span></a></li></ol></div>
+<div class="side-unit"><h4>Arrays &amp; Strings</h4><ol><li><a href="../../c/arrays/" data-lesson="c/arrays"><span class="tick" aria-hidden="true"></span><span>Arrays</span></a></li><li><a href="../../c/2d-arrays/" data-lesson="c/2d-arrays"><span class="tick" aria-hidden="true"></span><span>2D Arrays &amp; Matrices</span></a></li><li><a href="../../c/strings/" data-lesson="c/strings"><span class="tick" aria-hidden="true"></span><span>Strings</span></a></li></ol></div>
+<div class="side-unit"><h4>Pointers &amp; Memory</h4><ol><li><a href="../../c/pointers/" data-lesson="c/pointers"><span class="tick" aria-hidden="true"></span><span>Pointers</span></a></li><li><a href="../../c/pointers-functions/" data-lesson="c/pointers-functions"><span class="tick" aria-hidden="true"></span><span>Pointers, Arrays &amp; Functions</span></a></li><li><a href="../../c/dynamic-memory/" data-lesson="c/dynamic-memory"><span class="tick" aria-hidden="true"></span><span>Dynamic Memory Allocation</span></a></li></ol></div>
+<div class="side-unit"><h4>Structures, Files &amp; More</h4><ol><li><a href="../../c/structures/" data-lesson="c/structures"><span class="tick" aria-hidden="true"></span><span>Structures, Unions &amp; Enums</span></a></li><li><a href="../../c/file-handling/" data-lesson="c/file-handling"><span class="tick" aria-hidden="true"></span><span>File Handling</span></a></li><li><a href="../../c/preprocessor/" data-lesson="c/preprocessor"><span class="tick" aria-hidden="true"></span><span>Preprocessor, Macros &amp; Command-Line Arguments</span></a></li><li><a href="../../c/cheatsheet/" data-lesson="c/cheatsheet"><span class="tick" aria-hidden="true"></span><span>C Cheat Sheet &amp; Exam Prep</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../c/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="c/recursion" data-title="Recursion" data-course-title="Programming in C">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../c/">C</a><span>/</span><span>Lesson 10 of 21</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Functions</p>
+<h1>Recursion</h1>
+<p class="lede">Functions that call themselves: base cases, the call stack, and the factorial, Fibonacci, power, digit-sum and Tower of Hanoi programs.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>4 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A function is <strong>recursive</strong> when it calls itself. Recursion solves a problem by solving a <strong>smaller version of the same problem</strong>, until it reaches a case so small that the answer is obvious.</p>
+<p>Every recursive function needs two parts:</p>
+<ol>
+<li><strong>Base case</strong> — the smallest input, answered directly without recursion.</li>
+<li><strong>Recursive case</strong> — express the answer using the same function on a smaller input.</li>
+</ol>
+<h2 id="factorial"><a class="anchor" href="#factorial" aria-hidden="true" tabindex="-1">#</a>Factorial</h2>
+<p>5! = 5 × 4! and 0! = 1. That definition <em>is</em> the code:</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title function_">factorial</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;               <span class="hljs-comment">// base case</span>
+    <span class="hljs-keyword">return</span> n * factorial(n - <span class="hljs-number">1</span>);        <span class="hljs-comment">// recursive case</span>
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">6</span>; i++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d! = %lld\n&quot;</span>, i, factorial(i));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>0! = 1
+1! = 1
+2! = 2
+3! = 6
+4! = 24
+5! = 120
+6! = 720</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-Cgpsb25nIGxvbmcgZmFjdG9yaWFsKGludCBuKSB7CiAgICBpZiAobiA8PSAxKSByZXR1cm4gMTsgICAgICAgICAgICAgICAvLyBiYXNlIGNhc2UKICAgIHJldHVybiBuICogZmFjdG9yaWFsKG4gLSAxKTsgICAgICAgIC8vIHJlY3Vyc2l2ZSBjYXNlCn0KCmludCBtYWluKHZvaWQpIHsKICAgIGZvciAoaW50IGkgPSAwOyBpIDw9IDY7IGkrKykKICAgICAgICBwcmludGYoIiVkISA9ICVsbGRcbiIsIGksIGZhY3RvcmlhbChpKSk7CiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="what-happens-on-the-call-stack"><a class="anchor" href="#what-happens-on-the-call-stack" aria-hidden="true" tabindex="-1">#</a>What happens on the call stack</h2>
+<p>Each call gets its own <strong>stack frame</strong> holding its own copy of <code>n</code>. Calls pile up until the base case, then return values flow back down:</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 279 236" width="279" height="236" role="img" aria-label="Stack with main(), factorial(4), factorial(3), factorial(2), factorial(1) (top is factorial(1))"><defs><marker id="dg-ah-3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path class="ah" d="M0,1.2 L10,5 L0,8.8 z"/></marker></defs><rect class="box" x="20" y="170" width="144.8" height="34" rx="5"/><text class="t" x="92.4" y="187">main()</text><rect class="box" x="20" y="132" width="144.8" height="34" rx="5"/><text class="t" x="92.4" y="149">factorial(4)</text><rect class="box" x="20" y="94" width="144.8" height="34" rx="5"/><text class="t" x="92.4" y="111">factorial(3)</text><rect class="box" x="20" y="56" width="144.8" height="34" rx="5"/><text class="t" x="92.4" y="73">factorial(2)</text><rect class="box hl" x="20" y="18" width="144.8" height="34" rx="5"/><text class="t" x="92.4" y="35">factorial(1)</text><path class="wall" d="M16,10 V210 H168.8 V10"/><line class="edge ptr" x1="232.8" y1="35" x2="176.8" y2="35" marker-end="url(#dg-ah-3)"/><text class="s ptr start" x="240.8" y="35">top</text><text class="s" x="92.4" y="226">call stack</text></svg><figcaption>While computing <code>factorial(4)</code>, five frames are on the stack. <code>factorial(1)</code> returns 1, then each frame multiplies and returns.</figcaption></figure>
+<figure class="code" data-lang="text"><div class="code-head"><span class="code-lang">Text</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs">factorial(4) = 4 * factorial(3)
+             = 4 * (3 * factorial(2))
+             = 4 * (3 * (2 * factorial(1)))
+             = 4 * (3 * (2 * 1))
+             = 24</code></pre></figure>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>Missing base case</span></div><div class="callout-body"><p>Without a base case (or with one that is never reached), the function calls itself forever until the stack runs out of memory: a <strong>stack overflow</strong>, which crashes the program.</p>
+</div></aside>
+<h2 id="fibonacci"><a class="anchor" href="#fibonacci" aria-hidden="true" tabindex="-1">#</a>Fibonacci</h2>
+<p>fib(0) = 0, fib(1) = 1, fib(n) = fib(n−1) + fib(n−2):</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">fib</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> {
+    <span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> n;
+    <span class="hljs-keyword">return</span> fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">12</span>; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, fib(i));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>0 1 1 2 3 5 8 13 21 34 55 89</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgZmliKGludCBuKSB7CiAgICBpZiAobiA8IDIpIHJldHVybiBuOwogICAgcmV0dXJuIGZpYihuIC0gMSkgKyBmaWIobiAtIDIpOwp9CgppbnQgbWFpbih2b2lkKSB7CiAgICBmb3IgKGludCBpID0gMDsgaSA8IDEyOyBpKyspIHByaW50ZigiJWQgIiwgZmliKGkpKTsKICAgIHByaW50ZigiXG4iKTsKICAgIHJldHVybiAwOwp9Cg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<p>This is elegant but slow: <code>fib(n)</code> recomputes the same values again and again, making about 2ⁿ calls. You will fix this with <em>memoisation</em> in the Algorithms subject (<a href="../../daa/dp-intro/">Dynamic Programming</a>).</p>
+<figure class="diagram"><svg class="dg" viewBox="0 0 262 264" width="262" height="264" role="img" aria-label="Tree rooted at f5"><line class="edge" x1="150.5" y1="27" x2="92" y2="97"/><line class="edge" x1="92" y1="97" x2="53" y2="167"/><line class="edge hl" x1="53" y1="167" x2="27" y2="237"/><line class="edge" x1="53" y1="167" x2="79" y2="237"/><line class="edge" x1="92" y1="97" x2="131" y2="167"/><line class="edge" x1="150.5" y1="27" x2="209" y2="97"/><line class="edge hl" x1="209" y1="97" x2="183" y2="167"/><line class="edge" x1="209" y1="97" x2="235" y2="167"/><circle class="node hl" cx="27" cy="237" r="19"/><text class="t" x="27" y="237">f2</text><circle class="node" cx="79" cy="237" r="19"/><text class="t" x="79" y="237">f1</text><circle class="node hl" cx="53" cy="167" r="19"/><text class="t" x="53" y="167">f3</text><circle class="node hl" cx="131" cy="167" r="19"/><text class="t" x="131" y="167">f2</text><circle class="node" cx="92" cy="97" r="19"/><text class="t" x="92" y="97">f4</text><circle class="node hl" cx="183" cy="167" r="19"/><text class="t" x="183" y="167">f2</text><circle class="node" cx="235" cy="167" r="19"/><text class="t" x="235" y="167">f1</text><circle class="node hl" cx="209" cy="97" r="19"/><text class="t" x="209" y="97">f3</text><circle class="node" cx="150.5" cy="27" r="19"/><text class="t" x="150.5" y="27">f5</text></svg><figcaption>The call tree of <code>fib(5)</code>. Highlighted calls are repeated work — <code>fib(3)</code> is computed twice and <code>fib(2)</code> three times.</figcaption></figure>
+<h2 id="more-recursive-classics"><a class="anchor" href="#more-recursive-classics" aria-hidden="true" tabindex="-1">#</a>More recursive classics</h2>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">sumDigits</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span>        { <span class="hljs-keyword">return</span> n == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : n % <span class="hljs-number">10</span> + sumDigits(n / <span class="hljs-number">10</span>); }
+<span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title function_">power</span><span class="hljs-params">(<span class="hljs-type">int</span> b, <span class="hljs-type">int</span> e)</span> {
+    <span class="hljs-keyword">if</span> (e == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-type">long</span> <span class="hljs-type">long</span> half = power(b, e / <span class="hljs-number">2</span>);       <span class="hljs-comment">// fast power: b^e = (b^(e/2))^2</span>
+    <span class="hljs-keyword">return</span> e % <span class="hljs-number">2</span> ? half * half * b : half * half;
+}
+<span class="hljs-type">void</span> <span class="hljs-title function_">printBinary</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span>     { <span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">1</span>) printBinary(n / <span class="hljs-number">2</span>); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, n % <span class="hljs-number">2</span>); }
+<span class="hljs-type">int</span> <span class="hljs-title function_">gcd</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span>       { <span class="hljs-keyword">return</span> b == <span class="hljs-number">0</span> ? a : gcd(b, a % b); }
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;sumDigits(9045) = %d\n&quot;</span>, sumDigits(<span class="hljs-number">9045</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;power(3, 13) = %lld\n&quot;</span>, power(<span class="hljs-number">3</span>, <span class="hljs-number">13</span>));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;13 in binary = &quot;</span>); printBinary(<span class="hljs-number">13</span>); <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;gcd(84, 36) = %d\n&quot;</span>, gcd(<span class="hljs-number">84</span>, <span class="hljs-number">36</span>));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>sumDigits(9045) = 18
+power(3, 13) = 1594323
+13 in binary = 1101
+gcd(84, 36) = 12</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgc3VtRGlnaXRzKGludCBuKSAgICAgICAgeyByZXR1cm4gbiA9PSAwID8gMCA6IG4gJSAxMCArIHN1bURpZ2l0cyhuIC8gMTApOyB9CmxvbmcgbG9uZyBwb3dlcihpbnQgYiwgaW50IGUpIHsKICAgIGlmIChlID09IDApIHJldHVybiAxOwogICAgbG9uZyBsb25nIGhhbGYgPSBwb3dlcihiLCBlIC8gMik7ICAgICAgIC8vIGZhc3QgcG93ZXI6IGJeZSA9IChiXihlLzIpKV4yCiAgICByZXR1cm4gZSAlIDIgPyBoYWxmICogaGFsZiAqIGIgOiBoYWxmICogaGFsZjsKfQp2b2lkIHByaW50QmluYXJ5KGludCBuKSAgICAgeyBpZiAobiA-IDEpIHByaW50QmluYXJ5KG4gLyAyKTsgcHJpbnRmKCIlZCIsIG4gJSAyKTsgfQppbnQgZ2NkKGludCBhLCBpbnQgYikgICAgICAgeyByZXR1cm4gYiA9PSAwID8gYSA6IGdjZChiLCBhICUgYik7IH0KCmludCBtYWluKHZvaWQpIHsKICAgIHByaW50Zigic3VtRGlnaXRzKDkwNDUpID0gJWRcbiIsIHN1bURpZ2l0cyg5MDQ1KSk7CiAgICBwcmludGYoInBvd2VyKDMsIDEzKSA9ICVsbGRcbiIsIHBvd2VyKDMsIDEzKSk7CiAgICBwcmludGYoIjEzIGluIGJpbmFyeSA9ICIpOyBwcmludEJpbmFyeSgxMyk7IHByaW50ZigiXG4iKTsKICAgIHByaW50ZigiZ2NkKDg0LCAzNikgPSAlZFxuIiwgZ2NkKDg0LCAzNikpOwogICAgcmV0dXJuIDA7Cn0K" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="tower-of-hanoi"><a class="anchor" href="#tower-of-hanoi" aria-hidden="true" tabindex="-1">#</a>Tower of Hanoi</h2>
+<p>Move <code>n</code> disks from peg A to peg C using peg B, never placing a larger disk on a smaller one. The recursive insight: move <code>n−1</code> disks out of the way, move the biggest disk, then move the <code>n−1</code> disks back on top.</p>
+<figure class="code has-out" data-lang="c"><div class="code-head"><span class="code-lang">C</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> moves = <span class="hljs-number">0</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">hanoi</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">char</span> from, <span class="hljs-type">char</span> via, <span class="hljs-type">char</span> to)</span> {
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+    hanoi(n - <span class="hljs-number">1</span>, from, to, via);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Move disk %d from %c to %c\n&quot;</span>, n, from, to);
+    moves++;
+    hanoi(n - <span class="hljs-number">1</span>, via, from, to);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    hanoi(<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Total moves: %d\n&quot;</span>, moves);   <span class="hljs-comment">// always 2^n - 1</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>Move disk 1 from A to C
+Move disk 2 from A to B
+Move disk 1 from C to B
+Move disk 3 from A to C
+Move disk 1 from B to A
+Move disk 2 from B to C
+Move disk 1 from A to C
+Total moves: 7</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=c&amp;code=I2luY2x1ZGUgPHN0ZGlvLmg-CgppbnQgbW92ZXMgPSAwOwoKdm9pZCBoYW5vaShpbnQgbiwgY2hhciBmcm9tLCBjaGFyIHZpYSwgY2hhciB0bykgewogICAgaWYgKG4gPT0gMCkgcmV0dXJuOwogICAgaGFub2kobiAtIDEsIGZyb20sIHRvLCB2aWEpOwogICAgcHJpbnRmKCJNb3ZlIGRpc2sgJWQgZnJvbSAlYyB0byAlY1xuIiwgbiwgZnJvbSwgdG8pOwogICAgbW92ZXMrKzsKICAgIGhhbm9pKG4gLSAxLCB2aWEsIGZyb20sIHRvKTsKfQoKaW50IG1haW4odm9pZCkgewogICAgaGFub2koMywgJ0EnLCAnQicsICdDJyk7CiAgICBwcmludGYoIlRvdGFsIG1vdmVzOiAlZFxuIiwgbW92ZXMpOyAgIC8vIGFsd2F5cyAyXm4gLSAxCiAgICByZXR1cm4gMDsKfQo" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="recursion-vs-iteration"><a class="anchor" href="#recursion-vs-iteration" aria-hidden="true" tabindex="-1">#</a>Recursion vs iteration</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Recursion</th>
+<th>Iteration (loops)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Code</td>
+<td>short, mirrors the maths</td>
+<td>sometimes longer</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>one stack frame per call</td>
+<td>constant</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>function-call overhead</td>
+<td>usually faster</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>trees, divide and conquer, backtracking</td>
+<td>simple repetition</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-exam"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5zM6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8M22 9v5"/></svg><span>Write the recurrence</span></div><div class="callout-body"><p>Examiners often ask for the recurrence relation of a recursive function. For factorial: T(n) = T(n−1) + O(1), which solves to O(n). For naive Fibonacci: T(n) = T(n−1) + T(n−2) + O(1), which grows exponentially.</p>
+</div></aside>
+<section class="quiz" id="quiz" data-quiz="c/recursion" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>What is the base case in <code>int f(int n) { if (n == 0) return 0; return n + f(n - 1); }</code>?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label"><code>n == 0</code>, which returns 0</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label"><code>return n + f(n - 1)</code></span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">There is no base case</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label"><code>n == 1</code></span></button></div><div class="q-why" hidden>The base case stops the recursion: when <code>n</code> is 0 the function returns without calling itself.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>What does <code>f(4)</code> return for the function in the previous question?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">4</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">0</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">10</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">24</span></button></div><div class="q-why" hidden>4 + 3 + 2 + 1 + 0 = 10. The function sums 1 to n.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What happens if a recursive function never reaches its base case?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">It returns 0</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The compiler refuses to compile it</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">It keeps calling itself until the stack overflows and the program crashes</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It automatically becomes a loop</span></button></div><div class="q-why" hidden>Each call uses stack memory. Infinite recursion exhausts the stack.</div></li><li class="q" data-answer="2"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>How many moves does Tower of Hanoi need for 4 disks?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">8</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">12</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">15</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">16</span></button></div><div class="q-why" hidden>The minimum is 2ⁿ − 1 = 2⁴ − 1 = 15.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="c/recursion"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../c/functions/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Functions</strong></a><a class="next" href="../../c/scope-storage/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Scope &amp; Storage Classes</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#factorial">Factorial</a></li><li><a class="d2" href="#what-happens-on-the-call-stack">What happens on the call stack</a></li><li><a class="d2" href="#fibonacci">Fibonacci</a></li><li><a class="d2" href="#more-recursive-classics">More recursive classics</a></li><li><a class="d2" href="#tower-of-hanoi">Tower of Hanoi</a></li><li><a class="d2" href="#recursion-vs-iteration">Recursion vs iteration</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

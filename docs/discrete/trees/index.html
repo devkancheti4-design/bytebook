@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trees · Discrete Math | Bytebook</title>
+<meta name="description" content="Trees in discrete mathematics: characterisations, rooted and m-ary trees with their counting formulas, spanning trees, Cayley&#39;s formula and prefix codes.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Trees · Discrete Math | Bytebook">
+<meta property="og:description" content="Trees in discrete mathematics: characterisations, rooted and m-ary trees with their counting formulas, spanning trees, Cayley&#39;s formula and prefix codes.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="discrete">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete" class="active" aria-current="true"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="discrete" aria-label="Discrete Mathematics lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../discrete/"><span class="chip" data-c="discrete">DMS</span><strong>Discrete Mathematics</strong></a>
+<div class="side-progress" data-course="discrete" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Logic &amp; Proofs</h4><ol><li><a href="../../discrete/propositional-logic/" data-lesson="discrete/propositional-logic"><span class="tick" aria-hidden="true"></span><span>Propositional Logic</span></a></li><li><a href="../../discrete/logical-equivalence/" data-lesson="discrete/logical-equivalence"><span class="tick" aria-hidden="true"></span><span>Logical Equivalences &amp; Normal Forms</span></a></li><li><a href="../../discrete/predicate-logic/" data-lesson="discrete/predicate-logic"><span class="tick" aria-hidden="true"></span><span>Predicates &amp; Quantifiers</span></a></li><li><a href="../../discrete/proofs/" data-lesson="discrete/proofs"><span class="tick" aria-hidden="true"></span><span>Proof Techniques</span></a></li><li><a href="../../discrete/induction/" data-lesson="discrete/induction"><span class="tick" aria-hidden="true"></span><span>Mathematical Induction</span></a></li></ol></div>
+<div class="side-unit"><h4>Sets, Relations &amp; Functions</h4><ol><li><a href="../../discrete/sets/" data-lesson="discrete/sets"><span class="tick" aria-hidden="true"></span><span>Sets</span></a></li><li><a href="../../discrete/relations/" data-lesson="discrete/relations"><span class="tick" aria-hidden="true"></span><span>Relations</span></a></li><li><a href="../../discrete/partial-orders/" data-lesson="discrete/partial-orders"><span class="tick" aria-hidden="true"></span><span>Partial Orders &amp; Lattices</span></a></li><li><a href="../../discrete/functions/" data-lesson="discrete/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li></ol></div>
+<div class="side-unit"><h4>Counting</h4><ol><li><a href="../../discrete/counting/" data-lesson="discrete/counting"><span class="tick" aria-hidden="true"></span><span>Counting Principles &amp; Pigeonhole</span></a></li><li><a href="../../discrete/permutations-combinations/" data-lesson="discrete/permutations-combinations"><span class="tick" aria-hidden="true"></span><span>Permutations &amp; Combinations</span></a></li><li><a href="../../discrete/inclusion-exclusion/" data-lesson="discrete/inclusion-exclusion"><span class="tick" aria-hidden="true"></span><span>Inclusion–Exclusion &amp; the Binomial Theorem</span></a></li><li><a href="../../discrete/recurrences/" data-lesson="discrete/recurrences"><span class="tick" aria-hidden="true"></span><span>Recurrence Relations</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs, Number Theory &amp; Algebra</h4><ol><li><a href="../../discrete/graph-theory/" data-lesson="discrete/graph-theory"><span class="tick" aria-hidden="true"></span><span>Graph Theory</span></a></li><li><a href="../../discrete/trees/" data-lesson="discrete/trees" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Trees</span></a></li><li><a href="../../discrete/number-theory/" data-lesson="discrete/number-theory"><span class="tick" aria-hidden="true"></span><span>Number Theory</span></a></li><li><a href="../../discrete/boolean-algebra/" data-lesson="discrete/boolean-algebra"><span class="tick" aria-hidden="true"></span><span>Boolean Algebra</span></a></li><li><a href="../../discrete/cheatsheet/" data-lesson="discrete/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Discrete Mathematics Formula Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../discrete/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="discrete/trees" data-title="Trees" data-course-title="Discrete Mathematics">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../discrete/">Discrete Math</a><span>/</span><span>Lesson 15 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Graphs, Number Theory &amp; Algebra</p>
+<h1>Trees</h1>
+<p class="lede">Trees in discrete mathematics: characterisations, rooted and m-ary trees with their counting formulas, spanning trees, Cayley&#39;s formula and prefix codes.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>2 runnable examples</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>tree</strong> is a <strong>connected, acyclic</strong> undirected graph. Trees are the most important graphs in computer science: file systems, parse trees, decision trees, search trees, heaps, tries.</p>
+<h2 id="equivalent-characterisations"><a class="anchor" href="#equivalent-characterisations" aria-hidden="true" tabindex="-1">#</a>Equivalent characterisations</h2>
+<p>For a graph T with n vertices, these are all equivalent — any one of them makes T a tree:</p>
+<ol>
+<li>T is connected and has no cycles.</li>
+<li>There is a <strong>unique simple path</strong> between every pair of vertices.</li>
+<li>T is connected and has exactly <strong>n − 1 edges</strong>.</li>
+<li>T has no cycles and has exactly <strong>n − 1 edges</strong>.</li>
+<li>T is connected, but removing any edge disconnects it (every edge is a bridge).</li>
+<li>T has no cycles, but adding any edge creates exactly one cycle.</li>
+</ol>
+<p>A graph with no cycles that may be disconnected is a <strong>forest</strong> — a collection of trees. A forest with n vertices and c components has n − c edges.</p>
+<h2 id="rooted-and-m-ary-trees"><a class="anchor" href="#rooted-and-m-ary-trees" aria-hidden="true" tabindex="-1">#</a>Rooted and m-ary trees</h2>
+<p>Choosing one vertex as the <strong>root</strong> gives every edge a direction away from it, with the usual parent, child, leaf, level and height terms (see <a href="../../dsa/trees/">Trees &amp; Binary Trees</a> in Data Structures).</p>
+<p>An <strong>m-ary tree</strong> gives each internal vertex at most m children; a <strong>full m-ary tree</strong> gives each internal vertex exactly m children.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>For a full m-ary tree with…</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i internal vertices</td>
+<td>n = mi + 1 vertices, l = (m − 1)i + 1 leaves</td>
+</tr>
+<tr>
+<td>n vertices</td>
+<td>i = (n − 1)/m internal, l = ((m − 1)n + 1)/m leaves</td>
+</tr>
+<tr>
+<td>l leaves</td>
+<td>n = (ml − 1)/(m − 1), i = (l − 1)/(m − 1)</td>
+</tr>
+</tbody></table>
+</div>
+<p>An m-ary tree of height h has at most <strong>mʰ leaves</strong>, so a tree with l leaves has height at least ⌈log_m l⌉.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">full_mary</span>(<span class="hljs-params">m, internal</span>):
+    n = m * internal + <span class="hljs-number">1</span>
+    leaves = (m - <span class="hljs-number">1</span>) * internal + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> n, leaves
+
+<span class="hljs-comment"># A knockout chess tournament: each match (internal vertex) has 2 players (children)</span>
+players = <span class="hljs-number">64</span>
+matches = (players - <span class="hljs-number">1</span>) // (<span class="hljs-number">2</span> - <span class="hljs-number">1</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">{players}</span> players need <span class="hljs-subst">{matches}</span> matches&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;full ternary tree with 10 internal vertices (vertices, leaves):&quot;</span>, full_mary(<span class="hljs-number">3</span>, <span class="hljs-number">10</span>))
+
+<span class="hljs-comment"># Chain letter: each person sends to 4 others; 100 people never send (leaves)</span>
+m, l = <span class="hljs-number">4</span>, <span class="hljs-number">100</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;people involved: <span class="hljs-subst">{(m * l - <span class="hljs-number">1</span>) // (m - <span class="hljs-number">1</span>)}</span>, senders: <span class="hljs-subst">{(l - <span class="hljs-number">1</span>) // (m - <span class="hljs-number">1</span>)}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>64 players need 63 matches
+full ternary tree with 10 internal vertices (vertices, leaves): (31, 21)
+people involved: 133, senders: 33</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGZ1bGxfbWFyeShtLCBpbnRlcm5hbCk6CiAgICBuID0gbSAqIGludGVybmFsICsgMQogICAgbGVhdmVzID0gKG0gLSAxKSAqIGludGVybmFsICsgMQogICAgcmV0dXJuIG4sIGxlYXZlcwoKIyBBIGtub2Nrb3V0IGNoZXNzIHRvdXJuYW1lbnQ6IGVhY2ggbWF0Y2ggKGludGVybmFsIHZlcnRleCkgaGFzIDIgcGxheWVycyAoY2hpbGRyZW4pCnBsYXllcnMgPSA2NAptYXRjaGVzID0gKHBsYXllcnMgLSAxKSAvLyAoMiAtIDEpCnByaW50KGYie3BsYXllcnN9IHBsYXllcnMgbmVlZCB7bWF0Y2hlc30gbWF0Y2hlcyIpCnByaW50KCJmdWxsIHRlcm5hcnkgdHJlZSB3aXRoIDEwIGludGVybmFsIHZlcnRpY2VzICh2ZXJ0aWNlcywgbGVhdmVzKToiLCBmdWxsX21hcnkoMywgMTApKQoKIyBDaGFpbiBsZXR0ZXI6IGVhY2ggcGVyc29uIHNlbmRzIHRvIDQgb3RoZXJzOyAxMDAgcGVvcGxlIG5ldmVyIHNlbmQgKGxlYXZlcykKbSwgbCA9IDQsIDEwMApwcmludChmInBlb3BsZSBpbnZvbHZlZDogeyhtICogbCAtIDEpIC8vIChtIC0gMSl9LCBzZW5kZXJzOiB7KGwgLSAxKSAvLyAobSAtIDEpfSIpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="spanning-trees"><a class="anchor" href="#spanning-trees" aria-hidden="true" tabindex="-1">#</a>Spanning trees</h2>
+<p>A <strong>spanning tree</strong> of a connected graph G is a subgraph that is a tree and includes <strong>every</strong> vertex of G. Every connected graph has one (delete cycle edges until none are left); BFS and DFS each produce one. With weights, the cheapest is the <strong>minimum spanning tree</strong> — <a href="../../daa/mst/">Kruskal and Prim</a>.</p>
+<p><strong>Cayley&#39;s formula</strong>: the complete graph Kₙ has <strong>nⁿ⁻²</strong> different spanning trees (equivalently, there are nⁿ⁻² labelled trees on n vertices). K₄ has 4² = 16.</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">is_tree</span>(<span class="hljs-params">n, edges</span>):
+    parent = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(n))
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">x</span>):
+        <span class="hljs-keyword">while</span> parent[x] != x:
+            x = parent[x]
+        <span class="hljs-keyword">return</span> x
+    <span class="hljs-keyword">for</span> u, v <span class="hljs-keyword">in</span> edges:
+        ru, rv = find(u), find(v)
+        <span class="hljs-keyword">if</span> ru == rv:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>          <span class="hljs-comment"># a cycle</span>
+        parent[ru] = rv
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(edges) == n - <span class="hljs-number">1</span>    <span class="hljs-comment"># n - 1 edges and no cycle: connected tree</span>
+
+<span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-number">6</span>):
+    all_edges = <span class="hljs-built_in">list</span>(combinations(<span class="hljs-built_in">range</span>(n), <span class="hljs-number">2</span>))
+    count = <span class="hljs-built_in">sum</span>(<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> es <span class="hljs-keyword">in</span> combinations(all_edges, n - <span class="hljs-number">1</span>) <span class="hljs-keyword">if</span> is_tree(n, es))
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;K<span class="hljs-subst">{n}</span>: <span class="hljs-subst">{count}</span> spanning trees, Cayley n^(n-2) = <span class="hljs-subst">{n ** (n - <span class="hljs-number">2</span>)}</span>&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>K2: 1 spanning trees, Cayley n^(n-2) = 1
+K3: 3 spanning trees, Cayley n^(n-2) = 3
+K4: 16 spanning trees, Cayley n^(n-2) = 16
+K5: 125 spanning trees, Cayley n^(n-2) = 125</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZnJvbSBpdGVydG9vbHMgaW1wb3J0IGNvbWJpbmF0aW9ucwoKZGVmIGlzX3RyZWUobiwgZWRnZXMpOgogICAgcGFyZW50ID0gbGlzdChyYW5nZShuKSkKICAgIGRlZiBmaW5kKHgpOgogICAgICAgIHdoaWxlIHBhcmVudFt4XSAhPSB4OgogICAgICAgICAgICB4ID0gcGFyZW50W3hdCiAgICAgICAgcmV0dXJuIHgKICAgIGZvciB1LCB2IGluIGVkZ2VzOgogICAgICAgIHJ1LCBydiA9IGZpbmQodSksIGZpbmQodikKICAgICAgICBpZiBydSA9PSBydjoKICAgICAgICAgICAgcmV0dXJuIEZhbHNlICAgICAgICAgICMgYSBjeWNsZQogICAgICAgIHBhcmVudFtydV0gPSBydgogICAgcmV0dXJuIGxlbihlZGdlcykgPT0gbiAtIDEgICAgIyBuIC0gMSBlZGdlcyBhbmQgbm8gY3ljbGU6IGNvbm5lY3RlZCB0cmVlCgpmb3IgbiBpbiByYW5nZSgyLCA2KToKICAgIGFsbF9lZGdlcyA9IGxpc3QoY29tYmluYXRpb25zKHJhbmdlKG4pLCAyKSkKICAgIGNvdW50ID0gc3VtKDEgZm9yIGVzIGluIGNvbWJpbmF0aW9ucyhhbGxfZWRnZXMsIG4gLSAxKSBpZiBpc190cmVlKG4sIGVzKSkKICAgIHByaW50KGYiS3tufToge2NvdW50fSBzcGFubmluZyB0cmVlcywgQ2F5bGV5IG5eKG4tMikgPSB7biAqKiAobiAtIDIpfSIpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="prefix-codes-and-decision-trees"><a class="anchor" href="#prefix-codes-and-decision-trees" aria-hidden="true" tabindex="-1">#</a>Prefix codes and decision trees</h2>
+<ul>
+<li>Binary trees whose leaves are symbols give <strong>prefix codes</strong> — the basis of <a href="../../daa/huffman/">Huffman coding</a>.</li>
+<li>A <strong>decision tree</strong> for sorting n items has n! leaves, so its height (worst-case comparisons) is at least log₂(n!) = Ω(n log n) — the proof that comparison sorting cannot beat O(n log n).</li>
+</ul>
+<section class="quiz" id="quiz" data-quiz="discrete/trees" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="1"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>How many edges does a tree with 25 vertices have?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">25</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">24</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">26</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">It depends on its shape</span></button></div><div class="q-why" hidden>Every tree on n vertices has n − 1 edges.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>A full binary tree has 15 internal vertices. How many leaves does it have?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">15</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">16</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">31</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">30</span></button></div><div class="q-why" hidden>l = (m − 1)i + 1 = 15 + 1 = 16.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>How many labelled trees are there on 5 vertices?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">25</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">125</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">120</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">32</span></button></div><div class="q-why" hidden>Cayley&#39;s formula: 5³ = 125.</div></li><li class="q" data-answer="0"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>A forest has 20 vertices and 3 components. How many edges?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">17</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">20</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">19</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">23</span></button></div><div class="q-why" hidden>Each component (tree) has one fewer edge than vertices: 20 − 3.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="discrete/trees"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../discrete/graph-theory/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Graph Theory</strong></a><a class="next" href="../../discrete/number-theory/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Number Theory</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#equivalent-characterisations">Equivalent characterisations</a></li><li><a class="d2" href="#rooted-and-m-ary-trees">Rooted and m-ary trees</a></li><li><a class="d2" href="#spanning-trees">Spanning trees</a></li><li><a class="d2" href="#prefix-codes-and-decision-trees">Prefix codes and decision trees</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>

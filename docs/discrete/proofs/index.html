@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proof Techniques · Discrete Math | Bytebook</title>
+<meta name="description" content="How mathematicians and computer scientists prove things: rules of inference, direct proof, proof by contrapositive, contradiction, cases, counterexamples, and existence proofs.">
+<meta name="bb-root" content="../../">
+<meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Proof Techniques · Discrete Math | Bytebook">
+<meta property="og:description" content="How mathematicians and computer scientists prove things: rules of inference, direct proof, proof by contrapositive, contradiction, cases, counterexamples, and existence proofs.">
+<link rel="icon" href="../../assets/favicon.svg?v=382bed9e9d" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=dcdae1963e">
+
+<script>try{var t=localStorage.getItem('bb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body class="page-lesson" data-c="discrete">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+<div class="topbar-row">
+<button class="icon-btn nav-toggle" type="button" aria-label="Open lesson list" aria-controls="sidebar" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+<a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<button class="search-trigger" type="button" aria-label="Search lessons"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search lessons…</span><kbd class="kbd-mod">⌘K</kbd></button>
+<a class="top-run" href="../../playground/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z"/></svg><span>Compiler</span></a>
+<button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme"><span class="t-sun"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></span><span class="t-moon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span></button>
+</div>
+<nav class="course-strip" aria-label="Subjects">
+<a href="../../c/" data-c="c"><span class="dot"></span>C</a>
+<a href="../../dsa/" data-c="dsa"><span class="dot"></span>Data Structures</a>
+<a href="../../cpp/" data-c="cpp"><span class="dot"></span>C++ OOP</a>
+<a href="../../python/" data-c="python"><span class="dot"></span>Python</a>
+<a href="../../discrete/" data-c="discrete" class="active" aria-current="true"><span class="dot"></span>Discrete Math</a>
+<a href="../../daa/" data-c="daa"><span class="dot"></span>Algorithms (DAA)</a>
+<a href="../../foundations/" data-c="foundations"><span class="dot"></span>Foundations</a>
+</nav>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</header>
+<div class="shell">
+<aside class="sidebar" id="sidebar" data-c="discrete" aria-label="Discrete Mathematics lessons">
+<div class="side-top"><button class="icon-btn side-close" type="button" aria-label="Close lesson list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<a class="side-course" href="../../discrete/"><span class="chip" data-c="discrete">DMS</span><strong>Discrete Mathematics</strong></a>
+<div class="side-progress" data-course="discrete" data-total="18"><div class="bar"><span></span></div><small><b class="done-count">0</b> of 18 lessons complete</small></div>
+<nav class="side-nav">
+<div class="side-unit"><h4>Logic &amp; Proofs</h4><ol><li><a href="../../discrete/propositional-logic/" data-lesson="discrete/propositional-logic"><span class="tick" aria-hidden="true"></span><span>Propositional Logic</span></a></li><li><a href="../../discrete/logical-equivalence/" data-lesson="discrete/logical-equivalence"><span class="tick" aria-hidden="true"></span><span>Logical Equivalences &amp; Normal Forms</span></a></li><li><a href="../../discrete/predicate-logic/" data-lesson="discrete/predicate-logic"><span class="tick" aria-hidden="true"></span><span>Predicates &amp; Quantifiers</span></a></li><li><a href="../../discrete/proofs/" data-lesson="discrete/proofs" class="current" aria-current="page"><span class="tick" aria-hidden="true"></span><span>Proof Techniques</span></a></li><li><a href="../../discrete/induction/" data-lesson="discrete/induction"><span class="tick" aria-hidden="true"></span><span>Mathematical Induction</span></a></li></ol></div>
+<div class="side-unit"><h4>Sets, Relations &amp; Functions</h4><ol><li><a href="../../discrete/sets/" data-lesson="discrete/sets"><span class="tick" aria-hidden="true"></span><span>Sets</span></a></li><li><a href="../../discrete/relations/" data-lesson="discrete/relations"><span class="tick" aria-hidden="true"></span><span>Relations</span></a></li><li><a href="../../discrete/partial-orders/" data-lesson="discrete/partial-orders"><span class="tick" aria-hidden="true"></span><span>Partial Orders &amp; Lattices</span></a></li><li><a href="../../discrete/functions/" data-lesson="discrete/functions"><span class="tick" aria-hidden="true"></span><span>Functions</span></a></li></ol></div>
+<div class="side-unit"><h4>Counting</h4><ol><li><a href="../../discrete/counting/" data-lesson="discrete/counting"><span class="tick" aria-hidden="true"></span><span>Counting Principles &amp; Pigeonhole</span></a></li><li><a href="../../discrete/permutations-combinations/" data-lesson="discrete/permutations-combinations"><span class="tick" aria-hidden="true"></span><span>Permutations &amp; Combinations</span></a></li><li><a href="../../discrete/inclusion-exclusion/" data-lesson="discrete/inclusion-exclusion"><span class="tick" aria-hidden="true"></span><span>Inclusion–Exclusion &amp; the Binomial Theorem</span></a></li><li><a href="../../discrete/recurrences/" data-lesson="discrete/recurrences"><span class="tick" aria-hidden="true"></span><span>Recurrence Relations</span></a></li></ol></div>
+<div class="side-unit"><h4>Graphs, Number Theory &amp; Algebra</h4><ol><li><a href="../../discrete/graph-theory/" data-lesson="discrete/graph-theory"><span class="tick" aria-hidden="true"></span><span>Graph Theory</span></a></li><li><a href="../../discrete/trees/" data-lesson="discrete/trees"><span class="tick" aria-hidden="true"></span><span>Trees</span></a></li><li><a href="../../discrete/number-theory/" data-lesson="discrete/number-theory"><span class="tick" aria-hidden="true"></span><span>Number Theory</span></a></li><li><a href="../../discrete/boolean-algebra/" data-lesson="discrete/boolean-algebra"><span class="tick" aria-hidden="true"></span><span>Boolean Algebra</span></a></li><li><a href="../../discrete/cheatsheet/" data-lesson="discrete/cheatsheet"><span class="tick" aria-hidden="true"></span><span>Discrete Mathematics Formula Sheet</span></a></li></ol></div>
+</nav>
+<a class="side-book" href="../../discrete/book/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v10.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 5.5h-6A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/></svg><span>Read the whole subject as one ebook page</span></a>
+</aside>
+<div class="scrim" data-close-nav></div>
+<main class="main" id="main">
+<article class="lesson" data-lesson="discrete/proofs" data-title="Proof Techniques" data-course-title="Discrete Mathematics">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../discrete/">Discrete Math</a><span>/</span><span>Lesson 4 of 18</span></nav>
+<header class="lesson-head">
+<p class="eyebrow">Logic &amp; Proofs</p>
+<h1>Proof Techniques</h1>
+<p class="lede">How mathematicians and computer scientists prove things: rules of inference, direct proof, proof by contrapositive, contradiction, cases, counterexamples, and existence proofs.</p>
+<div class="meta"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4m8-8 5 4-5 4M14 4l-4 16"/></svg>1 runnable example</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>4-question quiz</span></div>
+</header>
+<div class="prose">
+<p>A <strong>proof</strong> is a chain of logically valid steps from accepted facts to a conclusion. Proofs are how we know an algorithm is correct for <strong>all</strong> inputs, not just the ones we tested.</p>
+<h2 id="rules-of-inference"><a class="anchor" href="#rules-of-inference" aria-hidden="true" tabindex="-1">#</a>Rules of inference</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Form</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Modus ponens</td>
+<td>p, p → q ∴ q</td>
+<td>It rains; if it rains the road is wet ∴ the road is wet</td>
+</tr>
+<tr>
+<td>Modus tollens</td>
+<td>¬q, p → q ∴ ¬p</td>
+<td>The road is dry; if it rained it would be wet ∴ it did not rain</td>
+</tr>
+<tr>
+<td>Hypothetical syllogism</td>
+<td>p → q, q → r ∴ p → r</td>
+<td>chaining implications</td>
+</tr>
+<tr>
+<td>Disjunctive syllogism</td>
+<td>p ∨ q, ¬p ∴ q</td>
+<td>It is tea or coffee; not tea ∴ coffee</td>
+</tr>
+<tr>
+<td>Addition</td>
+<td>p ∴ p ∨ q</td>
+<td></td>
+</tr>
+<tr>
+<td>Simplification</td>
+<td>p ∧ q ∴ p</td>
+<td></td>
+</tr>
+<tr>
+<td>Conjunction</td>
+<td>p, q ∴ p ∧ q</td>
+<td></td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>p ∨ q, ¬p ∨ r ∴ q ∨ r</td>
+<td>the rule behind SAT solvers</td>
+</tr>
+</tbody></table>
+</div>
+<aside class="callout callout-mistake"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>Two classic fallacies</span></div><div class="callout-body"><p><strong>Affirming the conclusion</strong>: q, p → q ∴ p — invalid (&quot;the road is wet, so it rained&quot;). <strong>Denying the hypothesis</strong>: ¬p, p → q ∴ ¬q — invalid.</p>
+</div></aside>
+<h2 id="direct-proof"><a class="anchor" href="#direct-proof" aria-hidden="true" tabindex="-1">#</a>Direct proof</h2>
+<p>To prove p → q: <strong>assume p</strong>, then use definitions and known facts to reach q.</p>
+<blockquote>
+<p><strong>Theorem.</strong> If n is odd, then n² is odd.
+<strong>Proof.</strong> Suppose n is odd, so n = 2k + 1 for some integer k. Then n² = 4k² + 4k + 1 = 2(2k² + 2k) + 1, which is odd. ∎</p>
+</blockquote>
+<h2 id="proof-by-contrapositive"><a class="anchor" href="#proof-by-contrapositive" aria-hidden="true" tabindex="-1">#</a>Proof by contrapositive</h2>
+<p>Prove ¬q → ¬p instead, which is equivalent to p → q. Use it when the negations are easier to work with.</p>
+<blockquote>
+<p><strong>Theorem.</strong> If n² is even, then n is even.
+<strong>Proof.</strong> Contrapositive: if n is odd, then n² is odd — proved above. ∎</p>
+</blockquote>
+<h2 id="proof-by-contradiction"><a class="anchor" href="#proof-by-contradiction" aria-hidden="true" tabindex="-1">#</a>Proof by contradiction</h2>
+<p>Assume the statement is <strong>false</strong> and derive something impossible.</p>
+<blockquote>
+<p><strong>Theorem.</strong> √2 is irrational.
+<strong>Proof.</strong> Suppose √2 = a/b in lowest terms. Then 2b² = a², so a² is even, so a is even: a = 2c. Then 2b² = 4c², so b² = 2c² is even, so b is even. But then a and b share the factor 2, contradicting &quot;lowest terms&quot;. ∎</p>
+</blockquote>
+<blockquote>
+<p><strong>Theorem (Euclid).</strong> There are infinitely many primes.
+<strong>Proof.</strong> Suppose there are finitely many: p₁, p₂, …, pₙ. Let N = p₁p₂…pₙ + 1. No pᵢ divides N (each leaves remainder 1), so N&#39;s prime factors are not in the list — a contradiction. ∎</p>
+</blockquote>
+<h2 id="proof-by-cases"><a class="anchor" href="#proof-by-cases" aria-hidden="true" tabindex="-1">#</a>Proof by cases</h2>
+<p>Split into cases that cover every possibility and prove each one.</p>
+<blockquote>
+<p><strong>Theorem.</strong> n² + n is even for every integer n.
+<strong>Proof.</strong> If n is even, n² and n are both even, so their sum is even. If n is odd, n² and n are both odd, and odd + odd is even. ∎</p>
+</blockquote>
+<h2 id="counterexamples"><a class="anchor" href="#counterexamples" aria-hidden="true" tabindex="-1">#</a>Counterexamples</h2>
+<p>To <strong>disprove</strong> a universal statement ∀x P(x), one counterexample is enough.</p>
+<p>Claim: &quot;n² + n + 41 is prime for every n ≥ 0.&quot; It holds for n = 0 … 39, but fails at n = 40. Testing many cases is evidence, never proof:</p>
+<figure class="code has-out" data-lang="python"><div class="code-head"><span class="code-lang">Python</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg><span>Copy</span></button></div><pre><code class="hljs"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_prime</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">return</span> n &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">all</span>(n % d <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">int</span>(n ** <span class="hljs-number">0.5</span>) + <span class="hljs-number">1</span>))
+
+<span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">45</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_prime(n * n + n + <span class="hljs-number">41</span>):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;counterexample: n = <span class="hljs-subst">{n}</span>, n^2 + n + 41 = <span class="hljs-subst">{n*n + n + <span class="hljs-number">41</span>}</span> = 41 x <span class="hljs-subst">{(n*n + n + <span class="hljs-number">41</span>) // <span class="hljs-number">41</span>}</span>&quot;</span>)
+        <span class="hljs-keyword">break</span>
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;no counterexample found&quot;</span>)</code></pre><div class="code-out"><div class="out-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 16.5 5-4.5-5-4.5M12.5 17h6.5"/></svg><span>Output</span></div><pre>counterexample: n = 40, n^2 + n + 41 = 1681 = 41 x 41</pre></div><div class="code-foot"><a class="tryit" href="../../playground/#lang=python&amp;code=ZGVmIGlzX3ByaW1lKG4pOgogICAgcmV0dXJuIG4gPiAxIGFuZCBhbGwobiAlIGQgZm9yIGQgaW4gcmFuZ2UoMiwgaW50KG4gKiogMC41KSArIDEpKQoKZm9yIG4gaW4gcmFuZ2UoNDUpOgogICAgaWYgbm90IGlzX3ByaW1lKG4gKiBuICsgbiArIDQxKToKICAgICAgICBwcmludChmImNvdW50ZXJleGFtcGxlOiBuID0ge259LCBuXjIgKyBuICsgNDEgPSB7bipuICsgbiArIDQxfSA9IDQxIHggeyhuKm4gKyBuICsgNDEpIC8vIDQxfSIpCiAgICAgICAgYnJlYWsKZWxzZToKICAgIHByaW50KCJubyBjb3VudGVyZXhhbXBsZSBmb3VuZCIpCg" target="_blank" rel="noopener">Try it Yourself <svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></figure>
+<h2 id="existence-proofs"><a class="anchor" href="#existence-proofs" aria-hidden="true" tabindex="-1">#</a>Existence proofs</h2>
+<ul>
+<li><strong>Constructive</strong>: exhibit the object. &quot;There is an integer that is the sum of two cubes in two ways&quot;: 1729 = 1³ + 12³ = 9³ + 10³.</li>
+<li><strong>Non-constructive</strong>: show it must exist without naming it (often by contradiction or the <a href="../../discrete/counting/">pigeonhole principle</a>).</li>
+</ul>
+<h2 id="which-technique"><a class="anchor" href="#which-technique" aria-hidden="true" tabindex="-1">#</a>Which technique?</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Statement looks like</th>
+<th>Try</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p → q with a usable p</td>
+<td>direct proof</td>
+</tr>
+<tr>
+<td>q is a negative statement (&quot;not divisible&quot;, &quot;irrational&quot;)</td>
+<td>contradiction or contrapositive</td>
+</tr>
+<tr>
+<td>&quot;for all n ≥ 1&quot; about integers</td>
+<td><a href="../../discrete/induction/">induction</a></td>
+</tr>
+<tr>
+<td>a few distinct situations (even/odd, sign)</td>
+<td>cases</td>
+</tr>
+<tr>
+<td>&quot;every x&quot; that you suspect is false</td>
+<td>counterexample</td>
+</tr>
+</tbody></table>
+</div>
+<section class="quiz" id="quiz" data-quiz="discrete/proofs" data-total="4"><div class="quiz-head"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg><h2>Test yourself</h2><span class="quiz-score" hidden></span></div><p class="quiz-sub">4 questions · pick an answer to check it instantly</p><ol class="quiz-list"><li class="q" data-answer="0"><div class="q-text"><span class="q-num">1</span><div class="q-body"><p>Which rule concludes q from p and p → q?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">Modus ponens</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">Modus tollens</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Disjunctive syllogism</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">Resolution</span></button></div><div class="q-why" hidden>Affirm the hypothesis to get the conclusion.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">2</span><div class="q-body"><p>In proof by contradiction you begin by assuming...</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">the hypothesis is false</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">the statement you want to prove is false</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">the converse is true</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">nothing</span></button></div><div class="q-why" hidden>Then you derive something impossible.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">3</span><div class="q-body"><p>What is enough to disprove &quot;every prime is odd&quot;?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">A proof by induction</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">One counterexample: 2</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Checking primes up to 1000</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">A truth table</span></button></div><div class="q-why" hidden>A single counterexample refutes a universal claim.</div></li><li class="q" data-answer="1"><div class="q-text"><span class="q-num">4</span><div class="q-body"><p>From &quot;If the server is up, the site loads&quot; and &quot;the site does not load&quot;, what follows?</p>
+</div></div><div class="q-opts"><button class="q-opt" type="button" data-i="0"><span class="q-key">A</span><span class="q-label">The server is up</span></button><button class="q-opt" type="button" data-i="1"><span class="q-key">B</span><span class="q-label">The server is down</span></button><button class="q-opt" type="button" data-i="2"><span class="q-key">C</span><span class="q-label">Nothing</span></button><button class="q-opt" type="button" data-i="3"><span class="q-key">D</span><span class="q-label">The site loads</span></button></div><div class="q-why" hidden>Modus tollens: ¬q and p → q give ¬p.</div></li></ol><div class="quiz-foot" hidden><p class="quiz-result"></p><button class="quiz-reset" type="button">Try again</button></div></section>
+
+</div>
+<div class="complete-box"><button class="complete-btn" type="button" data-lesson="discrete/proofs"><span class="cb-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="cb-text">Mark lesson as complete</span></button></div>
+<nav class="pager" aria-label="Lesson navigation"><a class="prev" href="../../discrete/predicate-logic/" rel="prev"><small><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Previous</small><strong>Predicates &amp; Quantifiers</strong></a><a class="next" href="../../discrete/induction/" rel="next"><small>Next<svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></small><strong>Mathematical Induction</strong></a></nav>
+</article>
+</main>
+<aside class="toc" aria-label="On this page"><div class="toc-inner"><p>On this page</p><ul><li><a class="d2" href="#rules-of-inference">Rules of inference</a></li><li><a class="d2" href="#direct-proof">Direct proof</a></li><li><a class="d2" href="#proof-by-contrapositive">Proof by contrapositive</a></li><li><a class="d2" href="#proof-by-contradiction">Proof by contradiction</a></li><li><a class="d2" href="#proof-by-cases">Proof by cases</a></li><li><a class="d2" href="#counterexamples">Counterexamples</a></li><li><a class="d2" href="#existence-proofs">Existence proofs</a></li><li><a class="d2" href="#which-technique">Which technique?</a></li><li><a class="d2" href="#quiz">Test yourself</a></li></ul></div></aside>
+</div>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand"><a class="brand" href="../../"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#D7A43F"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M6.5 10.2c3.2-1.4 6.3-1.3 9.5.7 3.2-2 6.3-2.1 9.5-.7v12.3c-3.2-1.4-6.3-1.3-9.5.7-3.2-2-6.3-2.1-9.5-.7z" fill="#1C1508" fill-opacity=".1" stroke="#1C1508" stroke-width="1.9" stroke-linejoin="round"/><path d="M16 10.9v12.3" stroke="#1C1508" stroke-width="1.9"/><path d="m10.4 14.6-1.6 1.5 1.6 1.5M21.6 14.6l1.6 1.5-1.6 1.5" fill="none" stroke="#1C1508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bytebook</span></a>
+<p>An independent, free study companion for Kalvium students covering semesters 1 to 3. Not affiliated with or endorsed by Kalvium.</p></div>
+<nav aria-label="Subjects"><h4>Subjects</h4><a href="../../c/">Programming in C</a><a href="../../dsa/">Data Structures</a><a href="../../cpp/">Object-Oriented Programming with C++</a><a href="../../python/">Python Programming</a><a href="../../discrete/">Discrete Mathematics</a><a href="../../daa/">Design and Analysis of Algorithms</a><a href="../../foundations/">First-Year Foundations</a></nav>
+<nav aria-label="Tools"><h4>Tools</h4><a href="../../playground/">Online compiler (C, C++, Python)</a><button class="link-btn search-trigger-alt" type="button">Search everything</button><a href="../../c/book/">C as an ebook</a><a href="../../dsa/book/">Data Structures as an ebook</a><a href="../../cpp/book/">C++ OOP as an ebook</a></nav>
+</div>
+<p class="footer-small">Examples are compiled and run when the site is built, so every output shown is real. Progress is saved only in this browser.</p>
+</footer>
+<dialog class="search" id="search" aria-label="Search">
+<div class="search-box">
+<div class="search-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search-input" type="search" placeholder="Search every subject — try “pointers” or “dijkstra”" autocomplete="off" spellcheck="false" aria-controls="search-results"><kbd>Esc</kbd></div>
+<ul class="search-results" id="search-results" role="listbox"></ul>
+<div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="search-count"></span></div>
+</div>
+</dialog>
+<script src="../../assets/site.js?v=54c50ac319" defer></script>
+
+</body>
+</html>
