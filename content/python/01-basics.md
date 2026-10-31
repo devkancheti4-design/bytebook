@@ -1,8 +1,8 @@
-=== intro | Python Introduction
+=== intro | Introduction to Python
 unit: Python Basics
 desc: Why Python is everywhere, how it runs your code, indentation, comments, print(), and your first programs.
 
-**Python** was created by **Guido van Rossum** and released in **1991**. It was designed to be **readable**: code looks almost like English, and there is usually one obvious way to do something. Today Python is the language of data science, machine learning, automation, web back-ends, scripting and competitive programming.
+**Python** was created by **Guido van Rossum** and released in **1991**. It was designed to be **readable**: code looks almost like English, and there is usually one obvious way to do something. Today Python is the language of data science, machine learning, automation, web back-ends, scripting and competitive programming. Python was also created with the intention of being used by people who have never coded before and by experienced programmers.
 
 ```python run
 print("Hello, Python!")
