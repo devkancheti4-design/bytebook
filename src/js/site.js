@@ -252,13 +252,14 @@
   }
   async function openSearch() {
     if (!dlg || dlg.open) return;
-    dlg.showModal();
     input.value = '';
+    dlg.showModal();
+    input.focus();
     if (!index) {
+      list.innerHTML = '<li class="empty">Loading the search index…</li>';
       index = (await loadIndex()).map(e => ({ ...e, tl: e.t.toLowerCase(), xl: (e.x || '').toLowerCase(), sl: e.s.toLowerCase() }));
     }
-    render('');
-    input.focus();
+    render(input.value);              // the reader may have typed while the index was loading
   }
   $$('.search-trigger, .search-trigger-alt').forEach(b => b.addEventListener('click', openSearch));
   input?.addEventListener('input', () => index && render(input.value));
